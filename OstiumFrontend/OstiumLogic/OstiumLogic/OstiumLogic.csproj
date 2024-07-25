@@ -46,7 +46,7 @@
     
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <PropertyGroup>
-            <UnityProjectDir>..\..\View\Assets\Plugins</UnityProjectDir>
+            <UnityProjectDir>..\..\OstiumView\Assets\Plugins</UnityProjectDir>
         </PropertyGroup>
         <MakeDir Directories="$(UnityProjectDir)" />
         <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(UnityProjectDir)" />
