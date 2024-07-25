@@ -1,8 +1,7 @@
 ﻿using B20.Logic;
-using Ostium.Logic;
 using Xunit;
 
-namespace OstiumLogicTests
+namespace Ostium.Logic.Tests
 {
     public class OstiumLogicTest: GameStateListener
     {

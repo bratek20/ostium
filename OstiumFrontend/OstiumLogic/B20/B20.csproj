@@ -4,11 +4,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{013DF444-AB6A-419C-B254-B4F46FDC1342}</ProjectGuid>
+        <ProjectGuid>{CBC099E1-20D2-452A-9F49-91276BF3B1C7}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>OstiumLogic</RootNamespace>
-        <AssemblyName>OstiumLogic</AssemblyName>
+        <RootNamespace>B20</RootNamespace>
+        <AssemblyName>B20</AssemblyName>
         <TargetFramework>netstandard2.0</TargetFramework>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -38,23 +38,19 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="GameWindow.cs" />
-        <Compile Include="MainWindow.cs" />
-        <Compile Include="OstiumLogic.cs" />
-        <Compile Include="PlayButton.cs" />
+        <Compile Include="Button.cs" />
+        <Compile Include="GameState.cs" />
+        <Compile Include="GameStateListener.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\B20\B20.csproj" />
+        <Compile Include="Window.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <PropertyGroup>
-            <UnityProjectDir>..\..\OstiumView\Assets\Plugins</UnityProjectDir>
-        </PropertyGroup>
-        <MakeDir Directories="$(UnityProjectDir)" />
-        <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(UnityProjectDir)" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
     </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
 
 </Project>

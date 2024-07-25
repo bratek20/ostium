@@ -2,7 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OstiumLogic", "OstiumLogic\OstiumLogic.csproj", "{013DF444-AB6A-419C-B254-B4F46FDC1342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OstiumLogicTests", "OstiumLogicTests\OstiumLogicTests.csproj", "{7C07CFA6-70FC-4D09-8421-88831EDF1CFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OstiumLogic.Tests", "OstiumLogic.Tests\OstiumLogic.Tests.csproj", "{7C07CFA6-70FC-4D09-8421-88831EDF1CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B20", "B20\B20.csproj", "{CBC099E1-20D2-452A-9F49-91276BF3B1C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B20.Tests", "B20.Tests\B20.Tests.csproj", "{BD7C4409-5501-47C9-9956-5536D61667A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +22,13 @@ Global
 		{7C07CFA6-70FC-4D09-8421-88831EDF1CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C07CFA6-70FC-4D09-8421-88831EDF1CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C07CFA6-70FC-4D09-8421-88831EDF1CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC099E1-20D2-452A-9F49-91276BF3B1C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC099E1-20D2-452A-9F49-91276BF3B1C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC099E1-20D2-452A-9F49-91276BF3B1C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC099E1-20D2-452A-9F49-91276BF3B1C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD7C4409-5501-47C9-9956-5536D61667A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7C4409-5501-47C9-9956-5536D61667A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7C4409-5501-47C9-9956-5536D61667A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7C4409-5501-47C9-9956-5536D61667A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
