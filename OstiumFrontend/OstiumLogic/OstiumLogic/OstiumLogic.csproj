@@ -44,6 +44,7 @@
         <Compile Include="B20\Window.cs" />
         <Compile Include="Ostium\GameWindow.cs" />
         <Compile Include="Ostium\MainWindow.cs" />
+        <Compile Include="Ostium\OstiumLogic.cs" />
         <Compile Include="Ostium\PlayButton.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
