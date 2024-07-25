@@ -1,12 +1,9 @@
-using Logic;
-using Logic.Core;
+using B20.Logic;
+using B20.View;
 using Ostium.Logic;
-using OstiumLogic;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace View
+namespace Ostium.View
 {
     public class GameManager : MonoBehaviour, GameStateListener
     {
@@ -21,9 +18,6 @@ namespace View
 
         void Start()
         {
-            int x = new Class1().PrintHelloWorld();
-            Debug.Log("x:" + x);
-
             mainWindow.Init(new MainWindow());
             gameWindow.Init(new GameWindow());
 

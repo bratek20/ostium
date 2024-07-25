@@ -1,10 +1,7 @@
-using Logic;
-using Logic.Core;
-using System.Collections;
-using System.Collections.Generic;
+using B20.Logic;
 using UnityEngine;
 
-namespace View
+namespace B20.View
 {
     public class WindowView : MonoBehaviour
     {

@@ -1,13 +1,8 @@
-﻿using Logic.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using B20.Logic;
 
 namespace Ostium.Logic
 {
-    class PlayButton : Button
+    public class PlayButton : Button
     {
         private GameState state;
         private GameWindow gameWindow;
