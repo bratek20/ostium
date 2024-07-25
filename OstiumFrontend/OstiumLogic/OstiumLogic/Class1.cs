@@ -5,9 +5,10 @@ namespace OstiumLogic
 {
     public class Class1
     {
-        public void PrintHelloWorld()
+        public int PrintHelloWorld()
         {
             Console.Out.WriteLine("Hello world from OstiumLogic");
+            return 42;
         }
     }
 }
