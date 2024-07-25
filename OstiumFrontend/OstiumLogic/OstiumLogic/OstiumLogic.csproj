@@ -9,7 +9,7 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>OstiumLogic</RootNamespace>
         <AssemblyName>OstiumLogic</AssemblyName>
-        <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
