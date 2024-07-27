@@ -13,22 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Change directory to OstiumBackend
-        shell: bash
-        run: |
-          cd ./OstiumBackend
-          # If you need to set up anything else before running the action, do it here
-          echo "Changed directory to OstiumBackend"
-      
-      - name: Check if directory changed
-        shell: bash
-        run: |
-          pwd
-
       - name: Run Tests with custom action
         uses: bratek20/github-actions/run-tests-action@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: OstiumBackend
