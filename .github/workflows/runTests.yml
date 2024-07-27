@@ -1,0 +1,20 @@
+name: Run Backend Tests
+
+permissions:
+  checks: write
+  pull-requests: write
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Tests
+        uses: bratek20/github-actions/run-tests-action@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: OstiumBackend
