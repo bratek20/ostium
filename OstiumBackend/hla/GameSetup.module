@@ -1,0 +1,15 @@
+ValueObjects
+    Hand
+        cards: List<CreatureCard>
+    Table
+        creatureCard: CreatureCard
+        gateCard: GateCard
+        gateDurabilityCard: GateDurabilityCard
+
+    Game
+        hand: Hand
+        table: Table
+
+Interfaces
+    GameSetupApi
+        startGame(): Game

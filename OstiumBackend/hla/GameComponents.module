@@ -1,0 +1,11 @@
+ValueObjects
+    CreateCard
+        name: string
+
+    GateCard
+        destroyed: bool
+
+    GateDurabilityMarker: int
+    GateDurabilityCard
+        myMarker: GateDurabilityMarker
+        opponentMarker: GateDurabilityMarker

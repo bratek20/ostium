@@ -1,4 +1,4 @@
-rootProject.name = "template" // TODO: Change this
+rootProject.name = "ostium-backend"
 
 val catalogVersion = "1.0.47"
 
