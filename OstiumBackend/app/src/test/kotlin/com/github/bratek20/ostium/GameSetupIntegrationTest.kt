@@ -9,14 +9,14 @@ import com.github.bratek20.ostium.gamesetup.tests.GameSetupImplTest
 
 class GameSetupIntegrationTest: GameSetupImplTest() {
     override fun createApi(): GameSetupApi {
-        runWebApp(true)
+        val port = runWebApp(true)
 
         return someContextBuilder()
             .withModules(
                 HttpClientImpl(),
                 GameSetupWebClient(
                     config = httpClientConfig {
-                        baseUrl = "http://localhost:8080"
+                        baseUrl = "http://localhost:$port"
                     }
                 )
             )

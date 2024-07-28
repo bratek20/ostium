@@ -7,11 +7,11 @@ fun main() {
     runWebApp(false)
 }
 
-fun runWebApp(useRandomPort: Boolean) {
-    SpringWebApp(
+fun runWebApp(useRandomPort: Boolean): Int {
+    return SpringWebApp(
         modules = listOf(
             GameSetupWebServer()
         ),
         useRandomPort = useRandomPort
-    ).run()
+    ).run().port
 }
