@@ -2,8 +2,9 @@ rootProject.name = "ostium-backend"
 
 val catalogVersion = "1.0.55"
 
-include("web-app")
 include("lib")
+include("web-app")
+include("web-app-tester")
 
 pluginManagement {
     repositories {
