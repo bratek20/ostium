@@ -1,17 +1,9 @@
 package com.github.bratek20.template
 
-import com.github.bratek20.architecture.context.spring.SpringContextBuilder
-import com.github.bratek20.logs.context.Slf4jLogsImpl
-import com.github.bratek20.template.helloworld.api.HelloWorldApi
-import com.github.bratek20.template.helloworld.context.HelloWorldImpl
+import com.github.bratek20.spring.webapp.SpringWebApp
 
 fun main() {
-    val api = SpringContextBuilder()
-        .withModules(
-            Slf4jLogsImpl(),
-            HelloWorldImpl()
-        )
-        .get(HelloWorldApi::class.java)
-
-    api.sayHello()
+    SpringWebApp(
+        modules = emptyList()
+    ).run()
 }

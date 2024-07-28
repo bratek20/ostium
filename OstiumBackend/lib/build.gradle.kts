@@ -6,6 +6,6 @@ dependencies {
     api(libs.bratek20.architecture)
     testApi(testFixtures(libs.bratek20.architecture))
 
-    api(libs.bratek20.logs)
-    testApi(testFixtures(libs.bratek20.logs.logback))
+    api(libs.bratek20.infrastructure)
+    testApi(testFixtures(libs.bratek20.infrastructure))
 }
