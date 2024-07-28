@@ -4,17 +4,20 @@ import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.ostium.gamesetup.api.GameSetupApi
 import com.github.bratek20.ostium.gamesetup.context.GameSetupImpl
 import com.github.bratek20.ostium.gamesetup.fixtures.assertGame
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class GameSetupImplTest {
-    @Test
-    fun `start game`() {
-        val api = someContextBuilder()
+open class GameSetupImplTest {
+    open fun createApi(): GameSetupApi {
+        return someContextBuilder()
             .withModules(
                 GameSetupImpl()
             )
             .get(GameSetupApi::class.java)
+    }
+
+    @Test
+    fun `start game`() {
+        val api = createApi()
 
         val game = api.startGame()
 
