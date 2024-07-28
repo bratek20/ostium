@@ -1,6 +1,6 @@
 rootProject.name = "ostium-backend"
 
-val catalogVersion = "1.0.47"
+val catalogVersion = "1.0.55"
 
 include("app")
 include("lib")
