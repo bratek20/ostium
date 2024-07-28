@@ -1,6 +1,6 @@
 ValueObjects
     Hand
-        cards: List<CreatureCard>
+        cards: CreatureCard[]
     Table
         creatureCard: CreatureCard
         gateCard: GateCard

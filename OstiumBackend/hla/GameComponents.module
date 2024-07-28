@@ -1,5 +1,5 @@
 ValueObjects
-    CreateCard
+    CreatureCard
         name: string
 
     GateCard
