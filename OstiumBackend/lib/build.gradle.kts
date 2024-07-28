@@ -14,7 +14,17 @@ dependencies {
     //TODO-REF generate web layer in app?
     api(libs.bratek20.spring)
 
-    //needed when tests moved to test fixtures
+    //needed when tests moved to test fixtures, TODO-REF to some plugin
     testFixturesImplementation(libs.junit.jupiter.api)
     testFixturesImplementation(testFixtures(libs.bratek20.architecture))
+}
+
+//needed when tests moved to test fixtures, TODO-REF to some plugin
+tasks.named("check") {
+    dependsOn("testFixturesClasses")
+}
+tasks.named<Test>("test") {
+    dependsOn("testFixturesClasses")
+    testClassesDirs += sourceSets["testFixtures"].output.classesDirs
+    classpath += sourceSets["testFixtures"].runtimeClasspath
 }
