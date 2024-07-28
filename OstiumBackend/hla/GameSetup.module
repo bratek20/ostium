@@ -13,3 +13,8 @@ ValueObjects
 Interfaces
     GameSetupApi
         startGame(): Game
+
+Web
+    Http
+        ExposedInterfaces
+            GameSetupApi

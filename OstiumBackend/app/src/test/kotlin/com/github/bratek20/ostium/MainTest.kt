@@ -1,5 +1,6 @@
-package com.github.bratek20.template
+package com.github.bratek20.ostium
 
+import com.github.bratek20.ostium.main
 import org.junit.jupiter.api.Test
 
 class MainTest {
