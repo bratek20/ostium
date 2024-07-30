@@ -1,10 +1,4 @@
-rootProject.name = "ostium-backend"
-
-val catalogVersion = "1.0.55"
-
-include("lib")
-include("web-app")
-include("web-app-tester")
+val b20Version = "1.0.58"
 
 pluginManagement {
     repositories {
@@ -31,7 +25,7 @@ pluginManagement {
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            from("com.github.bratek20:version-catalog:$catalogVersion")
+            from("com.github.bratek20:version-catalog:$b20Version")
         }
     }
 
@@ -54,3 +48,9 @@ dependencyResolutionManagement {
         }
     }
 }
+
+rootProject.name = "ostium-backend"
+
+include("lib")
+include("web-app")
+include("web-app-tester")
