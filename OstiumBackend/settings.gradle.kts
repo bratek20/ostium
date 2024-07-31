@@ -1,4 +1,4 @@
-val b20Version = "1.0.58"
+val b20Version = "1.0.59"
 
 pluginManagement {
     repositories {
