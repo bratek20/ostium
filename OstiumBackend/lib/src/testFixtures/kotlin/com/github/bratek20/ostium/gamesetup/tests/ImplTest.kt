@@ -22,26 +22,26 @@ open class GameSetupImplTest {
         val game = api.startGame()
 
         assertGame(game) {
+            id = "Game1"
             hand = {
                 cards = listOf(
                     {
-                        name = "HandCard1"
+                        id = "Mouse1"
                     },
                     {
-                        name = "HandCard2"
+                        id = "Mouse2"
                     }
                 )
             }
             table = {
-                creatureCard = {
-                    name = "TableCreature"
-                }
-                gateCard = {
-                    destroyed = false
-                }
                 gateDurabilityCard = {
                     myMarker = 15
                     opponentMarker = 15
+                }
+                attackRowEmpty = true
+                defenseRowEmpty = true
+                gateCard = {
+                    destroyed = false
                 }
             }
         }
