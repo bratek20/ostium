@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameComponents.Api;
+using GameSetup.Api;
 
 namespace GameSetup.Impl
 {
