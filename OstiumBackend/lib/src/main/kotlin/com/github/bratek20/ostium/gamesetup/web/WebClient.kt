@@ -17,5 +17,13 @@ class GameSetupApiWebClient(
     override fun startGame(): Game {
         return client.post("/gameSetupApi/startGame", null).getBody(GameSetupApiStartGameResponse::class.java).value
     }
+
+    override fun playCard(cardId: CreatureCardId, row: RowType): Game {
+        return client.post("/gameSetupApi/playCard", GameSetupApiPlayCardRequest.create(cardId, row)).getBody(GameSetupApiPlayCardResponse::class.java).value
+    }
+
+    override fun moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game {
+        return client.post("/gameSetupApi/moveCard", GameSetupApiMoveCardRequest.create(cardId, from, to)).getBody(GameSetupApiMoveCardResponse::class.java).value
+    }
 }
 

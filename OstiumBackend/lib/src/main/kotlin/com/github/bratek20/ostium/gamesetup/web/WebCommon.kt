@@ -14,3 +14,47 @@ class GameSetupApiStartGameResponse(
     val value: Game,
 ) {
 }
+class GameSetupApiPlayCardRequest(
+    private val cardId: String,
+    private val row: String,
+) {
+    fun getCardId(): CreatureCardId {
+        return CreatureCardId(cardId)
+    }
+    fun getRow(): RowType {
+        return RowType.valueOf(row)
+    }
+    companion object {
+        fun create(cardId: CreatureCardId, row: RowType): GameSetupApiPlayCardRequest {
+            return GameSetupApiPlayCardRequest(cardId.value, row.name)
+        }
+    }
+}
+class GameSetupApiPlayCardResponse(
+    val value: Game,
+) {
+}
+class GameSetupApiMoveCardRequest(
+    private val cardId: String,
+    private val from: String,
+    private val to: String,
+) {
+    fun getCardId(): CreatureCardId {
+        return CreatureCardId(cardId)
+    }
+    fun getFrom(): RowType {
+        return RowType.valueOf(from)
+    }
+    fun getTo(): RowType {
+        return RowType.valueOf(to)
+    }
+    companion object {
+        fun create(cardId: CreatureCardId, from: RowType, to: RowType): GameSetupApiMoveCardRequest {
+            return GameSetupApiMoveCardRequest(cardId.value, from.name, to.name)
+        }
+    }
+}
+class GameSetupApiMoveCardResponse(
+    val value: Game,
+) {
+}

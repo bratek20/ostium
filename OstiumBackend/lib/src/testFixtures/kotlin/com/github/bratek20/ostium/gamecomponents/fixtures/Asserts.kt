@@ -11,6 +11,12 @@ fun assertGateDurabilityMarker(given: GateDurabilityMarker, expected: Int) {
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 
+
+fun assertCreatureCardId(given: CreatureCardId, expected: String) {
+    val diff = diffCreatureCardId(given, expected)
+    assertThat(diff).withFailMessage(diff).isEqualTo("")
+}
+
 fun assertCreatureCard(given: CreatureCard, expectedInit: ExpectedCreatureCard.() -> Unit) {
     val diff = diffCreatureCard(given, expectedInit)
     assertThat(diff).withFailMessage(diff).isEqualTo("")

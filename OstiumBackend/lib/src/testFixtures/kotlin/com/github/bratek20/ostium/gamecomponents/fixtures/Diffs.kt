@@ -9,15 +9,20 @@ fun diffGateDurabilityMarker(given: GateDurabilityMarker, expected: Int, path: S
     return ""
 }
 
+fun diffCreatureCardId(given: CreatureCardId, expected: String, path: String = ""): String {
+    if (given.value != expected) { return "${path}value ${given.value} != ${expected}" }
+    return ""
+}
+
 data class ExpectedCreatureCard(
-    var name: String? = null,
+    var id: String? = null,
 )
 fun diffCreatureCard(given: CreatureCard, expectedInit: ExpectedCreatureCard.() -> Unit, path: String = ""): String {
     val expected = ExpectedCreatureCard().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
 
-    expected.name?.let {
-        if (given.getName() != it) { result.add("${path}name ${given.getName()} != ${it}") }
+    expected.id?.let {
+        if (diffCreatureCardId(given.getId(), it) != "") { result.add(diffCreatureCardId(given.getId(), it, "${path}id.")) }
     }
 
     return result.joinToString("\n")

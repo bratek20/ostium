@@ -9,13 +9,18 @@ import com.github.bratek20.ostium.gamecomponents.fixtures.*
 
 import com.github.bratek20.ostium.gamesetup.api.*
 
-fun assertHand(given: Hand, expectedInit: ExpectedHand.() -> Unit) {
-    val diff = diffHand(given, expectedInit)
+fun assertGameId(given: GameId, expected: String) {
+    val diff = diffGameId(given, expected)
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 
 fun assertTable(given: Table, expectedInit: ExpectedTable.() -> Unit) {
     val diff = diffTable(given, expectedInit)
+    assertThat(diff).withFailMessage(diff).isEqualTo("")
+}
+
+fun assertHand(given: Hand, expectedInit: ExpectedHand.() -> Unit) {
+    val diff = diffHand(given, expectedInit)
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 

@@ -7,6 +7,26 @@ import com.github.bratek20.ostium.gamecomponents.fixtures.*
 
 import com.github.bratek20.ostium.gamesetup.api.*
 
+fun gameId(value: String = "someValue"): GameId {
+    return GameId(value)
+}
+
+data class TableDef(
+    var gateDurabilityCard: (GateDurabilityCardDef.() -> Unit) = {},
+    var attackRow: (CreatureCardDef.() -> Unit)? = null,
+    var defenseRow: (CreatureCardDef.() -> Unit)? = null,
+    var gateCard: (GateCardDef.() -> Unit) = {},
+)
+fun table(init: TableDef.() -> Unit = {}): Table {
+    val def = TableDef().apply(init)
+    return Table.create(
+        gateDurabilityCard = gateDurabilityCard(def.gateDurabilityCard),
+        attackRow = def.attackRow?.let { it -> creatureCard(it) },
+        defenseRow = def.defenseRow?.let { it -> creatureCard(it) },
+        gateCard = gateCard(def.gateCard),
+    )
+}
+
 data class HandDef(
     var cards: List<(CreatureCardDef.() -> Unit)> = emptyList(),
 )
@@ -17,28 +37,16 @@ fun hand(init: HandDef.() -> Unit = {}): Hand {
     )
 }
 
-data class TableDef(
-    var creatureCard: (CreatureCardDef.() -> Unit) = {},
-    var gateCard: (GateCardDef.() -> Unit) = {},
-    var gateDurabilityCard: (GateDurabilityCardDef.() -> Unit) = {},
-)
-fun table(init: TableDef.() -> Unit = {}): Table {
-    val def = TableDef().apply(init)
-    return Table.create(
-        creatureCard = creatureCard(def.creatureCard),
-        gateCard = gateCard(def.gateCard),
-        gateDurabilityCard = gateDurabilityCard(def.gateDurabilityCard),
-    )
-}
-
 data class GameDef(
-    var hand: (HandDef.() -> Unit) = {},
+    var id: String = "someValue",
     var table: (TableDef.() -> Unit) = {},
+    var hand: (HandDef.() -> Unit) = {},
 )
 fun game(init: GameDef.() -> Unit = {}): Game {
     val def = GameDef().apply(init)
     return Game.create(
-        hand = hand(def.hand),
+        id = GameId(def.id),
         table = table(def.table),
+        hand = hand(def.hand),
     )
 }

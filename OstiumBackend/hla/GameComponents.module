@@ -1,6 +1,6 @@
 ValueObjects
     CreatureCard
-        name: string
+        id: CreatureCardId: string
 
     GateCard
         destroyed: bool

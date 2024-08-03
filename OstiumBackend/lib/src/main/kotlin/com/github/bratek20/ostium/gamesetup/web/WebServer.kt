@@ -25,5 +25,17 @@ class GameSetupApiController(
         // no request needed
         return serializer.asStruct(GameSetupApiStartGameResponse(api.startGame()))
     }
+
+    @PostMapping("/playCard")
+    fun playCard(@RequestBody rawRequest: Struct): Struct {
+        val request = serializer.fromStruct(rawRequest, GameSetupApiPlayCardRequest::class.java)
+        return serializer.asStruct(GameSetupApiPlayCardResponse(api.playCard(request.getCardId(), request.getRow())))
+    }
+
+    @PostMapping("/moveCard")
+    fun moveCard(@RequestBody rawRequest: Struct): Struct {
+        val request = serializer.fromStruct(rawRequest, GameSetupApiMoveCardRequest::class.java)
+        return serializer.asStruct(GameSetupApiMoveCardResponse(api.moveCard(request.getCardId(), request.getFrom(), request.getTo())))
+    }
 }
 

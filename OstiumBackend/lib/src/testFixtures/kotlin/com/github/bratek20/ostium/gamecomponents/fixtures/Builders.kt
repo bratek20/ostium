@@ -8,13 +8,17 @@ fun gateDurabilityMarker(value: Int = 0): GateDurabilityMarker {
     return GateDurabilityMarker(value)
 }
 
+fun creatureCardId(value: String = "someValue"): CreatureCardId {
+    return CreatureCardId(value)
+}
+
 data class CreatureCardDef(
-    var name: String = "someValue",
+    var id: String = "someValue",
 )
 fun creatureCard(init: CreatureCardDef.() -> Unit = {}): CreatureCard {
     val def = CreatureCardDef().apply(init)
     return CreatureCard.create(
-        name = def.name,
+        id = CreatureCardId(def.id),
     )
 }
 

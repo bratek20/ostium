@@ -4,6 +4,53 @@ package com.github.bratek20.ostium.gamesetup.api
 
 import com.github.bratek20.ostium.gamecomponents.api.*
 
+data class GameId(
+    val value: String
+) {
+    override fun toString(): String {
+        return value.toString()
+    }
+}
+
+data class Table(
+    private val gateDurabilityCard: GateDurabilityCard,
+    private val attackRow: CreatureCard?,
+    private val defenseRow: CreatureCard?,
+    private val gateCard: GateCard,
+) {
+    fun getGateDurabilityCard(): GateDurabilityCard {
+        return this.gateDurabilityCard
+    }
+
+    fun getAttackRow(): CreatureCard? {
+        return this.attackRow
+    }
+
+    fun getDefenseRow(): CreatureCard? {
+        return this.defenseRow
+    }
+
+    fun getGateCard(): GateCard {
+        return this.gateCard
+    }
+
+    companion object {
+        fun create(
+            gateDurabilityCard: GateDurabilityCard,
+            attackRow: CreatureCard?,
+            defenseRow: CreatureCard?,
+            gateCard: GateCard,
+        ): Table {
+            return Table(
+                gateDurabilityCard = gateDurabilityCard,
+                attackRow = attackRow,
+                defenseRow = defenseRow,
+                gateCard = gateCard,
+            )
+        }
+    }
+}
+
 data class Hand(
     private val cards: List<CreatureCard>,
 ) {
@@ -22,58 +69,33 @@ data class Hand(
     }
 }
 
-data class Table(
-    private val creatureCard: CreatureCard,
-    private val gateCard: GateCard,
-    private val gateDurabilityCard: GateDurabilityCard,
-) {
-    fun getCreatureCard(): CreatureCard {
-        return this.creatureCard
-    }
-
-    fun getGateCard(): GateCard {
-        return this.gateCard
-    }
-
-    fun getGateDurabilityCard(): GateDurabilityCard {
-        return this.gateDurabilityCard
-    }
-
-    companion object {
-        fun create(
-            creatureCard: CreatureCard,
-            gateCard: GateCard,
-            gateDurabilityCard: GateDurabilityCard,
-        ): Table {
-            return Table(
-                creatureCard = creatureCard,
-                gateCard = gateCard,
-                gateDurabilityCard = gateDurabilityCard,
-            )
-        }
-    }
-}
-
 data class Game(
-    private val hand: Hand,
+    private val id: String,
     private val table: Table,
+    private val hand: Hand,
 ) {
-    fun getHand(): Hand {
-        return this.hand
+    fun getId(): GameId {
+        return GameId(this.id)
     }
 
     fun getTable(): Table {
         return this.table
     }
 
+    fun getHand(): Hand {
+        return this.hand
+    }
+
     companion object {
         fun create(
-            hand: Hand,
+            id: GameId,
             table: Table,
+            hand: Hand,
         ): Game {
             return Game(
-                hand = hand,
+                id = id.value,
                 table = table,
+                hand = hand,
             )
         }
     }

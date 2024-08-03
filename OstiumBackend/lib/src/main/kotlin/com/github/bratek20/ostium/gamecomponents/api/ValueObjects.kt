@@ -22,19 +22,27 @@ data class GateDurabilityMarker(
     }
 }
 
-data class CreatureCard(
-    private val name: String,
+data class CreatureCardId(
+    val value: String
 ) {
-    fun getName(): String {
-        return this.name
+    override fun toString(): String {
+        return value.toString()
+    }
+}
+
+data class CreatureCard(
+    private val id: String,
+) {
+    fun getId(): CreatureCardId {
+        return CreatureCardId(this.id)
     }
 
     companion object {
         fun create(
-            name: String,
+            id: CreatureCardId,
         ): CreatureCard {
             return CreatureCard(
-                name = name,
+                id = id.value,
             )
         }
     }
