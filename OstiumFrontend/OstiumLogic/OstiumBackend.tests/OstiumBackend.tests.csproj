@@ -11,8 +11,8 @@
         <RootNamespace>OstiumBackend.tests</RootNamespace>
         <AssemblyName>OstiumBackend.tests</AssemblyName>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <LangVersion>8.0</LangVersion> <!-- Added this line for C# 8.0 -->
-        <Nullable>enable</Nullable> <!-- Added this line to enable nullable reference types -->
+        <LangVersion>8.0</LangVersion> <!-- C# 8.0 support -->
+        <Nullable>enable</Nullable> <!-- Enable nullable reference types -->
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -37,7 +37,11 @@
     <ItemGroup>
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="xunit.assert" Version="2.4.1" /> <!-- Add xunit.assert for assertions -->
+        <PackageReference Include="xunit.assert" Version="2.4.1" />
+        <PackageReference Include="xunit.abstractions" Version="2.4.1" />
+        <PackageReference Include="xunit.core" Version="2.4.1" />
+        <PackageReference Include="xunit.execution.desktop" Version="2.4.1" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="GameComponents\Fixtures\Asserts.cs" />
