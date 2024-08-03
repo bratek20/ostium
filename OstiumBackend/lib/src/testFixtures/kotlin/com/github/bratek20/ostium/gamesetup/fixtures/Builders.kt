@@ -7,10 +7,6 @@ import com.github.bratek20.ostium.gamecomponents.fixtures.*
 
 import com.github.bratek20.ostium.gamesetup.api.*
 
-fun gameId(value: String = "someValue"): GameId {
-    return GameId(value)
-}
-
 data class TableDef(
     var gateDurabilityCard: (GateDurabilityCardDef.() -> Unit) = {},
     var attackRow: (CreatureCardDef.() -> Unit)? = null,
@@ -38,14 +34,12 @@ fun hand(init: HandDef.() -> Unit = {}): Hand {
 }
 
 data class GameDef(
-    var id: String = "someValue",
     var table: (TableDef.() -> Unit) = {},
     var hand: (HandDef.() -> Unit) = {},
 )
 fun game(init: GameDef.() -> Unit = {}): Game {
     val def = GameDef().apply(init)
     return Game.create(
-        id = GameId(def.id),
         table = table(def.table),
         hand = hand(def.hand),
     )

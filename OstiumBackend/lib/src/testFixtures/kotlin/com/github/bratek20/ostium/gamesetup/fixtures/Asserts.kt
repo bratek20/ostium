@@ -9,11 +9,6 @@ import com.github.bratek20.ostium.gamecomponents.fixtures.*
 
 import com.github.bratek20.ostium.gamesetup.api.*
 
-fun assertGameId(given: GameId, expected: String) {
-    val diff = diffGameId(given, expected)
-    assertThat(diff).withFailMessage(diff).isEqualTo("")
-}
-
 fun assertTable(given: Table, expectedInit: ExpectedTable.() -> Unit) {
     val diff = diffTable(given, expectedInit)
     assertThat(diff).withFailMessage(diff).isEqualTo("")

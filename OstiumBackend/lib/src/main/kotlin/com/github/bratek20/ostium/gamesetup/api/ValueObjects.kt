@@ -4,14 +4,6 @@ package com.github.bratek20.ostium.gamesetup.api
 
 import com.github.bratek20.ostium.gamecomponents.api.*
 
-data class GameId(
-    val value: String
-) {
-    override fun toString(): String {
-        return value.toString()
-    }
-}
-
 data class Table(
     private val gateDurabilityCard: GateDurabilityCard,
     private val attackRow: CreatureCard?,
@@ -70,14 +62,9 @@ data class Hand(
 }
 
 data class Game(
-    private val id: String,
     private val table: Table,
     private val hand: Hand,
 ) {
-    fun getId(): GameId {
-        return GameId(this.id)
-    }
-
     fun getTable(): Table {
         return this.table
     }
@@ -88,12 +75,10 @@ data class Game(
 
     companion object {
         fun create(
-            id: GameId,
             table: Table,
             hand: Hand,
         ): Game {
             return Game(
-                id = id.value,
                 table = table,
                 hand = hand,
             )

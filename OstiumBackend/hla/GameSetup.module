@@ -12,7 +12,6 @@ ValueObjects
     Hand
         cards: CreatureCard[]
     Game
-        id: GameId: string
         table: Table
         hand: Hand
 

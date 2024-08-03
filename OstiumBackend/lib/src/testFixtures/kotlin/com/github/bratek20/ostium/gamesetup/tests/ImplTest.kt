@@ -1,7 +1,9 @@
 package com.github.bratek20.ostium.gamesetup.tests
 
 import com.github.bratek20.architecture.context.someContextBuilder
+import com.github.bratek20.ostium.gamecomponents.fixtures.creatureCardId
 import com.github.bratek20.ostium.gamesetup.api.GameSetupApi
+import com.github.bratek20.ostium.gamesetup.api.RowType
 import com.github.bratek20.ostium.gamesetup.context.GameSetupImpl
 import com.github.bratek20.ostium.gamesetup.fixtures.assertGame
 import org.junit.jupiter.api.Test
@@ -22,7 +24,6 @@ open class GameSetupImplTest {
         val game = api.startGame()
 
         assertGame(game) {
-            id = "Game1"
             hand = {
                 cards = listOf(
                     {
@@ -42,6 +43,50 @@ open class GameSetupImplTest {
                 defenseRowEmpty = true
                 gateCard = {
                     destroyed = false
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `play card`() {
+        val api = createApi()
+        api.startGame()
+
+        val game = api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+
+        assertGame(game) {
+            hand = {
+                cards = listOf {
+                    id = "Mouse2"
+                }
+            }
+            table = {
+                attackRow = {
+                    id = "Mouse1"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `move card`() {
+        val api = createApi()
+        api.startGame()
+        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+
+        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
+
+        assertGame(game) {
+            hand = {
+                cards = listOf {
+                    id = "Mouse2"
+                }
+            }
+            table = {
+                attackRowEmpty = true
+                defenseRow = {
+                    id = "Mouse1"
                 }
             }
         }

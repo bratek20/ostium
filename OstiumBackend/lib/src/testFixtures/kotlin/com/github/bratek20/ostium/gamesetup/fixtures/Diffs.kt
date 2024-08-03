@@ -7,11 +7,6 @@ import com.github.bratek20.ostium.gamecomponents.fixtures.*
 
 import com.github.bratek20.ostium.gamesetup.api.*
 
-fun diffGameId(given: GameId, expected: String, path: String = ""): String {
-    if (given.value != expected) { return "${path}value ${given.value} != ${expected}" }
-    return ""
-}
-
 fun diffRowType(given: RowType, expected: String, path: String = ""): String {
     if (given != RowType.valueOf(expected)) { return "${path}value ${given.name} != ${expected}" }
     return ""
@@ -72,17 +67,12 @@ fun diffHand(given: Hand, expectedInit: ExpectedHand.() -> Unit, path: String = 
 }
 
 data class ExpectedGame(
-    var id: String? = null,
     var table: (ExpectedTable.() -> Unit)? = null,
     var hand: (ExpectedHand.() -> Unit)? = null,
 )
 fun diffGame(given: Game, expectedInit: ExpectedGame.() -> Unit, path: String = ""): String {
     val expected = ExpectedGame().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
-
-    expected.id?.let {
-        if (diffGameId(given.getId(), it) != "") { result.add(diffGameId(given.getId(), it, "${path}id.")) }
-    }
 
     expected.table?.let {
         if (diffTable(given.getTable(), it) != "") { result.add(diffTable(given.getTable(), it, "${path}table.")) }
