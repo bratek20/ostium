@@ -54,6 +54,9 @@
         <Compile Include="GameComponents\Fixtures\Asserts.cs" />
         <Compile Include="GameComponents\Fixtures\Builders.cs" />
         <Compile Include="GameComponents\Fixtures\Diffs.cs" />
+        <Compile Include="GameSetup\Fixtures\Asserts.cs" />
+        <Compile Include="GameSetup\Fixtures\Builders.cs" />
+        <Compile Include="GameSetup\Fixtures\Diffs.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

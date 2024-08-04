@@ -40,5 +40,21 @@ namespace GameComponents
             init?.Invoke(def);
             return GateCard.Create(def.Destroyed);
         }
+
+        public class GateDurabilityCardDef
+        {
+            public int MyMarker { get; set; } = 0;
+            public int OpponentMarker { get; set; } = 0;
+        }
+
+        public static GateDurabilityCard BuildGateDurabilityCard(Action<GateDurabilityCardDef> init = null)
+        {
+            var def = new GateDurabilityCardDef();
+            init?.Invoke(def);
+            return GateDurabilityCard.Create(
+                BuildGateDurabilityMarker(def.MyMarker),
+                BuildGateDurabilityMarker(def.OpponentMarker)
+            );
+        }
     }
 }
