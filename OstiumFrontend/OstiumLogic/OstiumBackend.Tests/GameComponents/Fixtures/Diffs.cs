@@ -21,7 +21,7 @@ namespace GameComponents
 
         public class ExpectedCreatureCard
         {
-            public string? Id { get; set; }
+            public string Id { get; set; }
         }
 
         public static string DiffCreatureCard(CreatureCard given, Action<ExpectedCreatureCard> expectedInit, string path = "")

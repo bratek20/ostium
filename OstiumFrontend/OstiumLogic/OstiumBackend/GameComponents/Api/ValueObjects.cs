@@ -45,6 +45,16 @@ namespace GameComponents.Api
         {
             return Value;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CreatureCardId id && Value == id.Value;
+        }
+        
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
     }
 
     public class CreatureCard

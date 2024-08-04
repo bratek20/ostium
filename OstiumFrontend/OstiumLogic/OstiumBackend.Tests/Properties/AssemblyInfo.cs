@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OstiumBackend.tests")]
+[assembly: AssemblyTitle("OstiumBackend.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OstiumBackend.tests")]
+[assembly: AssemblyProduct("OstiumBackend.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4FA13081-1A6C-4E8D-A8D0-3F7077F86695")]
+[assembly: Guid("D2C81056-D99F-472B-A38C-9AE0954F95C6")]
 
 // Version information for an assembly consists of the following four values:
 //
