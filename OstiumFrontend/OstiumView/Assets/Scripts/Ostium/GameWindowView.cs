@@ -8,10 +8,13 @@ namespace Ostium.View
     {
         [SerializeField]
         private HandView hand;
+        [SerializeField]
+        private TableView table;
         
         public void Init2(Game game)
         {
-            hand.Init(game.GetHand());    
+            hand.Init(game.GetHand());
+            table.Init(game.GetTable());
         }
     }
 }
