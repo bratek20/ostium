@@ -2,6 +2,7 @@
 
 using System;
 using GameComponents.Api;
+using Xunit;
 
 namespace GameComponents
 {
