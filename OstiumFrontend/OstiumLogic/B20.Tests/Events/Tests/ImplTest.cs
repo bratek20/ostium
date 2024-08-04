@@ -7,7 +7,7 @@ using Xunit;
 
 namespace B20.Tests.Events.Tests
 {
-    public class TestEvent : Event<TestEvent>
+    public class TestEvent : Event
     {
         public string Message { get; }
 
@@ -17,7 +17,7 @@ namespace B20.Tests.Events.Tests
         }
     }
 
-    public class OtherTestEvent : Event<OtherTestEvent>
+    public class OtherTestEvent : Event
     {
         public string Message { get; }
 
