@@ -64,11 +64,13 @@ namespace B20.Tests.Events.Tests
         {
             // Given
             var listener = new TestListener();
+            var listener2 = new TestListener();
             var otherListener = new OtherTestListener();
             
             EventPublisher publisher = new EventPublisherLogic(
                 ListUtils.ListOf<EventListener>(
                     listener,
+                    listener2,
                     otherListener
                 )
             );
@@ -82,6 +84,8 @@ namespace B20.Tests.Events.Tests
             Assert.Equal(2, listener.Events.Count);
             Assert.Equal("Hello", listener.Events[0].Message);
             Assert.Equal("World!", listener.Events[1].Message);
+            
+            Assert.Equal(2, listener2.Events.Count);
 
             Assert.Equal(1, otherListener.Events.Count);
             Assert.Equal("Not you!", otherListener.Events[0].Message);
