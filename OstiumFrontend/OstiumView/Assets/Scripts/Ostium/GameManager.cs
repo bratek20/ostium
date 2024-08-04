@@ -1,5 +1,7 @@
 using B20.Logic;
 using B20.View;
+using GameSetup.Api;
+using GameSetup.Impl;
 using Ostium.Logic;
 using UnityEngine;
 
@@ -10,7 +12,7 @@ namespace Ostium.View
         [SerializeField]
         private WindowView mainWindow;
         [SerializeField]
-        private WindowView gameWindow;
+        private GameWindowView gameWindow;
         [SerializeField]
         private ButtonView playButton;
 
@@ -44,6 +46,9 @@ namespace Ostium.View
             {
                 mainWindow.SetActive(false);
                 gameWindow.SetActive(true);
+
+                GameSetupApi api = new GameSetupApiLogic();
+                gameWindow.Init2(api.StartGame());
             }
         }
     }

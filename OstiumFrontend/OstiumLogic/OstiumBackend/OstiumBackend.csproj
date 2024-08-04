@@ -48,12 +48,12 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <PropertyGroup>
+            <UnityProjectDir>..\..\OstiumView\Assets\Plugins</UnityProjectDir>
+        </PropertyGroup>
+        <MakeDir Directories="$(UnityProjectDir)" />
+        <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(UnityProjectDir)" />
     </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
 
 </Project>

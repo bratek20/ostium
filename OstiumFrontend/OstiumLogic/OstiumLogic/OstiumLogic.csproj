@@ -46,6 +46,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\B20\B20.csproj" />
+      <ProjectReference Include="..\OstiumBackend\OstiumBackend.csproj" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     
