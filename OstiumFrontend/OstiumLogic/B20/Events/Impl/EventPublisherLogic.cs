@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using B20.Events.Api;
 
-namespace B20.Logic.Events.Impl
+namespace B20.Events.Impl
 {
     public class EventPublisherLogic : EventPublisher
     {
@@ -12,13 +12,13 @@ namespace B20.Logic.Events.Impl
             this.listeners = listeners;
         }
 
-        public void Publish(Event e)
+        public void Publish<TEvent>(TEvent e) where TEvent : Event
         {
             foreach (var listener in listeners)
             {
-                if (listener.GetEventType() == e.GetType())
+                if (listener is EventListener<TEvent> typedListener)
                 {
-                    listener.HandleEvent(e);    
+                    typedListener.HandleEvent(e);
                 }
             }
         }

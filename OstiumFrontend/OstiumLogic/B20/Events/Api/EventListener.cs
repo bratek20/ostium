@@ -4,7 +4,11 @@ namespace B20.Events.Api
 {
     public interface EventListener
     {
-        Type GetEventType();
-        void HandleEvent(Object e);
+        
+    }
+    
+    public interface EventListener<TEvent> : EventListener where TEvent : Event
+    {
+        void HandleEvent(TEvent e);
     }
 }

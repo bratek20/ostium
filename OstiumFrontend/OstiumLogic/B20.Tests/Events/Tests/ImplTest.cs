@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using B20.Events.Api;
-using B20.Logic.Events.Impl;
+using B20.Events.Impl;
 using B20.Logic.Utils;
 using Xunit;
 
 namespace B20.Tests.Events.Tests
 {
-    public class TestEvent : Event
+    public class TestEvent : Event<TestEvent>
     {
         public string Message { get; }
 
@@ -17,7 +17,7 @@ namespace B20.Tests.Events.Tests
         }
     }
 
-    public class OtherTestEvent : Event
+    public class OtherTestEvent : Event<OtherTestEvent>
     {
         public string Message { get; }
 
@@ -27,7 +27,7 @@ namespace B20.Tests.Events.Tests
         }
     }
 
-    public class TestListener : EventListener
+    public class TestListener : EventListener<TestEvent>
     {
         public List<TestEvent> Events { get; }
 
@@ -36,18 +36,13 @@ namespace B20.Tests.Events.Tests
             Events = new List<TestEvent>();
         }
 
-        public Type GetEventType()
+        public void HandleEvent(TestEvent e)
         {
-            return typeof(TestEvent);
-        }
-
-        public void HandleEvent(object e)
-        {
-            Events.Add((TestEvent)e);
+            Events.Add(e);
         }
     }
 
-    public class OtherTestListener : EventListener
+    public class OtherTestListener : EventListener<OtherTestEvent>
     {
         public List<OtherTestEvent> Events { get; }
 
@@ -56,14 +51,9 @@ namespace B20.Tests.Events.Tests
             Events = new List<OtherTestEvent>();
         }
 
-        public void HandleEvent(object e)
+        public void HandleEvent(OtherTestEvent e)
         {
-            Events.Add((OtherTestEvent)e);
-        }
-
-        public Type GetEventType()
-        {
-            return typeof(OtherTestEvent);
+            Events.Add(e);
         }
     }
 
@@ -75,7 +65,7 @@ namespace B20.Tests.Events.Tests
             // Given
             var listener = new TestListener();
             var otherListener = new OtherTestListener();
-
+            
             EventPublisher publisher = new EventPublisherLogic(
                 ListUtils.ListOf<EventListener>(
                     listener,
