@@ -1,3 +1,6 @@
+using B20.Frontend.Windows.Api;
+using B20.Frontend.Windows.Impl;
+using B20.Frontend.Windows.Integrations;
 using B20.Logic;
 using B20.View;
 using GameSetup.Api;
@@ -7,7 +10,7 @@ using UnityEngine;
 
 namespace Ostium.View
 {
-    public class GameManager : MonoBehaviour, GameStateListener
+    public class GameManager : MonoBehaviour
     {
         [SerializeField]
         private WindowView mainWindow;
@@ -16,40 +19,18 @@ namespace Ostium.View
         [SerializeField]
         private ButtonView playButton;
 
-        private GameState state;
+        private OstiumLogic logic;
 
         void Start()
         {
             mainWindow.Init(new MainWindow());
             gameWindow.Init(new GameWindow());
 
-            state = new GameState(this, mainWindow.Value);
+            var windowManipulator = new UnityWindowManipulator();
+            WindowManager windowManager = new WindowManagerLogic(windowManipulator);
+            logic = new OstiumLogic(new WindowManagerLogic(windowManipulator));
 
-            playButton.Init(new PlayButton(state, gameWindow.Value as GameWindow));
-
-            UpdateView();
-        }
-
-        public void OnStateChanged()
-        {
-            UpdateView();
-        }
-
-        private void UpdateView()
-        {
-            if (state.CurrentWindow == mainWindow.Value)
-            {
-                mainWindow.SetActive(true);
-                gameWindow.SetActive(false);
-            }
-            if (state.CurrentWindow == gameWindow.Value)
-            {
-                mainWindow.SetActive(false);
-                gameWindow.SetActive(true);
-
-                GameSetupApi api = new GameSetupApiLogic();
-                gameWindow.Init2(api.StartGame());
-            }
+            playButton.Init(new PlayButton(windowManager));
         }
     }
 }
