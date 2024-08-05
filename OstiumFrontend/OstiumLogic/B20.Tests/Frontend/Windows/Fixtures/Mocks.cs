@@ -6,16 +6,16 @@ namespace B20.Tests.Frontend.Windows.Fixtures
 {
     public class WindowManipulatorMock : WindowManipulator
     {
-        private Dictionary<WindowId, bool> windowVisibility = new Dictionary<WindowId, bool>();
+        private Dictionary<string, bool> windowVisibility = new Dictionary<string, bool>();
 
         public void SetVisible(WindowId id, bool visible)
         {
-            windowVisibility[id] = visible;
+            windowVisibility[id.Value] = visible;
         }
 
-        public void AssertVisible(WindowId id, bool visible)
+        public void AssertVisible(string windowId, bool visible)
         {
-            Assert.Equal(visible, windowVisibility[id]);
+            Assert.Equal(visible, windowVisibility[windowId]);
         }
     }
 }

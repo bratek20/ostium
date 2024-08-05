@@ -43,10 +43,8 @@
         <Compile Include="Events\Api\EventPublisher.cs" />
         <Compile Include="Events\Impl\EventPublisherLogic.cs" />
         <Compile Include="Frontend\Unsorted\Button.cs" />
-        <Compile Include="Frontend\Unsorted\Window.cs" />
+        <Compile Include="Frontend\Windows\Api\Interfaces.cs" />
         <Compile Include="Frontend\Windows\Api\ValueObjects.cs" />
-        <Compile Include="Frontend\Windows\Api\WindowManager.cs" />
-        <Compile Include="Frontend\Windows\Api\WindowManipulator.cs" />
         <Compile Include="Frontend\Windows\Impl\WindowManagerLogic.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils\ListUtils.cs" />

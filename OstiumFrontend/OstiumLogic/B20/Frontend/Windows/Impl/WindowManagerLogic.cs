@@ -6,34 +6,41 @@ namespace B20.Frontend.Windows.Impl
     public class WindowManagerLogic: WindowManager
     {
         private WindowManipulator windowManipulator;
-        private WindowId currentWindowId;
-        private List<WindowId> registeredWindows = new List<WindowId>();
+        private Window currentWindow;
+        private List<Window> registeredWindows = new List<Window>();
         
         public WindowManagerLogic(WindowManipulator windowManipulator)
         {
             this.windowManipulator = windowManipulator;
         }
-
-        public void Register(WindowId id)
+        
+        public void Register(Window window)
         {
-            registeredWindows.Add(id);
-            windowManipulator.SetVisible(id, false);
+            registeredWindows.Add(window);
+            windowManipulator.SetVisible(window.GetId(), false);
         }
 
         public void Open(WindowId id)
         {
-            if (currentWindowId != null)
+            Window window = registeredWindows.Find(w => w.GetId().Value == id.Value);
+        
+            if (currentWindow != null)
             {
-                windowManipulator.SetVisible(currentWindowId, false);
+                SetVisible(currentWindow, false);
             }
             
-            windowManipulator.SetVisible(id, true);
-            currentWindowId = id;
+            SetVisible(window, true);
+            currentWindow = window;
         }
 
         public WindowId GetCurrent()
         {
-            return currentWindowId;
+            return currentWindow.GetId();
+        }
+        
+        private void SetVisible(Window window, bool visible)
+        {
+            windowManipulator.SetVisible(window.GetId(), visible);
         }
     }
 }

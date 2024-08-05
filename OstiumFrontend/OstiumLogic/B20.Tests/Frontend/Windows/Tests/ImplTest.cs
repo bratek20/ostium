@@ -8,6 +8,20 @@ namespace B20.Frontend.Windows.Tests
 {
     public class WindowsImplTest
     {
+        class TestWindow : Window
+        {
+            private WindowId id;
+            public TestWindow(string id)
+            {
+                this.id = new WindowId(id);
+            }
+            
+            public WindowId GetId()
+            {
+                return id;
+            }
+        }
+
         [Fact]
         public void ShouldHandleWindowLogic()
         {
@@ -15,24 +29,21 @@ namespace B20.Frontend.Windows.Tests
             WindowManipulatorMock manipulatorMock = new WindowManipulatorMock();
             WindowManager windowManager = new WindowManagerLogic(manipulatorMock);
             
-            WindowId window1 = new WindowId("window1");
-            WindowId window2 = new WindowId("window2");
-            
-            windowManager.Register(window1);
-            windowManager.Register(window2);
+            windowManager.Register(new TestWindow("window1"));
+            windowManager.Register(new TestWindow("window2"));
             
             // Init state
-            manipulatorMock.AssertVisible(window1, false);
-            manipulatorMock.AssertVisible(window2, false);
+            manipulatorMock.AssertVisible("window1", false);
+            manipulatorMock.AssertVisible("window2", false);
             
             // Open first window
-            windowManager.Open(window1);
-            manipulatorMock.AssertVisible(window1, true);
+            windowManager.Open(new WindowId("window1"));
+            manipulatorMock.AssertVisible("window1", true);
             
             // Open second window
-            windowManager.Open(window2);
-            manipulatorMock.AssertVisible(window1, false);
-            manipulatorMock.AssertVisible(window2, true);
+            windowManager.Open(new WindowId("window2"));
+            manipulatorMock.AssertVisible("window1", false);
+            manipulatorMock.AssertVisible("window2", true);
         }
     }
 }

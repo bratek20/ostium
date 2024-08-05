@@ -1,5 +1,4 @@
 using B20.Frontend.Windows.Api;
-using B20.Logic;
 
 namespace Ostium.Logic
 {
@@ -17,8 +16,8 @@ namespace Ostium.Logic
         
         private void RegisterWindows()
         {
-            windowManager.Register(WindowIds.MAIN_WINDOW);
-            windowManager.Register(WindowIds.GAME_WINDOW);
+            windowManager.Register(new MainWindow());
+            windowManager.Register(new GameWindow());
         }
     }
 }
