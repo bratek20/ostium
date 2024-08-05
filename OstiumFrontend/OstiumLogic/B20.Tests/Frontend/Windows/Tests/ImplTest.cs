@@ -1,43 +1,52 @@
+using System.Collections.Generic;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using Xunit;
 
 namespace B20.Frontend.Windows.Tests
 {
-    public class WindowOpenerMock : WindowOpener
+    public class WindowManipulatorMock : WindowManipulator
     {
-        private WindowId lastOpenedWindowId;
-        
-        public void Open(WindowId id)
+        private Dictionary<WindowId, bool> windowVisibility = new Dictionary<WindowId, bool>();
+
+        public void SetVisible(WindowId id, bool visible)
         {
-            lastOpenedWindowId = id;
+            windowVisibility[id] = visible;
         }
 
-        public void AssertOpenCalled(WindowId id)
+        public void AssertVisible(WindowId id, bool visible)
         {
-            Assert.Equal(id, lastOpenedWindowId);
+            Assert.Equal(visible, windowVisibility[id]);
         }
-
     }
-    
+
     public class WindowsImplTest
     {
         [Fact]
-        public void ShouldOpenWindow()
+        public void ShouldHandleWindowLogic()
         {
-            // Given
-            WindowOpenerMock openerMock = new WindowOpenerMock();
-            WindowManager windowManager = new WindowManagerLogic(openerMock);
+            // Creation
+            WindowManipulatorMock manipulatorMock = new WindowManipulatorMock();
+            WindowManager windowManager = new WindowManagerLogic(manipulatorMock);
             
-            WindowId windowId = new WindowId("windowId");
+            WindowId window1 = new WindowId("window1");
+            WindowId window2 = new WindowId("window2");
             
-            // When
-            windowManager.Open(windowId);
-            var current = windowManager.GetCurrent();
+            windowManager.Register(window1);
+            windowManager.Register(window2);
             
-            // Then
-            openerMock.AssertOpenCalled(windowId);
-            Assert.Equal(windowId, current);
+            // Init state
+            manipulatorMock.AssertVisible(window1, false);
+            manipulatorMock.AssertVisible(window2, false);
+            
+            // Open first window
+            windowManager.Open(window1);
+            manipulatorMock.AssertVisible(window1, true);
+            
+            // Open second window
+            windowManager.Open(window2);
+            manipulatorMock.AssertVisible(window1, false);
+            manipulatorMock.AssertVisible(window2, true);
         }
     }
 }
