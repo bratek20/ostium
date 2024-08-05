@@ -1,21 +1,20 @@
-﻿using B20.Logic;
+﻿using B20.Frontend.Windows.Api;
+using B20.Logic;
 
 namespace Ostium.Logic
 {
     public class PlayButton : Button
     {
-        private GameState state;
-        private GameWindow gameWindow;
+        private WindowManager windowManager;
 
-        public PlayButton(GameState state, GameWindow gameWindow)
+        public PlayButton(WindowManager windowManager)
         {
-            this.state = state;
-            this.gameWindow = gameWindow;
+            this.windowManager = windowManager;
         }
 
         protected override void OnClick()
         {
-            state.ChangeWindow(gameWindow);
+            windowManager.Open(WindowIds.GAME_WINDOW);
         }
     }
 }

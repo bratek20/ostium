@@ -1,25 +1,11 @@
 using System.Collections.Generic;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
+using B20.Tests.Frontend.Windows.Fixtures;
 using Xunit;
 
 namespace B20.Frontend.Windows.Tests
 {
-    public class WindowManipulatorMock : WindowManipulator
-    {
-        private Dictionary<WindowId, bool> windowVisibility = new Dictionary<WindowId, bool>();
-
-        public void SetVisible(WindowId id, bool visible)
-        {
-            windowVisibility[id] = visible;
-        }
-
-        public void AssertVisible(WindowId id, bool visible)
-        {
-            Assert.Equal(visible, windowVisibility[id]);
-        }
-    }
-
     public class WindowsImplTest
     {
         [Fact]

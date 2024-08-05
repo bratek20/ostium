@@ -42,10 +42,8 @@
         <Compile Include="Events\Api\EventListener.cs" />
         <Compile Include="Events\Api\EventPublisher.cs" />
         <Compile Include="Events\Impl\EventPublisherLogic.cs" />
-        <Compile Include="Frontend\Button.cs" />
-        <Compile Include="Frontend\GameState.cs" />
-        <Compile Include="Frontend\GameStateListener.cs" />
-        <Compile Include="Frontend\Window.cs" />
+        <Compile Include="Frontend\Unsorted\Button.cs" />
+        <Compile Include="Frontend\Unsorted\Window.cs" />
         <Compile Include="Frontend\Windows\Api\ValueObjects.cs" />
         <Compile Include="Frontend\Windows\Api\WindowManager.cs" />
         <Compile Include="Frontend\Windows\Api\WindowManipulator.cs" />
