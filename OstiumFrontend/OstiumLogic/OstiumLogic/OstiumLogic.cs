@@ -1,4 +1,5 @@
 using B20.Frontend.Windows.Api;
+using GameSetup.Impl;
 
 namespace Ostium.Logic
 {
@@ -14,7 +15,7 @@ namespace Ostium.Logic
         public void RegisterWindows()
         {
             windowManager.Register(new MainWindow(windowManager));
-            windowManager.Register(new GameWindow());
+            windowManager.Register(new GameWindow(new GameSetupApiLogic()));
         }
 
         public void Start()

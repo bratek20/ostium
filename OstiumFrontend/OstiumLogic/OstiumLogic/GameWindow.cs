@@ -1,5 +1,5 @@
 ﻿using B20.Frontend.Windows.Api;
-using B20.Logic;
+using GameSetup.Api;
 
 namespace Ostium.Logic
 {
@@ -8,6 +8,13 @@ namespace Ostium.Logic
         public WindowId GetId()
         {
             return WindowIds.GAME_WINDOW;
+        }
+        
+        public Game Game { get; private set; }
+    
+        public GameWindow(GameSetupApi gameSetupApi)
+        {
+            Game = gameSetupApi.StartGame();
         }
     }
 }

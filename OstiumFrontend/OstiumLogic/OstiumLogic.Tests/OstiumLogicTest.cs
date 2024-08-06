@@ -21,6 +21,11 @@ namespace Ostium.Logic.Tests
             logic.Start();
             
             Assert.Equal(WindowIds.MAIN_WINDOW, windowManager.GetCurrent());
+            
+            //Clicking play button
+            (windowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
+            
+            Assert.Equal(WindowIds.GAME_WINDOW, windowManager.GetCurrent());
         }
     }
 }
