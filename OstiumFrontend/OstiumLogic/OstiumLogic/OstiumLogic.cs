@@ -9,15 +9,17 @@ namespace Ostium.Logic
         public OstiumLogic(WindowManager windowManager)
         {
             this.windowManager = windowManager;
-            
-            RegisterWindows();
-            this.windowManager.Open(WindowIds.MAIN_WINDOW);
         }
         
-        private void RegisterWindows()
+        public void RegisterWindows()
         {
-            windowManager.Register(new MainWindow());
+            windowManager.Register(new MainWindow(windowManager));
             windowManager.Register(new GameWindow());
+        }
+
+        public void Start()
+        {
+            windowManager.Open(WindowIds.MAIN_WINDOW);
         }
     }
 }

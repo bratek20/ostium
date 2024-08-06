@@ -17,5 +17,10 @@ namespace B20.Tests.Frontend.Windows.Fixtures
         {
             Assert.Equal(visible, windowVisibility[windowId]);
         }
+        
+        public void AssertNoSetVisibleCalls()
+        {
+            Assert.Empty(windowVisibility);
+        }
     }
 }

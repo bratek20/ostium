@@ -38,11 +38,13 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Events\Api\Event.cs" />
-        <Compile Include="Events\Api\EventListener.cs" />
-        <Compile Include="Events\Api\EventPublisher.cs" />
-        <Compile Include="Events\Impl\EventPublisherLogic.cs" />
+        <Compile Include="Architecture\Events\Api\Event.cs" />
+        <Compile Include="Architecture\Events\Api\EventListener.cs" />
+        <Compile Include="Architecture\Events\Api\EventPublisher.cs" />
+        <Compile Include="Architecture\Events\Impl\EventPublisherLogic.cs" />
+        <Compile Include="Architecture\Exceptions\ApiException.cs" />
         <Compile Include="Frontend\Unsorted\Button.cs" />
+        <Compile Include="Frontend\Windows\Api\Exceptions.cs" />
         <Compile Include="Frontend\Windows\Api\Interfaces.cs" />
         <Compile Include="Frontend\Windows\Api\ValueObjects.cs" />
         <Compile Include="Frontend\Windows\Impl\WindowManagerLogic.cs" />

@@ -11,7 +11,7 @@ namespace Ostium.View
         [SerializeField]
         private TableView table;
         
-        public void Init2(Game game)
+        public void Refresh(Game game)
         {
             hand.Init(game.GetHand());
             table.Init(game.GetTable());

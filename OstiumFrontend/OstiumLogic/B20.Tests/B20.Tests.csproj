@@ -51,7 +51,8 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Events\Tests\ImplTest.cs" />
+        <Compile Include="Architecture\Events\Tests\ImplTest.cs" />
+        <Compile Include="Architecture\Exceptions\Fixtures\Asserts.cs" />
         <Compile Include="Frontend\Windows\Fixtures\Mocks.cs" />
         <Compile Include="Frontend\Windows\Tests\ImplTest.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

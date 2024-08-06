@@ -12,6 +12,13 @@ namespace Ostium.Logic.Tests
             var windowManager = new WindowManagerLogic(new WindowManipulatorMock());
             
             var logic = new OstiumLogic(windowManager);
+            logic.RegisterWindows();
+            
+            //should not throw
+            windowManager.Get(WindowIds.MAIN_WINDOW);
+            windowManager.Get(WindowIds.GAME_WINDOW);
+            
+            logic.Start();
             
             Assert.Equal(WindowIds.MAIN_WINDOW, windowManager.GetCurrent());
         }

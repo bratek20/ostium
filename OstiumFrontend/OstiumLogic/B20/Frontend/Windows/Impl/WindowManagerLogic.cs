@@ -8,6 +8,7 @@ namespace B20.Frontend.Windows.Impl
         private WindowManipulator windowManipulator;
         private Window currentWindow;
         private List<Window> registeredWindows = new List<Window>();
+        private bool firstOpen = true;
         
         public WindowManagerLogic(WindowManipulator windowManipulator)
         {
@@ -17,18 +18,33 @@ namespace B20.Frontend.Windows.Impl
         public void Register(Window window)
         {
             registeredWindows.Add(window);
-            windowManipulator.SetVisible(window.GetId(), false);
+        }
+
+        public Window Get(WindowId id)
+        {
+            var window = registeredWindows.Find(w => w.GetId().Value == id.Value);
+            if (window == null)
+            {
+                throw new WindowNotFoundException("Window " + id.Value + " not found");
+            }
+            
+            return window;
         }
 
         public void Open(WindowId id)
         {
-            Window window = registeredWindows.Find(w => w.GetId().Value == id.Value);
-        
+            if (firstOpen)
+            {
+                registeredWindows.ForEach(w => SetVisible(w, false));
+                firstOpen = false;
+            }
+
             if (currentWindow != null)
             {
                 SetVisible(currentWindow, false);
             }
             
+            Window window = Get(id);
             SetVisible(window, true);
             currentWindow = window;
         }
