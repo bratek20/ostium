@@ -10,13 +10,21 @@ namespace Ostium.Logic
         {
             return WindowIds.GAME_WINDOW;
         }
-        
+
+
+
         public GameVM Game { get; private set; }
-    
+
+        private GameSetupApi gameSetupApi;
+        
         public GameWindow(EventPublisher eventPublisher, GameSetupApi gameSetupApi)
         {
             Game = new GameVM(eventPublisher);
-            
+            this.gameSetupApi = gameSetupApi;
+        }
+
+        public void OnOpen()
+        {
             Game.Update(gameSetupApi.StartGame());
         }
     }

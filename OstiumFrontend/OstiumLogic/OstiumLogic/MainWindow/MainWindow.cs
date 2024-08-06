@@ -16,5 +16,10 @@ namespace Ostium.Logic
         {
             return WindowIds.MAIN_WINDOW;
         }
+
+        public void OnOpen()
+        {
+            
+        }
     }
 }

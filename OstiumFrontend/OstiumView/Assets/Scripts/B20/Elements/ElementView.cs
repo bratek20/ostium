@@ -9,10 +9,18 @@ namespace B20.View
 
         protected virtual void OnBind() { }
 
+        protected virtual void OnModelUpdate() { }
+
         public void Bind(T value)
         {
             Model = value;
+            Model.SetUpdateObserver(OnModelUpdateObserver);
             OnBind();
+        }
+
+        private void OnModelUpdateObserver()
+        {
+            OnModelUpdate();
         }
         
         public void SetVisible(bool visible)

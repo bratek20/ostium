@@ -14,8 +14,8 @@ namespace Ostium.View
         protected override void OnInit()
         {
             var game = ValueAs<GameWindow>().Game;
-            hand.Init(game.GetHand());
-            table.Init(game.GetTable());
+            hand.Bind(game.Hand);
+            //table.Init(game.GetTable());
         }
     }
 }

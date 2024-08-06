@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using B20.Events.Api;
+using B20.Events.Impl;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Frontend.Windows.Integrations;
@@ -21,14 +24,16 @@ namespace Ostium.View
         void Start()
         {
             var windowManipulator = new UnityWindowManipulator(
-                ListUtils.ListOf<WindowView>(
+                ListUtils.Of<WindowView>(
                     mainWindow,
                     gameWindow
                 )
             );
+
+            var eventPublisher = new EventPublisherLogic(ListUtils.Of<EventListener>());
             
             WindowManager windowManager = new WindowManagerLogic(windowManipulator);
-            logic = new OstiumLogic(windowManager);
+            logic = new OstiumLogic(eventPublisher, windowManager);
             logic.RegisterWindows();
             
             mainWindow.Init(windowManager.Get(WindowIds.MAIN_WINDOW));

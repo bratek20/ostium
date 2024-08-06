@@ -1,17 +1,20 @@
-using B20.Logic;
+using B20.Frontend.Elements;
 using TMPro;
-using UnityEngine;
 
 namespace B20.View
 {
-    public class LabelView : MonoBehaviour
+    public class LabelView : ElementView<LabelVM>
     {
         private TextMeshProUGUI text;
 
-        public void Init(string value)
+        protected override void OnBind()
         {
             text = GetComponent<TextMeshProUGUI>();
-            text.text = value;
+        }
+
+        protected override void OnModelUpdate()
+        {
+            text.text = Model.Model;
         }
     }
 }

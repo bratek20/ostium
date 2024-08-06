@@ -1,5 +1,6 @@
 using B20.View;
 using GameComponents.Api;
+using Ostium.Logic;
 using UnityEngine;
 
 namespace Ostium.View
@@ -8,10 +9,10 @@ namespace Ostium.View
     {
         [SerializeField]
         private LabelView name;
-        
-        public void Init(CreatureCard card)
+
+        protected override void OnBind()
         {
-            name.Init(card.GetId().Value);    
+            name.Bind((Model as CreatureCardVM).Name);
         }
     }
 }

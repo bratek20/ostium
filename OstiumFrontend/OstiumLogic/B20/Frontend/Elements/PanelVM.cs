@@ -12,8 +12,11 @@ namespace B20.Frontend.Elements.Api
         }
     }
 
-    public interface PanelVM
+    public interface PanelVM: ElementVM
     {
+        bool Clickable { get; }
+        
+        void Click();
     }
 
     public class PanelVM<T>: ElementVM<T>, PanelVM where T: class

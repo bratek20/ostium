@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace B20.View
 {
-    public class PanelView : ElementView<Panel>
+    public class PanelView : ElementView<PanelVM>
     {
         protected override void OnBind()
         {

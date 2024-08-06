@@ -14,7 +14,6 @@ namespace Ostium.View
             if (card != null)
             {
                 this.card.SetVisible(true);
-                this.card.Init(card);
             }
             else
             {

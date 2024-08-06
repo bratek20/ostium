@@ -1,21 +1,20 @@
 using B20.View;
-using GameComponents.Api;
-using GameSetup.Api;
+using Ostium.Logic;
 using UnityEngine;
 
 namespace Ostium.View
 {
-    public class HandView: MonoBehaviour
+    public class HandView: ElementView<HandVM>
     {
         [SerializeField]
         private CreateCardView card1;
         [SerializeField]
         private CreateCardView card2;
-        
-        public void Init(Hand hand)
+
+        protected override void OnBind()
         {
-            card1.Init(hand.GetCards()[0]);
-            card2.Init(hand.GetCards()[1]);  
+            card1.Bind(Model.Card1);
+            card2.Bind(Model.Card2);
         }
     }
 }

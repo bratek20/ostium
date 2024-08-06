@@ -7,19 +7,19 @@ namespace Ostium.Logic
 {
     public class HandVM: ElementVM<Hand>
     {
-        CreatureCardVM card1;
-        CreatureCardVM card2;
+        public CreatureCardVM Card1 { get; private set; }
+        public CreatureCardVM Card2 { get; private set; }
         
         public HandVM(EventPublisher eventPublisher)
         {
-            card1 = new CreatureCardVM(eventPublisher);
-            card2 = new CreatureCardVM(eventPublisher);
+            Card1 = new CreatureCardVM(eventPublisher);
+            Card2 = new CreatureCardVM(eventPublisher);
         }
 
         protected override void OnUpdate()
         {
-            card1.Update(Model.GetCards()[0]);
-            card2.Update(Model.GetCards()[1]);
+            Card1.Update(Model.GetCards()[0]);
+            Card2.Update(Model.GetCards()[1]);
         }
     }
 }
