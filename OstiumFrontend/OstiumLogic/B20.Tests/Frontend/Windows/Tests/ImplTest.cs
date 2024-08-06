@@ -1,52 +1,74 @@
 using System.Collections.Generic;
+using B20.Architecture.Exceptions;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
+using B20.Tests.Frontend.Windows.Fixtures;
 using Xunit;
+using B20Assert = B20.Tests.Architecture.Exceptions.Fixtures.Assert;
 
 namespace B20.Frontend.Windows.Tests
 {
-    public class WindowManipulatorMock : WindowManipulator
-    {
-        private Dictionary<WindowId, bool> windowVisibility = new Dictionary<WindowId, bool>();
-
-        public void SetVisible(WindowId id, bool visible)
-        {
-            windowVisibility[id] = visible;
-        }
-
-        public void AssertVisible(WindowId id, bool visible)
-        {
-            Assert.Equal(visible, windowVisibility[id]);
-        }
-    }
-
     public class WindowsImplTest
     {
+        class TestWindow : Window
+        {
+            private WindowId id;
+            public TestWindow(string id)
+            {
+                this.id = new WindowId(id);
+            }
+            
+            public WindowId GetId()
+            {
+                return id;
+            }
+        }
+        
+        private WindowManipulatorMock manipulatorMock;
+        private WindowManager windowManager;
+
+        public WindowsImplTest()
+        {
+            manipulatorMock = new WindowManipulatorMock();
+            windowManager = new WindowManagerLogic(manipulatorMock);
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionForGetIfWindowNotRegistered()
+        {
+            B20Assert.ThrowsApiException(
+                () => windowManager.Get(new WindowId("notRegistered")),
+                e =>
+                {
+                    e.Type = typeof(WindowNotFoundException);
+                    e.Message = "Window notRegistered not found";
+                }
+            );
+        }
+        
         [Fact]
         public void ShouldHandleWindowLogic()
         {
             // Creation
-            WindowManipulatorMock manipulatorMock = new WindowManipulatorMock();
-            WindowManager windowManager = new WindowManagerLogic(manipulatorMock);
-            
-            WindowId window1 = new WindowId("window1");
-            WindowId window2 = new WindowId("window2");
+            var window1 = new TestWindow("window1");
+            var window2 = new TestWindow("window2");
             
             windowManager.Register(window1);
             windowManager.Register(window2);
             
-            // Init state
-            manipulatorMock.AssertVisible(window1, false);
-            manipulatorMock.AssertVisible(window2, false);
+            manipulatorMock.AssertNoSetVisibleCalls();
+            Assert.Equal(window1, windowManager.Get(new WindowId("window1")));
+            Assert.Equal(window2, windowManager.Get(new WindowId("window2")));
             
             // Open first window
-            windowManager.Open(window1);
-            manipulatorMock.AssertVisible(window1, true);
-            
+            windowManager.Open(new WindowId("window1"));
+            manipulatorMock.AssertVisible("window1", true);
+            manipulatorMock.AssertVisible("window2", false);
+
             // Open second window
-            windowManager.Open(window2);
-            manipulatorMock.AssertVisible(window1, false);
-            manipulatorMock.AssertVisible(window2, true);
+            windowManager.Open(new WindowId("window2"));
+            manipulatorMock.AssertVisible("window1", false);
+            manipulatorMock.AssertVisible("window2", true);
         }
     }
 }

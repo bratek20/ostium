@@ -55,6 +55,10 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\B20.Tests\B20.Tests.csproj">
+        <Project>{bd7c4409-5501-47c9-9956-5536d61667a5}</Project>
+        <Name>B20.Tests</Name>
+      </ProjectReference>
       <ProjectReference Include="..\B20\B20.csproj">
         <Project>{cbc099e1-20d2-452a-9f49-91276bf3b1c7}</Project>
         <Name>B20</Name>

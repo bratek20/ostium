@@ -954,9 +954,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1658245375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e56c7b435dd1a2478ec64ee4edafb78, type: 3}
+  m_Script: {fileID: 11500000, guid: a35fa226554d4485a7ee424e6f0523e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playButton: {fileID: 576803552}
 --- !u!1001 &1791588344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1393,9 +1394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6dd0aefb62a14746bf915ee04320cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainWindow: {fileID: 1658245379}
+  mainWindow: {fileID: 0}
   gameWindow: {fileID: 1361700673}
-  playButton: {fileID: 576803552}
 --- !u!1 &2030486941
 GameObject:
   m_ObjectHideFlags: 0
