@@ -47,6 +47,7 @@ namespace B20.Frontend.Windows.Impl
             Window window = Get(id);
             SetVisible(window, true);
             currentWindow = window;
+            currentWindow.OnOpen();
         }
 
         public WindowId GetCurrent()
