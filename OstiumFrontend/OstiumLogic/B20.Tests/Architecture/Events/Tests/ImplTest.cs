@@ -68,7 +68,7 @@ namespace B20.Tests.Events.Tests
             var otherListener = new OtherTestListener();
             
             EventPublisher publisher = new EventPublisherLogic(
-                ListUtils.ListOf<EventListener>(
+                ListUtils.Of<EventListener>(
                     listener,
                     listener2,
                     otherListener

@@ -38,8 +38,11 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="GameWindow\CreatureCard.cs" />
+        <Compile Include="GameWindow\CreatureCardVM.cs" />
+        <Compile Include="GameWindow\GameVM.cs" />
         <Compile Include="GameWindow\GameWindow.cs" />
+        <Compile Include="GameWindow\HandVM.cs" />
+        <Compile Include="GameWindow\TableVM.cs" />
         <Compile Include="MainWindow\MainWindow.cs" />
         <Compile Include="MainWindow\PlayButton.cs" />
         <Compile Include="OstiumLogic.cs" />

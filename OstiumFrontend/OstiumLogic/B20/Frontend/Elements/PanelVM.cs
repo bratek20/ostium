@@ -4,21 +4,25 @@ namespace B20.Frontend.Elements.Api
 {
     class PanelClickedEvent: Event
     {
-        public Panel Panel {get; private set;}
+        public PanelVM Panel {get; private set;}
         
-        public PanelClickedEvent(Panel panel)
+        public PanelClickedEvent(PanelVM panel)
         {
             Panel = panel;
         }
     }
-    
-    public class Panel: ElementVM
+
+    public interface PanelVM
+    {
+    }
+
+    public class PanelVM<T>: ElementVM<T>, PanelVM where T: class
     {
         public bool Clickable { get; protected set; } = false;
         
         private EventPublisher publisher;
         
-        public Panel(EventPublisher publisher)
+        public PanelVM(EventPublisher publisher)
         {
             this.publisher = publisher;
         }
