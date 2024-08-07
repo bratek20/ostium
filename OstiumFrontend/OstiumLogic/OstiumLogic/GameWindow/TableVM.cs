@@ -11,8 +11,8 @@ namespace Ostium.Logic
         
         public TableVM(EventPublisher publisher)
         {
-            AttackRow = new RowVM(publisher);
-            DefenseRow = new RowVM(publisher);
+            AttackRow = new RowVM(RowType.ATTACK, publisher);
+            DefenseRow = new RowVM(RowType.DEFENSE, publisher);
         }
         
         protected override void OnUpdate()

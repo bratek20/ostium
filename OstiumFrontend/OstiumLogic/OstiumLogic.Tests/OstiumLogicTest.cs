@@ -12,7 +12,7 @@ namespace Ostium.Logic.Tests
     public class OstiumLogicTest
     {
         [Fact]
-        public void ShouldStartOnMainWindow()
+        public void ShouldWork()
         {
             var eventPublisher = new EventPublisherLogic();
             var windowManager = new WindowManagerLogic(new WindowManipulatorMock());
@@ -43,6 +43,15 @@ namespace Ostium.Logic.Tests
             
             Assert.NotNull(gameWindow.Game.Table.AttackRow.Model);
             Asserts.AssertCreatureCardId(gameWindow.Game.Table.AttackRow.Model.GetId(), "Mouse1");
+            
+            Assert.Equal(gameWindow.Game.Hand.Cards.Model.Count, 1);
+            Assert.Equal(gameWindow.Game.Hand.Cards.Model[0].Name.Model, "Mouse2");
+            
+            gameWindow.Game.Hand.Cards.Model[0].Click();
+            gameWindow.Game.Table.DefenseRow.Click();
+            
+            Assert.NotNull(gameWindow.Game.Table.DefenseRow.Model);
+            Asserts.AssertCreatureCardId(gameWindow.Game.Table.DefenseRow.Model.GetId(), "Mouse2");
         }
     }
 }

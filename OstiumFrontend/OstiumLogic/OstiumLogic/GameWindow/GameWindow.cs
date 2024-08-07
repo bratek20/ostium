@@ -19,13 +19,14 @@ namespace Ostium.Logic
         private CreatureCardId clickedCardId;
         public void HandleEvent(PanelClickedEvent e)
         {
-            if (e.Panel is CreatureCardVM)
+            if (e.Panel is CreatureCardVM card)
             {
-                clickedCardId = (e.Panel as CreatureCardVM).Model.GetId();
+                clickedCardId = card.Model.GetId();
             }
-            if (e.Panel is RowVM)
+            if (e.Panel is RowVM row)
             {
-                var gameModel = gameSetupApi.PlayCard(clickedCardId, RowType.ATTACK);
+                var type = row.Type;
+                var gameModel = gameSetupApi.PlayCard(clickedCardId, type);
                 game.Update(gameModel);
             }
         }
