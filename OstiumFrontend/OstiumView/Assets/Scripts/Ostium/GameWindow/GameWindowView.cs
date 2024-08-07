@@ -7,15 +7,12 @@ namespace Ostium.View
     public class GameWindowView: WindowView
     {
         [SerializeField]
-        private HandView hand;
-        [SerializeField]
-        private TableView table;
+        private GameView game;
 
         protected override void OnInit()
         {
-            var game = ValueAs<GameWindow>().Game;
-            hand.Bind(game.Hand);
-            //table.Init(game.GetTable());
+            var gameVM = ValueAs<GameWindow>().Game;
+            game.Bind(gameVM);
         }
     }
 }

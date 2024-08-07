@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 1361700672}
   - component: {fileID: 1361700671}
   - component: {fileID: 1361700673}
+  - component: {fileID: 1361700674}
   m_Layer: 5
   m_Name: GameWindow
   m_TagString: Untagged
@@ -730,6 +731,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b26d9cc65df141aa9bba593ded1f175d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: {fileID: 1361700674}
+--- !u!114 &1361700674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361700669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba1d6e1081643ab9614737d873ab4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 1027586333}

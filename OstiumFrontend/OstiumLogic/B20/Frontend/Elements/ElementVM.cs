@@ -24,7 +24,7 @@ namespace B20.Frontend.Elements
             
             if (onUpdate == null)
             {
-                throw new Exception("Update observer not set");
+                throw new Exception("Update observer not set for object of type " + GetType());
             }
             onUpdate.Invoke();
         }
