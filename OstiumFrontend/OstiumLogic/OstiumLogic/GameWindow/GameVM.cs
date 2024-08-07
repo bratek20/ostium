@@ -11,13 +11,13 @@ namespace Ostium.Logic
         
         public GameVM(EventPublisher eventPublisher)
         {
-            Table = new TableVM();
+            Table = new TableVM(eventPublisher);
             Hand = new HandVM(eventPublisher);
         }
         
         protected override void OnUpdate()
         {
-            //Table.Update(Model.GetTable());
+            Table.Update(Model.GetTable());
             Hand.Update(Model.GetHand());
         }
     }

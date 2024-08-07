@@ -1,19 +1,23 @@
+using B20.View;
 using GameSetup.Api;
+using Ostium.Logic;
 using UnityEngine;
 
 namespace Ostium.View
 {
-    public class TableView: MonoBehaviour
+    public class TableView: ElementView<TableVM>
     {
         [SerializeField]
         private RowView attackRow;
         [SerializeField]
         private RowView defenseRow;
-        
-        public void Init(Table table)
+
+        protected override void OnBind()
         {
-            attackRow.Init(table.GetAttackRow());
-            defenseRow.Init(table.GetDefenseRow());
+            base.OnBind();
+        
+            attackRow.Bind(Model.AttackRow);
+            defenseRow.Bind(Model.DefenseRow);
         }
     }
 }
