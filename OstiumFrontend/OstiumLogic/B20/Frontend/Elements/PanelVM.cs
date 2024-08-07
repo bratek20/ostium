@@ -1,6 +1,6 @@
 using B20.Events.Api;
 
-namespace B20.Frontend.Elements.Api
+namespace B20.Frontend.Elements
 {
     public class PanelClickedEvent: Event
     {

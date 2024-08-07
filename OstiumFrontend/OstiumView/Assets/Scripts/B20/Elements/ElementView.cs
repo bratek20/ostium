@@ -5,7 +5,7 @@ namespace B20.View
 {
     public class ElementView<T>: MonoBehaviour where T: ElementVM
     {
-        public T Model { get; private set; }
+        protected T Model { get; private set; }
 
         protected virtual void OnBind() { }
 
@@ -14,11 +14,11 @@ namespace B20.View
         public void Bind(T value)
         {
             Model = value;
-            Model.SetUpdateObserver(OnModelUpdateObserver);
+            Model.SetObserverUpdateAction(OnObservedModelUpdate);
             OnBind();
         }
 
-        private void OnModelUpdateObserver()
+        private void OnObservedModelUpdate()
         {
             OnModelUpdate();
         }

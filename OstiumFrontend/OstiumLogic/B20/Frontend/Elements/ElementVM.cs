@@ -4,14 +4,14 @@ namespace B20.Frontend.Elements
 {
     public interface ElementVM
     {
-        void SetUpdateObserver(Action onUpdate);
+        void SetObserverUpdateAction(Action observerUpdateAction);
     }
 
     public class ElementVM<T>: ElementVM where T: class
     {
         public T Model { get; private set; }
         
-        private Action onUpdate;
+        private Action observerUpdateAction;
         
         protected virtual void OnUpdate() { }
         
@@ -21,16 +21,12 @@ namespace B20.Frontend.Elements
             
             OnUpdate();
             
-            if (onUpdate == null)
-            {
-                //throw new Exception("Update observer not set for object of type " + GetType());
-            }
-            onUpdate?.Invoke();
+            observerUpdateAction?.Invoke();
         }
 
-        public void SetUpdateObserver(Action onUpdate)
+        public void SetObserverUpdateAction(Action observerUpdateAction)
         {
-            this.onUpdate = onUpdate;
+            this.observerUpdateAction = observerUpdateAction;
         }
     }
 }
