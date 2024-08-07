@@ -63,6 +63,14 @@
         <Project>{cbc099e1-20d2-452a-9f49-91276bf3b1c7}</Project>
         <Name>B20</Name>
       </ProjectReference>
+      <ProjectReference Include="..\OstiumBackend.Tests\OstiumBackend.Tests.csproj">
+        <Project>{d2c81056-d99f-472b-a38c-9ae0954f95c6}</Project>
+        <Name>OstiumBackend.Tests</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\OstiumBackend\OstiumBackend.csproj">
+        <Project>{489d50c9-6b03-478f-ab8e-a1404e8c86bc}</Project>
+        <Name>OstiumBackend</Name>
+      </ProjectReference>
       <ProjectReference Include="..\OstiumLogic\OstiumLogic.csproj">
         <Project>{013df444-ab6a-419c-b254-b4f46fdc1342}</Project>
         <Name>OstiumLogic</Name>

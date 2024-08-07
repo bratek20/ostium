@@ -30,7 +30,7 @@ namespace Ostium.View
                 )
             );
 
-            var eventPublisher = new EventPublisherLogic(ListUtils.Of<EventListener>());
+            var eventPublisher = new EventPublisherLogic();
             
             WindowManager windowManager = new WindowManagerLogic(windowManipulator);
             logic = new OstiumLogic(eventPublisher, windowManager);
