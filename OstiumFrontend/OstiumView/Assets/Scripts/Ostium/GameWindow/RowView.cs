@@ -1,24 +1,30 @@
-using GameComponents.Api;
-using JetBrains.Annotations;
+using B20.View;
+using Ostium.Logic;
 using UnityEngine;
 
 namespace Ostium.View
 {
-    public class RowView: MonoBehaviour
+    public class RowView: PanelView<RowVM>
     {
         [SerializeField]
         private CreateCardView card;
 
-        public void Init(CreatureCard card)
+        protected override void OnBind()
         {
-            if (card != null)
+            base.OnBind();
+            card.Bind(Model.Card);
+        }
+
+        protected override void OnModelUpdate()
+        {
+            base.OnModelUpdate();
+            if (Model.Model != null)
             {
-                this.card.SetVisible(true);
-                this.card.Init(card);
+                card.SetVisible(true);
             }
             else
             {
-                this.card.SetVisible(false);
+                card.SetVisible(false);
             }
         }
     }

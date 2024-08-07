@@ -1,8 +1,12 @@
+using System.Linq.Expressions;
+
 namespace B20.Frontend.Windows.Api
 {
     public interface Window
     {
-        WindowId GetId();    
+        WindowId GetId();
+
+        void OnOpen();
     }
     
     // outgoing

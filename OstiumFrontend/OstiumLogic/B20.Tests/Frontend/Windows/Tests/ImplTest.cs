@@ -22,6 +22,11 @@ namespace B20.Frontend.Windows.Tests
             {
                 return id;
             }
+
+            public void OnOpen()
+            {
+                
+            }
         }
         
         private WindowManipulatorMock manipulatorMock;

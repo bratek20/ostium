@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace Ostium.View
 {
-    public class HandView: ElementView<HandVM>
+    public class GameView: ElementView<GameVM>
     {
         [SerializeField]
-        private CreateCardView card1;
+        private HandView hand;
         [SerializeField]
-        private CreateCardView card2;
-
+        private TableView table;
+        
         protected override void OnBind()
         {
-            card1.Bind(Model.Card1);
-            card2.Bind(Model.Card2);
+            hand.Bind(Model.Hand);
+            table.Bind(Model.Table);
         }
     }
 }

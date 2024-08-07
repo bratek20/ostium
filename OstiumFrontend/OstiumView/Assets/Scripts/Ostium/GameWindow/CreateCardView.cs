@@ -1,17 +1,18 @@
 using B20.View;
-using GameComponents.Api;
+using Ostium.Logic;
 using UnityEngine;
 
 namespace Ostium.View
 {
-    public class CreateCardView: ElementView
+    public class CreateCardView: PanelView<CreatureCardVM>
     {
         [SerializeField]
         private LabelView name;
-        
-        public void Init(CreatureCard card)
+
+        protected override void OnBind()
         {
-            name.Init(card.GetId().Value);    
+            base.OnBind();
+            name.Bind(Model.Name);
         }
     }
 }
