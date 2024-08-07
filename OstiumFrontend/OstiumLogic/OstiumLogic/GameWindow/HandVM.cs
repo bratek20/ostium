@@ -19,7 +19,10 @@ namespace Ostium.Logic
         protected override void OnUpdate()
         {
             Card1.Update(Model.GetCards()[0]);
-            Card2.Update(Model.GetCards()[1]);
+            if (Model.GetCards().Count > 1)
+            {
+                Card2.Update(Model.GetCards()[1]);    
+            }
         }
     }
 }
