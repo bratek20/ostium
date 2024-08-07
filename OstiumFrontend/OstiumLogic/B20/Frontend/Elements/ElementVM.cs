@@ -5,6 +5,8 @@ namespace B20.Frontend.Elements
     public interface ElementVM
     {
         void SetObserverUpdateAction(Action observerUpdateAction);
+        
+        void Refresh();
     }
 
     public class ElementVM<T>: ElementVM where T: class
@@ -27,6 +29,11 @@ namespace B20.Frontend.Elements
         public void SetObserverUpdateAction(Action observerUpdateAction)
         {
             this.observerUpdateAction = observerUpdateAction;
+        }
+
+        public void Refresh()
+        {
+            Update(Model);
         }
     }
 }

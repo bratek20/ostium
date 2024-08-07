@@ -5,22 +5,22 @@ namespace B20.View
 {
     public class ElementView<T>: MonoBehaviour where T: ElementVM
     {
-        protected T Model { get; private set; }
+        protected T ViewModel { get; private set; }
 
         protected virtual void OnBind() { }
 
-        protected virtual void OnModelUpdate() { }
+        protected virtual void OnViewModelUpdate() { }
 
         public void Bind(T value)
         {
-            Model = value;
-            Model.SetObserverUpdateAction(OnObservedModelUpdate);
+            ViewModel = value;
+            ViewModel.SetObserverUpdateAction(OnObservedViewModelUpdate);
             OnBind();
         }
 
-        private void OnObservedModelUpdate()
+        private void OnObservedViewModelUpdate()
         {
-            OnModelUpdate();
+            OnViewModelUpdate();
         }
         
         public void SetVisible(bool visible)

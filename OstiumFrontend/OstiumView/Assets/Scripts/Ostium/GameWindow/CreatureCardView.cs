@@ -12,7 +12,7 @@ namespace Ostium.View
         protected override void OnBind()
         {
             base.OnBind();
-            name.Bind(Model.Name);
+            name.Bind(ViewModel.Name);
         }
     }
 }

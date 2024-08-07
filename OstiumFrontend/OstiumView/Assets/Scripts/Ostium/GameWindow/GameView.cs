@@ -13,8 +13,8 @@ namespace Ostium.View
         
         protected override void OnBind()
         {
-            hand.Bind(Model.Hand);
-            table.Bind(Model.Table);
+            hand.Bind(ViewModel.Hand);
+            table.Bind(ViewModel.Table);
         }
     }
 }

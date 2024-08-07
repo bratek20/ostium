@@ -12,13 +12,13 @@ namespace Ostium.View
         protected override void OnBind()
         {
             base.OnBind();
-            card.Bind(Model.Card);
+            card.Bind(ViewModel.Card);
         }
 
-        protected override void OnModelUpdate()
+        protected override void OnViewModelUpdate()
         {
-            base.OnModelUpdate();
-            if (Model.Model != null)
+            base.OnViewModelUpdate();
+            if (ViewModel.Model != null)
             {
                 card.SetVisible(true);
             }

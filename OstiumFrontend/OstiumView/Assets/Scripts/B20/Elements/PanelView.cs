@@ -7,7 +7,7 @@ namespace B20.View
     {
         protected override void OnBind()
         {
-            if (Model.Clickable)
+            if (ViewModel.Clickable)
             {
                 var button = gameObject.AddComponent<Button>();
                 button.onClick.AddListener(OnClick);
@@ -16,7 +16,7 @@ namespace B20.View
 
         private void OnClick()
         {
-            Model.Click();
+            ViewModel.Click();
         }
     }
 }

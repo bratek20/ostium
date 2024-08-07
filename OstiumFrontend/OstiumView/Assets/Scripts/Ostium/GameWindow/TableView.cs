@@ -16,8 +16,8 @@ namespace Ostium.View
         {
             base.OnBind();
         
-            attackRow.Bind(Model.AttackRow);
-            defenseRow.Bind(Model.DefenseRow);
+            attackRow.Bind(ViewModel.AttackRow);
+            defenseRow.Bind(ViewModel.DefenseRow);
         }
     }
 }

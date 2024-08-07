@@ -7,7 +7,8 @@ namespace B20.Tests.Frontend.Elements.Tests
     public class ElementListVMTest
     {
         class SomeModel {}
-        class SomeListVM: ElementListVM<SomeModel>
+        class SomeViewModel: ElementVM<SomeModel> {}
+        class SomeListVM: ElementListVM<SomeViewModel>
         {
             public int UpdateCount { get; private set; }
             
@@ -22,11 +23,11 @@ namespace B20.Tests.Frontend.Elements.Tests
         {
             var list = new SomeListVM();
             
-            list.Update(ListUtils.Of(new SomeModel()));
+            list.Update(ListUtils.Of(new SomeViewModel()));
             
             Assert.Equal(1, list.UpdateCount);
             
-            list.Update(ListUtils.Of(new SomeModel(), new SomeModel(), new SomeModel()));
+            list.Update(ListUtils.Of(new SomeViewModel(), new SomeViewModel(), new SomeViewModel()));
             
             Assert.Equal(2, list.UpdateCount);
             Assert.Equal(3, list.Model.Count);

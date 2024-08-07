@@ -12,9 +12,9 @@ namespace B20.View
             text = GetComponent<TextMeshProUGUI>();
         }
 
-        protected override void OnModelUpdate()
+        protected override void OnViewModelUpdate()
         {
-            text.text = Model.Model;
+            text.text = ViewModel.Model;
         }
     }
 }

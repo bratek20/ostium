@@ -35,10 +35,10 @@ namespace Ostium.Logic.Tests
             
             var gameWindow = windowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
 
-            var card1Name = gameWindow.Game.Hand.Card1.Name.Model;
+            var card1Name = gameWindow.Game.Hand.Cards.Model[0].Name.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            gameWindow.Game.Hand.Card1.Click();
+            gameWindow.Game.Hand.Cards.Model[0].Click();
             gameWindow.Game.Table.AttackRow.Click();
             
             Assert.NotNull(gameWindow.Game.Table.AttackRow.Model);
