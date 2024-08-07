@@ -2,7 +2,7 @@ using B20.Events.Api;
 
 namespace B20.Frontend.Elements.Api
 {
-    class PanelClickedEvent: Event
+    public class PanelClickedEvent: Event
     {
         public PanelVM Panel {get; private set;}
         

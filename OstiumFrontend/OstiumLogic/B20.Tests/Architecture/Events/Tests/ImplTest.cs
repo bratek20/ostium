@@ -67,14 +67,11 @@ namespace B20.Tests.Events.Tests
             var listener2 = new TestListener();
             var otherListener = new OtherTestListener();
             
-            EventPublisher publisher = new EventPublisherLogic(
-                ListUtils.Of<EventListener>(
-                    listener,
-                    listener2,
-                    otherListener
-                )
-            );
-
+            EventPublisher publisher = new EventPublisherLogic();
+            publisher.AddListener(listener);
+            publisher.AddListener(listener2);
+            publisher.AddListener(otherListener);
+            
             // When
             publisher.Publish(new TestEvent("Hello"));
             publisher.Publish(new TestEvent("World!"));

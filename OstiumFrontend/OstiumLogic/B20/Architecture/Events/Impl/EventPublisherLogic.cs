@@ -5,12 +5,7 @@ namespace B20.Events.Impl
 {
     public class EventPublisherLogic : EventPublisher
     {
-        private readonly List<EventListener> listeners;
-
-        public EventPublisherLogic(List<EventListener> listeners)
-        {
-            this.listeners = listeners;
-        }
+        private readonly List<EventListener> listeners = new List<EventListener>();
 
         public void Publish<TEvent>(TEvent e) where TEvent : Event
         {
@@ -21,6 +16,11 @@ namespace B20.Events.Impl
                     typedListener.HandleEvent(e);
                 }
             }
+        }
+
+        public void AddListener<TEvent>(EventListener<TEvent> listener) where TEvent : Event
+        {
+            listeners.Add(listener);
         }
     }
 }
