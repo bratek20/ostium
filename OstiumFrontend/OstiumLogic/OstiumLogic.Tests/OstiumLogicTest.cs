@@ -1,9 +1,12 @@
-﻿using B20.Events.Api;
+﻿using System.Collections.Generic;
+using B20.Events.Api;
 using B20.Events.Impl;
+using B20.Ext;
 using B20.Frontend.Windows.Impl;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameComponents;
+using GameComponents.Api;
 using Xunit;
 
 namespace Ostium.Logic.Tests
@@ -36,25 +39,86 @@ namespace Ostium.Logic.Tests
         public void ShouldPlayCards()
         {
             var c = scenarios.InGameWindow();
-            var gameWindow = c.WindowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
-
-            var card1Name = gameWindow.Game.Hand.Cards.Model[0].Name.Model;
+            //Playing first card on attack row
+            var card1Name = c.FirstCardInHand.Name.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            gameWindow.Game.Hand.Cards.Model[0].Click();
-            gameWindow.Game.Table.AttackRow.Click();
+            c.FirstCardInHand.Click();
+            c.AttackRow.Click();
             
-            Assert.NotNull(gameWindow.Game.Table.AttackRow.Model);
-            Asserts.AssertCreatureCardId(gameWindow.Game.Table.AttackRow.Model.GetId(), "Mouse1");
+            AssertCardInRow(c.AttackRow, "Mouse1");
             
-            Assert.Equal(gameWindow.Game.Hand.Cards.Model.Count, 1);
-            Assert.Equal(gameWindow.Game.Hand.Cards.Model[0].Name.Model, "Mouse2");
+            Assert.Equal(c.CardsInHand.Count, 1);
+            Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
             
-            gameWindow.Game.Hand.Cards.Model[0].Click();
-            gameWindow.Game.Table.DefenseRow.Click();
+            //Playing second card on defense row
+            c.FirstCardInHand.Click();
+            c.DefenseRow.Click();
+
+            AssertCardInRow(c.DefenseRow, "Mouse2");
+        }
+        
+        [Fact]
+        public void ShouldMovePlayedCardBetweenRows()
+        {
+            var c = scenarios.InGameWindow();
             
-            Assert.NotNull(gameWindow.Game.Table.DefenseRow.Model);
-            Asserts.AssertCreatureCardId(gameWindow.Game.Table.DefenseRow.Model.GetId(), "Mouse2");
+            c.FirstCardInHand.Click();
+            c.AttackRow.Click();
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertNoCardSelected(c);
+            
+            c.AttackRow.Card.Click();
+            c.DefenseRow.Click();
+            AssertCardInRow(c.DefenseRow, "Mouse1");
+            AssertRowEmpty(c.AttackRow);
+            AssertNoCardSelected(c);
+            
+            c.DefenseRow.Card.Click();
+            c.AttackRow.Click();
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertRowEmpty(c.DefenseRow);
+        }
+        
+        [Fact]
+        public void ShouldSwapPlayedCards()
+        {
+            var c = scenarios.InGameWindow();
+            
+            c.FirstCardInHand.Click();
+            c.AttackRow.Click();
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            
+            c.FirstCardInHand.Click();
+            c.DefenseRow.Click();
+            AssertCardInRow(c.DefenseRow, "Mouse2");
+            
+            c.AttackRow.Card.Click();
+            c.DefenseRow.Card.Click();
+            AssertCardInRow(c.AttackRow, "Mouse2");
+            AssertCardInRow(c.DefenseRow, "Mouse1");
+        }
+        
+        void AssertCardInRow(RowVM row, string cardName)
+        {
+            Assert.True(row.HasCard);
+            Asserts.AssertCreatureCardId(row.Model.Get().GetId(), cardName);
+        }
+        
+        void AssertRowEmpty(RowVM row)
+        {
+            Assert.False(row.HasCard);
+        }
+        
+        void AssertSelectedCard(Scenarios.InGameWindowContext c, string cardName)
+        {
+            Assert.True(c.SelectedCard.IsPresent());
+            Asserts.AssertCreatureCardId(c.SelectedCard.Get(), cardName);
+        }
+        
+        void AssertNoCardSelected(Scenarios.InGameWindowContext c)
+        {
+            Assert.False(c.SelectedCard.IsPresent());
         }
     }
 }

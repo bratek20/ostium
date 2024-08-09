@@ -1,14 +1,22 @@
 using B20.Events.Api;
+using B20.Ext;
 using B20.Frontend.Elements;
 using GameComponents.Api;
 using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class RowVM: PanelVM<CreatureCard>
+    public class RowVM: PanelVM<Optional<CreatureCard>>
     {
-        public RowType Type { get; private set; }
-        public CreatureCardVM Card { get; private set; }
+        public RowType Type { get; }
+        public CreatureCardVM Card { get; }
+
+        public bool HasCard => Model.IsPresent();
+        
+        public bool Contains(CreatureCardId cardId)
+        {
+            return Model.Map(card => card.GetId().Equals(cardId)).OrElse(false);
+        }
         
         public RowVM(RowType type, EventPublisher publisher): base(publisher)
         {
@@ -20,10 +28,10 @@ namespace Ostium.Logic
         
         protected override void OnUpdate()
         {
-            if (Model != null)
+            Model.Let(card =>
             {
-                Card.Update(Model);    
-            }
+                Card.Update(card);
+            });
         }
     }
 }

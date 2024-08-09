@@ -108,5 +108,31 @@ namespace OstiumBackend.Tests.GameSetup.Tests
                 };
             });
         }
+        
+        [Fact]
+        public void MoveCard_ShouldSwapCards()
+        {
+            var api = CreateApi();
+            api.StartGame();
+            api.PlayCard(new CreatureCardId("Mouse1"), RowType.ATTACK);
+            api.PlayCard(new CreatureCardId("Mouse2"), RowType.DEFENSE);
+
+            var game = api.MoveCard(new CreatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE);
+
+            Asserts.AssertGame(game, expected =>
+            {
+                expected.Table = table =>
+                {
+                    table.AttackRow = row =>
+                    {
+                        row.Id = "Mouse2";
+                    };
+                    table.DefenseRow = row =>
+                    {
+                        row.Id = "Mouse1";
+                    };
+                };
+            });
+        }
     }
 }

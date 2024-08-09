@@ -53,6 +53,7 @@
     <ItemGroup>
         <Compile Include="Architecture\Events\Tests\ImplTest.cs" />
         <Compile Include="Architecture\Exceptions\Fixtures\Asserts.cs" />
+        <Compile Include="Ext\OptionalTest.cs" />
         <Compile Include="Frontend\Elements\Tests\ElementListVMTest.cs" />
         <Compile Include="Frontend\Elements\Tests\ElementVMTest.cs" />
         <Compile Include="Frontend\Windows\Fixtures\Mocks.cs" />

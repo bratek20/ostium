@@ -34,25 +34,25 @@ namespace GameSetup
                 if (!string.IsNullOrEmpty(diff)) result.Add(diff);
             }
 
-            if (expected.AttackRowEmpty.HasValue && (given.GetAttackRow() == null) != expected.AttackRowEmpty.Value)
+            if (expected.AttackRowEmpty.HasValue && given.GetAttackRow().IsEmpty() != expected.AttackRowEmpty.Value)
             {
-                result.Add($"{path}attackRow empty {(given.GetAttackRow() == null)} != {expected.AttackRowEmpty.Value}");
+                result.Add($"{path}attackRow empty {given.GetAttackRow().IsEmpty()} != {expected.AttackRowEmpty.Value}");
             }
 
             if (expected.AttackRow != null)
             {
-                var diff = GameComponents.Diffs.DiffCreatureCard(given.GetAttackRow(), expected.AttackRow, $"{path}attackRow.");
+                var diff = GameComponents.Diffs.DiffCreatureCard(given.GetAttackRow().Get(), expected.AttackRow, $"{path}attackRow.");
                 if (!string.IsNullOrEmpty(diff)) result.Add(diff);
             }
 
-            if (expected.DefenseRowEmpty.HasValue && (given.GetDefenseRow() == null) != expected.DefenseRowEmpty.Value)
+            if (expected.DefenseRowEmpty.HasValue && given.GetDefenseRow().IsEmpty() != expected.DefenseRowEmpty.Value)
             {
-                result.Add($"{path}defenseRow empty {(given.GetDefenseRow() == null)} != {expected.DefenseRowEmpty.Value}");
+                result.Add($"{path}defenseRow empty {given.GetDefenseRow().IsEmpty()} != {expected.DefenseRowEmpty.Value}");
             }
 
             if (expected.DefenseRow != null)
             {
-                var diff = GameComponents.Diffs.DiffCreatureCard(given.GetDefenseRow(), expected.DefenseRow, $"{path}defenseRow.");
+                var diff = GameComponents.Diffs.DiffCreatureCard(given.GetDefenseRow().Get(), expected.DefenseRow, $"{path}defenseRow.");
                 if (!string.IsNullOrEmpty(diff)) result.Add(diff);
             }
 

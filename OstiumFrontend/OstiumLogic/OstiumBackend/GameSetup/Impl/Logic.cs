@@ -44,26 +44,12 @@ namespace GameSetup.Impl
         {
             CreatureCard? card = from switch
             {
-                RowType.ATTACK => attackRow,
-                RowType.DEFENSE => defenseRow,
-                _ => throw new InvalidOperationException($"No card in {from} row")
+                RowType.ATTACK when attackRow?.GetId().Value == cardId.Value => attackRow,
+                RowType.DEFENSE when defenseRow?.GetId().Value == cardId.Value => defenseRow,
+                _ => throw new InvalidOperationException($"No card with ID {cardId} in {from} row")
             };
 
-            if (card == null)
-            {
-                throw new InvalidOperationException($"No card in {from} row");
-            }
-
-            switch (to)
-            {
-                case RowType.ATTACK:
-                    attackRow = card;
-                    break;
-                case RowType.DEFENSE:
-                    defenseRow = card;
-                    break;
-            }
-
+            // Remove the card from the 'from' row
             switch (from)
             {
                 case RowType.ATTACK:
@@ -74,8 +60,22 @@ namespace GameSetup.Impl
                     break;
             }
 
+            // Place the card in the 'to' row
+            switch (to)
+            {
+                case RowType.ATTACK:
+                    defenseRow = attackRow;
+                    attackRow = card;
+                    break;
+                case RowType.DEFENSE:
+                    attackRow = defenseRow;
+                    defenseRow = card;
+                    break;
+            }
+
             return ToApiGame();
         }
+
 
         private Game ToApiGame()
         {

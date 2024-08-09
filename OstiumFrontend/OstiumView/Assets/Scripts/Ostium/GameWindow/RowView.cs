@@ -18,14 +18,7 @@ namespace Ostium.View
         protected override void OnViewModelUpdate()
         {
             base.OnViewModelUpdate();
-            if (ViewModel.Model != null)
-            {
-                card.SetVisible(true);
-            }
-            else
-            {
-                card.SetVisible(false);
-            }
+            card.SetVisible(ViewModel.Model.IsPresent());
         }
     }
 }
