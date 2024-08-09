@@ -1,3 +1,4 @@
+using B20.Architecture.Exceptions;
 using B20.Events.Api;
 using B20.Frontend.Elements;
 using GameComponents.Api;
@@ -42,12 +43,39 @@ namespace Ostium.Logic
             }
             return false;
         }
+
+        private bool IsOnTable(CreatureCardId card)
+        {
+            return Table.AttackRow.Contains(card) || Table.DefenseRow.Contains(card);
+        }
+        
+        private RowType GetRowType(CreatureCardId card)
+        {
+            if (Table.AttackRow.Contains(card))
+            {
+                return RowType.ATTACK;
+            }
+            if (Table.DefenseRow.Contains(card))
+            {
+                return RowType.DEFENSE;
+            }
+            throw new ApiException("card not found on table");
+        }
         
         public void HandleEvent(PanelClickedEvent e)
         {
             if (e.Panel is CreatureCardVM card)
             {
+                var previousClickedCardId = clickedCardId;
                 clickedCardId = card.Model.GetId();
+                
+                if(previousClickedCardId != null)
+                {
+                    if(IsOnTable(previousClickedCardId) && IsOnTable(clickedCardId))
+                    {
+                        Update(gameSetupApi.MoveCard(clickedCardId, GetRowType(clickedCardId), GetRowType(previousClickedCardId)));
+                    } 
+                }
             }
             if (e.Panel is RowVM row)
             {

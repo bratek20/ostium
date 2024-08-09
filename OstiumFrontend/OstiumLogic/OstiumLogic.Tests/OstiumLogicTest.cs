@@ -76,6 +76,25 @@ namespace Ostium.Logic.Tests
             AssertRowEmpty(c.DefenseRow);
         }
         
+        [Fact]
+        public void ShouldSwapPlayedCards()
+        {
+            var c = scenarios.InGameWindow();
+            
+            c.FirstCardInHand.Click();
+            c.AttackRow.Click();
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            
+            c.FirstCardInHand.Click();
+            c.DefenseRow.Click();
+            AssertCardInRow(c.DefenseRow, "Mouse2");
+            
+            c.AttackRow.Card.Click();
+            c.DefenseRow.Card.Click();
+            AssertCardInRow(c.AttackRow, "Mouse2");
+            AssertCardInRow(c.DefenseRow, "Mouse1");
+        }
+        
         void AssertCardInRow(RowVM row, string cardName)
         {
             Assert.True(row.HasCard);

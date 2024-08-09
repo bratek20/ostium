@@ -13,6 +13,11 @@ namespace Ostium.Logic
 
         public bool HasCard => Model.IsPresent();
         
+        public bool Contains(CreatureCardId cardId)
+        {
+            return Model.Map(card => card.GetId().Equals(cardId)).OrElse(false);
+        }
+        
         public RowVM(RowType type, EventPublisher publisher): base(publisher)
         {
             Clickable = true;
