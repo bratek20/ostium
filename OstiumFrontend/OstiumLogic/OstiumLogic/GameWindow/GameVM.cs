@@ -37,7 +37,7 @@ namespace Ostium.Logic
         {
             if (otherRow.HasCard && clickedCardId.Equals(otherRow.Card.Model.GetId()))
             {
-                Update(gameSetupApi.MoveCard(clickedCardId, clickedRow, otherRow.Type));
+                Update(gameSetupApi.MoveCard(clickedCardId, otherRow.Type, clickedRow));
                 return true;
             }
             return false;
