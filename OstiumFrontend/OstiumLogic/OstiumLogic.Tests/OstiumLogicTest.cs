@@ -5,35 +5,38 @@ using B20.Logic.Utils;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameComponents;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Ostium.Logic.Tests
 {
     public class OstiumLogicTest
     {
+        private Scenarios scenarios = new Scenarios();
+        
         [Fact]
-        public void ShouldWork()
+        public void ShouldStartOnMainScreenAndSwitchToGameScreen()
         {
-            var eventPublisher = new EventPublisherLogic();
-            var windowManager = new WindowManagerLogic(new WindowManipulatorMock());
-            
-            var logic = new OstiumLogic(eventPublisher, windowManager);
-            logic.RegisterWindows();
+            var c = scenarios.Setup();
+            c.Logic.RegisterWindows();
             
             //should not throw
-            windowManager.Get(WindowIds.MAIN_WINDOW);
-            windowManager.Get(WindowIds.GAME_WINDOW);
+            c.WindowManager.Get(WindowIds.MAIN_WINDOW);
+            c.WindowManager.Get(WindowIds.GAME_WINDOW);
             
-            logic.Start();
+            c.Logic.Start();
             
-            Assert.Equal(WindowIds.MAIN_WINDOW, windowManager.GetCurrent());
+            Assert.Equal(WindowIds.MAIN_WINDOW, c.WindowManager.GetCurrent());
             
             //Clicking play button
-            (windowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
+            (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
             
-            Assert.Equal(WindowIds.GAME_WINDOW, windowManager.GetCurrent());
-            
-            var gameWindow = windowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
+            Assert.Equal(WindowIds.GAME_WINDOW, c.WindowManager.GetCurrent());
+        }
+        
+        [Fact]
+        public void ShouldPlayCards()
+        {
+            var c = scenarios.InGameWindow();
+            var gameWindow = c.WindowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
 
             var card1Name = gameWindow.Game.Hand.Cards.Model[0].Name.Model;
             Assert.Equal("Mouse1", card1Name);
