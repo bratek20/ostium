@@ -69,17 +69,22 @@ namespace Ostium.Logic.Tests
             c.DefenseRow.Click();
             AssertCardInRow(c.DefenseRow, "Mouse1");
             AssertRowEmpty(c.AttackRow);
+            
+            c.DefenseRow.Card.Click();
+            c.AttackRow.Click();
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertRowEmpty(c.DefenseRow);
         }
         
         void AssertCardInRow(RowVM row, string cardName)
         {
-            Assert.NotNull(row.Model);
-            Asserts.AssertCreatureCardId(row.Model.GetId(), cardName);
+            Assert.True(row.HasCard);
+            Asserts.AssertCreatureCardId(row.Model.Get().GetId(), cardName);
         }
         
         void AssertRowEmpty(RowVM row)
         {
-            Assert.Null(row.Model);
+            Assert.False(row.HasCard);
         }
     }
 }

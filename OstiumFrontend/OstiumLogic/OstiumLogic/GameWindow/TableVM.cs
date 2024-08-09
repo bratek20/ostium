@@ -6,8 +6,8 @@ namespace Ostium.Logic
 {
     public class TableVM: ElementVM<Table>
     {
-        public RowVM AttackRow { get; private set; }
-        public RowVM DefenseRow { get; private set; }
+        public RowVM AttackRow { get; }
+        public RowVM DefenseRow { get; }
         
         public TableVM(EventPublisher publisher)
         {

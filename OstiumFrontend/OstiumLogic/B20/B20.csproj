@@ -43,6 +43,7 @@
         <Compile Include="Architecture\Events\Api\EventPublisher.cs" />
         <Compile Include="Architecture\Events\Impl\EventPublisherLogic.cs" />
         <Compile Include="Architecture\Exceptions\ApiException.cs" />
+        <Compile Include="Ext\Optional.cs" />
         <Compile Include="Frontend\Elements\Button.cs" />
         <Compile Include="Frontend\Elements\ElementListVM.cs" />
         <Compile Include="Frontend\Elements\ElementVM.cs" />

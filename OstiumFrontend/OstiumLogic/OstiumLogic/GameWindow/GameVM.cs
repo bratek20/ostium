@@ -32,6 +32,17 @@ namespace Ostium.Logic
         }
 
         private CreatureCardId clickedCardId;
+
+        private bool TryMove(RowType clickedRow, RowVM otherRow)
+        {
+            if (otherRow.HasCard && clickedCardId.Equals(otherRow.Card.Model.GetId()))
+            {
+                Update(gameSetupApi.MoveCard(clickedCardId, clickedRow, otherRow.Type));
+                return true;
+            }
+            return false;
+        }
+        
         public void HandleEvent(PanelClickedEvent e)
         {
             if (e.Panel is CreatureCardVM card)
@@ -40,9 +51,12 @@ namespace Ostium.Logic
             }
             if (e.Panel is RowVM row)
             {
-                var type = row.Type;
-                var gameModel = gameSetupApi.PlayCard(clickedCardId, type);
-                Update(gameModel);
+                var rowType = row.Type;
+                var otherRow = rowType == RowType.ATTACK ? Table.DefenseRow : Table.AttackRow;
+                if (!TryMove(rowType, otherRow))
+                {
+                    Update(gameSetupApi.PlayCard(clickedCardId, rowType));
+                }
             }
         }
     }
