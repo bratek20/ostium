@@ -1,5 +1,6 @@
 using B20.Architecture.Exceptions;
 using B20.Events.Api;
+using B20.Ext;
 using B20.Frontend.Elements;
 using GameComponents.Api;
 using GameSetup.Api;
@@ -32,16 +33,19 @@ namespace Ostium.Logic
             Hand.Update(Model.GetHand());
         }
 
-        private CreatureCardId clickedCardId;
-
+        public Optional<CreatureCardId> SelectedCard { get; private set; } = Optional<CreatureCardId>.Empty();
         private bool TryMove(RowType clickedRow, RowVM otherRow)
         {
-            if (otherRow.HasCard && clickedCardId.Equals(otherRow.Card.Model.GetId()))
+            return SelectedCard.Map(card =>
             {
-                Update(gameSetupApi.MoveCard(clickedCardId, otherRow.Type, clickedRow));
-                return true;
-            }
-            return false;
+                if (otherRow.HasCard && card.Equals(otherRow.Card.Model.GetId()))
+                {
+                    Update(gameSetupApi.MoveCard(card, otherRow.Type, clickedRow));
+                    SelectedCard = Optional<CreatureCardId>.Empty();
+                    return true;
+                }
+                return false;
+            }).OrElse(false);
         }
 
         private bool IsOnTable(CreatureCardId card)
@@ -66,16 +70,17 @@ namespace Ostium.Logic
         {
             if (e.Panel is CreatureCardVM card)
             {
-                var previousClickedCardId = clickedCardId;
-                clickedCardId = card.Model.GetId();
-                
-                if(previousClickedCardId != null)
+                var optPreviousClickedCardId = SelectedCard;
+                SelectedCard = Optional<CreatureCardId>.Of(card.Model.GetId());
+
+                optPreviousClickedCardId.Let(previousClickedCardId =>
                 {
-                    if(IsOnTable(previousClickedCardId) && IsOnTable(clickedCardId))
+                    if(IsOnTable(previousClickedCardId) && IsOnTable(SelectedCard.Get()))
                     {
-                        Update(gameSetupApi.MoveCard(clickedCardId, GetRowType(clickedCardId), GetRowType(previousClickedCardId)));
-                    } 
-                }
+                        Update(gameSetupApi.MoveCard(SelectedCard.Get(), GetRowType(SelectedCard.Get()), GetRowType(previousClickedCardId)));
+                        SelectedCard = Optional<CreatureCardId>.Empty();
+                    }
+                });
             }
             if (e.Panel is RowVM row)
             {
@@ -83,7 +88,11 @@ namespace Ostium.Logic
                 var otherRow = rowType == RowType.ATTACK ? Table.DefenseRow : Table.AttackRow;
                 if (!TryMove(rowType, otherRow))
                 {
-                    Update(gameSetupApi.PlayCard(clickedCardId, rowType));
+                    SelectedCard.Let(c =>
+                    {
+                        Update(gameSetupApi.PlayCard(c, rowType));    
+                    });
+                    SelectedCard = Optional<CreatureCardId>.Empty();
                 }
             }
         }

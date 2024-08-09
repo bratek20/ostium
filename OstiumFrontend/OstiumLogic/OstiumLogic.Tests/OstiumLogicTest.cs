@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using B20.Events.Api;
 using B20.Events.Impl;
+using B20.Ext;
 using B20.Frontend.Windows.Impl;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameComponents;
+using GameComponents.Api;
 using Xunit;
 
 namespace Ostium.Logic.Tests
@@ -64,11 +66,13 @@ namespace Ostium.Logic.Tests
             c.FirstCardInHand.Click();
             c.AttackRow.Click();
             AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertNoCardSelected(c);
             
             c.AttackRow.Card.Click();
             c.DefenseRow.Click();
             AssertCardInRow(c.DefenseRow, "Mouse1");
             AssertRowEmpty(c.AttackRow);
+            AssertNoCardSelected(c);
             
             c.DefenseRow.Card.Click();
             c.AttackRow.Click();
@@ -104,6 +108,17 @@ namespace Ostium.Logic.Tests
         void AssertRowEmpty(RowVM row)
         {
             Assert.False(row.HasCard);
+        }
+        
+        void AssertSelectedCard(Scenarios.InGameWindowContext c, string cardName)
+        {
+            Assert.True(c.SelectedCard.IsPresent());
+            Asserts.AssertCreatureCardId(c.SelectedCard.Get(), cardName);
+        }
+        
+        void AssertNoCardSelected(Scenarios.InGameWindowContext c)
+        {
+            Assert.False(c.SelectedCard.IsPresent());
         }
     }
 }

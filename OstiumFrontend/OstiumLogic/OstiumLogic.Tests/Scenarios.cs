@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using B20.Events.Api;
 using B20.Events.Impl;
+using B20.Ext;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
+using GameComponents.Api;
 
 namespace Ostium.Logic.Tests
 {
@@ -49,6 +51,8 @@ namespace Ostium.Logic.Tests
             
             public List<CreatureCardVM> CardsInHand => GameWindow.Game.Hand.Cards.Model;
             public CreatureCardVM FirstCardInHand => CardsInHand[0];
+            
+            public Optional<CreatureCardId> SelectedCard => GameWindow.Game.SelectedCard;
         }
         public InGameWindowContext InGameWindow()
         {

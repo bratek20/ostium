@@ -64,9 +64,11 @@ namespace GameSetup.Impl
             switch (to)
             {
                 case RowType.ATTACK:
+                    defenseRow = attackRow;
                     attackRow = card;
                     break;
                 case RowType.DEFENSE:
+                    attackRow = defenseRow;
                     defenseRow = card;
                     break;
             }
