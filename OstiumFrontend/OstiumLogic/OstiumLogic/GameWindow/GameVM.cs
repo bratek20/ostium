@@ -1,24 +1,49 @@
 using B20.Events.Api;
 using B20.Frontend.Elements;
+using GameComponents.Api;
 using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class GameVM: ElementVM<Game>
+    public class GameVM: ElementVM<Game>, EventListener<PanelClickedEvent>
     {
-        public TableVM Table { get; private set; }
-        public HandVM Hand { get; private set; }
-        
-        public GameVM(EventPublisher eventPublisher)
+        public TableVM Table { get; }
+        public HandVM Hand { get; }
+
+        private GameSetupApi gameSetupApi;
+        public GameVM(GameSetupApi gameSetupApi, EventPublisher eventPublisher)
         {
+            this.gameSetupApi = gameSetupApi;
+            eventPublisher.AddListener(this);
+            
             Table = new TableVM(eventPublisher);
             Hand = new HandVM(eventPublisher);
+        }
+        
+        public void StartGame()
+        {
+            Update(gameSetupApi.StartGame());
         }
         
         protected override void OnUpdate()
         {
             Table.Update(Model.GetTable());
             Hand.Update(Model.GetHand());
+        }
+
+        private CreatureCardId clickedCardId;
+        public void HandleEvent(PanelClickedEvent e)
+        {
+            if (e.Panel is CreatureCardVM card)
+            {
+                clickedCardId = card.Model.GetId();
+            }
+            if (e.Panel is RowVM row)
+            {
+                var type = row.Type;
+                var gameModel = gameSetupApi.PlayCard(clickedCardId, type);
+                Update(gameModel);
+            }
         }
     }
 }

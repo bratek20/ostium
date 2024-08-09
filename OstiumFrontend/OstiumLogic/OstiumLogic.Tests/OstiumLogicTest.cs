@@ -1,4 +1,5 @@
-﻿using B20.Events.Api;
+﻿using System.Collections.Generic;
+using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Frontend.Windows.Impl;
 using B20.Logic.Utils;
@@ -36,25 +37,49 @@ namespace Ostium.Logic.Tests
         public void ShouldPlayCards()
         {
             var c = scenarios.InGameWindow();
-            var gameWindow = c.WindowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
-
-            var card1Name = gameWindow.Game.Hand.Cards.Model[0].Name.Model;
+            //Playing first card on attack row
+            var card1Name = c.FirstCardInHand.Name.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            gameWindow.Game.Hand.Cards.Model[0].Click();
-            gameWindow.Game.Table.AttackRow.Click();
+            c.FirstCardInHand.Click();
+            c.AttackRow.Click();
             
-            Assert.NotNull(gameWindow.Game.Table.AttackRow.Model);
-            Asserts.AssertCreatureCardId(gameWindow.Game.Table.AttackRow.Model.GetId(), "Mouse1");
+            AssertCardInRow(c.AttackRow, "Mouse1");
             
-            Assert.Equal(gameWindow.Game.Hand.Cards.Model.Count, 1);
-            Assert.Equal(gameWindow.Game.Hand.Cards.Model[0].Name.Model, "Mouse2");
+            Assert.Equal(c.CardsInHand.Count, 1);
+            Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
             
-            gameWindow.Game.Hand.Cards.Model[0].Click();
-            gameWindow.Game.Table.DefenseRow.Click();
+            //Playing second card on defense row
+            c.FirstCardInHand.Click();
+            c.DefenseRow.Click();
+
+            AssertCardInRow(c.DefenseRow, "Mouse2");
+        }
+        
+        [Fact]
+        public void ShouldMovePlayedCardBetweenRows()
+        {
+            var c = scenarios.InGameWindow();
             
-            Assert.NotNull(gameWindow.Game.Table.DefenseRow.Model);
-            Asserts.AssertCreatureCardId(gameWindow.Game.Table.DefenseRow.Model.GetId(), "Mouse2");
+            c.FirstCardInHand.Click();
+            c.AttackRow.Click();
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            
+            c.AttackRow.Card.Click();
+            c.DefenseRow.Click();
+            AssertCardInRow(c.DefenseRow, "Mouse1");
+            AssertRowEmpty(c.AttackRow);
+        }
+        
+        void AssertCardInRow(RowVM row, string cardName)
+        {
+            Assert.NotNull(row.Model);
+            Asserts.AssertCreatureCardId(row.Model.GetId(), cardName);
+        }
+        
+        void AssertRowEmpty(RowVM row)
+        {
+            Assert.Null(row.Model);
         }
     }
 }
