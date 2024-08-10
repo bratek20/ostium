@@ -8,17 +8,19 @@ namespace B20.Frontend.Element
         void SetObserverUpdateAction(Action observerUpdateAction);
         
         void Refresh();
+        
+        List<Trait> GetTraits();
     }
 
-    public abstract class ElementVM<T>: ElementVM where T: class
+    public abstract class ElementVM<ModelType>: ElementVM where ModelType: class
     {
-        public T Model { get; private set; }
+        public ModelType Model { get; private set; }
         
         private Action observerUpdateAction;
         
         protected virtual void OnUpdate() { }
         
-        public void Update(T model)
+        public void Update(ModelType model)
         {
             Model = model;
             
@@ -48,6 +50,11 @@ namespace B20.Frontend.Element
         protected T GetTrait<T>() where T: Trait
         {
             return traits.Find(t => t is T) as T;
+        }
+        
+        public List<Trait> GetTraits()
+        {
+            return traits;
         }
     }
 }

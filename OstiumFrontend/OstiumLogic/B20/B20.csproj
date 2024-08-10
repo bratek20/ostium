@@ -47,7 +47,6 @@
         <Compile Include="Frontend\Elements\Button.cs" />
         <Compile Include="Frontend\Elements\ElementListVM.cs" />
         <Compile Include="Frontend\Elements\LabelVM.cs" />
-        <Compile Include="Frontend\Elements\PanelVM.cs" />
         <Compile Include="Frontend\Element\ElementVM.cs" />
         <Compile Include="Frontend\Element\Trait.cs" />
         <Compile Include="Frontend\Traits\Clickable.cs" />

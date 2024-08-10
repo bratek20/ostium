@@ -5,7 +5,7 @@ using GameComponents.Api;
 
 namespace Ostium.Logic
 {
-    public class CreatureCardVM: PanelVM<CreatureCard>
+    public class CreatureCardVM: ElementVM<CreatureCard>
     {
         public LabelVM Name { get; } = new LabelVM();
 

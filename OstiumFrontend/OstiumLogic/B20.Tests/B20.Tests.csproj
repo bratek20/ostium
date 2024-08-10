@@ -54,6 +54,7 @@
         <Compile Include="Architecture\Events\Fixtures\Mocks.cs" />
         <Compile Include="Architecture\Events\Tests\ImplTest.cs" />
         <Compile Include="Architecture\Exceptions\Fixtures\Asserts.cs" />
+        <Compile Include="Asserts\Assert.cs" />
         <Compile Include="Ext\OptionalTest.cs" />
         <Compile Include="Frontend\Elements\Tests\ElementListVMTest.cs" />
         <Compile Include="Frontend\Element\Tests\ElementVMTest.cs" />

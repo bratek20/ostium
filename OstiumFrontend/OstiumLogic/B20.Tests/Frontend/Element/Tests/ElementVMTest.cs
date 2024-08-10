@@ -1,4 +1,4 @@
-using B20.Frontend.Element;
+using B20.Tests.Asserts;
 using Xunit;
 
 namespace B20.Frontend.Element.Tests
@@ -42,9 +42,12 @@ namespace B20.Frontend.Element.Tests
     public class ElementVMTest
     {
         private ElementVMTester elementTester;
+        private ElementVM elementInterf;
+        
         public ElementVMTest()
         {
             elementTester = new ElementVMTester();
+            elementInterf = elementTester;
         }
             
         [Fact]
@@ -59,6 +62,8 @@ namespace B20.Frontend.Element.Tests
         public void ShouldSupportTraits()
         {
             elementTester.AssertHaveTraitTesterWithOwnerInitialized();
+            
+            Asserts.ListCount(elementInterf.GetTraits(), 1);
         }
     }
 }

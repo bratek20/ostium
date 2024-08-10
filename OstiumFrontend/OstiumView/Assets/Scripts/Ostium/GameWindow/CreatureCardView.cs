@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Ostium.View
 {
-    public class CreateCardView: PanelView<CreatureCardVM>
+    public class CreateCardView: ElementView<CreatureCardVM>
     {
         [SerializeField]
         private LabelView name;

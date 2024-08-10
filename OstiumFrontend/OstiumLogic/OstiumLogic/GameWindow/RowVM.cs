@@ -7,7 +7,7 @@ using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class RowVM: PanelVM<Optional<CreatureCard>>
+    public class RowVM: ElementVM<Optional<CreatureCard>>
     {
         public RowType Type { get; }
         public CreatureCardVM Card { get; }
