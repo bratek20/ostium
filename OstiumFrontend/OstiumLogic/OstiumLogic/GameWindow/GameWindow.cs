@@ -1,5 +1,5 @@
 ﻿using B20.Events.Api;
-using B20.Frontend.Elements;
+using B20.Frontend.Element;
 using B20.Frontend.Windows.Api;
 using GameComponents.Api;
 using GameSetup.Api;

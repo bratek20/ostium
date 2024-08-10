@@ -1,21 +1,27 @@
 using B20.Events.Api;
-using B20.Frontend.Elements;
+using B20.Frontend.Element;
+using B20.Frontend.Traits;
 using GameComponents.Api;
 
 namespace Ostium.Logic
 {
-    public class CreatureCardVM: PanelVM<CreatureCard>
+    public class CreatureCardVM: ElementVM<CreatureCard>
     {
         public LabelVM Name { get; } = new LabelVM();
-        
-        public CreatureCardVM(EventPublisher publisher): base(publisher)
+
+        public CreatureCardVM(EventPublisher publisher)
         {
-            Clickable = true;
+            AddTrait(new Clickable(publisher));
         }
         
         protected override void OnUpdate()
         {
             Name.Update(Model.GetId().Value);
+        }
+        
+        public void Click()
+        {
+            GetTrait<Clickable>().Click();
         }
     }
 }

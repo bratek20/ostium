@@ -1,4 +1,5 @@
-using B20.Frontend.Elements;
+using B20.Frontend.Element;
+using B20.Frontend.Traits;
 using UnityEngine;
 
 namespace B20.View
@@ -15,9 +16,20 @@ namespace B20.View
         {
             ViewModel = value;
             ViewModel.SetObserverUpdateAction(OnObservedViewModelUpdate);
+            
+            ViewModel.GetTraits().ForEach(BindTrait);
+            
             OnBind();
         }
 
+        private void BindTrait(Trait t)
+        {
+            if (t is Clickable c)
+            {
+                gameObject.AddComponent<ClickableView>().Bind(c);
+            }
+        }
+        
         private void OnObservedViewModelUpdate()
         {
             OnViewModelUpdate();
