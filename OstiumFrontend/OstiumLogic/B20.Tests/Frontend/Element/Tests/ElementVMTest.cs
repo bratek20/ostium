@@ -1,7 +1,7 @@
-using B20.Frontend.Elements;
+using B20.Frontend.Element;
 using Xunit;
 
-namespace B20.Tests.Frontend.Elements.Tests
+namespace B20.Frontend.Element.Tests
 {
     public class ElementVMTest
     {

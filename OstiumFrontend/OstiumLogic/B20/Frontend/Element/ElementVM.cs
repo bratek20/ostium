@@ -1,6 +1,6 @@
 using System;
 
-namespace B20.Frontend.Elements
+namespace B20.Frontend.Element
 {
     public interface ElementVM
     {
