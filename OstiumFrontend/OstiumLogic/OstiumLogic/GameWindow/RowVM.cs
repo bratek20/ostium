@@ -11,7 +11,6 @@ namespace Ostium.Logic
     {
         public RowType Type { get; }
         public CreatureCardVM Card { get; }
-        public ClickableTrait Clickable { get; }
         
         public bool HasCard => Model.IsPresent();
         
@@ -22,8 +21,7 @@ namespace Ostium.Logic
         
         public RowVM(RowType type, EventPublisher publisher)
         {
-            Clickable = new ClickableTrait(publisher);
-            Clickable.Init(this);
+            AddTrait(new Clickable(publisher));
             
             Type = type;
             Card = new CreatureCardVM(publisher);
@@ -39,7 +37,7 @@ namespace Ostium.Logic
         
         public void Click()
         {
-            Clickable.Click();
+            GetTrait<Clickable>().Click();
         }
     }
 }

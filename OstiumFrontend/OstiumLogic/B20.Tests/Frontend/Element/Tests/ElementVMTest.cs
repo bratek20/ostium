@@ -3,28 +3,62 @@ using Xunit;
 
 namespace B20.Frontend.Element.Tests
 {
-    public class ElementVMTest
+    class TraitTester : Trait
     {
-        class SomeModel {}
-        
-        class SomeElementVM: ElementVM<SomeModel>
+        public void AssertOwner(ElementVM owner)
         {
-            public int UpdateCount { get; private set; }
-            
-            protected override void OnUpdate()
-            {
-                UpdateCount++;
-            }
+            Assert.Equal(owner, Owner);
+        }
+    }
+    
+    class SomeModel {}
+        
+    class ElementVMTester: ElementVM<SomeModel>
+    {
+        private int updateCount = 0;
+        
+        public ElementVMTester()
+        {
+            AddTrait(new TraitTester());
         }
         
+        protected override void OnUpdate()
+        {
+            updateCount++;
+        }
+        
+        public void AssertUpdateCount(int expected)
+        {
+            Assert.Equal(expected, updateCount);
+        }
+        
+        public void AssertHaveTraitTesterWithOwnerInitialized()
+        {
+            var t = GetTrait<TraitTester>();
+            t.AssertOwner(this);
+        }
+    }
+    
+    public class ElementVMTest
+    {
+        private ElementVMTester elementTester;
+        public ElementVMTest()
+        {
+            elementTester = new ElementVMTester();
+        }
+            
         [Fact]
         public void ShouldCallOnUpdate()
         {
-            var element = new SomeElementVM();
+            elementTester.Update(new SomeModel());
             
-            element.Update(new SomeModel());
-            
-            Assert.Equal(1, element.UpdateCount);
+            elementTester.AssertUpdateCount(1);
+        }
+        
+        [Fact]
+        public void ShouldSupportTraits()
+        {
+            elementTester.AssertHaveTraitTesterWithOwnerInitialized();
         }
     }
 }

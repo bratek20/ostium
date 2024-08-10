@@ -30,10 +30,10 @@ namespace B20.Frontend.Traits
         }
     }
     
-    public class ClickableTrait: Trait
+    public class Clickable: Trait
     {
         private EventPublisher publisher;
-        public ClickableTrait(EventPublisher publisher)
+        public Clickable(EventPublisher publisher)
         {
             this.publisher = publisher;
         }

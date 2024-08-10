@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace B20.Frontend.Element
 {
@@ -9,7 +10,7 @@ namespace B20.Frontend.Element
         void Refresh();
     }
 
-    public class ElementVM<T>: ElementVM where T: class
+    public abstract class ElementVM<T>: ElementVM where T: class
     {
         public T Model { get; private set; }
         
@@ -34,6 +35,19 @@ namespace B20.Frontend.Element
         public void Refresh()
         {
             Update(Model);
+        }
+
+        private List<Trait> traits = new List<Trait>();
+        
+        protected void AddTrait(Trait t)
+        {
+            traits.Add(t);
+            t.Init(this);
+        }
+        
+        protected T GetTrait<T>() where T: Trait
+        {
+            return traits.Find(t => t is T) as T;
         }
     }
 }

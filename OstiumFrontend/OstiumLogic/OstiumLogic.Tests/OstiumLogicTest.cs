@@ -44,8 +44,8 @@ namespace Ostium.Logic.Tests
             Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
             
             //Playing second card on defense row
-            c.FirstCardInHand.Clickable.Click();
-            c.DefenseRow.Clickable.Click();
+            c.FirstCardInHand.Click();
+            c.DefenseRow.Click();
 
             AssertCardInRow(c.DefenseRow, "Mouse2");
         }
