@@ -10,16 +10,14 @@ namespace B20.Types
         {
             return new Position2D((int) v.x, (int) v.y);
         }
-        
+
+        //convert to world screen space
         public static Rect Convert(RectTransform rectTransform)
         {
-            // Extract the position and size from RectTransform
-            Vector2 position = rectTransform.anchoredPosition;
-            Vector2 size = rectTransform.sizeDelta;
-
-            var topLeft = new Position2D((int) position.x, (int) position.y);
-            var bottomRight = new Position2D((int) (position.x + size.x), (int) (position.y + size.y));
-            return new Rect(topLeft, bottomRight);
+            var leftBottom = rectTransform.TransformPoint(rectTransform.rect.min);
+            var rightTop = rectTransform.TransformPoint(rectTransform.rect.max);
+            var size = rightTop - leftBottom;
+            return new Rect(Convert(leftBottom), Convert(size));
         }
     }
 }

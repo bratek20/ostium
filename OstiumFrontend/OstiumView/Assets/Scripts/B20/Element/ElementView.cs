@@ -33,6 +33,10 @@ namespace B20.View
             {
                 gameObject.AddComponent<DraggableView>().Bind(d);
             }
+            if (t is WithRect r)
+            {
+                gameObject.AddComponent<WithRectView>().Bind(r);
+            }
         }
         
         private void OnObservedViewModelUpdate()

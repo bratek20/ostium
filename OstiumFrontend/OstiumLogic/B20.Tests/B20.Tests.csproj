@@ -62,8 +62,8 @@
         <Compile Include="Frontend\Traits\Tests\DraggableTest.cs" />
         <Compile Include="Frontend\Traits\Tests\WithRectTest.cs" />
         <Compile Include="Frontend\Types\Fixtures\Builders.cs" />
-        <Compile Include="Frontend\Types\Position2DTest.cs" />
-        <Compile Include="Frontend\Types\Tests.cs" />
+        <Compile Include="Frontend\Types\Tests\Position2DTest.cs" />
+        <Compile Include="Frontend\Types\Tests\RectTest.cs" />
         <Compile Include="Frontend\Windows\Fixtures\Mocks.cs" />
         <Compile Include="Frontend\Windows\Tests\ImplTest.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

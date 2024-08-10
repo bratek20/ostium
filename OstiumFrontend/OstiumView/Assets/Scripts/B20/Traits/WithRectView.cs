@@ -11,6 +11,7 @@ namespace B20.View
             base.OnBind();
             var rectTransform = gameObject.GetComponent<RectTransform>();
             Trait.Rect = TypesConverter.Convert(rectTransform);
+            Debug.Log("WithRectView, rect: " + Trait.Rect + ", gameObject: " + gameObject);
         }
     }
 }
