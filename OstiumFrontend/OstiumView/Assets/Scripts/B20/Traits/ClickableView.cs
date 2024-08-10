@@ -12,18 +12,5 @@ namespace B20.View
             var button = gameObject.AddComponent<Button>();
             button.onClick.AddListener(clickable.Click);
         }
-        // protected override void OnBind()
-        // {
-        //     if (ViewModel.Clickable)
-        //     {
-        //         var button = gameObject.AddComponent<Button>();
-        //         button.onClick.AddListener(OnClick);
-        //     }
-        // }
-        //
-        // private void OnClick()
-        // {
-        //     ViewModel.Click();
-        // }
     }
 }

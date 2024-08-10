@@ -22,7 +22,9 @@ namespace B20.Tests.Frontend.Traits.Tests
             
             clickable.Click();
             
-            publisherMock.AssertOneEventPublished(new ElementClickedEvent(owner));
+            publisherMock.AssertOneEventPublished<ElementClickedEvent>(
+                e => e.Element.Equals(owner)
+            );
         }
     }
 }

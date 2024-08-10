@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using B20.Events.Api;
 using Xunit;
@@ -13,10 +14,11 @@ namespace B20.Tests.Architecture.Events.Fixtures
             publishedEvents.Add(e);
         }
 
-        public void AssertOneEventPublished(Event expected)
+        public void AssertOneEventPublished<T>(Func<T, bool> eventCheck) where T: Event
         {
             Assert.Equal(publishedEvents.Count, 1);
-            Assert.Equal(publishedEvents[0], expected);
+            Assert.Equal(true, publishedEvents[0] is T);
+            Assert.Equal(true, eventCheck((T)publishedEvents[0]));
         }
 
         public void AddListener<TEvent>(EventListener<TEvent> listener) where TEvent : Event

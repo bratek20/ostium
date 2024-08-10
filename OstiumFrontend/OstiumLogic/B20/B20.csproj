@@ -50,6 +50,7 @@
         <Compile Include="Frontend\Element\ElementVM.cs" />
         <Compile Include="Frontend\Element\Trait.cs" />
         <Compile Include="Frontend\Traits\Clickable.cs" />
+        <Compile Include="Frontend\Traits\Draggable.cs" />
         <Compile Include="Frontend\Windows\Api\Exceptions.cs" />
         <Compile Include="Frontend\Windows\Api\Interfaces.cs" />
         <Compile Include="Frontend\Windows\Api\ValueObjects.cs" />

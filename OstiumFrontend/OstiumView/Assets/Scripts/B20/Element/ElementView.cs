@@ -22,11 +22,16 @@ namespace B20.View
             OnBind();
         }
 
+        //TODO-REF make it generic with some global trait dictionary
         private void BindTrait(Trait t)
         {
             if (t is Clickable c)
             {
                 gameObject.AddComponent<ClickableView>().Bind(c);
+            }
+            if (t is Draggable d)
+            {
+                gameObject.AddComponent<DraggableView>().Bind(d);
             }
         }
         
