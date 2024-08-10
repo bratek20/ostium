@@ -9,23 +9,26 @@ namespace B20.Tests.Frontend.Traits.Tests
     public class WithRectTest
     {
         [Fact]
-        public void IsInside_ShouldThrowIfRectNotSet()
+        public void IsInside_ShouldThrowIfRectProviderNotSet()
         {
             var withRect = new WithRect();
             Asserts.ThrowsApiException(
                 () => withRect.IsInside(Builders.CreatePosition2D()),
-                e => e.Type = typeof(RectNotSetException)
+                e => e.Type = typeof(RectProviderNotSetException)
             );
         }
 
         [Fact]
-        public void IsInside_ReturnsValueFromChecker()
+        public void IsInside_SupportsChangeableRect()
         {
             var withRect = new WithRect();
-            withRect.Rect = new Rect(0, 0, 10, 10);
+            var rect = new Rect(0, 0, 10, 10);
+            withRect.RectProvider = () => rect;
             
             Assert.True(withRect.IsInside(new Position2D(5, 5)));
-            Assert.False(withRect.IsInside(new Position2D(15, 15)));
+            
+            rect = new Rect(10, 10, 10, 10);
+            Assert.False(withRect.IsInside(new Position2D(5, 5)));
         }
     }
 }

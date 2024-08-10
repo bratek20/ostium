@@ -6,11 +6,13 @@ namespace B20.View
 {
     public class WithRectView: TraitView<WithRect>
     {
+        private RectTransform rectTransform;
+        
         protected override void OnBind()
         {
             base.OnBind();
-            var rectTransform = gameObject.GetComponent<RectTransform>();
-            Trait.Rect = TypesConverter.Convert(rectTransform);
+            rectTransform = gameObject.GetComponent<RectTransform>();
+            Trait.RectProvider = () => TypesConverter.Convert(rectTransform);
             Debug.Log("WithRectView, rect: " + Trait.Rect + ", gameObject: " + gameObject);
         }
     }

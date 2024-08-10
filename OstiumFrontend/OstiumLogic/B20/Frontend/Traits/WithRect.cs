@@ -1,27 +1,27 @@
+using System;
 using B20.Architecture.Exceptions;
 using B20.Frontend.Element;
 using B20.Frontend.Postion;
 
 namespace B20.Frontend.Traits
 {
-    public class RectNotSetException: ApiException
+    public class RectProviderNotSetException: ApiException
     {
-        public RectNotSetException(): base("Rect not set")
-        {
-        }
     }
     
     public class WithRect: Trait
     {
-        public Rect Rect { get; set; }
+        public Func<Rect> RectProvider { get; set; }
+        public Rect Rect => RectProvider();
         
         public bool IsInside(Position2D p)
         {
-            if (Rect == null)
+            if (RectProvider == null)
             {
-                throw new RectNotSetException();
+                throw new RectProviderNotSetException();
             }
-            return Rect.IsInside(p);
+
+            return RectProvider().IsInside(p);
         }
     }
 }
