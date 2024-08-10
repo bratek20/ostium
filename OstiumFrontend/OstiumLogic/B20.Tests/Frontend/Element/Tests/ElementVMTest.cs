@@ -1,4 +1,4 @@
-using B20.Tests.Asserts;
+using B20.Tests.ExtraAsserts;
 using Xunit;
 
 namespace B20.Frontend.Element.Tests

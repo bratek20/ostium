@@ -13,6 +13,7 @@ namespace Ostium.Logic
         {
             AddTrait(new Clickable(publisher));
             AddTrait(new Draggable(publisher));
+            AddTrait(new WithRect());
         }
         
         protected override void OnUpdate()

@@ -1,4 +1,4 @@
-namespace B20.Tests.Asserts
+namespace B20.Tests.ExtraAsserts
 {
     public class Asserts
     {

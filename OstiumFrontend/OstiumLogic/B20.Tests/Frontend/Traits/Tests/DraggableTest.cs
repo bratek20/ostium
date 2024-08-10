@@ -1,6 +1,7 @@
 using B20.Frontend.Element;
 using B20.Frontend.Traits;
 using B20.Tests.Architecture.Events.Fixtures;
+using B20.Tests.Frontend.Types.Fixtures;
 using Xunit;
 
 namespace B20.Tests.Frontend.Traits.Tests
@@ -9,10 +10,6 @@ namespace B20.Tests.Frontend.Traits.Tests
     {
         class SomeModel {}
         class SomeElementVM : ElementVM<SomeModel>
-        {
-        }
-        
-        class SimplePosition : Position
         {
         }
 
@@ -24,7 +21,7 @@ namespace B20.Tests.Frontend.Traits.Tests
             var owner = new SomeElementVM();
             draggable.Init(owner);
 
-            var position = new SimplePosition();
+            var position = Builders.CreatePosition2D();
             
             draggable.StartDrag(position);
 
@@ -40,8 +37,8 @@ namespace B20.Tests.Frontend.Traits.Tests
             var draggable = new Draggable(publisherMock);
             var owner = new SomeElementVM();
             draggable.Init(owner);
-        
-            var position = new SimplePosition();
+
+            var position = Builders.CreatePosition2D();
             
             draggable.EndDrag(position);
 
