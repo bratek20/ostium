@@ -1,12 +1,4 @@
-﻿using System.Collections.Generic;
-using B20.Events.Api;
-using B20.Events.Impl;
-using B20.Ext;
-using B20.Frontend.Windows.Impl;
-using B20.Logic.Utils;
-using B20.Tests.Frontend.Windows.Fixtures;
-using GameComponents;
-using GameComponents.Api;
+﻿using GameComponents;
 using Xunit;
 
 namespace Ostium.Logic.Tests
@@ -52,8 +44,8 @@ namespace Ostium.Logic.Tests
             Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
             
             //Playing second card on defense row
-            c.FirstCardInHand.Click();
-            c.DefenseRow.Click();
+            c.FirstCardInHand.Clickable.Click();
+            c.DefenseRow.Clickable.Click();
 
             AssertCardInRow(c.DefenseRow, "Mouse2");
         }

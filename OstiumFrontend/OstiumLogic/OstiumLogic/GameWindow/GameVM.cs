@@ -3,12 +3,13 @@ using B20.Architecture.Exceptions;
 using B20.Events.Api;
 using B20.Ext;
 using B20.Frontend.Element;
+using B20.Frontend.Traits;
 using GameComponents.Api;
 using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class GameVM: ElementVM<Game>, EventListener<PanelClickedEvent>
+    public class GameVM: ElementVM<Game>, EventListener<ElementClickedEvent>
     {
         public TableVM Table { get; }
         public HandVM Hand { get; }
@@ -66,10 +67,10 @@ namespace Ostium.Logic
             }
             throw new ApiException("card not found on table");
         }
-        
-        public void HandleEvent(PanelClickedEvent e)
+
+        public void HandleEvent(ElementClickedEvent e)
         {
-            if (e.Panel is CreatureCardVM card)
+            if (e.Element is CreatureCardVM card)
             {
                 var optPreviousClickedCardId = SelectedCard;
                 SelectedCard = Optional<CreatureCardId>.Of(card.Model.GetId());
@@ -83,7 +84,7 @@ namespace Ostium.Logic
                     }
                 });
             }
-            if (e.Panel is RowVM row)
+            if (e.Element is RowVM row)
             {
                 var rowType = row.Type;
                 var otherRow = rowType == RowType.ATTACK ? Table.DefenseRow : Table.AttackRow;

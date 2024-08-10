@@ -16,7 +16,7 @@ namespace B20.Tests.Frontend.Traits.Tests
         public void Click_PublishClicked()
         {
             var publisherMock = new EventPublisherMock();
-            var clickable = new Clickable(publisherMock);
+            var clickable = new ClickableTrait(publisherMock);
             var owner = new SomeElementVM();
             clickable.Init(owner);
             
