@@ -3,5 +3,5 @@ using Ostium.Logic;
 
 namespace Ostium.View
 {
-    public class CardsListView: ElementListView<CreateCardView, CreatureCardVM> { }
+    public class CardsListView: ElementListView<CreateCardView, CreatureCardVm> { }
 }

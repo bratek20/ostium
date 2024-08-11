@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace B20.View
 {
-    public class ElementView<T>: MonoBehaviour where T: ElementVM
+    public class ElementView<T>: MonoBehaviour where T: ElementVm
     {
         protected T ViewModel { get; private set; }
 

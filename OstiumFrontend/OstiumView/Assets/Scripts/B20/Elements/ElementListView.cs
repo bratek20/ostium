@@ -1,21 +1,22 @@
 using System.Collections.Generic;
 using B20.Frontend.Element;
+using B20.Frontend.Elements;
 using UnityEngine;
 
 namespace B20.View
 {
-    public class ElementListView<ViewType, ViewModelType>
-        : ElementView<ElementListVM<ViewModelType>> 
-        where ViewType: ElementView<ViewModelType>
-        where ViewModelType: ElementVM
+    public class ElementListView<TView, TViewModel>
+        : ElementView<ElementListVm<TViewModel>> 
+        where TView: ElementView<TViewModel>
+        where TViewModel: ElementVm
     {
         [SerializeField]
-        private ViewType elementPrefab;
+        private TView elementPrefab;
 
         [SerializeField]
         private int elementSpacing = 1;
 
-        private List<ViewType> elementViews = new List<ViewType>();
+        private readonly List<TView> _elementViews = new List<TView>();
         
         protected override void OnViewModelUpdate()
         {
@@ -23,16 +24,16 @@ namespace B20.View
             
             Vector3 currentPosition = Vector3.zero;
             
-            foreach (var view in elementViews)
+            foreach (var view in _elementViews)
             {
                 Destroy(view.gameObject);
             }
-            elementViews.Clear();
+            _elementViews.Clear();
             
             foreach (var element in ViewModel.Model)
             {
                 var view = Instantiate(elementPrefab, transform);
-                elementViews.Add(view);
+                _elementViews.Add(view);
                 
                 view.transform.localPosition = currentPosition;
                 view.Bind(element);

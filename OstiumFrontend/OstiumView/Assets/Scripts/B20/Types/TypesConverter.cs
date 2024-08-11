@@ -6,9 +6,9 @@ namespace B20.Types
 {
     public class TypesConverter
     {
-        public static Position2D Convert(Vector3 v)
+        public static Position2d Convert(Vector3 v)
         {
-            return new Position2D((int) v.x, (int) v.y);
+            return new Position2d((int) v.x, (int) v.y);
         }
 
         //convert to world screen space

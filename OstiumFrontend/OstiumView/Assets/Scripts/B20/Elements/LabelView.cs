@@ -1,20 +1,21 @@
 using B20.Frontend.Element;
+using B20.Frontend.Elements;
 using TMPro;
 
 namespace B20.View
 {
-    public class LabelView : ElementView<LabelVM>
+    public class LabelView : ElementView<LabelVm>
     {
-        private TextMeshProUGUI text;
+        private TextMeshProUGUI _text;
 
         protected override void OnBind()
         {
-            text = GetComponent<TextMeshProUGUI>();
+            _text = GetComponent<TextMeshProUGUI>();
         }
 
         protected override void OnViewModelUpdate()
         {
-            text.text = ViewModel.Model;
+            _text.text = ViewModel.Model;
         }
     }
 }
