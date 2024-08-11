@@ -1,4 +1,6 @@
-﻿using B20.Tests.Frontend.Traits.Fixtures;
+﻿using B20.Frontend.Postion;
+using B20.Frontend.Traits;
+using B20.Tests.Frontend.Traits.Fixtures;
 using GameComponents;
 using Xunit;
 
@@ -49,6 +51,36 @@ namespace Ostium.Logic.Tests
             Helpers.Click(c.FirstCardInHand);
             Helpers.Click(c.DefenseRow);
 
+            AssertCardInRow(c.DefenseRow, "Mouse2");
+        }
+        
+        [Fact]
+        public void ShouldPlayCardsByDragging()
+        {
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
+            
+            //Playing first card on attack row
+            var card1Name = c.FirstCardInHand.Name.Model;
+            Assert.Equal("Mouse1", card1Name);
+            
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            AssertSelectedCard(c, "Mouse1");
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
+            
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertNoCardSelected(c);
+            
+            Assert.Equal(c.CardsInHand.Count, 1);
+            Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
+            
+            //Playing second card on defense row
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(20, 20));
+            
             AssertCardInRow(c.DefenseRow, "Mouse2");
         }
         

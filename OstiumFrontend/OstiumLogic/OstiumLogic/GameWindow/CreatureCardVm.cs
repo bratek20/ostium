@@ -9,10 +9,10 @@ namespace Ostium.Logic
     public class CreatureCardVm: ElementVm<CreatureCard>
     {
         public LabelVm Name { get; } = new LabelVm();
-        public Position2dVm Position { get; } = new Position2dVm();
-        
+
         public CreatureCardVm(EventPublisher publisher)
         {
+            AddTrait(new Clickable(publisher));
             AddTrait(new Draggable(publisher));
         }
         

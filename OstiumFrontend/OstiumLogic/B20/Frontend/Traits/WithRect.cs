@@ -9,19 +9,31 @@ namespace B20.Frontend.Traits
     {
     }
     
-    public class WithRect: Trait
+    public class WithRect : Trait
     {
-        public Func<Rect> RectProvider { get; set; }
+        private Func<Rect> _rectProvider;
+
+        public Func<Rect> RectProvider
+        {
+            get 
+            {
+                if (_rectProvider == null)
+                {
+                    throw new RectProviderNotSetException();
+                }
+                return _rectProvider;
+            }
+            set
+            {
+                _rectProvider = value;
+            }
+        }
+
         public Rect Rect => RectProvider();
-        
+    
         public bool IsInside(Position2d p)
         {
-            if (RectProvider == null)
-            {
-                throw new RectProviderNotSetException();
-            }
-
-            return RectProvider().IsInside(p);
+            return Rect.IsInside(p);
         }
     }
 }
