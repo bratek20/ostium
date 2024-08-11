@@ -113,6 +113,34 @@ namespace Ostium.Logic.Tests
             AssertCardInRow(c.DefenseRow, "Mouse1");
         }
         
+        [Fact]
+        public void EndingDragInTheSameRowDoesNothing()
+        {
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
+            
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            
+            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            Helpers.EndDrag(c.CardInAttackRow, new Position2d(10, 10));
+        }
+        
+        [Fact]
+        public void InitialCardsInHandAreNotSelected()
+        {
+            var c = scenarios.InGameWindow();
+            
+            c.CardsInHand.ForEach(card =>
+            {
+                Assert.False(card.Selected.Model);
+            });
+        }
+        
         void AssertCardInRow(RowVM row, string cardName)
         {
             Assert.True(row.HasCard);

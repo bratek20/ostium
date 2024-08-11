@@ -23,6 +23,11 @@ namespace Ostium.Logic
             Card = new OptionalElementVm<CreatureCardVm, CreatureCard>(new CreatureCardVm(publisher));
         }
         
+        public bool ContainsCard(CreatureCardVm card)
+        {
+            return HasCard && Card.Element.Id.Equals(card.Id);
+        }
+        
         protected override void OnUpdate()
         {
             Card.Update(Model);

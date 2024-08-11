@@ -101,6 +101,10 @@ namespace Ostium.Logic
             {
                 FindRowWithPointInside(ev.Position).Let(row =>
                 {
+                    if (row.ContainsCard(SelectedCard.Get()))
+                    {
+                        return;
+                    }
                     var otherRow = row.Type == RowType.ATTACK ? Table.DefenseRow : Table.AttackRow;
                     var game = gameSetupApi.MoveCard(SelectedCard.Get().Id, otherRow.Type, row.Type);
                     Update(game);
