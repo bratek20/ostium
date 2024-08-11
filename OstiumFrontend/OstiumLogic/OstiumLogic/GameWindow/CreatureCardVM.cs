@@ -20,10 +20,5 @@ namespace Ostium.Logic
         {
             Name.Update(Model.GetId().Value);
         }
-        
-        public void Click()
-        {
-            GetTrait<Clickable>().Click();
-        }
     }
 }

@@ -9,7 +9,9 @@ namespace B20.Frontend.Element
         
         void Refresh();
         
+        
         List<Trait> GetTraits();
+        T GetTrait<T>() where T: Trait;
     }
 
     public abstract class ElementVM<ModelType>: ElementVM where ModelType: class
@@ -47,7 +49,7 @@ namespace B20.Frontend.Element
             t.Init(this);
         }
         
-        protected T GetTrait<T>() where T: Trait
+        public T GetTrait<T>() where T: Trait
         {
             return traits.Find(t => t is T) as T;
         }

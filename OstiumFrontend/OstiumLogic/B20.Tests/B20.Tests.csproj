@@ -58,6 +58,7 @@
         <Compile Include="Ext\OptionalTest.cs" />
         <Compile Include="Frontend\Elements\Tests\ElementListVMTest.cs" />
         <Compile Include="Frontend\Element\Tests\ElementVMTest.cs" />
+        <Compile Include="Frontend\Traits\Fixtures\Helpers.cs" />
         <Compile Include="Frontend\Traits\Tests\ClickableTest.cs" />
         <Compile Include="Frontend\Traits\Tests\DraggableTest.cs" />
         <Compile Include="Frontend\Traits\Tests\WithRectTest.cs" />

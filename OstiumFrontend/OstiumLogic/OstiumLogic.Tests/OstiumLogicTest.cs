@@ -1,4 +1,5 @@
-﻿using GameComponents;
+﻿using B20.Tests.Frontend.Traits.Fixtures;
+using GameComponents;
 using Xunit;
 
 namespace Ostium.Logic.Tests
@@ -35,8 +36,9 @@ namespace Ostium.Logic.Tests
             var card1Name = c.FirstCardInHand.Name.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            c.FirstCardInHand.Click();
-            c.AttackRow.Click();
+            Helpers.Click(c.FirstCardInHand);
+            AssertSelectedCard(c, "Mouse1");
+            Helpers.Click(c.AttackRow);
             
             AssertCardInRow(c.AttackRow, "Mouse1");
             
@@ -44,8 +46,8 @@ namespace Ostium.Logic.Tests
             Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
             
             //Playing second card on defense row
-            c.FirstCardInHand.Click();
-            c.DefenseRow.Click();
+            Helpers.Click(c.FirstCardInHand);
+            Helpers.Click(c.DefenseRow);
 
             AssertCardInRow(c.DefenseRow, "Mouse2");
         }
@@ -55,19 +57,19 @@ namespace Ostium.Logic.Tests
         {
             var c = scenarios.InGameWindow();
             
-            c.FirstCardInHand.Click();
-            c.AttackRow.Click();
+            Helpers.Click(c.FirstCardInHand);
+            Helpers.Click(c.AttackRow);
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertNoCardSelected(c);
             
-            c.AttackRow.Card.Click();
-            c.DefenseRow.Click();
+            Helpers.Click(c.AttackRow.Card);
+            Helpers.Click(c.DefenseRow);
             AssertCardInRow(c.DefenseRow, "Mouse1");
             AssertRowEmpty(c.AttackRow);
             AssertNoCardSelected(c);
             
-            c.DefenseRow.Card.Click();
-            c.AttackRow.Click();
+            Helpers.Click(c.DefenseRow.Card);
+            Helpers.Click(c.AttackRow);
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertRowEmpty(c.DefenseRow);
         }
@@ -77,16 +79,16 @@ namespace Ostium.Logic.Tests
         {
             var c = scenarios.InGameWindow();
             
-            c.FirstCardInHand.Click();
-            c.AttackRow.Click();
+            Helpers.Click(c.FirstCardInHand);
+            Helpers.Click(c.AttackRow);
             AssertCardInRow(c.AttackRow, "Mouse1");
             
-            c.FirstCardInHand.Click();
-            c.DefenseRow.Click();
+            Helpers.Click(c.FirstCardInHand);
+            Helpers.Click(c.DefenseRow);
             AssertCardInRow(c.DefenseRow, "Mouse2");
             
-            c.AttackRow.Card.Click();
-            c.DefenseRow.Card.Click();
+            Helpers.Click(c.AttackRow.Card);
+            Helpers.Click(c.DefenseRow.Card);
             AssertCardInRow(c.AttackRow, "Mouse2");
             AssertCardInRow(c.DefenseRow, "Mouse1");
         }

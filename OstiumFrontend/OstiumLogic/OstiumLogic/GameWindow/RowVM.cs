@@ -34,10 +34,5 @@ namespace Ostium.Logic
                 Card.Update(card);
             });
         }
-        
-        public void Click()
-        {
-            GetTrait<Clickable>().Click();
-        }
     }
 }
