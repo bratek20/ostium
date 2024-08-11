@@ -29,33 +29,9 @@ namespace Ostium.Logic.Tests
             
             Assert.Equal(WindowIds.GAME_WINDOW, c.WindowManager.GetCurrent());
         }
-        
+
         [Fact]
         public void ShouldPlayCards()
-        {
-            var c = scenarios.InGameWindow();
-            //Playing first card on attack row
-            var card1Name = c.FirstCardInHand.Name.Model;
-            Assert.Equal("Mouse1", card1Name);
-            
-            Helpers.Click(c.FirstCardInHand);
-            AssertSelectedCard(c, "Mouse1");
-            Helpers.Click(c.AttackRow);
-            
-            AssertCardInRow(c.AttackRow, "Mouse1");
-            
-            Assert.Equal(c.CardsInHand.Count, 1);
-            Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
-            
-            //Playing second card on defense row
-            Helpers.Click(c.FirstCardInHand);
-            Helpers.Click(c.DefenseRow);
-
-            AssertCardInRow(c.DefenseRow, "Mouse2");
-        }
-        
-        [Fact]
-        public void ShouldPlayCardsByDragging()
         {
             var c = scenarios.InGameWindow(i =>
             {
@@ -82,28 +58,6 @@ namespace Ostium.Logic.Tests
             Helpers.EndDrag(c.FirstCardInHand, new Position2d(20, 20));
             
             AssertCardInRow(c.DefenseRow, "Mouse2");
-        }
-        
-        [Fact]
-        public void ShouldMovePlayedCardBetweenRows()
-        {
-            var c = scenarios.InGameWindow();
-            
-            Helpers.Click(c.FirstCardInHand);
-            Helpers.Click(c.AttackRow);
-            AssertCardInRow(c.AttackRow, "Mouse1");
-            AssertNoCardSelected(c);
-            
-            Helpers.Click(c.AttackRow.Card);
-            Helpers.Click(c.DefenseRow);
-            AssertCardInRow(c.DefenseRow, "Mouse1");
-            AssertRowEmpty(c.AttackRow);
-            AssertNoCardSelected(c);
-            
-            Helpers.Click(c.DefenseRow.Card);
-            Helpers.Click(c.AttackRow);
-            AssertCardInRow(c.AttackRow, "Mouse1");
-            AssertRowEmpty(c.DefenseRow);
         }
         
         [Fact]
@@ -135,22 +89,26 @@ namespace Ostium.Logic.Tests
             AssertRowEmpty(c.DefenseRow);
             AssertNoCardSelected(c);
         }
-        
+
         [Fact]
         public void ShouldSwapPlayedCards()
         {
-            var c = scenarios.InGameWindow();
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
             
-            Helpers.Click(c.FirstCardInHand);
-            Helpers.Click(c.AttackRow);
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             
-            Helpers.Click(c.FirstCardInHand);
-            Helpers.Click(c.DefenseRow);
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(20, 20));
             AssertCardInRow(c.DefenseRow, "Mouse2");
             
-            Helpers.Click(c.AttackRow.Card);
-            Helpers.Click(c.DefenseRow.Card);
+            Helpers.StartDrag(c.AttackRow.Card, new Position2d(10, 10));
+            Helpers.EndDrag(c.AttackRow.Card, new Position2d(20, 20));
             AssertCardInRow(c.AttackRow, "Mouse2");
             AssertCardInRow(c.DefenseRow, "Mouse1");
         }
