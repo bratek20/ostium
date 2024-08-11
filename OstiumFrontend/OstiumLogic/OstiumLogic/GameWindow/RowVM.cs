@@ -7,10 +7,10 @@ using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class RowVM: ElementVM<Optional<CreatureCard>>
+    public class RowVM: ElementVm<Optional<CreatureCard>>
     {
         public RowType Type { get; }
-        public CreatureCardVM Card { get; }
+        public CreatureCardVm Card { get; }
         
         public bool HasCard => Model.IsPresent();
         
@@ -21,10 +21,10 @@ namespace Ostium.Logic
         
         public RowVM(RowType type, EventPublisher publisher)
         {
-            AddTrait(new Clickable(publisher));
+            AddTrait(new WithRect());
             
             Type = type;
-            Card = new CreatureCardVM(publisher);
+            Card = new CreatureCardVm(publisher);
         }
         
         protected override void OnUpdate()

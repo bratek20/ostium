@@ -5,15 +5,17 @@ namespace B20.Frontend.Element.Tests
 {
     class TraitTester : Trait
     {
-        public void AssertOwner(ElementVM owner)
+        public void AssertOwner(ElementVm owner)
         {
             Assert.Equal(owner, Owner);
         }
     }
     
+    class OtherTrait : Trait {}
+    
     class SomeModel {}
         
-    class ElementVMTester: ElementVM<SomeModel>
+    class ElementVMTester: ElementVm<SomeModel>
     {
         private int updateCount = 0;
         
@@ -42,7 +44,7 @@ namespace B20.Frontend.Element.Tests
     public class ElementVMTest
     {
         private ElementVMTester elementTester;
-        private ElementVM elementInterf;
+        private ElementVm elementInterf;
         
         public ElementVMTest()
         {
@@ -64,6 +66,15 @@ namespace B20.Frontend.Element.Tests
             elementTester.AssertHaveTraitTesterWithOwnerInitialized();
             
             Asserts.ListCount(elementInterf.GetTraits(), 1);
+            
+            B20.Tests.Architecture.Exceptions.Fixtures.Asserts.ThrowsApiException(
+                () => elementInterf.GetTrait<OtherTrait>(),
+                e =>
+                {
+                    e.Type = typeof(TraitNotFoundException);
+                    e.Message = "Trait OtherTrait not found for ElementVMTester";
+                }
+            );
         }
     }
 }

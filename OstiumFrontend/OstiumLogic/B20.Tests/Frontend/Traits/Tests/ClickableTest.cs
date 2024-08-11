@@ -8,7 +8,7 @@ namespace B20.Tests.Frontend.Traits.Tests
     public class ClickableTest
     {
         class SomeModel {}
-        class SomeElementVM: ElementVM<SomeModel>
+        class SomeElementVM: ElementVm<SomeModel>
         {
         }
         

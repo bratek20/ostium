@@ -8,7 +8,7 @@ namespace B20.Tests.Frontend.Types
         [Fact]
         public void ToStringTest()
         {
-            var position = new Position2D(5, 10);
+            var position = new Position2d(5, 10);
             Assert.Equal("(5, 10)", position.ToString());
         }
     }

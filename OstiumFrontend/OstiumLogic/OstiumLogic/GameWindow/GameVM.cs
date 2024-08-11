@@ -9,10 +9,10 @@ using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class GameVM: ElementVM<Game>, EventListener<ElementClickedEvent>
+    public class GameVM: ElementVm<Game>, EventListener<ElementClickedEvent>
     {
         public TableVM Table { get; }
-        public HandVM Hand { get; }
+        public HandVm Hand { get; }
 
         private GameSetupApi gameSetupApi;
         public GameVM(GameSetupApi gameSetupApi, EventPublisher eventPublisher)
@@ -21,7 +21,7 @@ namespace Ostium.Logic
             eventPublisher.AddListener(this);
             
             Table = new TableVM(eventPublisher);
-            Hand = new HandVM(eventPublisher);
+            Hand = new HandVm(eventPublisher);
         }
         
         public void StartGame()
@@ -70,7 +70,7 @@ namespace Ostium.Logic
 
         public void HandleEvent(ElementClickedEvent e)
         {
-            if (e.Element is CreatureCardVM card)
+            if (e.Element is CreatureCardVm card)
             {
                 var optPreviousClickedCardId = SelectedCard;
                 SelectedCard = Optional<CreatureCardId>.Of(card.Model.GetId());

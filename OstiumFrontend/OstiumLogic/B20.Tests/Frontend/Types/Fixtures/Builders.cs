@@ -4,9 +4,9 @@ namespace B20.Tests.Frontend.Types.Fixtures
 {
     public class Builders
     {
-        public static Position2D CreatePosition2D()
+        public static Position2d CreatePosition2D()
         {
-            return new Position2D(0, 0);
+            return new Position2d(0, 0);
         }
     }
 }

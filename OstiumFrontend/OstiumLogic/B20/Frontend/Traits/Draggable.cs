@@ -6,10 +6,10 @@ namespace B20.Frontend.Traits
 {
     public class ElementDragStartedEvent : Event
     {
-        public ElementVM Element { get; }
-        public Position2D Position { get; }
+        public ElementVm Element { get; }
+        public Position2d Position { get; }
         
-        public ElementDragStartedEvent(ElementVM element, Position2D position)
+        public ElementDragStartedEvent(ElementVm element, Position2d position)
         {
             Element = element;
             Position = position;
@@ -18,10 +18,10 @@ namespace B20.Frontend.Traits
 
     public class ElementDragEndedEvent : Event
     {
-        public ElementVM Element { get; }
-        public Position2D Position { get; }
+        public ElementVm Element { get; }
+        public Position2d Position { get; }
         
-        public ElementDragEndedEvent(ElementVM element, Position2D position)
+        public ElementDragEndedEvent(ElementVm element, Position2d position)
         {
             Element = element;
             Position = position;
@@ -36,12 +36,12 @@ namespace B20.Frontend.Traits
             this.publisher = publisher;
         }
 
-        public void StartDrag(Position2D p)
+        public void StartDrag(Position2d p)
         {
             publisher.Publish(new ElementDragStartedEvent(Owner, p));
         }
 
-        public void EndDrag(Position2D p)
+        public void EndDrag(Position2d p)
         {
             publisher.Publish(new ElementDragEndedEvent(Owner, p));
         }

@@ -18,16 +18,16 @@ namespace B20.Tests.Frontend.Types
             var rect = new Rect(100, 200, 30, 40);
             
             //edge points are inside
-            Assert.True(rect.IsInside(new Position2D(100, 200)));
-            Assert.True(rect.IsInside(new Position2D(130, 200)));
-            Assert.True(rect.IsInside(new Position2D(100, 240)));
-            Assert.True(rect.IsInside(new Position2D(130, 240)));
+            Assert.True(rect.IsInside(new Position2d(100, 200)));
+            Assert.True(rect.IsInside(new Position2d(130, 200)));
+            Assert.True(rect.IsInside(new Position2d(100, 240)));
+            Assert.True(rect.IsInside(new Position2d(130, 240)));
             
             //points outside
-            Assert.False(rect.IsInside(new Position2D(99, 200)));
-            Assert.False(rect.IsInside(new Position2D(100, 199)));
-            Assert.False(rect.IsInside(new Position2D(131, 200)));
-            Assert.False(rect.IsInside(new Position2D(100, 241)));
+            Assert.False(rect.IsInside(new Position2d(99, 200)));
+            Assert.False(rect.IsInside(new Position2d(100, 199)));
+            Assert.False(rect.IsInside(new Position2d(131, 200)));
+            Assert.False(rect.IsInside(new Position2d(100, 241)));
         }
     }
 }

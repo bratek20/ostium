@@ -25,10 +25,10 @@ namespace B20.Tests.Frontend.Traits.Tests
             var rect = new Rect(0, 0, 10, 10);
             withRect.RectProvider = () => rect;
             
-            Assert.True(withRect.IsInside(new Position2D(5, 5)));
+            Assert.True(withRect.IsInside(new Position2d(5, 5)));
             
             rect = new Rect(10, 10, 10, 10);
-            Assert.False(withRect.IsInside(new Position2D(5, 5)));
+            Assert.False(withRect.IsInside(new Position2d(5, 5)));
         }
     }
 }

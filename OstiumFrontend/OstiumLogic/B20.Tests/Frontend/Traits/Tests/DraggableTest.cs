@@ -9,7 +9,7 @@ namespace B20.Tests.Frontend.Traits.Tests
     public class DraggableTest
     {
         class SomeModel {}
-        class SomeElementVM : ElementVM<SomeModel>
+        class SomeElementVM : ElementVm<SomeModel>
         {
         }
 

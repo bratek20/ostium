@@ -5,8 +5,8 @@ namespace B20.Frontend.Traits
 {
     public class ElementClickedEvent: Event
     {
-        public ElementVM Element { get; }
-        public ElementClickedEvent(ElementVM element)
+        public ElementVm Element { get; }
+        public ElementClickedEvent(ElementVm element)
         {
             Element = element;
         }

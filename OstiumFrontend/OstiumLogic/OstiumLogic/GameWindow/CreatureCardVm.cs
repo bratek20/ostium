@@ -1,19 +1,19 @@
 using B20.Events.Api;
 using B20.Frontend.Element;
+using B20.Frontend.Elements;
 using B20.Frontend.Traits;
 using GameComponents.Api;
 
 namespace Ostium.Logic
 {
-    public class CreatureCardVM: ElementVM<CreatureCard>
+    public class CreatureCardVm: ElementVm<CreatureCard>
     {
-        public LabelVM Name { get; } = new LabelVM();
-
-        public CreatureCardVM(EventPublisher publisher)
+        public LabelVm Name { get; } = new LabelVm();
+        public Position2dVm Position { get; } = new Position2dVm();
+        
+        public CreatureCardVm(EventPublisher publisher)
         {
-            AddTrait(new Clickable(publisher));
             AddTrait(new Draggable(publisher));
-            AddTrait(new WithRect());
         }
         
         protected override void OnUpdate()

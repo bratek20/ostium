@@ -49,8 +49,8 @@ namespace Ostium.Logic.Tests
             public RowVM AttackRow => GameWindow.Game.Table.AttackRow;
             public RowVM DefenseRow => GameWindow.Game.Table.DefenseRow;
             
-            public List<CreatureCardVM> CardsInHand => GameWindow.Game.Hand.Cards.Model;
-            public CreatureCardVM FirstCardInHand => CardsInHand[0];
+            public List<CreatureCardVm> CardsInHand => GameWindow.Game.Hand.Cards.Model;
+            public CreatureCardVm FirstCardInHand => CardsInHand[0];
             
             public Optional<CreatureCardId> SelectedCard => GameWindow.Game.SelectedCard;
         }

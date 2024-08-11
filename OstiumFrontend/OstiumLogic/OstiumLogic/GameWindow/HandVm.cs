@@ -1,30 +1,31 @@
 using B20.Events.Api;
 using B20.Frontend.Element;
+using B20.Frontend.Elements;
 using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class HandVM: ElementVM<Hand>
+    public class HandVm: ElementVm<Hand>
     {
-        public ElementListVM<CreatureCardVM> Cards { get; } = new ElementListVM<CreatureCardVM>(); 
+        public ElementListVm<CreatureCardVm> Cards { get; } = new ElementListVm<CreatureCardVm>(); 
         
         private EventPublisher eventPublisher;
-        public HandVM(EventPublisher eventPublisher)
+        public HandVm(EventPublisher eventPublisher)
         {
             this.eventPublisher = eventPublisher;
         }
 
         protected override void OnUpdate()
         {
-            var cardsVM = Model.GetCards()
+            var cardsVm = Model.GetCards()
                 .ConvertAll(card =>
                 {
-                    var vm = new CreatureCardVM(eventPublisher);
+                    var vm = new CreatureCardVm(eventPublisher);
                     vm.Update(card);
                     return vm;
                 });
             
-            Cards.Update(cardsVM);
+            Cards.Update(cardsVm);
         }
     }
 }

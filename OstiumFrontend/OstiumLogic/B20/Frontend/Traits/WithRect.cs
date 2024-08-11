@@ -14,7 +14,7 @@ namespace B20.Frontend.Traits
         public Func<Rect> RectProvider { get; set; }
         public Rect Rect => RectProvider();
         
-        public bool IsInside(Position2D p)
+        public bool IsInside(Position2d p)
         {
             if (RectProvider == null)
             {
