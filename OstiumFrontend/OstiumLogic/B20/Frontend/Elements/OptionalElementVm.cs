@@ -7,10 +7,16 @@ namespace B20.Frontend.Elements
         ElementVm<Optional<TModel>> where TViewModel : ElementVm<TModel>
     {
         public TViewModel Element { get; }
-        
+
         public OptionalElementVm(TViewModel element)
         {
             Element = element;
+        }
+
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+            Model.Let(m => Element.Update(m));
         }
     }
 }

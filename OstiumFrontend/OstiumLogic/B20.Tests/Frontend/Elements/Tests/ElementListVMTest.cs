@@ -7,19 +7,19 @@ using Xunit;
 
 namespace B20.Tests.Frontend.Elements.Tests
 {
+    public class SomeModel
+    {
+        public int Value { get; }
+
+        public SomeModel(int value)
+        {
+            Value = value;
+        }
+    }
+    public class SomeViewModel: ElementVm<SomeModel> {}
+    
     public class ElementListVMTest
     {
-        class SomeModel
-        {
-            public int Value { get; }
-
-            public SomeModel(int value)
-            {
-                Value = value;
-            }
-        }
-        class SomeViewModel: ElementVm<SomeModel> {}
-
         [Fact]
         public void ShouldCreateVmElementsWithModel()
         {

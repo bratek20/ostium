@@ -12,8 +12,8 @@ namespace B20.View
         public void OnBeginDrag(PointerEventData eventData)
         {
             _parent = transform.parent;
-            transform.SetParent(transform.root);
-            transform.SetAsLastSibling();
+            //transform.SetParent(transform.root);
+            //transform.SetAsLastSibling();
             
             var position = TypesConverter.Convert(transform.position);
             Debug.Log("OnBeginDrag, position: " + position);
@@ -29,7 +29,7 @@ namespace B20.View
         
         public void OnEndDrag(PointerEventData eventData)
         {
-            transform.SetParent(_parent);
+            //transform.SetParent(_parent);
             
             var position = TypesConverter.Convert(transform.position);
             Debug.Log("OnEndDrag, position: " + position);
