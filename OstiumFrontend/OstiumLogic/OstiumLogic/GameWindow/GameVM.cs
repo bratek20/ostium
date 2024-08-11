@@ -97,6 +97,11 @@ namespace Ostium.Logic
             }).OrElse(false);
         }
 
+        private bool IsInHand(CreatureCardId card)
+        {
+            return Hand.Contains(card);
+        }
+        
         private bool IsOnTable(CreatureCardId card)
         {
             return Table.AttackRow.Contains(card) || Table.DefenseRow.Contains(card);
@@ -153,11 +158,23 @@ namespace Ostium.Logic
 
         public void HandleElementDragEnded(ElementDragEndedEvent ev)
         {
-            FindRowWithPointInside(ev.Position).Let(row =>
+            if (IsInHand(SelectedCard.Get()))
             {
-                var game = gameSetupApi.PlayCard(SelectedCard.Get(), row.Type);
-                Update(game);
-            });
+                FindRowWithPointInside(ev.Position).Let(row =>
+                {
+                    var game = gameSetupApi.PlayCard(SelectedCard.Get(), row.Type);
+                    Update(game);
+                });
+            }
+            else // is in table
+            {
+                FindRowWithPointInside(ev.Position).Let(row =>
+                {
+                    var otherRow = row.Type == RowType.ATTACK ? Table.DefenseRow : Table.AttackRow;
+                    var game = gameSetupApi.MoveCard(SelectedCard.Get(), otherRow.Type, row.Type);
+                    Update(game);
+                });
+            }
             SelectedCard = Optional<CreatureCardId>.Empty();
         }
 

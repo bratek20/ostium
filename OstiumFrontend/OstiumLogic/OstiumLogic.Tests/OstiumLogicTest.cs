@@ -107,6 +107,32 @@ namespace Ostium.Logic.Tests
         }
         
         [Fact]
+        public void ShouldMovePlayedCardBetweenRowsByDragging()
+        {
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
+            
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertNoCardSelected(c);
+            
+            Helpers.StartDrag(c.AttackRow.Card, new Position2d(10, 10));
+            Helpers.EndDrag(c.AttackRow.Card, new Position2d(20, 20));
+            AssertCardInRow(c.DefenseRow, "Mouse1");
+            AssertRowEmpty(c.AttackRow);
+            AssertNoCardSelected(c);
+            
+            Helpers.StartDrag(c.DefenseRow.Card, new Position2d(20, 20));
+            Helpers.EndDrag(c.DefenseRow.Card, new Position2d(10, 10));
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertRowEmpty(c.DefenseRow);
+        }
+        
+        [Fact]
         public void ShouldSwapPlayedCards()
         {
             var c = scenarios.InGameWindow();

@@ -1,6 +1,7 @@
 using B20.Events.Api;
 using B20.Frontend.Element;
 using B20.Frontend.Elements;
+using GameComponents.Api;
 using GameSetup.Api;
 
 namespace Ostium.Logic
@@ -14,6 +15,12 @@ namespace Ostium.Logic
         {
             this.eventPublisher = eventPublisher;
         }
+        
+        public bool Contains(CreatureCardId cardId)
+        {
+            return Model.GetCards().Exists(card => card.GetId().Equals(cardId));
+        }
+        
 
         protected override void OnUpdate()
         {
