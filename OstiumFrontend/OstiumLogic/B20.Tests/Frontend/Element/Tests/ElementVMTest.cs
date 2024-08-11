@@ -65,7 +65,7 @@ namespace B20.Frontend.Element.Tests
         {
             elementTester.AssertHaveTraitTesterWithOwnerInitialized();
             
-            Asserts.ListCount(elementInterf.GetTraits(), 1);
+            AssertExt.ListCount(elementInterf.GetTraits(), 1);
             
             B20.Tests.Architecture.Exceptions.Fixtures.Asserts.ThrowsApiException(
                 () => elementInterf.GetTrait<OtherTrait>(),

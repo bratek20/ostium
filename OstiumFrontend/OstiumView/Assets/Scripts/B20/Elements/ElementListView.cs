@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace B20.View
 {
-    public class ElementListView<TView, TViewModel>
-        : ElementView<ElementListVm<TViewModel>> 
+    public class ElementListView<TView, TViewModel, TModel>
+        : ElementView<ElementListVm<TViewModel, TModel>> 
         where TView: ElementView<TViewModel>
-        where TViewModel: ElementVm
+        where TViewModel: ElementVm<TModel>
     {
         [SerializeField]
         private TView elementPrefab;
@@ -30,7 +30,7 @@ namespace B20.View
             }
             _elementViews.Clear();
             
-            foreach (var element in ViewModel.Model)
+            foreach (var element in ViewModel.Elements)
             {
                 var view = Instantiate(elementPrefab, transform);
                 _elementViews.Add(view);
