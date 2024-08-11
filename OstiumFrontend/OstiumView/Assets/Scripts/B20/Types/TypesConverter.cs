@@ -10,6 +10,11 @@ namespace B20.Types
         {
             return new Position2d((int) v.x, (int) v.y);
         }
+        
+        public static Vector3 Convert(Position2d position)
+        {
+            return new Vector3(position.X, position.Y);
+        }
 
         //convert to world screen space
         public static Rect Convert(RectTransform rectTransform)

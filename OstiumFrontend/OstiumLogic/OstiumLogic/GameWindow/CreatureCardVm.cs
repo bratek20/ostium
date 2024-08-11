@@ -10,13 +10,13 @@ namespace Ostium.Logic
     {
         public LabelVm Name { get; } = new LabelVm();
         public VisibleVm Selected { get; } = new VisibleVm();
+        public Position2dVm Position { get; } = new Position2dVm();
 
         public CreatureCardId Id => Model.GetId();
         
         public CreatureCardVm(EventPublisher publisher)
         {
-            //AddTrait(new Clickable(publisher));
-            AddTrait(new Draggable(publisher));
+            AddTrait(new Draggable(publisher, Position));
             SetSelected(false);
         }
         

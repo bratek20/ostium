@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 8082197596820468225}
   - component: {fileID: 9028733611678339031}
   - component: {fileID: 3557555159404192530}
+  - component: {fileID: 2486225360436876634}
   m_Layer: 5
   m_Name: CreatureCard
   m_TagString: Untagged
@@ -327,3 +328,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: {fileID: 5162951314656719423}
   selected: {fileID: 4535521714183039930}
+  position: {fileID: 2486225360436876634}
+--- !u!114 &2486225360436876634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6482767352363791115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fab9f38ab74e67a922acf18abc810b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
