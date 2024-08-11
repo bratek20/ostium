@@ -8,7 +8,7 @@ namespace B20.Tests.Frontend.Traits.Tests
     public class ClickableTest
     {
         class SomeModel {}
-        class SomeElementVM: ElementVM<SomeModel>
+        class SomeElementVM: ElementVm<SomeModel>
         {
         }
         
@@ -22,7 +22,9 @@ namespace B20.Tests.Frontend.Traits.Tests
             
             clickable.Click();
             
-            publisherMock.AssertOneEventPublished(new ElementClickedEvent(owner));
+            publisherMock.AssertOneEventPublished<ElementClickedEvent>(
+                e => e.Element.Equals(owner)
+            );
         }
     }
 }

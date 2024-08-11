@@ -7,5 +7,9 @@ namespace B20.Architecture.Exceptions
         public ApiException(string message): base(message)
         {
         }
+        
+        public ApiException()
+        {
+        }
     }
 }

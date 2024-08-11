@@ -4,7 +4,7 @@ using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class TableVM: ElementVM<Table>
+    public class TableVM: ElementVm<Table>
     {
         public RowVM AttackRow { get; }
         public RowVM DefenseRow { get; }

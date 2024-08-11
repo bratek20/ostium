@@ -1,6 +1,6 @@
-namespace B20.Tests.Asserts
+namespace B20.Tests.ExtraAsserts
 {
-    public class Asserts
+    public class AssertExt
     {
         public static void ListCount<T>(System.Collections.Generic.List<T> list, int expected)
         {

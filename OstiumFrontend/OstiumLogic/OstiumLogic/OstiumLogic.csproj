@@ -38,10 +38,10 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="GameWindow\CreatureCardVM.cs" />
+        <Compile Include="GameWindow\CreatureCardVm.cs" />
         <Compile Include="GameWindow\GameVM.cs" />
         <Compile Include="GameWindow\GameWindow.cs" />
-        <Compile Include="GameWindow\HandVM.cs" />
+        <Compile Include="GameWindow\HandVm.cs" />
         <Compile Include="GameWindow\RowVM.cs" />
         <Compile Include="GameWindow\TableVM.cs" />
         <Compile Include="MainWindow\MainWindow.cs" />

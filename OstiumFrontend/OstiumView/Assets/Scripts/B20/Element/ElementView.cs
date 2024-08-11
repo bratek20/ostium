@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace B20.View
 {
-    public class ElementView<T>: MonoBehaviour where T: ElementVM
+    public class ElementView<T>: MonoBehaviour where T: ElementVm
     {
-        protected T ViewModel { get; private set; }
+        public T ViewModel { get; private set; }
 
         protected virtual void OnBind() { }
 
@@ -22,11 +22,20 @@ namespace B20.View
             OnBind();
         }
 
+        //TODO-REF make it generic with some global trait dictionary
         private void BindTrait(Trait t)
         {
             if (t is Clickable c)
             {
                 gameObject.AddComponent<ClickableView>().Bind(c);
+            }
+            if (t is Draggable d)
+            {
+                gameObject.AddComponent<DraggableView>().Bind(d);
+            }
+            if (t is WithRect r)
+            {
+                gameObject.AddComponent<WithRectView>().Bind(r);
             }
         }
         

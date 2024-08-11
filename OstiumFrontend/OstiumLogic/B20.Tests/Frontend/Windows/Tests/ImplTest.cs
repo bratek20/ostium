@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using B20.Architecture.Exceptions;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
+using B20.Tests.Architecture.Exceptions.Fixtures;
 using B20.Tests.Frontend.Windows.Fixtures;
 using Xunit;
-using B20Assert = B20.Tests.Architecture.Exceptions.Fixtures.Assert;
 
 namespace B20.Frontend.Windows.Tests
 {
@@ -41,7 +41,7 @@ namespace B20.Frontend.Windows.Tests
         [Fact]
         public void ShouldThrowExceptionForGetIfWindowNotRegistered()
         {
-            B20Assert.ThrowsApiException(
+            Asserts.ThrowsApiException(
                 () => windowManager.Get(new WindowId("notRegistered")),
                 e =>
                 {

@@ -1,4 +1,7 @@
-﻿using GameComponents;
+﻿using B20.Frontend.Postion;
+using B20.Frontend.Traits;
+using B20.Tests.Frontend.Traits.Fixtures;
+using GameComponents;
 using Xunit;
 
 namespace Ostium.Logic.Tests
@@ -26,69 +29,116 @@ namespace Ostium.Logic.Tests
             
             Assert.Equal(WindowIds.GAME_WINDOW, c.WindowManager.GetCurrent());
         }
-        
+
         [Fact]
         public void ShouldPlayCards()
         {
-            var c = scenarios.InGameWindow();
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
+            
             //Playing first card on attack row
             var card1Name = c.FirstCardInHand.Name.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            c.FirstCardInHand.Click();
-            c.AttackRow.Click();
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            AssertSelectedCard(c, "Mouse1");
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             
             AssertCardInRow(c.AttackRow, "Mouse1");
+            AssertNoCardSelected(c);
             
             Assert.Equal(c.CardsInHand.Count, 1);
             Assert.Equal(c.FirstCardInHand.Name.Model, "Mouse2");
             
             //Playing second card on defense row
-            c.FirstCardInHand.Click();
-            c.DefenseRow.Click();
-
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(20, 20));
+            
             AssertCardInRow(c.DefenseRow, "Mouse2");
         }
         
         [Fact]
-        public void ShouldMovePlayedCardBetweenRows()
+        public void ShouldMovePlayedCardBetweenRowsByDragging()
         {
-            var c = scenarios.InGameWindow();
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
             
-            c.FirstCardInHand.Click();
-            c.AttackRow.Click();
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            AssertSelectedCard(c, "Mouse1");
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertNoCardSelected(c);
             
-            c.AttackRow.Card.Click();
-            c.DefenseRow.Click();
+            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            AssertSelectedCard(c, "Mouse1");
+            Helpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
             AssertCardInRow(c.DefenseRow, "Mouse1");
             AssertRowEmpty(c.AttackRow);
             AssertNoCardSelected(c);
             
-            c.DefenseRow.Card.Click();
-            c.AttackRow.Click();
+            Helpers.StartDrag(c.CardInDefenseRow, new Position2d(20, 20));
+            AssertSelectedCard(c, "Mouse1");
+            Helpers.EndDrag(c.CardInDefenseRow, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertRowEmpty(c.DefenseRow);
+            AssertNoCardSelected(c);
         }
-        
+
         [Fact]
         public void ShouldSwapPlayedCards()
         {
-            var c = scenarios.InGameWindow();
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
             
-            c.FirstCardInHand.Click();
-            c.AttackRow.Click();
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             
-            c.FirstCardInHand.Click();
-            c.DefenseRow.Click();
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(20, 20));
             AssertCardInRow(c.DefenseRow, "Mouse2");
             
-            c.AttackRow.Card.Click();
-            c.DefenseRow.Card.Click();
+            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            Helpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
             AssertCardInRow(c.AttackRow, "Mouse2");
             AssertCardInRow(c.DefenseRow, "Mouse1");
+        }
+        
+        [Fact]
+        public void EndingDragInTheSameRowDoesNothing()
+        {
+            var c = scenarios.InGameWindow(i =>
+            {
+                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
+                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
+            });
+            
+            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
+            AssertCardInRow(c.AttackRow, "Mouse1");
+            
+            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            Helpers.EndDrag(c.CardInAttackRow, new Position2d(10, 10));
+        }
+        
+        [Fact]
+        public void InitialCardsInHandAreNotSelected()
+        {
+            var c = scenarios.InGameWindow();
+            
+            c.CardsInHand.ForEach(card =>
+            {
+                Assert.False(card.Selected.Model);
+            });
         }
         
         void AssertCardInRow(RowVM row, string cardName)
@@ -105,7 +155,8 @@ namespace Ostium.Logic.Tests
         void AssertSelectedCard(Scenarios.InGameWindowContext c, string cardName)
         {
             Assert.True(c.SelectedCard.IsPresent());
-            Asserts.AssertCreatureCardId(c.SelectedCard.Get(), cardName);
+            Assert.True(c.SelectedCard.Get().Selected.Model);
+            Asserts.AssertCreatureCardId(c.SelectedCard.Get().Id, cardName);
         }
         
         void AssertNoCardSelected(Scenarios.InGameWindowContext c)

@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Ext;
+using B20.Frontend.Postion;
+using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
@@ -49,23 +52,38 @@ namespace Ostium.Logic.Tests
             public RowVM AttackRow => GameWindow.Game.Table.AttackRow;
             public RowVM DefenseRow => GameWindow.Game.Table.DefenseRow;
             
-            public List<CreatureCardVM> CardsInHand => GameWindow.Game.Hand.Cards.Model;
-            public CreatureCardVM FirstCardInHand => CardsInHand[0];
+            public CreatureCardVm CardInAttackRow => AttackRow.Card.Element;
+            public CreatureCardVm CardInDefenseRow => DefenseRow.Card.Element;
             
-            public Optional<CreatureCardId> SelectedCard => GameWindow.Game.SelectedCard;
+            public List<CreatureCardVm> CardsInHand => GameWindow.Game.Hand.Cards.Elements;
+            public CreatureCardVm FirstCardInHand => CardsInHand[0];
+            
+            public Optional<CreatureCardVm> SelectedCard => GameWindow.Game.SelectedCard;
         }
-        public InGameWindowContext InGameWindow()
+
+        public class InGameWindowArgs
         {
+            public Rect AttackRowRect { get; set; } = new Rect(0, 0, 100, 100);
+            public Rect DefenseRowRect { get; set; } = new Rect(0, 100, 100, 100);
+        }
+        public InGameWindowContext InGameWindow(Action<InGameWindowArgs> init = null)
+        {
+            var args = new InGameWindowArgs();
+            init?.Invoke(args);
+            
             var c = Setup();
             c.Logic.RegisterWindows();
             c.Logic.Start();
             (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
             
-            return new InGameWindowContext(
+            var nc = new InGameWindowContext(
                 eventPublisher: c.EventPublisher,
                 windowManager: c.WindowManager,
                 logic: c.Logic
             );
+            nc.AttackRow.GetTrait<WithRect>().RectProvider = () => args.AttackRowRect;
+            nc.DefenseRow.GetTrait<WithRect>().RectProvider = () => args.DefenseRowRect;
+            return nc;
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace B20.Tests.Architecture.Exceptions.Fixtures
 {
-    public class Assert
+    public class Asserts
     {
         public class ExpectedException
         {

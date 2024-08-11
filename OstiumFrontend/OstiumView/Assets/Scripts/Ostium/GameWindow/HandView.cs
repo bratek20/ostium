@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Ostium.View
 {
-    public class HandView: ElementView<HandVM>
+    public class HandView: ElementView<HandVm>
     {
         [SerializeField]
         private CardsListView cards;
