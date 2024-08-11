@@ -6,7 +6,7 @@ namespace B20.View
 {
     public class ElementView<T>: MonoBehaviour where T: ElementVm
     {
-        protected T ViewModel { get; private set; }
+        public T ViewModel { get; private set; }
 
         protected virtual void OnBind() { }
 
