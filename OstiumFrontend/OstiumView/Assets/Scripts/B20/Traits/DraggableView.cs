@@ -23,7 +23,7 @@ namespace B20.View
         public void OnDrag(PointerEventData eventData)
         {
             var position = TypesConverter.Convert(Input.mousePosition);
-            Debug.Log("OnDrag, position: " + position);
+            //Debug.Log("OnDrag, position: " + position);
             Trait.OnDrag(position);
         }
         

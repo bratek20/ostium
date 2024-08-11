@@ -30,9 +30,12 @@ namespace B20.View
             }
             _elementViews.Clear();
             
+            int idx = 0;
             foreach (var element in ViewModel.Elements)
             {
                 var view = Instantiate(elementPrefab, transform);
+                view.name = elementPrefab.name + idx++;
+                
                 _elementViews.Add(view);
                 
                 view.transform.localPosition = currentPosition;

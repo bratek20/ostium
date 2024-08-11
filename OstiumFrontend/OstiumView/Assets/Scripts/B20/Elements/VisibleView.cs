@@ -5,16 +5,10 @@ namespace B20.View
 {
     public class VisibleView: ElementView<VisibleVm>
     {
-        private GameObject _go;
-
-        protected override void OnBind()
-        {
-            _go = gameObject;
-        }
-
         protected override void OnViewModelUpdate()
         {
-            _go.SetActive(ViewModel.Model);
+            Debug.Log("Setting visible: " + ViewModel.Model + " for " + gameObject.name);
+            gameObject.SetActive(ViewModel.Model);
         }
     }
 }
