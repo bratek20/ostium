@@ -14,20 +14,23 @@ namespace Ostium.Logic
 
         public CreatureCardId Id => Model.GetId();
         
+        private bool _selected = false;
+        
         public CreatureCardVm(EventPublisher publisher)
         {
             AddTrait(new Draggable(publisher, Position));
-            SetSelected(false);
         }
         
         public void SetSelected(bool selected)
         {
+            _selected = selected;
             Selected.Update(selected);
         }
         
         protected override void OnUpdate()
         {
             Name.Update(Model.GetId().Value);
+            Selected.Update(_selected);
         }
     }
 }

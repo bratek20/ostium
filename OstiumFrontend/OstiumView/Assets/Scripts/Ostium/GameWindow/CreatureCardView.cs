@@ -9,6 +9,7 @@ namespace Ostium.View
     {
         [SerializeField]
         private LabelView name;
+        //TODO-REF selected should be image below parent
         [SerializeField]
         private VisibleView selected;
         [SerializeField]
