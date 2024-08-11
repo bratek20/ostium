@@ -33,6 +33,7 @@ namespace B20.Frontend.Traits
     {
         private EventPublisher publisher;
         private Position2dVm position;
+        private Position2d startPosition;
         
         public Draggable(EventPublisher publisher, Position2dVm position)
         {
@@ -42,6 +43,9 @@ namespace B20.Frontend.Traits
 
         public void StartDrag(Position2d p)
         {
+            startPosition = p;
+            position.Update(p);
+            
             publisher.Publish(new ElementDragStartedEvent(Owner, p));
         }
         
@@ -52,6 +56,8 @@ namespace B20.Frontend.Traits
 
         public void EndDrag(Position2d p)
         {
+            position.Update(startPosition);
+            
             publisher.Publish(new ElementDragEndedEvent(Owner, p));
         }
     }

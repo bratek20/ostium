@@ -25,5 +25,10 @@ namespace B20.Tests.Architecture.Events.Fixtures
         {
             throw new System.NotImplementedException();
         }
+        
+        public void Reset()
+        {
+            publishedEvents.Clear();
+        }
     }
 }

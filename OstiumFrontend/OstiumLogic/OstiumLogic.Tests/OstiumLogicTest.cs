@@ -75,16 +75,16 @@ namespace Ostium.Logic.Tests
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertNoCardSelected(c);
             
-            Helpers.StartDrag(c.AttackRow.Card, new Position2d(10, 10));
+            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
             AssertSelectedCard(c, "Mouse1");
-            Helpers.EndDrag(c.AttackRow.Card, new Position2d(20, 20));
+            Helpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
             AssertCardInRow(c.DefenseRow, "Mouse1");
             AssertRowEmpty(c.AttackRow);
             AssertNoCardSelected(c);
             
-            Helpers.StartDrag(c.DefenseRow.Card, new Position2d(20, 20));
+            Helpers.StartDrag(c.CardInDefenseRow, new Position2d(20, 20));
             AssertSelectedCard(c, "Mouse1");
-            Helpers.EndDrag(c.DefenseRow.Card, new Position2d(10, 10));
+            Helpers.EndDrag(c.CardInDefenseRow, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertRowEmpty(c.DefenseRow);
             AssertNoCardSelected(c);
@@ -107,8 +107,8 @@ namespace Ostium.Logic.Tests
             Helpers.EndDrag(c.FirstCardInHand, new Position2d(20, 20));
             AssertCardInRow(c.DefenseRow, "Mouse2");
             
-            Helpers.StartDrag(c.AttackRow.Card, new Position2d(10, 10));
-            Helpers.EndDrag(c.AttackRow.Card, new Position2d(20, 20));
+            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            Helpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
             AssertCardInRow(c.AttackRow, "Mouse2");
             AssertCardInRow(c.DefenseRow, "Mouse1");
         }

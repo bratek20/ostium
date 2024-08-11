@@ -30,7 +30,7 @@ namespace B20.Tests.Frontend.Traits.Tests
         }
 
         [Fact]
-        public void StartDrag_PublishDragStarted()
+        public void StartDrag_PublishDragStartedAndPositionVmSet()
         {
             var position = Builders.CreatePosition2D();
             
@@ -39,26 +39,34 @@ namespace B20.Tests.Frontend.Traits.Tests
             publisherMock.AssertOneEventPublished<ElementDragStartedEvent>(
                 e => e.Element.Equals(owner) && e.Position.Equals(position)
             );
+            Assert.Equal(positionVm.Model, position);
         }
         
         [Fact]
         public void OnDrag_PositionVmUpdated()
         {
+            draggable.StartDrag(Builders.CreatePosition2D());
+            
             draggable.OnDrag(new Position2d(1, 2));
 
             Assert.Equal(positionVm.Model, new Position2d(1, 2));
         }
 
         [Fact]
-        public void EndDrag_PublishDragEnded()
+        public void EndDrag_PublishDragEndedAndReturnToStartPosition()
         {
-            var position = Builders.CreatePosition2D();
+            var startPosition = new Position2d(1, 1);
+            var endPosition = new Position2d(2, 2);
             
-            draggable.EndDrag(position);
+            draggable.StartDrag(startPosition);
+            publisherMock.Reset();
+            
+            draggable.EndDrag(endPosition);
 
             publisherMock.AssertOneEventPublished<ElementDragEndedEvent>(
-                e => e.Element.Equals(owner) && e.Position.Equals(position)
+                e => e.Element.Equals(owner) && e.Position.Equals(endPosition)
             );
+            Assert.Equal(positionVm.Model, startPosition);
         }
     }
 }
