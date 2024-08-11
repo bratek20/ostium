@@ -7,18 +7,12 @@ namespace Ostium.View
     public class RowView: ElementView<RowVM>
     {
         [SerializeField]
-        private CreateCardView card;
+        private OptionalCreateCardView card;
 
         protected override void OnBind()
         {
             base.OnBind();
             card.Bind(ViewModel.Card);
-        }
-
-        protected override void OnViewModelUpdate()
-        {
-            base.OnViewModelUpdate();
-            card.SetVisible(ViewModel.Model.IsPresent());
         }
     }
 }
