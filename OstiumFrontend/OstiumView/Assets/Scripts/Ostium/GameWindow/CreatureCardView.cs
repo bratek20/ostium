@@ -8,11 +8,14 @@ namespace Ostium.View
     {
         [SerializeField]
         private LabelView name;
+        [SerializeField]
+        private VisibleView selected;
 
         protected override void OnBind()
         {
             base.OnBind();
             name.Bind(ViewModel.Name);
+            selected.Bind(ViewModel.Selected);
         }
     }
 }

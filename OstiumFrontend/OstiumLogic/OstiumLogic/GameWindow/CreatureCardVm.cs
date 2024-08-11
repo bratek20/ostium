@@ -15,7 +15,7 @@ namespace Ostium.Logic
         
         public CreatureCardVm(EventPublisher publisher)
         {
-            AddTrait(new Clickable(publisher));
+            //AddTrait(new Clickable(publisher));
             AddTrait(new Draggable(publisher));
             SetSelected(false);
         }

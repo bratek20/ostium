@@ -21,7 +21,7 @@ namespace Ostium.Logic
         
         public RowVM(RowType type, EventPublisher publisher)
         {
-            AddTrait(new Clickable(publisher));
+            //AddTrait(new Clickable(publisher));
             AddTrait(new WithRect());
 
             Type = type;
