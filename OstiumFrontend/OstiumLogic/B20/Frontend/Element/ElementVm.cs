@@ -22,7 +22,7 @@ namespace B20.Frontend.Element
         T GetTrait<T>() where T: Trait;
     }
 
-    public abstract class ElementVm<TModelType>: ElementVm where TModelType: class
+    public abstract class ElementVm<TModelType>: ElementVm
     {
         public TModelType Model { get; private set; }
         

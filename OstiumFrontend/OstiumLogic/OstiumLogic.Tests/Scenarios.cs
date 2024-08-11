@@ -55,7 +55,7 @@ namespace Ostium.Logic.Tests
             public List<CreatureCardVm> CardsInHand => GameWindow.Game.Hand.Cards.Model;
             public CreatureCardVm FirstCardInHand => CardsInHand[0];
             
-            public Optional<CreatureCardId> SelectedCard => GameWindow.Game.SelectedCard;
+            public Optional<CreatureCardVm> SelectedCard => GameWindow.Game.SelectedCard;
         }
 
         public class InGameWindowArgs

@@ -16,9 +16,9 @@ namespace Ostium.Logic
             this.eventPublisher = eventPublisher;
         }
         
-        public bool Contains(CreatureCardId cardId)
+        public bool Contains(CreatureCardVm card)
         {
-            return Model.GetCards().Exists(card => card.GetId().Equals(cardId));
+            return Model.GetCards().Exists(c => c.GetId().Equals(card.Model.GetId()));
         }
         
 

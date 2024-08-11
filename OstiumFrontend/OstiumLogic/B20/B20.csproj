@@ -48,6 +48,7 @@
         <Compile Include="Frontend\Elements\ElementListVm.cs" />
         <Compile Include="Frontend\Elements\LabelVm.cs" />
         <Compile Include="Frontend\Elements\Position2dVm.cs" />
+        <Compile Include="Frontend\Elements\VisibleVm.cs" />
         <Compile Include="Frontend\Element\ElementVm.cs" />
         <Compile Include="Frontend\Element\Trait.cs" />
         <Compile Include="Frontend\Traits\Clickable.cs" />

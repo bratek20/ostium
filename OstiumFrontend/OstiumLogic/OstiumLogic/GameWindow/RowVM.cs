@@ -14,9 +14,9 @@ namespace Ostium.Logic
         
         public bool HasCard => Model.IsPresent();
         
-        public bool Contains(CreatureCardId cardId)
+        public bool Contains(CreatureCardVm card)
         {
-            return Model.Map(card => card.GetId().Equals(cardId)).OrElse(false);
+            return Model.Map(c => c.GetId().Equals(card.Model.GetId())).OrElse(false);
         }
         
         public RowVM(RowType type, EventPublisher publisher)

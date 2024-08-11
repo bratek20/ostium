@@ -116,20 +116,24 @@ namespace Ostium.Logic.Tests
             });
             
             Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            AssertSelectedCard(c, "Mouse1");
             Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertNoCardSelected(c);
             
             Helpers.StartDrag(c.AttackRow.Card, new Position2d(10, 10));
+            AssertSelectedCard(c, "Mouse1");
             Helpers.EndDrag(c.AttackRow.Card, new Position2d(20, 20));
             AssertCardInRow(c.DefenseRow, "Mouse1");
             AssertRowEmpty(c.AttackRow);
             AssertNoCardSelected(c);
             
             Helpers.StartDrag(c.DefenseRow.Card, new Position2d(20, 20));
+            AssertSelectedCard(c, "Mouse1");
             Helpers.EndDrag(c.DefenseRow.Card, new Position2d(10, 10));
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertRowEmpty(c.DefenseRow);
+            AssertNoCardSelected(c);
         }
         
         [Fact]
@@ -165,7 +169,8 @@ namespace Ostium.Logic.Tests
         void AssertSelectedCard(Scenarios.InGameWindowContext c, string cardName)
         {
             Assert.True(c.SelectedCard.IsPresent());
-            Asserts.AssertCreatureCardId(c.SelectedCard.Get(), cardName);
+            Assert.True(c.SelectedCard.Get().Selected.Model);
+            Asserts.AssertCreatureCardId(c.SelectedCard.Get().Id, cardName);
         }
         
         void AssertNoCardSelected(Scenarios.InGameWindowContext c)
