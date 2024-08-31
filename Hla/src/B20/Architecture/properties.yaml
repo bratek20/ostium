@@ -4,6 +4,6 @@ profiles:
     paths:
       project: "../../../../Frontend/Logic"
       src:
-        main: "B20/Infrastructure"
-        test: "B20.Tests/Infrastructure"
-        fixtures: "B20.Tests/Infrastructure"
+        main: "B20/Architecture"
+        test: "B20.Tests/Architecture"
+        fixtures: "B20.Tests/Architecture"
