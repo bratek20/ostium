@@ -4,4 +4,4 @@
 */bin/
 packages/
 
-*.DotSettings
+*.DotSettings.user
