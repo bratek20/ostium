@@ -31,12 +31,9 @@
 
     <ItemGroup><!-- Include necessary framework references -->
     
-      <PackageReference Include="System.Text.Json" Version="8.0.4" />
-    </ItemGroup>
-
-    <ItemGroup><!-- Project files are included by default, no need for explicit Compile elements -->
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     
-      <Folder Include="Architecture\Serialization\" />
+      <PackageReference Include="System.Text.Json" Version="8.0.4" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -15,8 +15,4 @@
     <ItemGroup>
         <ProjectReference Include="..\B20\B20.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <!-- Project files are included by default, no need for explicit Compile elements -->
-    </ItemGroup>
 </Project>

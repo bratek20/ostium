@@ -19,10 +19,10 @@ namespace Serialization.Api {
             return value;
         }
         public SerializationType GetType() {
-            return SerializationType.fromName(type).get();
+            return (SerializationType)Enum.Parse(typeof(SerializationType), type);
         }
         public static SerializedValue Create(string value, SerializationType type) {
-            return new SerializedValue(value, type.getName());
+            return new SerializedValue(value, type.ToString());
         }
     }
 }
