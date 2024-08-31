@@ -32,8 +32,6 @@
     <ItemGroup><!-- Include necessary framework references -->
     
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    
-      <PackageReference Include="System.Text.Json" Version="8.0.4" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

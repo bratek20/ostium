@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using B20.Tests.ExtraAsserts;
 using HttpClient.Api;
 using Xunit;
 
@@ -76,7 +77,7 @@ namespace B20.Tests.Infrastructure.HttpClient.Fixtures
             var expected = new ExpectedX();
             expectedInit.Invoke(expected);
             
-            Assert.Equal(sendCalls, 1);
+            AssertExt.Equal(sendCalls, 1);
 
             if (expected.Url != null)
             {
@@ -84,7 +85,7 @@ namespace B20.Tests.Infrastructure.HttpClient.Fixtures
             }
             if (expected.Method != null)
             {
-                Assert.Equal(lastRequest.GetMethod(), expected.Method);
+                AssertExt.Equal(lastRequest.GetMethod(), expected.Method);
             }
             if (expected.Content != null)
             {
@@ -103,7 +104,8 @@ namespace B20.Tests.Infrastructure.HttpClient.Fixtures
                 Assert.Equal(lastRequest.GetHeaders().Count, expected.Headers.Count);
                 for (var i = 0; i < lastRequest.GetHeaders().Count; i++)
                 {
-                    Assert.Equal(lastRequest.GetHeaders()[i], expected.Headers[i]);
+                    Assert.Equal(lastRequest.GetHeaders()[i].GetKey(), expected.Headers[i].GetKey());
+                    Assert.Equal(lastRequest.GetHeaders()[i].GetValue(), expected.Headers[i].GetValue());
                 }
             }
         }

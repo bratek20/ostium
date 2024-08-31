@@ -2,12 +2,15 @@
 using B20.Logic.Utils;
 using HttpClient.Api;
 using System.Collections.Generic;
-using System.Text.Json;
+using B20.Architecture.Serialization.Context;
+using Serialization.Api;
 
 namespace HttpClient.Impl
 {
     class HttpResponseLogic : HttpResponse
     {
+        private static Serializer serializer = SerializationFactory.CreateSerializer();
+        
         private readonly int statusCode;
         private readonly string responseBody;
 
@@ -31,7 +34,7 @@ namespace HttpClient.Impl
 
             try
             {
-                T result = JsonSerializer.Deserialize<T>(responseBody);
+                T result = serializer.Deserialize<T>(SerializedValue.Create(responseBody, SerializationType.JSON));
                 return Optional<T>.Of(result);
             }
             catch
@@ -43,6 +46,8 @@ namespace HttpClient.Impl
 
     class HttpClientLogic : Api.HttpClient
     {
+        private static Serializer serializer = SerializationFactory.CreateSerializer();
+        
         private readonly HttpRequester requester;
         private readonly HttpClientConfig config;
 
@@ -68,11 +73,8 @@ namespace HttpClient.Impl
 
         public HttpResponse Post(string path, Optional<object> body)
         {
-            string content = body.IsPresent() ? JsonSerializer.Serialize(body.Get()) : "";
-            var headers = new List<HttpHeader>
-            {
-                new HttpHeader("Content-Type", "application/json")
-            };
+            string content = body.IsPresent() ? serializer.Serialize(body.Get()).GetValue() : "";
+            var headers = new List<HttpHeader>();
 
             if (config.GetAuth().IsPresent())
             {

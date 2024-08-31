@@ -45,7 +45,7 @@ namespace HttpClient.Tests
             requesterMock.Response = "{\"value\": \"Some value\"}";
             var response = client.Get("/test");
             
-            AssertExt.Equals(response.getStatusCode(), 200);
+            AssertExt.Equal(response.getStatusCode(), 200);
             requesterMock.AssertCalledOnce(e =>
             {
                 e.Url = "http://localhost:8081/test";
@@ -145,10 +145,10 @@ namespace HttpClient.Tests
             var response = client.Post("/test", Optional<object>.Of(request));
 
             // Assert
-            AssertExt.Equals(response.getStatusCode(), 200);
+            AssertExt.Equal(response.getStatusCode(), 200);
 
             var responseBody = response.getBody<SomeResponse>().Get();
-            AssertExt.Equals(responseBody.value, "response value");
+            AssertExt.Equal(responseBody.value, "response value");
 
             requesterMock.AssertCalledOnce(e =>
             {

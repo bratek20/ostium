@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serialization.Api;
-using JsonException = System.Text.Json.JsonException;
 
 namespace B20.Architecture.Serialization.Impl
 {

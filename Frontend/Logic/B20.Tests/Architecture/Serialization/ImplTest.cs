@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using B20.Architecture.Serialization.Context;
-using B20.Architecture.Serialization.Impl;
 using B20.Tests.ExtraAsserts;
 using Serialization.Api;
 using Xunit;
@@ -21,6 +21,24 @@ namespace B20.Tests.Architecture.Serialization
 
         public class TestObject
         {
+            protected bool Equals(TestObject other)
+            {
+                return value == other.value && number == other.number && nullable == other.nullable;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((TestObject)obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(value, number, nullable);
+            }
+
             private string value;
             private int number;
             private string nullable;
@@ -56,36 +74,32 @@ namespace B20.Tests.Architecture.Serialization
 
             var serializedValue = serializer.Serialize(testObject);
 
-            AssertExt.Equals(serializedValue.GetValue(), "{\"value\":\"test\",\"number\":1,\"nullable\":null}");
-            AssertExt.Equals(serializedValue.GetType(), SerializationType.JSON);
+            AssertExt.Equal(serializedValue.GetValue(), "{\"value\":\"test\",\"number\":1,\"nullable\":null}");
+            AssertExt.Equal(serializedValue.GetType(), SerializationType.JSON);
         }
 
-        // [Fact]
-        // public void Should_Deserialize_Object_From_JSON()
-        // {
-        //     var serializedValue = new SerializedValue
-        //     {
-        //         Value = "{\"Value\":\"test\",\"Number\":1}",
-        //         Type = SerializationType.JSON
-        //     };
-        //
-        //     var deserializedObject = serializer.Deserialize<TestObject>(serializedValue);
-        //
-        //     deserializedObject.Should().BeEquivalentTo(new TestObject("test", 1, null));
-        // }
-        //
-        // [Fact]
-        // public void Should_Deserialize_List_From_JSON()
-        // {
-        //     var serializedValue = new SerializedValue
-        //     {
-        //         Value = "[{\"Value\":\"test\",\"Number\":1}]",
-        //         Type = SerializationType.JSON
-        //     };
-        //
-        //     var deserializedObject = serializer.DeserializeList<TestObject>(serializedValue);
-        //
-        //     deserializedObject.Should().BeEquivalentTo(new List<TestObject> { new TestObject("test", 1, null) });
-        // }
+        [Fact]
+        public void Should_Deserialize_Object_From_JSON()
+        {
+            var serializedValue = SerializedValue.Create("{\"value\":\"test\",\"number\":1,\"nullable\":null}",SerializationType.JSON);
+
+            var deserializedObject = serializer.Deserialize<TestObject>(serializedValue);
+
+            AssertExt.Equal(deserializedObject, new TestObject("test", 1, null));
+        }
+
+        [Fact]
+        public void Should_Deserialize_List_From_JSON()
+        {
+            var serializedValue = SerializedValue.Create(
+                "[{\"value\":\"test\",\"number\":1,\"nullable\":null}]",
+                SerializationType.JSON
+            );
+
+            var deserializedObject = serializer.DeserializeList<TestObject>(serializedValue);
+
+            AssertExt.Equal(deserializedObject, new List<TestObject> { new TestObject("test", 1, null) });
+        }
+
     }
 }
