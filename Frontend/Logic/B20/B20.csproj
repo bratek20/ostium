@@ -29,12 +29,14 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
 
-    <ItemGroup>
-        <!-- Include necessary framework references -->
+    <ItemGroup><!-- Include necessary framework references -->
+    
+      <PackageReference Include="System.Text.Json" Version="8.0.4" />
     </ItemGroup>
 
-    <ItemGroup>
-        <!-- Project files are included by default, no need for explicit Compile elements -->
+    <ItemGroup><!-- Project files are included by default, no need for explicit Compile elements -->
+    
+      <Folder Include="Architecture\Serialization\" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

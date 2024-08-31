@@ -1,51 +1,99 @@
 ﻿using B20.Ext;
 using B20.Logic.Utils;
 using HttpClient.Api;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace HttpClient.Impl
 {
-    class HttpResponseLogic: HttpResponse
+    class HttpResponseLogic : HttpResponse
     {
-        public int getStatusCode()
+        private readonly int statusCode;
+        private readonly string responseBody;
+
+        public HttpResponseLogic(int statusCode, string responseBody)
         {
-            return 200;
+            this.statusCode = statusCode;
+            this.responseBody = responseBody;
         }
 
-        public Optional<object> getBody<T>()
+        public int getStatusCode()
         {
-            throw new System.NotImplementedException();
+            return statusCode;
+        }
+
+        public Optional<T> getBody<T>()
+        {
+            if (string.IsNullOrEmpty(responseBody))
+            {
+                return Optional<T>.Empty();
+            }
+
+            try
+            {
+                T result = JsonSerializer.Deserialize<T>(responseBody);
+                return Optional<T>.Of(result);
+            }
+            catch
+            {
+                return Optional<T>.Empty();
+            }
         }
     }
 
     class HttpClientLogic : Api.HttpClient
     {
         private readonly HttpRequester requester;
+        private readonly HttpClientConfig config;
 
-        public HttpClientLogic(HttpRequester requester)
+        public HttpClientLogic(HttpRequester requester, HttpClientConfig config)
         {
             this.requester = requester;
+            this.config = config;
         }
 
         public HttpResponse Get(string path)
         {
-            requester.Send(
+            var response = requester.Send(
                 HttpRequest.Create(
-                    url: "http://localhost:8080/test",
+                    url: config.GetBaseUrl() + path,
                     method: HttpMethod.GET,
-                    content: Optional<string>.Empty(), 
+                    content: Optional<string>.Empty(),
                     contentType: "",
                     headers: ListUtils.Of<HttpHeader>()
                 )
             );
-            return new HttpResponseLogic();
+            return new HttpResponseLogic(200, response);
         }
 
         public HttpResponse Post(string path, Optional<object> body)
         {
-            throw new System.NotImplementedException();
+            string content = body.IsPresent() ? JsonSerializer.Serialize(body.Get()) : "";
+            var headers = new List<HttpHeader>
+            {
+                new HttpHeader("Content-Type", "application/json")
+            };
+
+            if (config.GetAuth().IsPresent())
+            {
+                headers.Add(new HttpHeader("Authorization", config.GetAuth().Get().GetValue()));
+            }
+
+            var response = requester.Send(
+                HttpRequest.Create(
+                    url: config.GetBaseUrl() + path,
+                    method: HttpMethod.POST,
+                    content: Optional<string>.Of(content),
+                    contentType: "application/json",
+                    headers: headers
+                )
+            );
+
+            return new HttpResponseLogic(200, response);
         }
     }
-    public class HttpClientFactoryLogic: HttpClientFactory
+
+    public class HttpClientFactoryLogic : HttpClientFactory
     {
         private readonly HttpRequester requester;
 
@@ -56,7 +104,7 @@ namespace HttpClient.Impl
 
         public Api.HttpClient Create(HttpClientConfig config)
         {
-            return new HttpClientLogic(requester);
+            return new HttpClientLogic(requester, config);
         }
     }
 }

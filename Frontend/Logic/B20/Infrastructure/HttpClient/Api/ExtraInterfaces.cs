@@ -5,6 +5,6 @@ namespace HttpClient.Api
     public interface HttpResponse
     {
         int getStatusCode();
-        Optional<object> getBody<T>();
+        Optional<T> getBody<T>();
     }
 }
