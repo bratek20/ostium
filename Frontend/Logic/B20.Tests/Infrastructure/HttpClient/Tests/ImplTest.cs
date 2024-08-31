@@ -7,34 +7,18 @@ namespace HttpClient.Tests
 {
     public class HttpClientImplTest
     {
-        // interface SetupArgs {
-        //     config?: Builder.HttpClientConfigDef
-        //         context?: HandlerContext
-        // }
-        // function setup(args: SetupArgs = {}) {
-        //     const context = args.context ?? EmptyContext()
-        //     const requester = new HttpRequesterMock()
-        //     const factory = new Impl.HttpClientFactoryLogic(requester, context)
-        //
-        //     const client = factory.create(
-        //         Builder.httpClientConfig(args.config),
-        //     )
-        //
-        //     const logMocks = Log.Mocks.Setup()
-        //     return {client, requester, context, logMocks}
-        // }
-        class Context
+        private readonly HttpRequesterMock requesterMock;
+        private readonly HttpClientFactory factory;
+
+        public HttpClientImplTest()
         {
-            public Api.HttpClient Client;
-            public HttpRequesterMock RequesterMock;
+            requesterMock = new HttpRequesterMock();
+            factory = new HttpClientFactoryLogic(requesterMock);
         }
-        private Context Setup()
+        
+        private Api.HttpClient CreateClient()
         {
-            return new Context
-            {
-                Client = new HttpClientFactoryLogic().Create(null),
-                RequesterMock = new HttpRequesterMock()
-            };
+            return factory.Create(null);
         }
             
         [Fact]
@@ -65,13 +49,12 @@ namespace HttpClient.Tests
             //     headers: []
             // })
             
-            var c = Setup();
-            c.RequesterMock.Response = "{\"value\": \"Some value\"}";
-            var response = c.Client.Get("/test");
+            requesterMock.Response = "{\"value\": \"Some value\"}";
+            var response = CreateClient().Get("/test");
             
             Assert.Equal(response.getStatusCode(), 200);
 
-            c.RequesterMock.AssertCalledOnce(e =>
+            requesterMock.AssertCalledOnce(e =>
             {
                 e.Url = "http://localhost:8080/test";
             });

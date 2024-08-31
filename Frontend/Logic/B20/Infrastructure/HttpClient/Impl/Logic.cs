@@ -1,4 +1,5 @@
 ﻿using B20.Ext;
+using B20.Logic.Utils;
 using HttpClient.Api;
 
 namespace HttpClient.Impl
@@ -18,8 +19,24 @@ namespace HttpClient.Impl
 
     class HttpClientLogic : Api.HttpClient
     {
+        private readonly HttpRequester requester;
+
+        public HttpClientLogic(HttpRequester requester)
+        {
+            this.requester = requester;
+        }
+
         public HttpResponse Get(string path)
         {
+            requester.Send(
+                HttpRequest.Create(
+                    url: "http://localhost:8080/test",
+                    method: HttpMethod.GET,
+                    content: Optional<string>.Empty(), 
+                    contentType: "",
+                    headers: ListUtils.Of<HttpHeader>()
+                )
+            );
             return new HttpResponseLogic();
         }
 
@@ -30,9 +47,16 @@ namespace HttpClient.Impl
     }
     public class HttpClientFactoryLogic: HttpClientFactory
     {
+        private readonly HttpRequester requester;
+
+        public HttpClientFactoryLogic(HttpRequester requester)
+        {
+            this.requester = requester;
+        }
+
         public Api.HttpClient Create(HttpClientConfig config)
         {
-            return new HttpClientLogic();
+            return new HttpClientLogic(requester);
         }
     }
 }
