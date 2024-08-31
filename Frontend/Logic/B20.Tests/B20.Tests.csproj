@@ -68,6 +68,8 @@
         <Compile Include="Frontend\Types\Tests\RectTest.cs" />
         <Compile Include="Frontend\Windows\Fixtures\Mocks.cs" />
         <Compile Include="Frontend\Windows\Tests\ImplTest.cs" />
+        <Compile Include="Infrastructure\HttpClient\Fixtures\Mocks.cs" />
+        <Compile Include="Infrastructure\HttpClient\Tests\ImplTest.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -75,9 +77,6 @@
         <Project>{cbc099e1-20d2-452a-9f49-91276bf3b1c7}</Project>
         <Name>B20</Name>
       </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Infrastructure\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
