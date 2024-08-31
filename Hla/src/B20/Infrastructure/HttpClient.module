@@ -1,4 +1,4 @@
-﻿ExternalTypes
+ExternalTypes
     HttpResponse // TODO-REF hla missing generic types support
         //getStatusCode(): Int
         //getBody<T>(type: Class<T>): T
