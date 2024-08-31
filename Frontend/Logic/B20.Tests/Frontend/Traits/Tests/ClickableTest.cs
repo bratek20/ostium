@@ -1,6 +1,6 @@
 using B20.Frontend.Element;
 using B20.Frontend.Traits;
-using B20.Tests.Architecture.Events.Fixtures;
+using B20.Architecture.Events.Fixtures;
 using Xunit;
 
 namespace B20.Tests.Frontend.Traits.Tests

@@ -1,6 +1,6 @@
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
-using B20.Tests.Architecture.Exceptions.Fixtures;
+using B20.Architecture.Exceptions.Fixtures;
 using B20.Tests.Frontend.Types.Fixtures;
 using Xunit;
 

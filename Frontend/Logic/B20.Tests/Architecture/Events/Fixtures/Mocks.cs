@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using B20.Events.Api;
 using Xunit;
 
-namespace B20.Tests.Architecture.Events.Fixtures
+namespace B20.Architecture.Events.Fixtures
 {
     public class EventPublisherMock: EventPublisher
     {

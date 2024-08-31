@@ -67,7 +67,7 @@ namespace B20.Frontend.Element.Tests
             
             AssertExt.ListCount(elementInterf.GetTraits(), 1);
             
-            B20.Tests.Architecture.Exceptions.Fixtures.Asserts.ThrowsApiException(
+            Architecture.Exceptions.Fixtures.Asserts.ThrowsApiException(
                 () => elementInterf.GetTrait<OtherTrait>(),
                 e =>
                 {

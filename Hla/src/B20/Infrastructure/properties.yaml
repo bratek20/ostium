@@ -1,0 +1,9 @@
+profiles:
+  - name: "CSharp"
+    language: "C_SHARP"
+    paths:
+      project: "../../../../Frontend/Logic"
+      src:
+        main: "B20/Infrastructure"
+        test: "B20.Tests/Infrastructure"
+        fixtures: "B20.Tests/Infrastructure"

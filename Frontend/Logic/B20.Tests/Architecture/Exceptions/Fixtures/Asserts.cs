@@ -1,6 +1,6 @@
 using System;
 
-namespace B20.Tests.Architecture.Exceptions.Fixtures
+namespace B20.Architecture.Exceptions.Fixtures
 {
     public class Asserts
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using B20.Architecture.Exceptions;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
-using B20.Tests.Architecture.Exceptions.Fixtures;
+using B20.Architecture.Exceptions.Fixtures;
 using B20.Tests.Frontend.Windows.Fixtures;
 using Xunit;
 

@@ -2,7 +2,7 @@ using B20.Frontend.Element;
 using B20.Frontend.Elements;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
-using B20.Tests.Architecture.Events.Fixtures;
+using B20.Architecture.Events.Fixtures;
 using B20.Tests.Frontend.Types.Fixtures;
 using Xunit;
 

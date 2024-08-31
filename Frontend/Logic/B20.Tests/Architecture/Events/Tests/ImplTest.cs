@@ -5,7 +5,7 @@ using B20.Events.Impl;
 using B20.Logic.Utils;
 using Xunit;
 
-namespace B20.Tests.Events.Tests
+namespace B20.Architecture.Events.Tests
 {
     public class TestEvent : Event
     {
