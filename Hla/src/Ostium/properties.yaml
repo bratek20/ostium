@@ -1,0 +1,18 @@
+profiles:
+  - name: "Backend"
+    language: "KOTLIN"
+    paths:
+      project: "../../../Backend/lib"
+      src:
+        main: "src/main/kotlin/com/github/bratek20/ostium"
+        test: "src/test/kotlin/com/github/bratek20/ostium"
+        fixtures: "src/testFixtures/kotlin/com/github/bratek20/ostium"
+        
+  - name: "Frontend"
+    language: "C_SHARP"
+    paths:
+      project: "../../../Frontend/Logic"
+      src:
+        main: "OstiumBackend"
+        test: "OstiumBackend.Tests"
+        fixtures: "OstiumBackend.Tests"
