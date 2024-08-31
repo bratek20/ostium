@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../../../OstiumHla
+cd ../../../Hla
 
-./allModulesUpdate.sh Frontend
+./allModulesUpdate.sh Ostium Frontend
 

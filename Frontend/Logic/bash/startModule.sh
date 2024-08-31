@@ -2,7 +2,7 @@
 
 moduleName=$1
 
-cd ../../../OstiumHla
+cd ../../../Hla
 
-./startModule.sh Frontend $moduleName
+./startModule.sh Ostium Frontend $moduleName
 

@@ -1,7 +1,9 @@
 #!/bin/bash
 
-hlaFolderPath=src
-profileName=$1
+moduleGroup=$1
+profileName=$2
+
+hlaFolderPath=src/$moduleGroup
 
 java -jar tool.jar updateAll $hlaFolderPath $profileName
 
