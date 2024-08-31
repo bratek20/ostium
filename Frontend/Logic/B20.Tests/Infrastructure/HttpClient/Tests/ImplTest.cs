@@ -70,6 +70,11 @@ namespace HttpClient.Tests
             var response = c.Client.Get("/test");
             
             Assert.Equal(response.getStatusCode(), 200);
+
+            c.RequesterMock.AssertCalledOnce(e =>
+            {
+                e.Url = "http://localhost:8080/test";
+            });
         }
     }
 }
