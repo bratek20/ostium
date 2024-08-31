@@ -4,92 +4,75 @@ using System.Collections.Generic;
 using B20.Ext;
 using GameComponents.Api;
 
-namespace GameSetup.Api
-{
-    public class Table
-    {
-        private GateDurabilityCard gateDurabilityCard;
-        private CreatureCard? attackRow;
-        private CreatureCard? defenseRow;
-        private GateCard gateCard;
-    
-        private Table(GateDurabilityCard gateDurabilityCard, CreatureCard? attackRow, CreatureCard? defenseRow, GateCard gateCard)
-        {
+namespace GameSetup.Api {
+    public class Table {
+        readonly GateDurabilityCard gateDurabilityCard;
+        readonly CreatureCard? attackRow;
+        readonly CreatureCard? defenseRow;
+        readonly GateCard gateCard;
+
+        public Table(
+            GateDurabilityCard gateDurabilityCard,
+            CreatureCard? attackRow,
+            CreatureCard? defenseRow,
+            GateCard gateCard
+        ) {
             this.gateDurabilityCard = gateDurabilityCard;
             this.attackRow = attackRow;
             this.defenseRow = defenseRow;
             this.gateCard = gateCard;
         }
-    
-        public GateDurabilityCard GetGateDurabilityCard()
-        {
-            return this.gateDurabilityCard;
+        public GateDurabilityCard GetGateDurabilityCard() {
+            return gateDurabilityCard;
         }
-    
-        public Optional<CreatureCard> GetAttackRow()
-        {
-            return Optional<CreatureCard>.Of(this.attackRow);
+        public Optional<CreatureCard> GetAttackRow() {
+            return Optional<CreatureCard>.Of(attackRow);
         }
-    
-        public Optional<CreatureCard> GetDefenseRow()
-        {
-            return Optional<CreatureCard>.Of(this.defenseRow);
+        public Optional<CreatureCard> GetDefenseRow() {
+            return Optional<CreatureCard>.Of(defenseRow);
         }
-    
-        public GateCard GetGateCard()
-        {
-            return this.gateCard;
+        public GateCard GetGateCard() {
+            return gateCard;
         }
-    
-        public static Table Create(GateDurabilityCard gateDurabilityCard, CreatureCard? attackRow, CreatureCard? defenseRow, GateCard gateCard)
-        {
-            return new Table(gateDurabilityCard, attackRow, defenseRow, gateCard);
+        public static Table Create(GateDurabilityCard gateDurabilityCard, Optional<CreatureCard> attackRow, Optional<CreatureCard> defenseRow, GateCard gateCard) {
+            return new Table(gateDurabilityCard, attackRow.OrElse(null), defenseRow.OrElse(null), gateCard);
         }
     }
-    
-    public class Hand
-    {
-        private List<CreatureCard> cards;
-    
-        private Hand(List<CreatureCard> cards)
-        {
+
+    public class Hand {
+        readonly List<CreatureCard> cards;
+
+        public Hand(
+            List<CreatureCard> cards
+        ) {
             this.cards = cards;
         }
-    
-        public List<CreatureCard> GetCards()
-        {
-            return this.cards;
+        public List<CreatureCard> GetCards() {
+            return cards;
         }
-    
-        public static Hand Create(List<CreatureCard> cards)
-        {
+        public static Hand Create(List<CreatureCard> cards) {
             return new Hand(cards);
         }
     }
-    
-    public class Game
-    {
-        private Table table;
-        private Hand hand;
-    
-        private Game(Table table, Hand hand)
-        {
+
+    public class Game {
+        readonly Table table;
+        readonly Hand hand;
+
+        public Game(
+            Table table,
+            Hand hand
+        ) {
             this.table = table;
             this.hand = hand;
         }
-    
-        public Table GetTable()
-        {
-            return this.table;
+        public Table GetTable() {
+            return table;
         }
-    
-        public Hand GetHand()
-        {
-            return this.hand;
+        public Hand GetHand() {
+            return hand;
         }
-    
-        public static Game Create(Table table, Hand hand)
-        {
+        public static Game Create(Table table, Hand hand) {
             return new Game(table, hand);
         }
     }

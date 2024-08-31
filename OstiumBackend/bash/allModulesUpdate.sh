@@ -1,7 +1,6 @@
 #!/bin/bash
 
-hlaFolderPath=../hla
-profileName=lib
+cd ../../OstiumHla
 
-java -jar tool.jar updateAll $hlaFolderPath $profileName
+./allModulesUpdate.sh Backend
 

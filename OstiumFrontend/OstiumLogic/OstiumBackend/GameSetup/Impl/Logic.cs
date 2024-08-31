@@ -80,7 +80,7 @@ namespace GameSetup.Impl
         private Game ToApiGame()
         {
             return Game.Create(
-                Table.Create(
+                new Table(
                     GateDurabilityCard.Create(
                         new GateDurabilityMarker(15),
                         new GateDurabilityMarker(15)
@@ -89,7 +89,7 @@ namespace GameSetup.Impl
                     defenseRow,
                     GateCard.Create(false)
                 ),
-                Hand.Create(hand.ToList())
+                Hand.Create(hand)
             );
         }
     }

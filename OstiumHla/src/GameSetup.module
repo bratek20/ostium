@@ -1,0 +1,26 @@
+Enums
+    RowType
+        ATTACK
+        DEFENSE
+
+ValueObjects
+    Table
+        gateDurabilityCard: GateDurabilityCard
+        attackRow: CreatureCard?
+        defenseRow: CreatureCard?
+        gateCard: GateCard
+    Hand
+        cards: CreatureCard[]
+    Game
+        table: Table
+        hand: Hand
+
+Interfaces
+    GameSetupApi
+        startGame(): Game
+        playCard(cardId: CreatureCardId, row: RowType): Game
+        moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game
+Web
+    Http
+        ExposedInterfaces
+            GameSetupApi

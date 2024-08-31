@@ -21,7 +21,7 @@ namespace GameSetup
         {
             var def = new TableDef();
             init?.Invoke(def);
-            return Table.Create(
+            return new Table(
                 gateDurabilityCard: BuildGateDurabilityCard(def.GateDurabilityCard),
                 attackRow: def.AttackRow != null ? BuildCreatureCard(def.AttackRow) : null,
                 defenseRow: def.DefenseRow != null ? BuildCreatureCard(def.DefenseRow) : null,

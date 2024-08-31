@@ -1,0 +1,11 @@
+ValueObjects
+    CreatureCard
+        id: CreatureCardId: string
+
+    GateCard
+        destroyed: bool
+
+    GateDurabilityMarker: int
+    GateDurabilityCard
+        myMarker: GateDurabilityMarker
+        opponentMarker: GateDurabilityMarker
