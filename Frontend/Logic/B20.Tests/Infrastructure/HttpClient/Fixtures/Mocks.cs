@@ -20,7 +20,7 @@ namespace B20.Tests.Infrastructure.HttpClient.Fixtures
 
         public class ExpectedX
         {
-            public string? Url { get; set; }
+            public string Url { get; set; }
         }
         public void AssertCalledOnce(Action<ExpectedX> expectedInit)
         {
