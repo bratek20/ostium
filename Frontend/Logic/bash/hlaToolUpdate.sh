@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../../../OstiumHla
+cd ../../../Hla
 
 ./hlaToolUpdate.sh
 
