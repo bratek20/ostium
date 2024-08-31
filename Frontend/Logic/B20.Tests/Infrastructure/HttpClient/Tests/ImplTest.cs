@@ -54,62 +54,10 @@ namespace HttpClient.Tests
                 e.Headers = new List<HttpHeader>();
             });
         }
-        
-        // class SomeRequest {
-        //     private value = STRING
-        //
-        //     static create(value: string) {
-        //         const instance = new SomeRequest()
-        //         instance.value = value
-        //         return instance
-        //     }
-        // }
-        // test("Should work - post: auth header, debug log for request", () => {
-        //     // given
-        //     const {client, requester, logMocks} = setup({
-        //         config: {
-        //             baseUrl: "http://localhost:8080",
-        //             auth: {
-        //                 value: "Basic abc"
-        //             } 
-        //         }
-        //     })
-        //     requester.setResponse('{"value": "response value"}')
-        //
-        //     // when
-        //     const response = client.post("/test", Optional.of(SomeRequest.create("request value")))
-        //
-        //     //then
-        //     AssertEquals(response.getStatusCode(), 200)
-        //
-        //     const body = response.getBody(SomeResponse).get()
-        //     AssertEquals(body.getValue(), "response value")
-        //
-        //     requester.assertCalledOnce({
-        //         url: "http://localhost:8080/test",
-        //         method: HttpMethod.POST,
-        //         content: '{"value":"request value"}',
-        //         contentType: "application/json",
-        //         headers: [
-        //         {
-        //             key: "Authorization",
-        //             value: "Basic abc"
-        //         }
-        //         ]
-        //     })
-        //
-        //     logMocks.assertOneDebug(
-        //         "Request url: http://localhost:8080/test, " +
-        //         "method: POST, " +
-        //         `content: {"value":"request value"}, ` + 
-        //             "contentType: application/json, " +
-        //         "headers: [Authorization: Basic abc, ]" +
-        //         `response: {"value": "response value"}`
-        //     );            
-        // });
+
         private class SomeRequest
         {
-            public string value;
+            private string value;
 
             private SomeRequest(string value)
             {
@@ -161,7 +109,6 @@ namespace HttpClient.Tests
                     new HttpHeader("Authorization", "Basic abc")
                 };
             });
-            
         }
     }
 }
