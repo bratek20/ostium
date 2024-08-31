@@ -1,89 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{BD7C4409-5501-47C9-9956-5536D61667A5}</ProjectGuid>
-        <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>B20.Tests</RootNamespace>
         <AssemblyName>B20.Tests</AssemblyName>
-        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
+
     <ItemGroup>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-        </Reference>
-        <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-        </Reference>
-        <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-        </Reference>
-        <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-        </Reference>
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     </ItemGroup>
+
     <ItemGroup>
-        <Compile Include="Architecture\Events\Fixtures\Mocks.cs" />
-        <Compile Include="Architecture\Events\Tests\ImplTest.cs" />
-        <Compile Include="Architecture\Exceptions\Fixtures\Asserts.cs" />
-        <Compile Include="ExtraAsserts\AssertExt.cs" />
-        <Compile Include="Ext\OptionalTest.cs" />
-        <Compile Include="Frontend\Elements\Tests\ElementListVMTest.cs" />
-        <Compile Include="Frontend\Elements\Tests\OptionalElementVmTest.cs" />
-        <Compile Include="Frontend\Element\Tests\ElementVMTest.cs" />
-        <Compile Include="Frontend\Traits\Fixtures\Helpers.cs" />
-        <Compile Include="Frontend\Traits\Tests\ClickableTest.cs" />
-        <Compile Include="Frontend\Traits\Tests\DraggableTest.cs" />
-        <Compile Include="Frontend\Traits\Tests\WithRectTest.cs" />
-        <Compile Include="Frontend\Types\Fixtures\Builders.cs" />
-        <Compile Include="Frontend\Types\Tests\Position2DTest.cs" />
-        <Compile Include="Frontend\Types\Tests\RectTest.cs" />
-        <Compile Include="Frontend\Windows\Fixtures\Mocks.cs" />
-        <Compile Include="Frontend\Windows\Tests\ImplTest.cs" />
-        <Compile Include="Infrastructure\HttpClient\Fixtures\Mocks.cs" />
-        <Compile Include="Infrastructure\HttpClient\Tests\ImplTest.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
+        <ProjectReference Include="..\B20\B20.csproj" />
     </ItemGroup>
+
     <ItemGroup>
-      <ProjectReference Include="..\B20\B20.csproj">
-        <Project>{cbc099e1-20d2-452a-9f49-91276bf3b1c7}</Project>
-        <Name>B20</Name>
-      </ProjectReference>
+        <!-- Project files are included by default, no need for explicit Compile elements -->
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
 </Project>

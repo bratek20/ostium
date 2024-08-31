@@ -1,88 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{7C07CFA6-70FC-4D09-8421-88831EDF1CFA}</ProjectGuid>
-        <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>OstiumLogicTests</RootNamespace>
         <AssemblyName>OstiumLogic.Tests</AssemblyName>
-        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
+
     <ItemGroup>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-        </Reference>
-        <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-        </Reference>
-        <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-        </Reference>
-        <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
-            <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-        </Reference>
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     </ItemGroup>
+
     <ItemGroup>
-        <Compile Include="OstiumLogicTest.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Scenarios.cs" />
+        <ProjectReference Include="..\B20.Tests\B20.Tests.csproj" />
+        <ProjectReference Include="..\B20\B20.csproj" />
+        <ProjectReference Include="..\OstiumBackend.Tests\OstiumBackend.Tests.csproj" />
+        <ProjectReference Include="..\OstiumBackend\OstiumBackend.csproj" />
+        <ProjectReference Include="..\OstiumLogic\OstiumLogic.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\B20.Tests\B20.Tests.csproj">
-        <Project>{bd7c4409-5501-47c9-9956-5536d61667a5}</Project>
-        <Name>B20.Tests</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\B20\B20.csproj">
-        <Project>{cbc099e1-20d2-452a-9f49-91276bf3b1c7}</Project>
-        <Name>B20</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\OstiumBackend.Tests\OstiumBackend.Tests.csproj">
-        <Project>{d2c81056-d99f-472b-a38c-9ae0954f95c6}</Project>
-        <Name>OstiumBackend.Tests</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\OstiumBackend\OstiumBackend.csproj">
-        <Project>{489d50c9-6b03-478f-ab8e-a1404e8c86bc}</Project>
-        <Name>OstiumBackend</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\OstiumLogic\OstiumLogic.csproj">
-        <Project>{013df444-ab6a-419c-b254-b4f46fdc1342}</Project>
-        <Name>OstiumLogic</Name>
-      </ProjectReference>
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
 </Project>
