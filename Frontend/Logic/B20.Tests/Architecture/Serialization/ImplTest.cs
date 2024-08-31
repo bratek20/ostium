@@ -21,20 +21,20 @@ namespace B20.Tests.Architecture.Serialization
 
         public class TestObject
         {
-            private string Value { get; }
-            private int Number { get; }
-            private string Nullable { get; }
+            private string value;
+            private int number;
+            private string nullable;
 
             public TestObject(string value, int number, string nullable)
             {
-                Value = value;
-                Number = number;
-                Nullable = nullable;
+                this.value = value;
+                this.number = number;
+                this.nullable = nullable;
             }
 
-            public SomeValue GetValue() => new SomeValue(Value);
-            public int GetNumber() => Number;
-            public string GetNullable() => Nullable;
+            public SomeValue GetValue() => new SomeValue(value);
+            public int GetNumber() => number;
+            public string GetNullable() => nullable;
 
             public static TestObject Create(SomeValue value, int number, string nullable)
             {
@@ -56,7 +56,7 @@ namespace B20.Tests.Architecture.Serialization
 
             var serializedValue = serializer.Serialize(testObject);
 
-            AssertExt.Equals(serializedValue.GetValue(), "{\"Value\":\"test\",\"Number\":1,\"Nullable\":null}");
+            AssertExt.Equals(serializedValue.GetValue(), "{\"value\":\"test\",\"number\":1,\"nullable\":null}");
             AssertExt.Equals(serializedValue.GetType(), SerializationType.JSON);
         }
 
