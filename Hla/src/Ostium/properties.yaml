@@ -13,6 +13,6 @@ profiles:
     paths:
       project: "../../../Frontend/Logic"
       src:
-        main: "OstiumBackend"
-        test: "OstiumBackend.Tests"
-        fixtures: "OstiumBackend.Tests"
+        main: "OstiumLogic"
+        test: "OstiumLogic.Tests"
+        fixtures: "OstiumLogic.Tests"
