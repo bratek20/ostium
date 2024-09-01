@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using B20.Ext;
 using GameSetup.Api;
 using GameComponents.Api;
+using HttpClient.Api;
 
 namespace GameSetup.Web {
     public class GameSetupApiWebClient: GameSetupApi {
-        readonly HttpClient client;
+        readonly HttpClient.Api.HttpClient client;
 
         public GameSetupApiWebClient(
             HttpClientFactory factory,
@@ -17,13 +18,13 @@ namespace GameSetup.Web {
             this.client = factory.Create(config.Value);
         }
         public Game StartGame() {
-            return client.Post("/gameSetupApi/startGame", Optional<object>.Empty()).GetBody(GameSetupApiStartGameResponse).Get().Value;
+            return client.Post("/gameSetupApi/startGame", Optional<object>.Empty()).GetBody<GameSetupApiStartGameResponse>().Get().Value;
         }
         public Game PlayCard(CreatureCardId cardId, RowType row) {
-            return client.Post("/gameSetupApi/playCard", Optional<GameSetupApiPlayCardRequest>.Of(GameSetupApiPlayCardRequest.Create(cardId, row))).GetBody(GameSetupApiPlayCardResponse).Get().Value;
+            return client.Post("/gameSetupApi/playCard", Optional<GameSetupApiPlayCardRequest>.Of(GameSetupApiPlayCardRequest.Create(cardId, row))).GetBody<GameSetupApiPlayCardResponse>().Get().Value;
         }
         public Game MoveCard(CreatureCardId cardId, RowType from, RowType to) {
-            return client.Post("/gameSetupApi/moveCard", Optional<GameSetupApiMoveCardRequest>.Of(GameSetupApiMoveCardRequest.Create(cardId, from, to))).GetBody(GameSetupApiMoveCardResponse).Get().Value;
+            return client.Post("/gameSetupApi/moveCard", Optional<GameSetupApiMoveCardRequest>.Of(GameSetupApiMoveCardRequest.Create(cardId, from, to))).GetBody<GameSetupApiMoveCardResponse>().Get().Value;
         }
     }
 }

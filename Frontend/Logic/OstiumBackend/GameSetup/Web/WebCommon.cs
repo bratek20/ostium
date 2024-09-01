@@ -19,12 +19,12 @@ namespace GameSetup.Web {
     }
 
     public class GameSetupApiStartGameResponse {
-        public readonly Game value;
+        public Game Value { get; }
 
         public GameSetupApiStartGameResponse(
             Game value
         ) {
-            this.value = value;
+            Value = value;
         }
     }
 
@@ -51,12 +51,12 @@ namespace GameSetup.Web {
     }
 
     public class GameSetupApiPlayCardResponse {
-        public readonly Game value;
+        public Game Value { get; }
 
         public GameSetupApiPlayCardResponse(
             Game value
         ) {
-            this.value = value;
+            Value = value;
         }
     }
 
@@ -89,12 +89,12 @@ namespace GameSetup.Web {
     }
 
     public class GameSetupApiMoveCardResponse {
-        public readonly Game value;
+        public Game Value { get; }
 
         public GameSetupApiMoveCardResponse(
             Game value
         ) {
-            this.value = value;
+            Value = value;
         }
     }
 }

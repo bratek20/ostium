@@ -20,12 +20,12 @@ namespace HttpClient.Impl
             this.responseBody = responseBody;
         }
 
-        public int getStatusCode()
+        public int GetStatusCode()
         {
             return statusCode;
         }
 
-        public Optional<T> getBody<T>()
+        public Optional<T> GetBody<T>()
         {
             if (string.IsNullOrEmpty(responseBody))
             {

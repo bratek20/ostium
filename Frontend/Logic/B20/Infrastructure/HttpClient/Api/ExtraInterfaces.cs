@@ -4,7 +4,7 @@ namespace HttpClient.Api
 {
     public interface HttpResponse
     {
-        int getStatusCode();
-        Optional<T> getBody<T>();
+        int GetStatusCode();
+        Optional<T> GetBody<T>();
     }
 }

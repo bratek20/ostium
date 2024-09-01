@@ -7,7 +7,7 @@ namespace HttpClient.Api {
     public interface HttpClient {
         HttpResponse Get(string path);
 
-        HttpResponse Post(string path, Optional<object> body);
+        HttpResponse Post<T>(string path, Optional<T> body);
     }
 
     public interface HttpClientFactory {
