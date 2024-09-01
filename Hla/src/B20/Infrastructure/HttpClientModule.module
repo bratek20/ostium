@@ -2,6 +2,9 @@ ExternalTypes
     HttpResponse // TODO-REF hla missing generic types support
         //getStatusCode(): Int
         //getBody<T>(type: Class<T>): T
+    HttpClient
+        //get(path: String): HttpResponse
+        //post<T>(path: String, body: T?): HttpResponse
         
 ValueObjects
     HttpClientAuth
@@ -21,9 +24,7 @@ Enums
     
 Interfaces
     //internal - created by factory 
-    HttpClient
-        get(path: String): HttpResponse
-        post(path: String, body: any?): HttpResponse
+    //HttpClient
 
     //outgoing 
     HttpClientFactory

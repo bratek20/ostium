@@ -6,6 +6,7 @@ using B20.Ext;
 using HttpClient.Api;
 using GameSetup.Api;
 using GameComponents.Api;
+using HttpClientModule.Api;
 
 namespace GameSetup.Web {
     public class GameSetupWebClientConfig {

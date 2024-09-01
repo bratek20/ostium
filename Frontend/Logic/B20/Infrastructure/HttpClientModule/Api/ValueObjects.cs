@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 
-namespace HttpClient.Api {
+namespace HttpClientModule.Api {
     public class HttpClientAuth {
         readonly string value;
 

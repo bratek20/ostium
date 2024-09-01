@@ -1,11 +1,11 @@
 ﻿using B20.Ext;
 using B20.Logic.Utils;
-using HttpClient.Api;
 using System.Collections.Generic;
 using B20.Architecture.Serialization.Context;
+using HttpClientModule.Api;
 using Serialization.Api;
 
-namespace HttpClient.Impl
+namespace HttpClientModule.Impl
 {
     class HttpResponseLogic : HttpResponse
     {
@@ -44,7 +44,7 @@ namespace HttpClient.Impl
         }
     }
 
-    class HttpClientLogic : Api.HttpClient
+    class HttpClientLogic : HttpClient
     {
         private static Serializer serializer = SerializationFactory.CreateSerializer();
         
@@ -69,6 +69,11 @@ namespace HttpClient.Impl
                 )
             );
             return new HttpResponseLogic(200, response);
+        }
+
+        public HttpResponse Post(string path, Optional<object> body)
+        {
+            throw new System.NotImplementedException();
         }
 
         public HttpResponse Post<T>(string path, Optional<T> body)

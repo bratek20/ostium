@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using HttpClient.Api;
+using HttpClientModule.Api;
 using DotNetHttpMethod = System.Net.Http.HttpMethod;
-using HttpMethod = HttpClient.Api.HttpMethod;
+using HttpMethod = HttpClientModule.Api.HttpMethod;
 
 namespace B20.Infrastructure.HttpClient.Integrations
 {
