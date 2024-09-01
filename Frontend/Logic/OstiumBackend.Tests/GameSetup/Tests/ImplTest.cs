@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
+using B20.Ext;
+using B20.Infrastructure.HttpClient.Integrations;
 using GameComponents.Api;
 using GameSetup;
 using GameSetup.Api;
 using GameSetup.Impl;
+using GameSetup.Web;
+using HttpClientModule.Api;
+using HttpClientModule.Impl;
 using Xunit;
 
 namespace OstiumBackend.Tests.GameSetup.Tests
@@ -50,6 +55,8 @@ namespace OstiumBackend.Tests.GameSetup.Tests
                 };
             });
         }
+        
+
 
         [Fact]
         public void PlayCard_ShouldPlaceCardInAttackRow()
