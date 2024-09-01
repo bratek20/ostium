@@ -28,7 +28,7 @@ namespace OstiumBackend.Tests.GameSetup.Tests
         }
         
         [Fact(
-            //Skip = "Comment this line to test local server connection"
+            Skip = "Comment this line to test local server connection"
         )]
         public void ShouldUseLocalServer()
         {
