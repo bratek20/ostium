@@ -60,9 +60,11 @@ namespace Ostium.Logic
             EventPublisher = eventPublisher;
             WindowManager = windowManager;
             GameSetupApi = gameSetupApi;
+            
+            RegisterWindows();
         }
         
-        public void RegisterWindows()
+        private void RegisterWindows()
         {
             WindowManager.Register(new MainWindow(WindowManager));
             WindowManager.Register(new GameWindow(EventPublisher, GameSetupApi));

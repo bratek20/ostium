@@ -70,7 +70,6 @@ namespace Ostium.Logic.Tests
             init?.Invoke(args);
             
             var c = Setup();
-            c.Logic.RegisterWindows();
             c.Logic.Start();
             (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
             

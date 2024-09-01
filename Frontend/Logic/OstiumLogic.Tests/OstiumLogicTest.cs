@@ -14,8 +14,7 @@ namespace Ostium.Logic.Tests
         public void ShouldStartOnMainScreenAndSwitchToGameScreen()
         {
             var c = scenarios.Setup();
-            c.Logic.RegisterWindows();
-            
+
             //should not throw
             c.WindowManager.Get(WindowIds.MAIN_WINDOW);
             c.WindowManager.Get(WindowIds.GAME_WINDOW);

@@ -18,6 +18,8 @@ namespace Ostium.View
         private MainWindowView mainWindow;
         [SerializeField]
         private GameWindowView gameWindow;
+        [SerializeField]
+        private bool useBuiltInServer = true;
 
         private OstiumLogic logic;
 
@@ -29,13 +31,13 @@ namespace Ostium.View
                     gameWindow
                 )
             );
-
-            var eventPublisher = new EventPublisherLogic();
             
-            WindowManager windowManager = new WindowManagerLogic(windowManipulator);
-            logic = new OstiumLogic(eventPublisher, windowManager);
-            logic.RegisterWindows();
+            logic = OstiumLogicFactory.Create(
+                windowManipulator: windowManipulator,
+                useBuiltInServer: useBuiltInServer
+            );
             
+            var windowManager = logic.WindowManager;
             mainWindow.Init(windowManager.Get(WindowIds.MAIN_WINDOW));
             gameWindow.Init(windowManager.Get(WindowIds.GAME_WINDOW));
             
