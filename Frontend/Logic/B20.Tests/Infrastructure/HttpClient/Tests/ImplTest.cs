@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using B20.Ext;
 using B20.Tests.ExtraAsserts;
-using B20.Tests.Infrastructure.HttpClient.Fixtures;
-using HttpClient.Api;
-using HttpClient.Impl;
+using HttpClientModule.Api;
+using HttpClientModule.Fixtures;
+using HttpClientModule.Impl;
 using Xunit;
 
-namespace HttpClient.Tests
+namespace HttpClientModule.Tests
 {
     public class HttpClientImplTest
     {
@@ -24,7 +24,7 @@ namespace HttpClient.Tests
             public string BaseUrl = "http://localhost:8080";
             public string AuthValue = null;
         }
-        private Api.HttpClient CreateClient(Action<CreateArgs> setup = null)
+        private HttpClient CreateClient(Action<CreateArgs> setup = null)
         {
             var args = new CreateArgs();
             setup?.Invoke(args);

@@ -1,54 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using B20.Tests.ExtraAsserts;
-using HttpClient.Api;
+using HttpClientModule.Api;
 using Xunit;
 
-namespace B20.Tests.Infrastructure.HttpClient.Fixtures
+namespace HttpClientModule.Fixtures
 {
-    // interface ReqeustArgs {
-    //     url: string
-    //         method: HttpMethod
-    //         content: Optional<string>
-    //         contentType: Optional<string>
-    //         headers: HttpHeader[]
-    // }
-    // interface ExpectedRequestArgs {
-    //     url?: string
-    //         method?: HttpMethod
-    //         content?: string
-    //         contentEmpty?: boolean
-    //         contentType?: string
-    //         contentTypeEmpty?: boolean
-    //         headers?: ExpectedHttpHeader[]
-    // }
-    // function assertRequestArgs(given: ReqeustArgs, expected: ExpectedRequestArgs) {
-    //     if (Defined(expected.url)) {
-    //         AssertEquals(given.url, expected.url)
-    //     }
-    //     if (Defined(expected.method)) {
-    //         AssertEquals(given.method, expected.method)
-    //     }
-    //     if (Defined(expected.content)) {
-    //         AssertEquals(given.content.get(), expected.content)
-    //     }
-    //     if (Defined(expected.contentEmpty)) {
-    //         AssertEquals(given.content.isEmpty(), expected.contentEmpty)
-    //     }
-    //     if (Defined(expected.contentType)) {
-    //         AssertEquals(given.contentType.get(), expected.contentType)
-    //     }
-    //     if (Defined(expected.contentTypeEmpty)) {
-    //         AssertEquals(given.contentType.isEmpty(), expected.contentTypeEmpty)
-    //     }
-    //
-    //     if (Defined(expected.headers)) {
-    //         AssertEquals(given.headers.length, expected.headers.length)
-    //         for (let i = 0; i < given.headers.length; i++) {
-    //             Assert.httpHeader(given.headers[i], expected.headers[i])
-    //         }
-    //     }
-    // }
     public class HttpRequesterMock: HttpRequester
     {
         private int sendCalls = 0;

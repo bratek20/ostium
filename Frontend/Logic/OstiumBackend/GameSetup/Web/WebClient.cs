@@ -3,13 +3,13 @@
 using System;
 using System.Collections.Generic;
 using B20.Ext;
+using HttpClientModule.Api;
 using GameSetup.Api;
 using GameComponents.Api;
-using HttpClient.Api;
 
 namespace GameSetup.Web {
     public class GameSetupApiWebClient: GameSetupApi {
-        readonly HttpClient.Api.HttpClient client;
+        readonly HttpClient client;
 
         public GameSetupApiWebClient(
             HttpClientFactory factory,
