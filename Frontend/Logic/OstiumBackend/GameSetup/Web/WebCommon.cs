@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 using HttpClient.Api;
-
-using GameComponents.Api;
 using GameSetup.Api;
+using GameComponents.Api;
 
 namespace GameSetup.Web {
     public class GameSetupWebClientConfig {
