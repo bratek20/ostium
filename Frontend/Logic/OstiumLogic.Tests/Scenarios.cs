@@ -31,14 +31,10 @@ namespace Ostium.Logic.Tests
         
         public Context Setup()
         {
-            var eventPublisher = new EventPublisherLogic();
-            var windowManager = new WindowManagerLogic(new WindowManipulatorMock());
-            var gameSetupApi = OstiumLogicFactory.CreateBuiltInGameSetupApi();
-            var logic = new OstiumLogic(eventPublisher, windowManager, gameSetupApi);
-            
+            var logic = OstiumLogicFactory.Create(new WindowManipulatorMock(), true);
             return new Context(
-                eventPublisher: eventPublisher,
-                windowManager: windowManager,
+                eventPublisher: logic.EventPublisher,
+                windowManager: logic.WindowManager,
                 logic: logic
             );
         }

@@ -25,7 +25,7 @@ namespace Ostium.Logic
             );
         }
         
-        public static GameSetupApi CreateBuiltInGameSetupApi()
+        static GameSetupApi CreateBuiltInGameSetupApi()
         {
             return new GameSetupApiLogic();
         }
@@ -52,7 +52,7 @@ namespace Ostium.Logic
         public WindowManager WindowManager { get; }
         public GameSetupApi GameSetupApi { get; }
         
-        public OstiumLogic(
+        internal OstiumLogic(
             EventPublisher eventPublisher, 
             WindowManager windowManager,
             GameSetupApi gameSetupApi
