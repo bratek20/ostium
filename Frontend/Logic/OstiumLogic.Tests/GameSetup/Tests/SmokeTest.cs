@@ -15,16 +15,7 @@ namespace OstiumBackend.Tests.GameSetup.Tests
     {
         private GameSetupApi CreateWebApi()
         {
-            var factory = new HttpClientFactoryLogic(new DotNetHttpRequester());
-            return new GameSetupApiWebClient(
-                factory,
-                new GameSetupWebClientConfig(
-                    HttpClientConfig.Create(
-                        baseUrl: "http://localhost:8080",
-                        auth: Optional<HttpClientAuth>.Empty()
-                    )
-                )
-            );
+            return null;
         }
         
         [Fact(

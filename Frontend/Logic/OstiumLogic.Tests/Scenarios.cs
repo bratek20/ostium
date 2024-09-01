@@ -9,6 +9,7 @@ using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameComponents.Api;
+using GameSetup.Impl;
 
 namespace Ostium.Logic.Tests
 {
@@ -30,13 +31,10 @@ namespace Ostium.Logic.Tests
         
         public Context Setup()
         {
-            var eventPublisher = new EventPublisherLogic();
-            var windowManager = new WindowManagerLogic(new WindowManipulatorMock());
-            var logic = new OstiumLogic(eventPublisher, windowManager);
-            
+            var logic = OstiumLogicFactory.Create(new WindowManipulatorMock(), true);
             return new Context(
-                eventPublisher: eventPublisher,
-                windowManager: windowManager,
+                eventPublisher: logic.EventPublisher,
+                windowManager: logic.WindowManager,
                 logic: logic
             );
         }
@@ -72,7 +70,6 @@ namespace Ostium.Logic.Tests
             init?.Invoke(args);
             
             var c = Setup();
-            c.Logic.RegisterWindows();
             c.Logic.Start();
             (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
             

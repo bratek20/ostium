@@ -8,10 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B20", "B20\B20.csproj", "{C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B20.Tests", "B20.Tests\B20.Tests.csproj", "{BD7C4409-5501-47C9-9956-5536D61667A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OstiumBackend", "OstiumBackend\OstiumBackend.csproj", "{489D50C9-6B03-478F-AB8E-A1404E8C86BC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OstiumBackend.Tests", "OstiumBackend.Tests\OstiumBackend.Tests.csproj", "{D2C81056-D99F-472B-A38C-9AE0954F95C6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,13 +30,5 @@ Global
 		{BD7C4409-5501-47C9-9956-5536D61667A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD7C4409-5501-47C9-9956-5536D61667A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD7C4409-5501-47C9-9956-5536D61667A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{489D50C9-6B03-478F-AB8E-A1404E8C86BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{489D50C9-6B03-478F-AB8E-A1404E8C86BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{489D50C9-6B03-478F-AB8E-A1404E8C86BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{489D50C9-6B03-478F-AB8E-A1404E8C86BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2C81056-D99F-472B-A38C-9AE0954F95C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2C81056-D99F-472B-A38C-9AE0954F95C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2C81056-D99F-472B-A38C-9AE0954F95C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2C81056-D99F-472B-A38C-9AE0954F95C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
