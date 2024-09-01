@@ -7,6 +7,9 @@ dependencies {
     api(libs.bratek20.architecture)
     testFixturesApi(testFixtures(libs.bratek20.architecture))
 
+    api(libs.bratek20.logs)
+    testFixturesApi(testFixtures(libs.bratek20.logs))
+
     //TODO-REF generate web layer in app?
     api(libs.bratek20.infrastructure)
     testFixturesApi(testFixtures(libs.bratek20.infrastructure))

@@ -1,10 +1,13 @@
 package com.github.bratek20.ostium.gamesetup.impl
 
+import com.github.bratek20.logs.api.Logger
 import com.github.bratek20.ostium.gamesetup.api.*
 
 import com.github.bratek20.ostium.gamecomponents.api.*
 
-class GameSetupApiLogic: GameSetupApi {
+class GameSetupApiLogic(
+    private val logger: Logger
+): GameSetupApi {
     private val hand: MutableList<CreatureCard> = mutableListOf(
         CreatureCard.create(
             id = CreatureCardId("Mouse1"),
@@ -17,6 +20,7 @@ class GameSetupApiLogic: GameSetupApi {
     private var defenseRow: CreatureCard? = null
 
     override fun startGame(): Game {
+        logger.info("Game started")
         return toApiGame()
     }
 
