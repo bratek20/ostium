@@ -53,8 +53,8 @@ namespace HttpClientModule.Tests
             server.Given(
                 Request.Create().WithPath("/api/test").UsingPost()
                 .WithBody("Test Content")
-                .WithHeader("Content-Type", "application/json")
-            )
+                .WithHeader("HeaderName", "HeaderValue")
+                )
             .RespondWith(
                 Response.Create().WithStatusCode(200).WithBody("Mocked POST Response")
             );
@@ -67,7 +67,7 @@ namespace HttpClientModule.Tests
                 content: Optional<string>.Of("Test Content"),
                 contentType: "application/json",
                 headers: new List<HttpHeader> {
-                    HttpHeader.Create("Content-Type", "application/json")
+                    HttpHeader.Create("HeaderName", "HeaderValue")
                 }
             );
 

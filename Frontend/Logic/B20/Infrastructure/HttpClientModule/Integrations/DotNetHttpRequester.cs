@@ -22,7 +22,7 @@ namespace B20.Infrastructure.HttpClient.Integrations
             {
                 var httpRequestMessage = new HttpRequestMessage
                 {
-                    Method = DotNetHttpMethod.Get,
+                    Method = GetDotNetHttpMethod(request.GetMethod()),
                     RequestUri = new Uri(request.GetUrl())
                 };
     
@@ -50,6 +50,16 @@ namespace B20.Infrastructure.HttpClient.Integrations
             {
                 throw new HttpRequesterException("An error occurred while sending the HTTP request, message: " + ex.Message);
             }
+        }
+        
+        private DotNetHttpMethod GetDotNetHttpMethod(HttpMethod method)
+        {
+            return method switch
+            {
+                HttpMethod.GET => DotNetHttpMethod.Get,
+                HttpMethod.POST => DotNetHttpMethod.Post,
+                _ => throw new ArgumentException("Unsupported HTTP method: " + method)
+            };
         }
     }
 }
