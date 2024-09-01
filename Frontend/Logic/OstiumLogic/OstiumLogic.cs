@@ -1,29 +1,76 @@
 using B20.Events.Api;
+using B20.Events.Impl;
+using B20.Ext;
 using B20.Frontend.Windows.Api;
+using B20.Frontend.Windows.Impl;
+using B20.Infrastructure.HttpClient.Integrations;
+using GameSetup.Api;
 using GameSetup.Impl;
+using GameSetup.Web;
+using HttpClientModule.Api;
+using HttpClientModule.Impl;
 
 namespace Ostium.Logic
 {
+    public class OstiumLogicFactory
+    {
+        public static OstiumLogic Create(
+            WindowManipulator windowManipulator, 
+            bool useBuiltInServer
+        ) {
+            return new OstiumLogic(
+                new EventPublisherLogic(), 
+                new WindowManagerLogic(windowManipulator),
+                useBuiltInServer ? CreateBuiltInGameSetupApi() : createWebClientForGameSetupApi()
+            );
+        }
+        
+        public static GameSetupApi CreateBuiltInGameSetupApi()
+        {
+            return new GameSetupApiLogic();
+        }
+        
+        public static GameSetupApi createWebClientForGameSetupApi()
+        {
+            var factory = new HttpClientFactoryLogic(new DotNetHttpRequester());
+            return new GameSetupApiWebClient(
+                factory,
+                new GameSetupWebClientConfig(
+                    HttpClientConfig.Create(
+                        baseUrl: "http://localhost:8080",
+                        auth: Optional<HttpClientAuth>.Empty()
+                    )
+                )
+            );
+        }
+    }
+
     public class OstiumLogic
     {
-        private EventPublisher eventPublisher;
-        private WindowManager windowManager;
+        // context
+        public EventPublisher EventPublisher { get; }
+        public WindowManager WindowManager { get; }
+        public GameSetupApi GameSetupApi { get; }
         
-        public OstiumLogic(EventPublisher eventPublisher, WindowManager windowManager)
-        {
-            this.eventPublisher = eventPublisher;
-            this.windowManager = windowManager;
+        public OstiumLogic(
+            EventPublisher eventPublisher, 
+            WindowManager windowManager,
+            GameSetupApi gameSetupApi
+        ) {
+            EventPublisher = eventPublisher;
+            WindowManager = windowManager;
+            GameSetupApi = gameSetupApi;
         }
         
         public void RegisterWindows()
         {
-            windowManager.Register(new MainWindow(windowManager));
-            windowManager.Register(new GameWindow(eventPublisher, new GameSetupApiLogic()));
+            WindowManager.Register(new MainWindow(WindowManager));
+            WindowManager.Register(new GameWindow(EventPublisher, GameSetupApi));
         }
 
         public void Start()
         {
-            windowManager.Open(WindowIds.MAIN_WINDOW);
+            WindowManager.Open(WindowIds.MAIN_WINDOW);
         }
     }
 }

@@ -9,6 +9,7 @@ using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameComponents.Api;
+using GameSetup.Impl;
 
 namespace Ostium.Logic.Tests
 {
@@ -32,7 +33,8 @@ namespace Ostium.Logic.Tests
         {
             var eventPublisher = new EventPublisherLogic();
             var windowManager = new WindowManagerLogic(new WindowManipulatorMock());
-            var logic = new OstiumLogic(eventPublisher, windowManager);
+            var gameSetupApi = OstiumLogicFactory.CreateBuiltInGameSetupApi();
+            var logic = new OstiumLogic(eventPublisher, windowManager, gameSetupApi);
             
             return new Context(
                 eventPublisher: eventPublisher,
