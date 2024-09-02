@@ -4,10 +4,12 @@ Enums
         DEFENSE
 
 ValueObjects
+    Row
+        card: CreatureCard?
     Table
         gateDurabilityCard: GateDurabilityCard
-        attackRow: CreatureCard?
-        defenseRow: CreatureCard?
+        attackRow: Row
+        defenseRow: Row
         gateCard: GateCard
     Hand
         cards: CreatureCard[]

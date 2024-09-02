@@ -8,13 +8,19 @@ using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class RowVM: ElementVm<Optional<CreatureCard>>
+    public partial class RowVM: ElementVm<Optional<CreatureCard>>
     {
-        public RowType Type { get; }
         public OptionalElementVm<CreatureCardVm, CreatureCard> Card { get; }
         
-        public bool HasCard => Model.IsPresent();
+        protected override void OnUpdate()
+        {
+            Card.Update(Model);
+        }
+    }
 
+    public partial class RowVM
+    {
+        public RowType Type { get; }
         public RowVM(RowType type, EventPublisher publisher)
         {
             AddTrait(new WithRect());
@@ -23,14 +29,11 @@ namespace Ostium.Logic
             Card = new OptionalElementVm<CreatureCardVm, CreatureCard>(new CreatureCardVm(publisher));
         }
         
+        public bool HasCard => Model.IsPresent();
+
         public bool ContainsCard(CreatureCardVm card)
         {
             return HasCard && Card.Element.Id.Equals(card.Id);
-        }
-        
-        protected override void OnUpdate()
-        {
-            Card.Update(Model);
         }
     }
 }

@@ -37,11 +37,20 @@ namespace Ostium.Logic
         }
     }
     
-    public class GameVM: ElementVm<Game>
+    public partial class GameVM: ElementVm<Game>
     {
         public TableVM Table { get; }
         public HandVm Hand { get; }
 
+        protected override void OnUpdate()
+        {
+            Table.Update(Model.GetTable());
+            Hand.Update(Model.GetHand());
+        }
+    }
+    
+    public partial class GameVM
+    {
         private GameSetupApi gameSetupApi;
         public GameVM(GameSetupApi gameSetupApi, EventPublisher eventPublisher)
         {
@@ -56,12 +65,6 @@ namespace Ostium.Logic
         public void StartGame()
         {
             Update(gameSetupApi.StartGame());
-        }
-        
-        protected override void OnUpdate()
-        {
-            Table.Update(Model.GetTable());
-            Hand.Update(Model.GetHand());
         }
 
         private Optional<CreatureCardVm> _selectedCard = Optional<CreatureCardVm>.Empty();

@@ -6,10 +6,18 @@ using GameSetup.Api;
 
 namespace Ostium.Logic
 {
-    public class HandVm: ElementVm<Hand>
+    public partial class HandVm: ElementVm<Hand>
     {
         public ElementListVm<CreatureCardVm, CreatureCard> Cards { get; }
-        
+
+        protected override void OnUpdate()
+        {
+            Cards.Update(Model.GetCards());
+        }
+    }
+
+    public partial class HandVm
+    {
         public HandVm(EventPublisher eventPublisher)
         {
             Cards = new ElementListVm<CreatureCardVm, CreatureCard>(() => new CreatureCardVm(eventPublisher));
@@ -18,11 +26,6 @@ namespace Ostium.Logic
         public bool Contains(CreatureCardVm card)
         {
             return Model.GetCards().Exists(c => c.GetId().Equals(card.Model.GetId()));
-        }
-
-        protected override void OnUpdate()
-        {
-            Cards.Update(Model.GetCards());
         }
     }
 }
