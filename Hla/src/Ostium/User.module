@@ -1,0 +1,8 @@
+ValueObjects
+    Username: string
+
+Data
+    UserData
+        name: Username
+        
+    "UserData" -> UserData    

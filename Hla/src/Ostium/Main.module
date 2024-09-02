@@ -1,0 +1,5 @@
+Windows
+    MainWindow
+        usernameInfo: TranslatableLabel = "username-info"
+        username: InputField<Username>
+        play: Button -> GamesWindows
