@@ -2,7 +2,7 @@ using B20.Events.Api;
 using B20.Frontend.Element;
 using B20.Frontend.Elements;
 using B20.Frontend.Traits;
-using GameComponents.Api;
+using GameModule.Api;
 
 namespace Ostium.Logic
 {

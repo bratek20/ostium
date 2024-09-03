@@ -4,35 +4,34 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 using HttpClientModule.Api;
-using GameSetup.Api;
-using GameComponents.Api;
+using GameModule.Api;
 
-namespace GameSetup.Web {
-    public class GameSetupWebClientConfig {
+namespace GameModule.Web {
+    public class GameWebClientConfig {
         public HttpClientConfig Value { get; }
 
-        public GameSetupWebClientConfig(
+        public GameWebClientConfig(
             HttpClientConfig value
         ) {
             Value = value;
         }
     }
 
-    public class GameSetupApiStartGameResponse {
-        public Game Value { get; }
+    public class GameApiStartGameResponse {
+        public GameModule Value { get; }
 
-        public GameSetupApiStartGameResponse(
-            Game value
+        public GameApiStartGameResponse(
+            GameModule value
         ) {
             Value = value;
         }
     }
 
-    public class GameSetupApiPlayCardRequest {
+    public class GameApiPlayCardRequest {
         readonly string cardId;
         readonly string row;
 
-        public GameSetupApiPlayCardRequest(
+        public GameApiPlayCardRequest(
             string cardId,
             string row
         ) {
@@ -45,27 +44,27 @@ namespace GameSetup.Web {
         public RowType GetRow() {
             return (RowType)Enum.Parse(typeof(RowType), row);
         }
-        public static GameSetupApiPlayCardRequest Create(CreatureCardId cardId, RowType row) {
-            return new GameSetupApiPlayCardRequest(cardId.Value, row.ToString());
+        public static GameApiPlayCardRequest Create(CreatureCardId cardId, RowType row) {
+            return new GameApiPlayCardRequest(cardId.Value, row.ToString());
         }
     }
 
-    public class GameSetupApiPlayCardResponse {
-        public Game Value { get; }
+    public class GameApiPlayCardResponse {
+        public GameModule Value { get; }
 
-        public GameSetupApiPlayCardResponse(
-            Game value
+        public GameApiPlayCardResponse(
+            GameModule value
         ) {
             Value = value;
         }
     }
 
-    public class GameSetupApiMoveCardRequest {
+    public class GameApiMoveCardRequest {
         readonly string cardId;
         readonly string from;
         readonly string to;
 
-        public GameSetupApiMoveCardRequest(
+        public GameApiMoveCardRequest(
             string cardId,
             string from,
             string to
@@ -83,16 +82,16 @@ namespace GameSetup.Web {
         public RowType GetTo() {
             return (RowType)Enum.Parse(typeof(RowType), to);
         }
-        public static GameSetupApiMoveCardRequest Create(CreatureCardId cardId, RowType from, RowType to) {
-            return new GameSetupApiMoveCardRequest(cardId.Value, from.ToString(), to.ToString());
+        public static GameApiMoveCardRequest Create(CreatureCardId cardId, RowType from, RowType to) {
+            return new GameApiMoveCardRequest(cardId.Value, from.ToString(), to.ToString());
         }
     }
 
-    public class GameSetupApiMoveCardResponse {
-        public Game Value { get; }
+    public class GameApiMoveCardResponse {
+        public GameModule Value { get; }
 
-        public GameSetupApiMoveCardResponse(
-            Game value
+        public GameApiMoveCardResponse(
+            GameModule value
         ) {
             Value = value;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using B20.Ext;
 using B20.Infrastructure.HttpClient.Integrations;
 using GameSetup;
-using GameSetup.Api;
+
 using GameSetup.Web;
 using HttpClientModule.Api;
 using HttpClientModule.Impl;

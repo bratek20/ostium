@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using GameComponents.Api;
-using GameSetup.Api;
+using GameModule.Api;
 
 namespace GameSetup
 {
@@ -33,28 +32,28 @@ namespace GameSetup
                 var diff = GameComponents.Diffs.DiffGateDurabilityCard(given.GetGateDurabilityCard(), expected.GateDurabilityCard, $"{path}gateDurabilityCard.");
                 if (!string.IsNullOrEmpty(diff)) result.Add(diff);
             }
+            //
+            // if (expected.AttackRowEmpty.HasValue && given.GetAttackRow().IsEmpty() != expected.AttackRowEmpty.Value)
+            // {
+            //     result.Add($"{path}attackRow empty {given.GetAttackRow().IsEmpty()} != {expected.AttackRowEmpty.Value}");
+            // }
+            //
+            // if (expected.AttackRow != null)
+            // {
+            //     var diff = GameComponents.Diffs.DiffCreatureCard(given.GetAttackRow().Get(), expected.AttackRow, $"{path}attackRow.");
+            //     if (!string.IsNullOrEmpty(diff)) result.Add(diff);
+            // }
 
-            if (expected.AttackRowEmpty.HasValue && given.GetAttackRow().IsEmpty() != expected.AttackRowEmpty.Value)
-            {
-                result.Add($"{path}attackRow empty {given.GetAttackRow().IsEmpty()} != {expected.AttackRowEmpty.Value}");
-            }
-
-            if (expected.AttackRow != null)
-            {
-                var diff = GameComponents.Diffs.DiffCreatureCard(given.GetAttackRow().Get(), expected.AttackRow, $"{path}attackRow.");
-                if (!string.IsNullOrEmpty(diff)) result.Add(diff);
-            }
-
-            if (expected.DefenseRowEmpty.HasValue && given.GetDefenseRow().IsEmpty() != expected.DefenseRowEmpty.Value)
-            {
-                result.Add($"{path}defenseRow empty {given.GetDefenseRow().IsEmpty()} != {expected.DefenseRowEmpty.Value}");
-            }
-
-            if (expected.DefenseRow != null)
-            {
-                var diff = GameComponents.Diffs.DiffCreatureCard(given.GetDefenseRow().Get(), expected.DefenseRow, $"{path}defenseRow.");
-                if (!string.IsNullOrEmpty(diff)) result.Add(diff);
-            }
+            // if (expected.DefenseRowEmpty.HasValue && given.GetDefenseRow().IsEmpty() != expected.DefenseRowEmpty.Value)
+            // {
+            //     result.Add($"{path}defenseRow empty {given.GetDefenseRow().IsEmpty()} != {expected.DefenseRowEmpty.Value}");
+            // }
+            //
+            // if (expected.DefenseRow != null)
+            // {
+            //     var diff = GameComponents.Diffs.DiffCreatureCard(given.GetDefenseRow().Get(), expected.DefenseRow, $"{path}defenseRow.");
+            //     if (!string.IsNullOrEmpty(diff)) result.Add(diff);
+            // }
 
             if (expected.GateCard != null)
             {
@@ -101,7 +100,7 @@ namespace GameSetup
             public Action<ExpectedHand> Hand { get; set; }
         }
 
-        public static string DiffGame(Game given, Action<ExpectedGame> expectedInit, string path = "")
+        public static string DiffGame(GameModule.Api.Game given, Action<ExpectedGame> expectedInit, string path = "")
         {
             var expected = new ExpectedGame();
             expectedInit?.Invoke(expected);

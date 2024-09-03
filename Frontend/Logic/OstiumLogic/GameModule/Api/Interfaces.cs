@@ -3,10 +3,9 @@
 using System;
 using System.Collections.Generic;
 using B20.Ext;
-using GameComponents.Api;
 
-namespace GameSetup.Api {
-    public interface GameSetupApi {
+namespace GameModule.Api {
+    public interface GameApi {
         Game StartGame();
 
         Game PlayCard(CreatureCardId cardId, RowType row);

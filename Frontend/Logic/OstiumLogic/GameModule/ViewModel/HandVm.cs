@@ -1,8 +1,7 @@
 using B20.Events.Api;
 using B20.Frontend.Element;
 using B20.Frontend.Elements;
-using GameComponents.Api;
-using GameSetup.Api;
+using GameModule.Api;
 
 namespace Ostium.Logic
 {

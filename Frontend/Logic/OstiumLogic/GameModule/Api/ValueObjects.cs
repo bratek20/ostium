@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 
-namespace GameComponents.Api {
+namespace GameModule.Api {
     public class GateDurabilityMarker {
         public int Value { get; }
 
@@ -98,6 +98,94 @@ namespace GameComponents.Api {
         }
         public static GateDurabilityCard Create(GateDurabilityMarker myMarker, GateDurabilityMarker opponentMarker) {
             return new GateDurabilityCard(myMarker.Value, opponentMarker.Value);
+        }
+    }
+
+    public class Row {
+        readonly CreatureCard? card;
+
+        public Row(
+            CreatureCard? card
+        ) {
+            this.card = card;
+        }
+        public Optional<CreatureCard> GetCard() {
+            return Optional<CreatureCard>.Of(card);
+        }
+        public static Row Create(Optional<CreatureCard> card) {
+            return new Row(card.OrElse(null));
+        }
+    }
+
+    public class Table {
+        readonly GateDurabilityCard gateDurabilityCard;
+        readonly Row attackRow;
+        readonly Row defenseRow;
+        readonly GateCard gateCard;
+
+        public Table(
+            GateDurabilityCard gateDurabilityCard,
+            Row attackRow,
+            Row defenseRow,
+            GateCard gateCard
+        ) {
+            this.gateDurabilityCard = gateDurabilityCard;
+            this.attackRow = attackRow;
+            this.defenseRow = defenseRow;
+            this.gateCard = gateCard;
+        }
+        public GateDurabilityCard GetGateDurabilityCard() {
+            return gateDurabilityCard;
+        }
+        public Row GetAttackRow() {
+            return attackRow;
+        }
+        public Row GetDefenseRow() {
+            return defenseRow;
+        }
+        public GateCard GetGateCard() {
+            return gateCard;
+        }
+        public static Table Create(GateDurabilityCard gateDurabilityCard, Row attackRow, Row defenseRow, GateCard gateCard) {
+            return new Table(gateDurabilityCard, attackRow, defenseRow, gateCard);
+        }
+    }
+
+    public class Hand {
+        readonly List<CreatureCard> cards;
+
+        public Hand(
+            List<CreatureCard> cards
+        ) {
+            this.cards = cards;
+        }
+        public List<CreatureCard> GetCards() {
+            return cards;
+        }
+        public static Hand Create(List<CreatureCard> cards) {
+            return new Hand(cards);
+        }
+    }
+
+    public class Game {
+        readonly Table table;
+        readonly Hand hand;
+
+        public Game(
+            Table table,
+            Hand hand
+        ) {
+            this.table = table;
+            this.hand = hand;
+        }
+        public Table GetTable() {
+            return table;
+        }
+        public Hand GetHand() {
+            return hand;
+        }
+        public static Game Create(Table table, Hand hand) {
+            return new Game(table, hand);
         }
     }
 }

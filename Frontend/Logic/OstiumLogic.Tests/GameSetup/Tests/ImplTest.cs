@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 using B20.Infrastructure.HttpClient.Integrations;
-using GameComponents.Api;
+using GameModule.Api;
 using GameSetup;
-using GameSetup.Api;
+
 using GameSetup.Impl;
 using GameSetup.Web;
 using HttpClientModule.Api;
@@ -13,13 +13,31 @@ using Xunit;
 
 namespace OstiumBackend.Tests.GameSetup.Tests
 {
+    public class GameApiMock : GameApi
+    {
+        public GameModule.Api.Game StartGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameModule.Api.Game PlayCard(CreatureCardId cardId, RowType row)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameModule.Api.Game MoveCard(CreatureCardId cardId, RowType from, RowType to)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
     public class GameSetupImplTest
     {
-        private GameSetupApi CreateApi()
+        private GameApi CreateApi()
         {
             // Assuming someContextBuilder() is a placeholder for the actual implementation
             // that provides necessary context and module setup for GameSetupApi.
-            return new GameSetupApiLogic();
+            return new GameApiMock();
         }
 
         [Fact]

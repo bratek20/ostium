@@ -8,7 +8,7 @@ using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
-using GameComponents.Api;
+using GameModule.Api;
 using GameSetup.Impl;
 
 namespace Ostium.Logic.Tests

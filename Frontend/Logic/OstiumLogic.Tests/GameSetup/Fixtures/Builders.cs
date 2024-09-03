@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using GameComponents.Api;
-using GameSetup.Api;
+using GameModule.Api;
+
 
 namespace GameSetup
 {
@@ -49,11 +49,11 @@ namespace GameSetup
             public Action<HandDef> Hand { get; set; } = _ => { };
         }
 
-        public static Game BuildGame(Action<GameDef> init = null)
+        public static GameModule BuildGame(Action<GameDef> init = null)
         {
             var def = new GameDef();
             init?.Invoke(def);
-            return Game.Create(
+            return GameModule.Create(
                 table: BuildTable(def.Table),
                 hand: BuildHand(def.Hand)
             );

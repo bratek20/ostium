@@ -1,8 +1,6 @@
 ﻿using B20.Events.Api;
-using B20.Frontend.Element;
 using B20.Frontend.Windows.Api;
-using GameComponents.Api;
-using GameSetup.Api;
+using GameModule.Api;
 
 namespace Ostium.Logic
 {
@@ -15,7 +13,7 @@ namespace Ostium.Logic
         
         public GameVM Game { get; }
 
-        public GameWindow(EventPublisher eventPublisher, GameSetupApi gameSetupApi)
+        public GameWindow(EventPublisher eventPublisher, GameApi gameSetupApi)
         {
             Game = new GameVM(gameSetupApi, eventPublisher);
         }

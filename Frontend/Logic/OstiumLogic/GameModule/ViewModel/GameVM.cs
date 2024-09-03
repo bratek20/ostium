@@ -5,7 +5,7 @@ using B20.Frontend.Element;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Logic.Utils;
-using GameSetup.Api;
+using GameModule.Api;
 
 namespace Ostium.Logic
 {
@@ -37,7 +37,7 @@ namespace Ostium.Logic
         }
     }
     
-    public partial class GameVM: ElementVm<Game>
+    public partial class GameVM: ElementVm<GameModule.Api.Game>
     {
         public TableVM Table { get; }
         public HandVm Hand { get; }
@@ -51,8 +51,8 @@ namespace Ostium.Logic
     
     public partial class GameVM
     {
-        private GameSetupApi gameSetupApi;
-        public GameVM(GameSetupApi gameSetupApi, EventPublisher eventPublisher)
+        private GameApi gameSetupApi;
+        public GameVM(GameApi gameSetupApi, EventPublisher eventPublisher)
         {
             this.gameSetupApi = gameSetupApi;
             eventPublisher.AddListener(new GameElementDragStartedListener(this));

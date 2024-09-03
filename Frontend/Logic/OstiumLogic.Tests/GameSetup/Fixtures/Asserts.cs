@@ -2,8 +2,7 @@
 
 using System;
 using GameComponents;
-using GameComponents.Api;
-using GameSetup.Api;
+using GameModule.Api;
 using Xunit;
 
 namespace GameSetup
@@ -22,7 +21,7 @@ namespace GameSetup
             Assert.True(diff == "", diff);
         }
 
-        public static void AssertGame(Game given, Action<Diffs.ExpectedGame> expectedInit)
+        public static void AssertGame(GameModule.Api.Game given, Action<Diffs.ExpectedGame> expectedInit)
         {
             var diff = Diffs.DiffGame(given, expectedInit);
             Assert.True(diff == "", diff);

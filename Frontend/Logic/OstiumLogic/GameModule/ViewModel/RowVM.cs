@@ -3,8 +3,8 @@ using B20.Ext;
 using B20.Frontend.Element;
 using B20.Frontend.Elements;
 using B20.Frontend.Traits;
-using GameComponents.Api;
-using GameSetup.Api;
+using GameModule.Api;
+
 
 namespace Ostium.Logic
 {
