@@ -5,13 +5,13 @@ import com.github.bratek20.logs.LoggerMock
 import com.github.bratek20.logs.LogsMocks
 import com.github.bratek20.ostium.gamemodule.api.GameApi
 import com.github.bratek20.ostium.gamemodule.api.RowType
-import com.github.bratek20.ostium.gamemodule.context.GameImpl
+import com.github.bratek20.ostium.gamemodule.context.GameModuleImpl
 import com.github.bratek20.ostium.gamemodule.fixtures.assertGame
 import com.github.bratek20.ostium.gamemodule.fixtures.creatureCardId
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-open class GameImplTest {
+open class GameModuleImplTest {
     class Context(
         val api: GameApi,
         val loggerMock: LoggerMock
@@ -19,7 +19,7 @@ open class GameImplTest {
     open fun createContext(): Context {
         val c = someContextBuilder()
             .withModules(
-                GameImpl(),
+                GameModuleImpl(),
                 LogsMocks()
             ).build()
 

@@ -6,7 +6,7 @@ import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
 import com.github.bratek20.ostium.createdgames.api.CreatedGamesApi
 import com.github.bratek20.ostium.createdgames.context.CreatedGamesWebClient
 import com.github.bratek20.ostium.gamemodule.api.GameApi
-import com.github.bratek20.ostium.gamemodule.context.GameWebClient
+import com.github.bratek20.ostium.gamemodule.context.GameModuleWebClient
 import org.junit.jupiter.api.Test
 
 class MainSmokeTest {
@@ -21,7 +21,7 @@ class MainSmokeTest {
             .withModules(
                 HttpClientImpl(),
                 CreatedGamesWebClient(httpConfig),
-                GameWebClient(httpConfig)
+                GameModuleWebClient(httpConfig)
             )
 
         val createdGamesApi = c.get(CreatedGamesApi::class.java)
