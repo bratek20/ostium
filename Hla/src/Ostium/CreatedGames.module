@@ -9,6 +9,11 @@ Interfaces
         
         create(creator: Username): GameId
 
+Web
+    Http
+        ExposedInterfaces
+            CreatedGamesApi
+
 //ViewModels
     //CreatedGameVm (clickable)
         //main -> CreatedGame
