@@ -5,8 +5,8 @@ import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
 import com.github.bratek20.ostium.createdgames.api.CreatedGamesApi
 import com.github.bratek20.ostium.createdgames.context.CreatedGamesWebClient
-import com.github.bratek20.ostium.game.api.GameApi
-import com.github.bratek20.ostium.game.context.GameWebClient
+import com.github.bratek20.ostium.gamemodule.api.GameApi
+import com.github.bratek20.ostium.gamemodule.context.GameWebClient
 import org.junit.jupiter.api.Test
 
 class MainSmokeTest {

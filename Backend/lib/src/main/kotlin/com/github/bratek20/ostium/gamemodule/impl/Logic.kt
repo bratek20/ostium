@@ -1,7 +1,7 @@
-package com.github.bratek20.ostium.game.impl
+package com.github.bratek20.ostium.gamemodule.impl
 
 import com.github.bratek20.logs.api.Logger
-import com.github.bratek20.ostium.game.api.*
+import com.github.bratek20.ostium.gamemodule.api.*
 
 class GameApiLogic(
     private val logger: Logger

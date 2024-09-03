@@ -1,10 +1,10 @@
-package com.github.bratek20.ostium.game.context
+package com.github.bratek20.ostium.gamemodule.context
 
 import com.github.bratek20.architecture.context.api.ContextBuilder
 import com.github.bratek20.architecture.context.api.ContextModule
 
-import com.github.bratek20.ostium.game.api.*
-import com.github.bratek20.ostium.game.impl.*
+import com.github.bratek20.ostium.gamemodule.api.*
+import com.github.bratek20.ostium.gamemodule.impl.*
 
 class GameImpl: ContextModule {
     override fun apply(builder: ContextBuilder) {

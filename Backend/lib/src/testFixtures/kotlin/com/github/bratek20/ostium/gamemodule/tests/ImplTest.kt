@@ -1,13 +1,13 @@
-package com.github.bratek20.ostium.game.tests
+package com.github.bratek20.ostium.gamemodule.tests
 
 import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.logs.LoggerMock
 import com.github.bratek20.logs.LogsMocks
-import com.github.bratek20.ostium.game.api.GameApi
-import com.github.bratek20.ostium.game.api.RowType
-import com.github.bratek20.ostium.game.context.GameImpl
-import com.github.bratek20.ostium.game.fixtures.assertGame
-import com.github.bratek20.ostium.game.fixtures.creatureCardId
+import com.github.bratek20.ostium.gamemodule.api.GameApi
+import com.github.bratek20.ostium.gamemodule.api.RowType
+import com.github.bratek20.ostium.gamemodule.context.GameImpl
+import com.github.bratek20.ostium.gamemodule.fixtures.assertGame
+import com.github.bratek20.ostium.gamemodule.fixtures.creatureCardId
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 

@@ -1,1 +1,0 @@
-package com.github.bratek20.ostium.game.fixtures
