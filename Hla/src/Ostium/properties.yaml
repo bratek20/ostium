@@ -5,7 +5,7 @@ profiles:
       project: "../../../Backend/lib"
       src:
         main: "src/main/kotlin/com/github/bratek20/ostium"
-        test: "src/test/kotlin/com/github/bratek20/ostium"
+        test: "src/testFixtures/kotlin/com/github/bratek20/ostium"
         fixtures: "src/testFixtures/kotlin/com/github/bratek20/ostium"
         
   - name: "Frontend"

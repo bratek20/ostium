@@ -32,7 +32,7 @@ ValueObjects
         hand: Hand
 
 Interfaces
-    GameSetupApi
+    GameApi
         startGame(): Game
         playCard(cardId: CreatureCardId, row: RowType): Game
         moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game
@@ -40,7 +40,7 @@ Interfaces
 Web
     Http
         ExposedInterfaces
-            GameSetupApi
+            GameApi
                                 
 //ViewModels
     //CreatureCardVm

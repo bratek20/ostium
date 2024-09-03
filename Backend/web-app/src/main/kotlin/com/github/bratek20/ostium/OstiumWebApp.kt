@@ -4,7 +4,7 @@ import com.github.bratek20.architecture.context.api.ContextModule
 import com.github.bratek20.infrastructure.httpserver.api.WebServerModule
 import com.github.bratek20.logs.api.Logger
 import com.github.bratek20.logs.context.Slf4jLogsImpl
-import com.github.bratek20.ostium.gamesetup.context.GameSetupWebServer
+import com.github.bratek20.ostium.game.context.GameWebServer
 import com.github.bratek20.spring.webapp.SpringWebApp
 
 //TODO-REF SpringWebApp should accept also normal modules
@@ -21,7 +21,7 @@ class LogsWebServer: WebServerModule {
 fun main() {
     SpringWebApp(
         modules = listOf(
-            GameSetupWebServer(),
+            GameWebServer(),
             LogsWebServer()
         ),
     ).run()
