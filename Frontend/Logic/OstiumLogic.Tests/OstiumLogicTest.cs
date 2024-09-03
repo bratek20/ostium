@@ -143,7 +143,7 @@ namespace Ostium.Logic.Tests
         void AssertCardInRow(RowVM row, string cardName)
         {
             Assert.True(row.HasCard);
-            Asserts.AssertCreatureCardId(row.Model.Get().GetId(), cardName);
+            Asserts.AssertCreatureCardId(row.Model.GetCard().Get().GetId(), cardName);
         }
         
         void AssertRowEmpty(RowVM row)

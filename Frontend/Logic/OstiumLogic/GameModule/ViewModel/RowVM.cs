@@ -8,13 +8,13 @@ using GameModule.Api;
 
 namespace Ostium.Logic
 {
-    public partial class RowVM: ElementVm<Optional<CreatureCard>>
+    public partial class RowVM: ElementVm<Row>
     {
         public OptionalElementVm<CreatureCardVm, CreatureCard> Card { get; }
         
         protected override void OnUpdate()
         {
-            Card.Update(Model);
+            Card.Update(Model.GetCard());
         }
     }
 
@@ -29,7 +29,7 @@ namespace Ostium.Logic
             Card = new OptionalElementVm<CreatureCardVm, CreatureCard>(new CreatureCardVm(publisher));
         }
         
-        public bool HasCard => Model.IsPresent();
+        public bool HasCard => Model.GetCard().IsPresent();
 
         public bool ContainsCard(CreatureCardVm card)
         {

@@ -7,10 +7,10 @@ using HttpClientModule.Api;
 using GameModule.Api;
 
 namespace GameModule.Web {
-    public class GameWebClientConfig {
+    public class GameModuleWebClientConfig {
         public HttpClientConfig Value { get; }
 
-        public GameWebClientConfig(
+        public GameModuleWebClientConfig(
             HttpClientConfig value
         ) {
             Value = value;
@@ -18,10 +18,10 @@ namespace GameModule.Web {
     }
 
     public class GameApiStartGameResponse {
-        public GameModule Value { get; }
+        public Game Value { get; }
 
         public GameApiStartGameResponse(
-            GameModule value
+            Game value
         ) {
             Value = value;
         }
@@ -50,10 +50,10 @@ namespace GameModule.Web {
     }
 
     public class GameApiPlayCardResponse {
-        public GameModule Value { get; }
+        public Game Value { get; }
 
         public GameApiPlayCardResponse(
-            GameModule value
+            Game value
         ) {
             Value = value;
         }
@@ -88,10 +88,10 @@ namespace GameModule.Web {
     }
 
     public class GameApiMoveCardResponse {
-        public GameModule Value { get; }
+        public Game Value { get; }
 
         public GameApiMoveCardResponse(
-            GameModule value
+            Game value
         ) {
             Value = value;
         }

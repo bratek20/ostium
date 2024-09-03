@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
-using B20.Ext;
-using B20.Infrastructure.HttpClient.Integrations;
+using GameModule.Api;
 using GameSetup;
-
-using GameSetup.Web;
-using HttpClientModule.Api;
-using HttpClientModule.Impl;
 using Xunit;
+using Diffs = GameComponents.Diffs;
 
 namespace OstiumBackend.Tests.GameSetup.Tests
 {
     public class SmokeTest
     {
-        private GameSetupApi CreateWebApi()
+        private GameApi CreateWebApi()
         {
             return null;
         }
@@ -30,7 +26,7 @@ namespace OstiumBackend.Tests.GameSetup.Tests
             {
                 expected.Hand = hand =>
                 {
-                    hand.Cards = new List<Action<GameComponents.Diffs.ExpectedCreatureCard>>
+                    hand.Cards = new List<Action<Diffs.ExpectedCreatureCard>>
                     {
                         card => { card.Id = "Mouse1"; },
                         card => { card.Id = "Mouse2"; }

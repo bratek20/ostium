@@ -23,8 +23,8 @@ namespace GameSetup
             init?.Invoke(def);
             return new Table(
                 gateDurabilityCard: BuildGateDurabilityCard(def.GateDurabilityCard),
-                attackRow: def.AttackRow != null ? BuildCreatureCard(def.AttackRow) : null,
-                defenseRow: def.DefenseRow != null ? BuildCreatureCard(def.DefenseRow) : null,
+                attackRow: new Row(def.AttackRow != null ? BuildCreatureCard(def.AttackRow) : null),
+                defenseRow: new Row(def.DefenseRow != null ? BuildCreatureCard(def.DefenseRow) : null),
                 gateCard: BuildGateCard(def.GateCard)
             );
         }
@@ -49,11 +49,11 @@ namespace GameSetup
             public Action<HandDef> Hand { get; set; } = _ => { };
         }
 
-        public static GameModule BuildGame(Action<GameDef> init = null)
+        public static Game BuildGame(Action<GameDef> init = null)
         {
             var def = new GameDef();
             init?.Invoke(def);
-            return GameModule.Create(
+            return Game.Create(
                 table: BuildTable(def.Table),
                 hand: BuildHand(def.Hand)
             );

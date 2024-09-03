@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using B20.Events.Api;
-using B20.Events.Impl;
 using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
-using GameModule.Api;
-using GameSetup.Impl;
 
 namespace Ostium.Logic.Tests
 {
@@ -31,7 +27,7 @@ namespace Ostium.Logic.Tests
         
         public Context Setup()
         {
-            var logic = OstiumLogicFactory.Create(new WindowManipulatorMock(), true);
+            var logic = OstiumLogicFactory.Create(new WindowManipulatorMock());
             return new Context(
                 eventPublisher: logic.EventPublisher,
                 windowManager: logic.WindowManager,

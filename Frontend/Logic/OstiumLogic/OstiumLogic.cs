@@ -28,7 +28,7 @@ namespace Ostium.Logic
             var factory = new HttpClientFactoryLogic(new DotNetHttpRequester());
             return new GameApiWebClient(
                 factory,
-                new GameWebClientConfig(
+                new GameModuleWebClientConfig(
                     HttpClientConfig.Create(
                         baseUrl: "http://localhost:8080",
                         auth: Optional<HttpClientAuth>.Empty()
