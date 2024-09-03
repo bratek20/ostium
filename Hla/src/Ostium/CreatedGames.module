@@ -9,13 +9,13 @@ Interfaces
         
         create(creator: Username): GameId
 
-ViewModels
-    CreatedGameVm (clickable)
-        main -> CreatedGame
-            id (debug)
-            creator
+//ViewModels
+    //CreatedGameVm (clickable)
+        //main -> CreatedGame
+            //id (debug)
+            //creator
             
-Windows
-    CreatedGamesWindow
-        createdGames: ElementList<CreatedGameVm>
-        createGame: Button -> GameWindow
+//Windows
+    //CreatedGamesWindow
+        //createdGames: ElementList<CreatedGameVm>
+        //createGame: Button -> GameWindow

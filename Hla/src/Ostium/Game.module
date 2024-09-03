@@ -42,30 +42,30 @@ Web
         ExposedInterfaces
             GameSetupApi
                                 
-ViewModels
-    CreatureCardVm
-        CreatureCard
-            id -> name    
-        visible: BoolSwitch
+//ViewModels
+    //CreatureCardVm
+        //CreatureCard
+            //id -> name
+        //visible: BoolSwitch
     
-    RowVm
-        Row
-            card
+    //RowVm
+        //Row
+            //card
     
-    TableVm
-        Table
-            attackRow
-            defenseRow
+    //TableVm
+        //Table
+            //attackRow
+            //defenseRow
             
-    HandVm
-        Hand
-            cards
+    //HandVm
+        //Hand
+            //cards
             
-    GameVm    
-        Game
-            table
-            hand    
+    //GameVm
+        //Game
+            //table
+            //hand
 
-Windows
-    GameWindow
-        game: GameVm
+//Windows
+    //GameWindow
+        //game: GameVm

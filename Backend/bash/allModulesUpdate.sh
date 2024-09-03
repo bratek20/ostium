@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../../OstiumHla
+cd ../../Hla
 
-./allModulesUpdate.sh Backend
+./allModulesUpdate.sh Ostium Backend
 
