@@ -4,8 +4,8 @@ import com.github.bratek20.infrastructure.httpclient.api.HttpClientConfig
 import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.logs.api.Logger
 import com.github.bratek20.logs.context.Slf4jLogsImpl
-import com.github.bratek20.ostium.gamesetup.api.GameSetupApi
-import com.github.bratek20.ostium.gamesetup.context.GameSetupWebClient
+import com.github.bratek20.ostium.game.api.GameApi
+import com.github.bratek20.ostium.game.context.GameWebClient
 
 fun main(args: Array<String>) {
     var serverUrl = "http://localhost:8080"
@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
     val c = SpringContextBuilder()
         .withModules(
             HttpClientImpl(),
-            GameSetupWebClient(
+            GameWebClient(
                 config = HttpClientConfig.create(
                     baseUrl = serverUrl
                 )
@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
         )
         .build()
 
-    val api = c.get(GameSetupApi::class.java)
+    val api = c.get(GameApi::class.java)
     val logger = c.get(Logger::class.java)
 
     logger.info("Using server URL = $serverUrl")
