@@ -5,7 +5,7 @@ using GameComponents;
 using GameModule.Api;
 using Xunit;
 
-namespace GameSetup
+namespace GameModule
 {
     public static class Asserts
     {

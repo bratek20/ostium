@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameModule.Api;
-using GameSetup;
+using GameModule;
 using Xunit;
 using Diffs = GameComponents.Diffs;
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameModule.Api;
 
-namespace GameSetup
+namespace GameModule
 {
     public static class Diffs
     {

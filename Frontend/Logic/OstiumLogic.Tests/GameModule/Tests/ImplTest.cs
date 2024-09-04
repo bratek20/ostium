@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameModule.Api;
-using GameSetup;
+using GameModule;
 using Xunit;
 using Diffs = GameComponents.Diffs;
 
@@ -11,17 +11,17 @@ namespace OstiumBackend.Tests.GameSetup.Tests
     {
         public Game StartGame()
         {
-            throw new NotImplementedException();
+            return Builders.BuildGame();
         }
 
         public Game PlayCard(CreatureCardId cardId, RowType row)
         {
-            throw new NotImplementedException();
+            return Builders.BuildGame();
         }
 
         public Game MoveCard(CreatureCardId cardId, RowType from, RowType to)
         {
-            throw new NotImplementedException();
+            return Builders.BuildGame();
         }
     }
     

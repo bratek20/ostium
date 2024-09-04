@@ -45,7 +45,7 @@ namespace Ostium.Logic
         public WindowManager WindowManager { get; }
         public GameApi GameApi { get; }
         
-        internal OstiumLogic(
+        public OstiumLogic(
             EventPublisher eventPublisher, 
             WindowManager windowManager,
             GameApi gameApi
