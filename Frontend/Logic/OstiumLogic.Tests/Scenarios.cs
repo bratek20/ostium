@@ -8,7 +8,7 @@ using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
-using OstiumBackend.Tests.GameSetup.Tests;
+using GameModule;
 
 namespace Ostium.Logic.Tests
 {
@@ -19,32 +19,42 @@ namespace Ostium.Logic.Tests
             public EventPublisher EventPublisher { get; }
             public WindowManager WindowManager { get; }
             public OstiumLogic Logic { get; }
+            public GameApiMock GameApiMock { get; }
 
-            public Context(EventPublisher eventPublisher, WindowManager windowManager, OstiumLogic logic)
+            public Context(
+                EventPublisher eventPublisher, 
+                WindowManager windowManager, 
+                OstiumLogic logic,
+                GameApiMock gameApiMock
+            )
             {
                 this.EventPublisher = eventPublisher;
                 this.WindowManager = windowManager;
                 this.Logic = logic;
+                this.GameApiMock = gameApiMock;
             }
         }
         
         public Context Setup()
         {
+            var gameApiMock = new GameApiMock();
             var logic = new OstiumLogic(
                 new EventPublisherLogic(), 
                 new WindowManagerLogic(new WindowManipulatorMock()),
-                new GameApiMock()
+                gameApiMock
             );
             return new Context(
                 eventPublisher: logic.EventPublisher,
                 windowManager: logic.WindowManager,
-                logic: logic
+                logic: logic,
+                gameApiMock: gameApiMock
             );
         }
         
         public class InGameWindowContext : Context
         {
-            public InGameWindowContext(EventPublisher eventPublisher, WindowManager windowManager, OstiumLogic logic) : base(eventPublisher, windowManager, logic)
+            public InGameWindowContext(EventPublisher eventPublisher, WindowManager windowManager, OstiumLogic logic, GameApiMock gameApiMock)
+                : base(eventPublisher, windowManager, logic, gameApiMock)
             {
             }
             
@@ -58,12 +68,14 @@ namespace Ostium.Logic.Tests
             
             public List<CreatureCardVm> CardsInHand => GameWindow.Game.Hand.Cards.Elements;
             public CreatureCardVm FirstCardInHand => CardsInHand[0];
+            public CreatureCardVm SecondCardInHand => CardsInHand[1];
             
             public Optional<CreatureCardVm> SelectedCard => GameWindow.Game.SelectedCard;
         }
 
         public class InGameWindowArgs
         {
+            public Action<Builders.GameDef> Game = null;
             public Rect AttackRowRect { get; set; } = new Rect(0, 0, 100, 100);
             public Rect DefenseRowRect { get; set; } = new Rect(0, 100, 100, 100);
         }
@@ -73,13 +85,15 @@ namespace Ostium.Logic.Tests
             init?.Invoke(args);
             
             var c = Setup();
+            c.GameApiMock.SetGame(args.Game);
             c.Logic.Start();
             (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
             
             var nc = new InGameWindowContext(
                 eventPublisher: c.EventPublisher,
                 windowManager: c.WindowManager,
-                logic: c.Logic
+                logic: c.Logic,
+                gameApiMock: c.GameApiMock
             );
             nc.AttackRow.GetTrait<WithRect>().RectProvider = () => args.AttackRowRect;
             nc.DefenseRow.GetTrait<WithRect>().RectProvider = () => args.DefenseRowRect;
