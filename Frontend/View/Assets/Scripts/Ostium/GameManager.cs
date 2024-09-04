@@ -18,8 +18,6 @@ namespace Ostium.View
         private MainWindowView mainWindow;
         [SerializeField]
         private GameWindowView gameWindow;
-        [SerializeField]
-        private bool useBuiltInServer = true;
 
         private OstiumLogic logic;
 
@@ -33,8 +31,7 @@ namespace Ostium.View
             );
             
             logic = OstiumLogicFactory.Create(
-                windowManipulator: windowManipulator,
-                useBuiltInServer: useBuiltInServer
+                windowManipulator: windowManipulator
             );
             
             var windowManager = logic.WindowManager;

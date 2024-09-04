@@ -1,0 +1,26 @@
+ValueObjects    
+    CreatedGame
+        id: GameId: int
+        creator: Username
+        
+Interfaces
+    CreatedGamesApi
+        getAll(): CreatedGame[]
+        
+        create(creator: Username): GameId
+
+Web
+    Http
+        ExposedInterfaces
+            CreatedGamesApi
+
+//ViewModels
+    //CreatedGameVm (clickable)
+        //main -> CreatedGame
+            //id (debug)
+            //creator
+            
+//Windows
+    //CreatedGamesWindow
+        //createdGames: ElementList<CreatedGameVm>
+        //createGame: Button -> GameWindow

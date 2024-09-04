@@ -1,5 +1,5 @@
 using B20.View;
-using GameSetup.Api;
+using GameModule.Api;
 using Ostium.Logic;
 using UnityEngine;
 

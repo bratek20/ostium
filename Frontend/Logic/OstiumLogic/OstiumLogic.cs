@@ -4,9 +4,8 @@ using B20.Ext;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Infrastructure.HttpClient.Integrations;
-using GameSetup.Api;
-using GameSetup.Impl;
-using GameSetup.Web;
+using GameModule.Api;
+using GameModule.Web;
 using HttpClientModule.Api;
 using HttpClientModule.Impl;
 
@@ -15,27 +14,21 @@ namespace Ostium.Logic
     public class OstiumLogicFactory
     {
         public static OstiumLogic Create(
-            WindowManipulator windowManipulator, 
-            bool useBuiltInServer
+            WindowManipulator windowManipulator
         ) {
             return new OstiumLogic(
                 new EventPublisherLogic(), 
                 new WindowManagerLogic(windowManipulator),
-                useBuiltInServer ? CreateBuiltInGameSetupApi() : createWebClientForGameSetupApi()
+                createWebClientForGameApi()
             );
         }
-        
-        static GameSetupApi CreateBuiltInGameSetupApi()
-        {
-            return new GameSetupApiLogic();
-        }
-        
-        public static GameSetupApi createWebClientForGameSetupApi()
+
+        public static GameApi createWebClientForGameApi()
         {
             var factory = new HttpClientFactoryLogic(new DotNetHttpRequester());
-            return new GameSetupApiWebClient(
+            return new GameApiWebClient(
                 factory,
-                new GameSetupWebClientConfig(
+                new GameModuleWebClientConfig(
                     HttpClientConfig.Create(
                         baseUrl: "http://localhost:8080",
                         auth: Optional<HttpClientAuth>.Empty()
@@ -50,16 +43,16 @@ namespace Ostium.Logic
         // context
         public EventPublisher EventPublisher { get; }
         public WindowManager WindowManager { get; }
-        public GameSetupApi GameSetupApi { get; }
+        public GameApi GameApi { get; }
         
-        internal OstiumLogic(
+        public OstiumLogic(
             EventPublisher eventPublisher, 
             WindowManager windowManager,
-            GameSetupApi gameSetupApi
+            GameApi gameApi
         ) {
             EventPublisher = eventPublisher;
             WindowManager = windowManager;
-            GameSetupApi = gameSetupApi;
+            GameApi = gameApi;
             
             RegisterWindows();
         }
@@ -67,7 +60,7 @@ namespace Ostium.Logic
         private void RegisterWindows()
         {
             WindowManager.Register(new MainWindow(WindowManager));
-            WindowManager.Register(new GameWindow(EventPublisher, GameSetupApi));
+            WindowManager.Register(new GameWindow(EventPublisher, GameApi));
         }
 
         public void Start()

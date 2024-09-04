@@ -2,7 +2,7 @@
 
 moduleName=$1
 
-cd ../../OstiumHla
+cd ../../Hla
 
-./updateModule.sh Backend $moduleName
+./updateModule.sh Ostium Backend $moduleName
 
