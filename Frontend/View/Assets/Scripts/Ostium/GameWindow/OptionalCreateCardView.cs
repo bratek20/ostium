@@ -1,5 +1,5 @@
 using B20.View;
-using GameComponents.Api;
+using GameModule.Api;
 using Ostium.Logic;
 
 namespace Ostium.View
