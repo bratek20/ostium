@@ -37,7 +37,7 @@ namespace Ostium.Logic
         }
     }
     
-    public partial class GameVM: ElementVm<GameModule.Api.Game>
+    public partial class GameVM: ElementVm<Game>
     {
         public TableVM Table { get; }
         public HandVm Hand { get; }
