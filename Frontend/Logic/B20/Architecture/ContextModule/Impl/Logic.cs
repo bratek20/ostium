@@ -4,7 +4,7 @@ using B20.Architecture.ContextModule.Api;
 
 namespace B20.Architecture.ContextModule.Impl
 {
-    public class ContextLogic : Context
+    public class ContextLogic : Api.Context
     {
         private readonly IServiceProvider _provider;
 
@@ -54,7 +54,7 @@ namespace B20.Architecture.ContextModule.Impl
             return this;
         }
 
-        public Context Build()
+        public Api.Context Build()
         {
             var provider = _services.BuildServiceProvider();
             return new ContextLogic(provider);

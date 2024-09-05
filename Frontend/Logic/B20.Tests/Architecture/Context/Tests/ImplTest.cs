@@ -1,5 +1,6 @@
 using B20.Architecture.ContextModule.Api;
 using B20.Architecture.ContextModule.Impl;
+using B20.Tests.ExtraAsserts;
 using Xunit;
 
 namespace B20.Tests.Architecture.Context.Tests
@@ -89,6 +90,31 @@ namespace B20.Tests.Architecture.Context.Tests
             
             // then
             Assert.IsType<SomeInterfaceImpl>(obj);
+        }
+        
+        class ClassWithValue
+        {
+            public int Value { get; }
+            
+            public ClassWithValue(int value)
+            {
+                Value = value;
+            }
+        }
+        
+        [Fact]
+        public void ShouldSupportImplObject()
+        {
+            // given
+            var c = CreateBuilder()
+                .SetImplObject(new ClassWithValue(42))
+                .Build();
+            
+            // when
+            var obj = c.Get<ClassWithValue>();
+            
+            // then
+            AssertExt.Equal(obj.Value, 42);
         }
     }
 }

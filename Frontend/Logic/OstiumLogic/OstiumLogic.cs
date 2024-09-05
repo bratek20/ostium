@@ -1,13 +1,18 @@
+using B20.Architecture.ContextModule.Api;
+using B20.Architecture.ContextModule.Context;
+using B20.Architecture.ContextModule.Impl;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Ext;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Infrastructure.HttpClient.Integrations;
+using B20.Infrastructure.HttpClientModule.Context;
 using GameModule.Api;
 using GameModule.Web;
 using HttpClientModule.Api;
 using HttpClientModule.Impl;
+using Ostium.Logic.GameModule.Context;
 
 namespace Ostium.Logic
 {
@@ -19,22 +24,23 @@ namespace Ostium.Logic
             return new OstiumLogic(
                 new EventPublisherLogic(), 
                 new WindowManagerLogic(windowManipulator),
-                createWebClientForGameApi()
+                CreateWebClientForGameApi()
             );
         }
 
-        public static GameApi createWebClientForGameApi()
+        public static GameApi CreateWebClientForGameApi()
         {
-            var factory = new HttpClientFactoryLogic(new DotNetHttpRequester());
-            return new GameApiWebClient(
-                factory,
-                new GameModuleWebClientConfig(
-                    HttpClientConfig.Create(
-                        baseUrl: "http://localhost:8080",
-                        auth: Optional<HttpClientAuth>.Empty()
+            return ContextModuleFactory.CreateBuilder()
+                .WithModules(
+                    new DotNetHttpClientModuleImpl(),
+                    new GameModuleWebClient(
+                        HttpClientConfig.Create(
+                            baseUrl: "http://localhost:8080",
+                            auth: Optional<HttpClientAuth>.Empty()
+                        )
                     )
                 )
-            );
+                .Get<GameApi>();
         }
     }
 

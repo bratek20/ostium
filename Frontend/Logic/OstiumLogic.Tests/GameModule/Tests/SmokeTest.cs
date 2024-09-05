@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameModule.Api;
 using GameModule;
+using Ostium.Logic;
 using Xunit;
 using Diffs = GameComponents.Diffs;
 
@@ -11,7 +12,7 @@ namespace OstiumBackend.Tests.GameSetup.Tests
     {
         private GameApi CreateWebApi()
         {
-            return null;
+            return OstiumLogicFactory.CreateWebClientForGameApi();
         }
         
         [Fact(

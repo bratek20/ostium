@@ -21,7 +21,7 @@ namespace B20.Architecture.ContextModule.Api
         
         // ContextBuilder AddImpl<I, T>() where T : class, I;
         //
-        // ContextBuilder SetImplObject<I>(I implementationObj) where I : class;
+        ContextBuilder SetImplObject<T>(T obj) where T : class;
         // ContextBuilder AddImplObject<I>(I implementationObj) where I : class;
 
         ContextBuilder WithModule(ContextModule module);
