@@ -4,4 +4,4 @@
         //username: InputField<Username>
         
         //grayed out if username is not set
-        //play: Button -> GamesWindows
+        //play: Button -> GamesWindow

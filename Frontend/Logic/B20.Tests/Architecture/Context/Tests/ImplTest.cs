@@ -55,6 +55,22 @@ namespace B20.Tests.Architecture.Context.Tests
         }
         
         [Fact]
+        public void ShouldUseSingletonAsDefaultInjectionMode()
+        {
+            // given
+            var c = CreateBuilder()
+                .SetClass<SimpleClass>()
+                .Build();
+            
+            // when
+            var obj1 = c.Get<SimpleClass>();
+            var obj2 = c.Get<SimpleClass>();
+            
+            // then
+            Assert.True(obj1 == obj2);
+        }
+        
+        [Fact]
         public void TestInterfaceImpl()
         {
             // given

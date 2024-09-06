@@ -30,7 +30,7 @@ namespace B20.Architecture.ContextModule.Impl
 
         public ContextBuilder SetClass<T>() where T : class
         {
-            _services.AddTransient<T>();
+            _services.AddSingleton<T>();
             return this;
         }
 
