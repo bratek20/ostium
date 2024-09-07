@@ -1,0 +1,34 @@
+name: Unity - Test Compile
+
+on:
+  push:
+    branches:
+      - feat/unity-ci
+
+jobs:
+  build:
+    name: Build Unity Project
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Unity Hub
+      uses: game-ci/unityhub@v0.10
+
+    - name: Install Unity Editor
+      uses: game-ci/unity-editor@v3
+      with:
+        version: 2022.3.37f1 # Use your specific Unity version here
+
+    - name: Build Project
+      run: |
+        /opt/unity/Editor/Unity -batchmode -quit -projectPath . -logFile - -executeMethod "UnityEditor.EditorUtility.CompileScripts"
+
+    - name: Save Build Logs
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-logs
+        path: ./build_logs.txt
