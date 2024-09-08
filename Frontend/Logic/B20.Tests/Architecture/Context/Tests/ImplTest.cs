@@ -53,23 +53,7 @@ namespace B20.Tests.Architecture.Context.Tests
             Assert.IsType<ReferencingClass>(obj);
             Assert.IsType<SimpleClass>(obj.SimpleClass);
         }
-        
-        [Fact]
-        public void ShouldUseSingletonAsDefaultInjectionMode()
-        {
-            // given
-            var c = CreateBuilder()
-                .SetClass<SimpleClass>()
-                .Build();
-            
-            // when
-            var obj1 = c.Get<SimpleClass>();
-            var obj2 = c.Get<SimpleClass>();
-            
-            // then
-            Assert.True(obj1 == obj2);
-        }
-        
+
         [Fact]
         public void TestInterfaceImpl()
         {
@@ -131,6 +115,35 @@ namespace B20.Tests.Architecture.Context.Tests
             
             // then
             AssertExt.Equal(obj.Value, 42);
+        }
+
+        public class DefaultScopeIsSingletonTests
+        {
+            private B20.Architecture.ContextModule.Api.Context c;
+
+            // Common setup done in the constructor
+            public DefaultScopeIsSingletonTests()
+            {
+                c = CreateBuilder()
+                    .SetClass<SimpleClass>()
+                    .SetImpl<SomeInterface, SomeInterfaceImpl>()
+                    .Build();
+            }
+            
+            [Fact]
+            public void SetClass() => TestBeingSingleton<SimpleClass>();
+            [Fact]
+            public void SetImpl() => TestBeingSingleton<SomeInterface>();
+
+            private void TestBeingSingleton<T>() where T: class
+            {
+                // when
+                var obj1 = c.Get<T>();
+                var obj2 = c.Get<T>();
+            
+                // then
+                Assert.True(obj1 == obj2);
+            }
         }
 
         public class FieldInjectionTests

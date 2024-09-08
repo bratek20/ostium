@@ -1,4 +1,6 @@
+using System;
 using Autofac;
+using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using B20.Architecture.ContextModule.Api;
 
@@ -30,30 +32,33 @@ namespace B20.Architecture.ContextModule.Impl
 
         public ContextBuilder SetClass<T>() where T : class
         {
-            _builder.RegisterType<T>()
-                .AsSelf()
-                .SingleInstance()
-                .PropertiesAutowired();
-            return this;
+            return Register(b => b.RegisterType<T>().AsSelf());
         }
 
         public ContextBuilder SetImpl<TInterface, TImplementation>()
             where TInterface : class
             where TImplementation : class, TInterface
         {
-            _builder.RegisterType<TImplementation>().As<TInterface>().PropertiesAutowired();
-            return this;
+            return Register(b => b.RegisterType<TImplementation>().As<TInterface>());
         }
 
         public ContextBuilder SetImplObject<I>(I implementationObj) where I : class
         {
-            _builder.RegisterInstance(implementationObj).PropertiesAutowired();
-            return this;
+            return Register(b => b.RegisterInstance(implementationObj));
         }
 
         public ContextBuilder WithModule(Api.ContextModule module)
         {
             module.Apply(this);
+            return this;
+        }
+
+        private ContextBuilder Register<T>(
+            Func<ContainerBuilder, IRegistrationBuilder<T, object, object>> registrationAction)
+            where T : class
+        {
+            var registration = registrationAction(_builder);
+            registration.PropertiesAutowired().SingleInstance();
             return this;
         }
 
