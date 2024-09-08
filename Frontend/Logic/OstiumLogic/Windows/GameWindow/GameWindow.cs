@@ -6,11 +6,6 @@ namespace Ostium.Logic
 {
     public class GameWindow : Window
     {
-        public WindowId GetId()
-        {
-            return WindowIds.GAME_WINDOW;
-        }
-        
         public GameVM Game { get; }
 
         public GameWindow(GameVM game)

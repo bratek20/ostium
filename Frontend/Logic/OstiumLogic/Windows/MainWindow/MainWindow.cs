@@ -11,10 +11,5 @@ namespace Ostium.Logic
         {
             PlayButton = playButton;
         }
-        
-        public WindowId GetId()
-        {
-            return WindowIds.MAIN_WINDOW;
-        }
     }
 }

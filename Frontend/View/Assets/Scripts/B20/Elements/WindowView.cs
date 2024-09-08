@@ -5,23 +5,25 @@ using UnityEngine;
 
 namespace B20.View
 {
-    public class WindowView : MonoBehaviour
+    public interface WindowView 
     {
-        public Window Value { get; private set; }
-        
-        public T ValueAs<T>() where T : class, Window
-        {
-            return Value as T;
-        }
+        Window RawViewModel { get; }
+        void SetActive(bool active);
+    }
+    
+    public class WindowView<T>: MonoBehaviour, WindowView where T : Window  
+    {
+        public T ViewModel { get; private set; }
+        public Window RawViewModel => ViewModel;
         
         protected virtual void OnInit() { }
         
-        public void Init(Window value)
+        public void Init(T value)
         {
-            Value = value;
+            ViewModel = value;
             OnInit();
         }
-
+        
         public void SetActive(bool active)
         {
             gameObject.SetActive(active);

@@ -47,7 +47,7 @@ namespace Ostium.Logic.Tests
                     new WindowManipulatorInMemoryImpl(),
                     new WindowsImpl(),
                     new EventsImpl(),
-                    new OstiumLogicImpl()
+                    new OstiumLogicPartialImpl()
                 )
                 .Build();
             

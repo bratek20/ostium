@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Context;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Frontend.Windows.Api;
@@ -20,24 +21,21 @@ namespace Ostium.View
         private GameWindowView gameWindow;
 
         private OstiumLogic logic;
-
+        
         void Start()
         {
-            var windowManipulator = new UnityWindowManipulator(
-                ListUtils.Of<WindowView>(
-                    mainWindow,
-                    gameWindow
-                )
-            );
+            var c = ContextsFactory.CreateBuilder()
+                .SetImplObject(mainWindow)
+                .SetImplObject(gameWindow)
+                .SetImpl<WindowManipulator, UnityWindowManipulator>()
+                .WithModule(new OstiumLogicFullImpl())
+                .Build();
+
+            var windowManager = c.Get<WindowManager>();
+            mainWindow.Init(windowManager.Get<Logic.MainWindow>());
+            gameWindow.Init(windowManager.Get<GameWindow>());
             
-            logic = OstiumLogicFactory.Create(
-                windowManipulator: windowManipulator
-            );
-            
-            var windowManager = logic.WindowManager;
-            mainWindow.Init(windowManager.Get(WindowIds.MAIN_WINDOW));
-            gameWindow.Init(windowManager.Get(WindowIds.GAME_WINDOW));
-            
+            logic = c.Get<OstiumLogic>();
             logic.Start();
         }
     }
