@@ -1,7 +1,7 @@
-using B20.Architecture.ContextModule.Api;
-using B20.Architecture.ContextModule.Impl;
+using B20.Architecture.Contexts.Api;
+using B20.Architecture.Contexts.Impl;
 
-namespace B20.Architecture.ContextModule.Context
+namespace B20.Architecture.Contexts.Context
 {
     public class ContextModuleFactory
     {

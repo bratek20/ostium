@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace B20.Architecture.ContextModule.Api
+namespace B20.Architecture.Contexts.Api
 {
     public interface Context
     {
@@ -11,7 +11,7 @@ namespace B20.Architecture.ContextModule.Api
 
     public interface ContextBuilder
     {
-        ContextBuilder SetClass<T>() where T : class;
+        ContextBuilder SetClass<T>(InjectionMode mode = InjectionMode.Singleton) where T : class;
         ContextBuilder SetImpl<TInterface, TImplementation>()             
             where TInterface : class
             where TImplementation : class, TInterface;

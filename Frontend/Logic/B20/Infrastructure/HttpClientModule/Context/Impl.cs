@@ -1,4 +1,4 @@
-using B20.Architecture.ContextModule.Api;
+using B20.Architecture.Contexts.Api;
 using B20.Infrastructure.HttpClient.Integrations;
 using HttpClientModule.Api;
 using HttpClientModule.Impl;

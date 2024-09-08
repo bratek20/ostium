@@ -2,9 +2,9 @@ using System;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
-using B20.Architecture.ContextModule.Api;
+using B20.Architecture.Contexts.Api;
 
-namespace B20.Architecture.ContextModule.Impl
+namespace B20.Architecture.Contexts.Impl
 {
     public class ContextLogic : Api.Context
     {
@@ -30,9 +30,9 @@ namespace B20.Architecture.ContextModule.Impl
             _builder = new ContainerBuilder();
         }
 
-        public ContextBuilder SetClass<T>() where T : class
+        public ContextBuilder SetClass<T>(InjectionMode mode = InjectionMode.Singleton) where T : class
         {
-            return Register(b => b.RegisterType<T>().AsSelf());
+            return Register(b => b.RegisterType<T>().AsSelf(), mode);
         }
 
         public ContextBuilder SetImpl<TInterface, TImplementation>()
@@ -54,11 +54,18 @@ namespace B20.Architecture.ContextModule.Impl
         }
 
         private ContextBuilder Register<T>(
-            Func<ContainerBuilder, IRegistrationBuilder<T, object, object>> registrationAction)
+            Func<ContainerBuilder, IRegistrationBuilder<T, object, object>> registrationAction,
+            InjectionMode mode = InjectionMode.Singleton
+        )
             where T : class
         {
             var registration = registrationAction(_builder);
-            registration.PropertiesAutowired().SingleInstance();
+            registration.PropertiesAutowired();
+
+            if (mode == InjectionMode.Singleton)
+            {
+                registration.SingleInstance();    
+            }
             return this;
         }
 

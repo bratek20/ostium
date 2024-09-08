@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 
-namespace Serialization.Api {
-    public enum SerializationType {
-        JSON,
+namespace B20.Architecture.Contexts.Api {
+    public enum InjectionMode {
+        Singleton,
+        Prototype,
     }
 }

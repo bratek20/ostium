@@ -1,5 +1,5 @@
-using B20.Architecture.ContextModule.Api;
-using B20.Architecture.ContextModule.Impl;
+using B20.Architecture.Contexts.Api;
+using B20.Architecture.Contexts.Impl;
 using B20.Tests.ExtraAsserts;
 using Xunit;
 
@@ -119,7 +119,7 @@ namespace B20.Tests.Architecture.Context.Tests
 
         public class DefaultScopeIsSingletonTests
         {
-            private B20.Architecture.ContextModule.Api.Context c;
+            private B20.Architecture.Contexts.Api.Context c;
 
             // Common setup done in the constructor
             public DefaultScopeIsSingletonTests()
@@ -143,6 +143,32 @@ namespace B20.Tests.Architecture.Context.Tests
             
                 // then
                 Assert.True(obj1 == obj2);
+            }
+        }
+        
+        public class ForcingPrototypeScopeTests
+        {
+            private B20.Architecture.Contexts.Api.Context c;
+
+            // Common setup done in the constructor
+            public ForcingPrototypeScopeTests()
+            {
+                c = CreateBuilder()
+                    .SetClass<SimpleClass>(InjectionMode.Prototype)
+                    .Build();
+            }
+            
+            [Fact]
+            public void SetClass() => TestBeingPrototype<SimpleClass>();
+
+            private void TestBeingPrototype<T>() where T: class
+            {
+                // when
+                var obj1 = c.Get<T>();
+                var obj2 = c.Get<T>();
+            
+                // then
+                Assert.True(obj1 != obj2);
             }
         }
 

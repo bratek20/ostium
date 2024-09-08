@@ -1,6 +1,6 @@
-using B20.Architecture.ContextModule.Api;
-using B20.Architecture.ContextModule.Context;
-using B20.Architecture.ContextModule.Impl;
+using B20.Architecture.Contexts.Api;
+using B20.Architecture.Contexts.Context;
+using B20.Architecture.Contexts.Impl;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Ext;
