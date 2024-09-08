@@ -6,13 +6,12 @@ namespace B20.Frontend.Windows.Api
     {
         WindowId GetId();
 
-        void OnOpen();
+        void OnOpen() {}
     }
     
     // outgoing
     public interface WindowManager
     {
-        void Register(Window window);
         Window Get(WindowId id);
         
         void Open(WindowId id);

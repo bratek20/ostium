@@ -20,17 +20,15 @@ namespace Ostium.Logic
     {
         public static OstiumLogic Create(
             WindowManipulator windowManipulator
-        ) {
-            return new OstiumLogic(
-                new EventPublisherLogic(), 
-                new WindowManagerLogic(windowManipulator),
-                CreateWebClientForGameApi()
-            );
+        )
+        {
+            return ContextsFactory.CreateBuilder()
+                .Get<OstiumLogic>();
         }
 
         public static GameApi CreateWebClientForGameApi()
         {
-            return ContextModuleFactory.CreateBuilder()
+            return ContextsFactory.CreateBuilder()
                 .WithModules(
                     new DotNetHttpClientModuleImpl(),
                     new GameModuleWebClient(
@@ -46,32 +44,18 @@ namespace Ostium.Logic
 
     public class OstiumLogic
     {
-        // context
-        public EventPublisher EventPublisher { get; }
-        public WindowManager WindowManager { get; }
-        public GameApi GameApi { get; }
+        private WindowManager windowManager;
         
         public OstiumLogic(
-            EventPublisher eventPublisher, 
-            WindowManager windowManager,
-            GameApi gameApi
-        ) {
-            EventPublisher = eventPublisher;
-            WindowManager = windowManager;
-            GameApi = gameApi;
-            
-            RegisterWindows();
-        }
-        
-        private void RegisterWindows()
+            WindowManager windowManager
+        )
         {
-            WindowManager.Register(new MainWindow(WindowManager));
-            WindowManager.Register(new GameWindow(EventPublisher, GameApi));
+            this.windowManager = windowManager;
         }
 
         public void Start()
         {
-            WindowManager.Open(WindowIds.MAIN_WINDOW);
+            windowManager.Open(WindowIds.MAIN_WINDOW);
         }
     }
 }

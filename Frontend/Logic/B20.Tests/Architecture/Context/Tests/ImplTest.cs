@@ -64,10 +64,12 @@ namespace B20.Tests.Architecture.Context.Tests
                 .Build();
             
             // when
-            var obj = c.Get<SomeInterface>();
+            var interfObj = c.Get<SomeInterface>();
+            var implObj = c.Get<SomeInterfaceImpl>();
             
             // then
-            Assert.IsType<SomeInterfaceImpl>(obj);
+            Assert.IsType<SomeInterfaceImpl>(interfObj);
+            Assert.IsType<SomeInterfaceImpl>(implObj);
         }
         
         class ClassNeedingContext

@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Context;
 using B20.Architecture.Exceptions;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Impl;
 using B20.Architecture.Exceptions.Fixtures;
+using B20.Frontend.Windows.Context;
+using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Fixtures;
 using Xunit;
 
@@ -10,22 +13,19 @@ namespace B20.Frontend.Windows.Tests
 {
     public class WindowsImplTest
     {
-        class TestWindow : Window
+        class TestWindow1 : Window
         {
-            private WindowId id;
-            public TestWindow(string id)
-            {
-                this.id = new WindowId(id);
-            }
-            
             public WindowId GetId()
             {
-                return id;
+                return new WindowId("window1");
             }
-
-            public void OnOpen()
+        }
+        
+        class TestWindow2 : Window
+        {
+            public WindowId GetId()
             {
-                
+                return new WindowId("window2");
             }
         }
         
@@ -34,8 +34,15 @@ namespace B20.Frontend.Windows.Tests
 
         public WindowsImplTest()
         {
-            manipulatorMock = new WindowManipulatorMock();
-            windowManager = new WindowManagerLogic(manipulatorMock);
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    new WindowsImpl(),
+                    new WindowManipulatorMockImpl()
+                )
+                .Build();
+            
+            manipulatorMock = c.Get<WindowManipulatorMock>();
+            windowManager = c.Get<WindowManager>();
         }
 
         [Fact]
@@ -55,15 +62,9 @@ namespace B20.Frontend.Windows.Tests
         public void ShouldHandleWindowLogic()
         {
             // Creation
-            var window1 = new TestWindow("window1");
-            var window2 = new TestWindow("window2");
-            
-            windowManager.Register(window1);
-            windowManager.Register(window2);
-            
             manipulatorMock.AssertNoSetVisibleCalls();
-            Assert.Equal(window1, windowManager.Get(new WindowId("window1")));
-            Assert.Equal(window2, windowManager.Get(new WindowId("window2")));
+            Assert.IsType<TestWindow1>(windowManager.Get(new WindowId("window1")));
+            Assert.IsType<TestWindow2>(windowManager.Get(new WindowId("window2")));
             
             // Open first window
             windowManager.Open(new WindowId("window1"));

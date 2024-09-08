@@ -3,7 +3,7 @@ using B20.Architecture.Contexts.Impl;
 
 namespace B20.Architecture.Contexts.Context
 {
-    public class ContextModuleFactory
+    public class ContextsFactory
     {
         public static ContextBuilder CreateBuilder()
         {

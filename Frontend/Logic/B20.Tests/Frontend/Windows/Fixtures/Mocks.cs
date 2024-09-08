@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
 using Xunit;
 
@@ -21,6 +22,14 @@ namespace B20.Tests.Frontend.Windows.Fixtures
         public void AssertNoSetVisibleCalls()
         {
             Assert.Empty(windowVisibility);
+        }
+    }
+    
+    public class WindowManipulatorMockImpl: ContextModule
+    {
+        public void Apply(ContextBuilder builder)
+        {
+            builder.SetImpl<WindowManipulator, WindowManipulatorMock>();
         }
     }
 }

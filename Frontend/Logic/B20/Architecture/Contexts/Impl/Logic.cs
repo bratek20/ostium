@@ -40,7 +40,7 @@ namespace B20.Architecture.Contexts.Impl
             where TInterface : class
             where TImplementation : class, TInterface
         {
-            return Register(b => b.RegisterType<TImplementation>().As<TInterface>());
+            return Register(b => b.RegisterType<TImplementation>().AsSelf().As<TInterface>());
         }
 
         public ContextBuilder SetImplObject<I>(I implementationObj) where I : class
