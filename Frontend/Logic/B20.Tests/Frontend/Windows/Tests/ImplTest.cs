@@ -39,6 +39,8 @@ namespace B20.Frontend.Windows.Tests
                     new WindowsImpl(),
                     new WindowManipulatorMockImpl()
                 )
+                .AddImpl<Window, TestWindow1>()
+                .AddImpl<Window, TestWindow2>()
                 .Build();
             
             manipulatorMock = c.Get<WindowManipulatorMock>();

@@ -5,8 +5,7 @@ namespace B20.Architecture.Contexts.Api
     public interface Context
     {
         T Get<T>() where T : class;
-        //
-        // ISet<T> GetMany<T>() where T : class;
+        IEnumerable<T> GetMany<T>() where T : class;
     }
 
     public interface ContextBuilder
@@ -19,7 +18,9 @@ namespace B20.Architecture.Contexts.Api
         // ContextBuilder AddClass<T>();
         //
         
-        // ContextBuilder AddImpl<I, T>() where T : class, I;
+        ContextBuilder AddImpl<TInterface, TImplementation>()             
+            where TInterface : class
+            where TImplementation : class, TInterface;
         //
         ContextBuilder SetImplObject<T>(T obj) where T : class;
         // ContextBuilder AddImplObject<I>(I implementationObj) where I : class;

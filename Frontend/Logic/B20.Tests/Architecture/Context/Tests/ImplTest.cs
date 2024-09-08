@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Impl;
 using B20.Tests.ExtraAsserts;
@@ -56,7 +58,7 @@ namespace B20.Tests.Architecture.Context.Tests
         }
         
         [Fact]
-        public void TestInterfaceImpl()
+        public void TestSetImpl()
         {
             // given
             var c = CreateBuilder()
@@ -71,6 +73,43 @@ namespace B20.Tests.Architecture.Context.Tests
             Assert.IsType<SomeInterfaceImpl>(interfObj);
             Assert.IsType<SomeInterfaceImpl>(implObj);
         }
+        
+        class SomeInterfaceImpl2 : SomeInterface
+        {
+            
+        }
+
+        class ClassWithSetOfImpls
+        {
+            public IEnumerable<SomeInterface> Impls { get; } 
+            
+            public ClassWithSetOfImpls(IEnumerable<SomeInterface> impls)
+            {
+                Impls = impls;
+            }
+        }
+        
+        [Fact]
+        public void TestAddImpl()
+        {
+            // given
+            var c = CreateBuilder()
+                .AddImpl<SomeInterface, SomeInterfaceImpl>()
+                .AddImpl<SomeInterface, SomeInterfaceImpl2>()
+                .SetClass<ClassWithSetOfImpls>()
+                .Build();
+            
+            // when
+            var interfObjs = c.GetMany<SomeInterface>();
+            var classWithImpls = c.Get<ClassWithSetOfImpls>();
+
+            // then
+            AssertExt.Equal(interfObjs, classWithImpls.Impls);
+            AssertExt.EnumerableCount(interfObjs, 2);
+            Assert.IsType<SomeInterfaceImpl>(interfObjs.ToList()[0]);
+            Assert.IsType<SomeInterfaceImpl2>(interfObjs.ToList()[1]);
+        }
+        
         
         class ClassNeedingContext
         {

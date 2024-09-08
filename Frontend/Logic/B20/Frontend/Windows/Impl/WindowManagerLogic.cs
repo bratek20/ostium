@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using B20.Frontend.Windows.Api;
 
 namespace B20.Frontend.Windows.Impl
@@ -7,22 +8,21 @@ namespace B20.Frontend.Windows.Impl
     {
         private WindowManipulator windowManipulator;
         private Window currentWindow;
-        private List<Window> registeredWindows = new List<Window>();
+        private List<Window> windows;
         private bool firstOpen = true;
         
-        public WindowManagerLogic(WindowManipulator windowManipulator)
+        public WindowManagerLogic(
+            WindowManipulator windowManipulator,
+            IEnumerable<Window> windows
+        )
         {
             this.windowManipulator = windowManipulator;
-        }
-        
-        public void Register(Window window)
-        {
-            registeredWindows.Add(window);
+            this.windows = windows.ToList();
         }
 
         public Window Get(WindowId id)
         {
-            var window = registeredWindows.Find(w => w.GetId().Value == id.Value);
+            var window = windows.Find(w => w.GetId().Value == id.Value);
             if (window == null)
             {
                 throw new WindowNotFoundException("Window " + id.Value + " not found");
@@ -35,7 +35,7 @@ namespace B20.Frontend.Windows.Impl
         {
             if (firstOpen)
             {
-                registeredWindows.ForEach(w => SetVisible(w, false));
+                windows.ForEach(w => SetVisible(w, false));
                 firstOpen = false;
             }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
@@ -20,6 +21,11 @@ namespace B20.Architecture.Contexts.Impl
         {
             return _scope.Resolve<T>();
         }
+
+        public IEnumerable<T> GetMany<T>() where T : class
+        {
+            return _scope.Resolve<IEnumerable<T>>();
+        }
     }
 
     public class ContextBuilderLogic : ContextBuilder
@@ -37,6 +43,13 @@ namespace B20.Architecture.Contexts.Impl
         }
 
         public ContextBuilder SetImpl<TInterface, TImplementation>()
+            where TInterface : class
+            where TImplementation : class, TInterface
+        {
+            return Register(b => b.RegisterType<TImplementation>().AsSelf().As<TInterface>());
+        }
+        
+        public ContextBuilder AddImpl<TInterface, TImplementation>()
             where TInterface : class
             where TImplementation : class, TInterface
         {
