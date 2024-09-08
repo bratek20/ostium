@@ -7,7 +7,7 @@ namespace Ostium.Logic
 {
     public partial class HandVm: ElementVm<Hand>
     {
-        public CreateCardListVm Cards { get; }
+        public CreateCardListVm Cards { get; set; }
 
         protected override void OnUpdate()
         {

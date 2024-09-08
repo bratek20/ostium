@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Context;
+using B20.Architecture.Events.Context;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
+using B20.Frontend.Windows.Context;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameModule;
+using Ostium.Logic.Tests.GameModule.Context;
 
 namespace Ostium.Logic.Tests
 {
@@ -37,17 +41,21 @@ namespace Ostium.Logic.Tests
         
         public Context Setup()
         {
-            var gameApiMock = new GameApiMock();
-            var logic = new OstiumLogic(
-                new EventPublisherLogic(), 
-                new WindowManagerLogic(new WindowManipulatorMock()),
-                gameApiMock
-            );
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    new GameModuleMocks(),
+                    new WindowManipulatorMockImpl(),
+                    new WindowsImpl(),
+                    new EventsImpl(),
+                    new OstiumLogicImpl()
+                )
+                .Build();
+            
             return new Context(
-                eventPublisher: logic.EventPublisher,
-                windowManager: logic.WindowManager,
-                logic: logic,
-                gameApiMock: gameApiMock
+                eventPublisher: c.Get<EventPublisher>(),
+                windowManager: c.Get<WindowManager>(),
+                logic: c.Get<OstiumLogic>(),
+                gameApiMock: c.Get<GameApiMock>()
             );
         }
         

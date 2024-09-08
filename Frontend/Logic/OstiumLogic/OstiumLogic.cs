@@ -16,32 +16,6 @@ using Ostium.Logic.GameModule.Context;
 
 namespace Ostium.Logic
 {
-    public class OstiumLogicFactory
-    {
-        public static OstiumLogic Create(
-            WindowManipulator windowManipulator
-        )
-        {
-            return ContextsFactory.CreateBuilder()
-                .Get<OstiumLogic>();
-        }
-
-        public static GameApi CreateWebClientForGameApi()
-        {
-            return ContextsFactory.CreateBuilder()
-                .WithModules(
-                    new DotNetHttpClientModuleImpl(),
-                    new GameModuleWebClient(
-                        HttpClientConfig.Create(
-                            baseUrl: "http://localhost:8080",
-                            auth: Optional<HttpClientAuth>.Empty()
-                        )
-                    )
-                )
-                .Get<GameApi>();
-        }
-    }
-
     public class OstiumLogic
     {
         private WindowManager windowManager;
@@ -56,6 +30,21 @@ namespace Ostium.Logic
         public void Start()
         {
             windowManager.Open(WindowIds.MAIN_WINDOW);
+        }
+    }
+    
+    public class OstiumLogicImpl: ContextModule
+    {
+        public void Apply(ContextBuilder builder)
+        {
+            builder
+                .WithModules(
+                    new GameModuleViewModel()
+                )
+                .SetClass<OstiumLogic>()
+                .SetClass<PlayButton>()
+                .AddImpl<Window, MainWindow>()
+                .AddImpl<Window, GameWindow>();
         }
     }
 }
