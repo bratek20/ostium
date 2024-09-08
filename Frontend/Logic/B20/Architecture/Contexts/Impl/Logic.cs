@@ -10,9 +10,10 @@ namespace B20.Architecture.Contexts.Impl
     {
         private readonly ILifetimeScope _scope;
 
-        public ContextLogic(ILifetimeScope scope)
+        public ContextLogic(ContainerBuilder builder)
         {
-            _scope = scope;
+            builder.RegisterInstance(this).As<Api.Context>();
+            _scope = builder.Build();
         }
 
         public T Get<T>() where T : class
@@ -71,8 +72,7 @@ namespace B20.Architecture.Contexts.Impl
 
         public Api.Context Build()
         {
-            var container = _builder.Build();
-            return new ContextLogic(container);
+            return new ContextLogic(_builder);
         }
     }
 }

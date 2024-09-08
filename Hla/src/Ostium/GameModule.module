@@ -16,6 +16,7 @@ ValueObjects
         opponentMarker: GateDurabilityMarker
     
     Row
+        type: RowType
         card: CreatureCard?
         
     Table

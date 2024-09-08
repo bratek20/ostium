@@ -27,16 +27,6 @@ namespace B20.Tests.Architecture.Context.Tests
             }
         }
 
-        interface SomeInterface
-        {
-            
-        }
-
-        class SomeInterfaceImpl : SomeInterface
-        {
-            
-        }
-        
         [Fact]
         public void TestReferencingClass()
         {
@@ -54,6 +44,17 @@ namespace B20.Tests.Architecture.Context.Tests
             Assert.IsType<SimpleClass>(obj.SimpleClass);
         }
 
+        
+        interface SomeInterface
+        {
+            
+        }
+
+        class SomeInterfaceImpl : SomeInterface
+        {
+            
+        }
+        
         [Fact]
         public void TestInterfaceImpl()
         {
@@ -67,6 +68,32 @@ namespace B20.Tests.Architecture.Context.Tests
             
             // then
             Assert.IsType<SomeInterfaceImpl>(obj);
+        }
+        
+        class ClassNeedingContext
+        {
+            public B20.Architecture.Contexts.Api.Context Context { get; }
+            
+            public ClassNeedingContext(B20.Architecture.Contexts.Api.Context context)
+            {
+                Context = context;
+            }
+        }
+        
+        [Fact]
+        public void TestContextInjection()
+        {
+            // given
+            var c = CreateBuilder()
+                .SetClass<ClassNeedingContext>()
+                .Build();
+            
+            // when
+            var obj = c.Get<ClassNeedingContext>();
+            
+            // then
+            Assert.IsType<ClassNeedingContext>(obj);
+            Assert.NotNull(obj.Context);
         }
         
         class SomeContextModule : ContextModule
