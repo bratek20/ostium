@@ -132,5 +132,27 @@ namespace B20.Tests.Architecture.Context.Tests
             // then
             AssertExt.Equal(obj.Value, 42);
         }
+
+
+        class ClassWithField
+        {
+            public SimpleClass SimpleClass { get; set;  }
+        }
+
+        [Fact]
+        public void ShouldSupportFieldInjection()
+        {
+            // given
+            var c = CreateBuilder()
+                .SetClass<SimpleClass>()
+                .SetClass<ClassWithField>()
+                .Build();
+            
+            // when
+            var obj = c.Get<ClassWithField>();
+            
+            // then
+            Assert.IsType<SimpleClass>(obj.SimpleClass);
+        }
     }
 }
