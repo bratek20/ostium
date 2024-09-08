@@ -20,7 +20,7 @@ namespace Ostium.Logic
 
     public partial class RowVM
     {
-        public RowType Type => RowType.ATTACK; //TODO-REF Model.GetType()
+        public RowType Type => Model.GetType();
         public RowVM()
         {
             AddTrait(new WithRect());
