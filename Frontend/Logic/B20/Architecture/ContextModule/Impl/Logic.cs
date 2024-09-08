@@ -1,50 +1,50 @@
-using Microsoft.Extensions.DependencyInjection;
-using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using B20.Architecture.ContextModule.Api;
 
 namespace B20.Architecture.ContextModule.Impl
 {
     public class ContextLogic : Api.Context
     {
-        private readonly IServiceProvider _provider;
+        private readonly ILifetimeScope _scope;
 
-        public ContextLogic(IServiceProvider provider)
+        public ContextLogic(ILifetimeScope scope)
         {
-            _provider = provider;
+            _scope = scope;
         }
 
         public T Get<T>() where T : class
         {
-            return _provider.GetService<T>();
+            return _scope.Resolve<T>();
         }
     }
 
     public class ContextBuilderLogic : ContextBuilder
     {
-        private readonly IServiceCollection _services;
+        private readonly ContainerBuilder _builder;
 
         public ContextBuilderLogic()
         {
-            _services = new ServiceCollection();
+            _builder = new ContainerBuilder();
         }
 
         public ContextBuilder SetClass<T>() where T : class
         {
-            _services.AddSingleton<T>();
+            _builder.RegisterType<T>().AsSelf().SingleInstance().PropertiesAutowired();
             return this;
         }
 
-        public ContextBuilder SetImpl<TInterface, TImplementation>()             
+        public ContextBuilder SetImpl<TInterface, TImplementation>()
             where TInterface : class
             where TImplementation : class, TInterface
         {
-            _services.AddTransient<TInterface, TImplementation>();
+            _builder.RegisterType<TImplementation>().As<TInterface>().PropertiesAutowired();
             return this;
         }
 
         public ContextBuilder SetImplObject<I>(I implementationObj) where I : class
         {
-            _services.AddSingleton(implementationObj);
+            _builder.RegisterInstance(implementationObj).PropertiesAutowired();
             return this;
         }
 
@@ -56,8 +56,8 @@ namespace B20.Architecture.ContextModule.Impl
 
         public Api.Context Build()
         {
-            var provider = _services.BuildServiceProvider();
-            return new ContextLogic(provider);
+            var container = _builder.Build();
+            return new ContextLogic(container);
         }
     }
 }
