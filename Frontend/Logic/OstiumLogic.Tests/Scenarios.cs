@@ -95,7 +95,7 @@ namespace Ostium.Logic.Tests
             var c = Setup();
             c.GameApiMock.SetGame(args.Game);
             c.Logic.Start();
-            (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
+            c.WindowManager.Get<MainWindow>().PlayButton.Click();
             
             var nc = new InGameWindowContext(
                 eventPublisher: c.EventPublisher,

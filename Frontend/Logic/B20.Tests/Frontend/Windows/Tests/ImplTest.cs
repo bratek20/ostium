@@ -67,11 +67,13 @@ namespace B20.Frontend.Windows.Tests
             windowManager.Open<Window1>();
             AssertVisible<Window1>(true);
             AssertVisible<Window2>(false);
+            Assert.IsType<Window1>(windowManager.GetCurrent());
 
             // Open second window
             windowManager.Open<Window2>();
             AssertVisible<Window1>(false);
             AssertVisible<Window2>(true);
+            Assert.IsType<Window2>(windowManager.GetCurrent());
         }
         
         private void AssertVisible<T>(bool visible) where T : Window

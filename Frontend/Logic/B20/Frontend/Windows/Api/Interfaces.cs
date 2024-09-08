@@ -14,7 +14,7 @@ namespace B20.Frontend.Windows.Api
         
         void Open<T>() where T : class, Window;
         
-        T GetCurrent<T>() where T : class, Window;
+        Window GetCurrent();
     }
     
     // incoming

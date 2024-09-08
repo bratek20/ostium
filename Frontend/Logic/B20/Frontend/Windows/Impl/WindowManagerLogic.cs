@@ -50,9 +50,9 @@ namespace B20.Frontend.Windows.Impl
             currentWindow.OnOpen();
         }
 
-        public T GetCurrent<T>() where T : class, Window 
+        public Window GetCurrent() 
         {
-            return currentWindow as T;
+            return currentWindow;
         }
     }
 }

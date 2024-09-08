@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
+using B20.Frontend.Windows.Api;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
 using GameComponents;
@@ -24,13 +25,13 @@ namespace Ostium.Logic.Tests
             c.WindowManager.Get<GameWindow>();
             
             c.Logic.Start();
-            
-            Assert.Equal(WindowIds.MAIN_WINDOW, c.WindowManager.GetCurrent());
+
+            Assert.IsType<MainWindow>(c.WindowManager.GetCurrent());
             
             //Clicking play button
-            (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
-            
-            Assert.Equal(WindowIds.GAME_WINDOW, c.WindowManager.GetCurrent());
+            c.WindowManager.Get<MainWindow>().PlayButton.Click();
+
+            Assert.IsType<GameWindow>(c.WindowManager.GetCurrent());
         }
 
         [Fact]
