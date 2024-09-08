@@ -7,13 +7,13 @@ namespace Ostium.Logic.GameModule.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .SetClass<GameVM>()
-                .SetClass<TableVM>()
-                .SetClass<HandVm>()
-                .SetClass<CreateCardListVm>()
-                .SetClass<OptionalCreatureCardVm>()
-                .SetClass<RowVM>()
-                .SetClass<CreatureCardVm>();
+                .SetClass<GameVM>(InjectionMode.Prototype)
+                .SetClass<TableVM>(InjectionMode.Prototype)
+                .SetClass<HandVm>(InjectionMode.Prototype)
+                .SetClass<CreateCardListVm>(InjectionMode.Prototype)
+                .SetClass<OptionalCreatureCardVm>(InjectionMode.Prototype)
+                .SetClass<RowVM>(InjectionMode.Prototype)
+                .SetClass<CreatureCardVm>(InjectionMode.Prototype);
         }
     }
 }
