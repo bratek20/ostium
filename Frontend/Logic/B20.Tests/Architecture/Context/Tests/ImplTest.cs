@@ -7,7 +7,7 @@ namespace B20.Tests.Architecture.Context.Tests
 {
     public class ImplTest
     {
-        public ContextBuilder CreateBuilder()
+        public static ContextBuilder CreateBuilder()
         {
             return new ContextBuilderLogic();
         }
@@ -133,26 +133,38 @@ namespace B20.Tests.Architecture.Context.Tests
             AssertExt.Equal(obj.Value, 42);
         }
 
-
-        class ClassWithField
+        public class FieldInjectionTests
         {
-            public SimpleClass SimpleClass { get; set;  }
-        }
+            class ClassWithField
+            {
+                public SimpleClass SimpleClass { get; set;  }
+                public ClassWithValue ClassWithValue { get; } = new ClassWithValue(5);
+            }
+            
+            private ClassWithField obj;
 
-        [Fact]
-        public void ShouldSupportFieldInjection()
-        {
-            // given
-            var c = CreateBuilder()
-                .SetClass<SimpleClass>()
-                .SetClass<ClassWithField>()
-                .Build();
-            
-            // when
-            var obj = c.Get<ClassWithField>();
-            
-            // then
-            Assert.IsType<SimpleClass>(obj.SimpleClass);
+            // Common setup done in the constructor
+            public FieldInjectionTests()
+            {
+                var c = CreateBuilder()
+                    .SetClass<SimpleClass>()
+                    .SetClass<ClassWithField>()
+                    .Build();
+                
+                obj = c.Get<ClassWithField>();
+            }
+
+            [Fact]
+            public void ShouldInjectSimpleClass()
+            {
+                Assert.IsType<SimpleClass>(obj.SimpleClass);
+            }
+
+            [Fact]
+            public void ShouldNotRequireAlreadySetField()
+            {
+                AssertExt.Equal(obj.ClassWithValue.Value, 5);
+            }
         }
     }
 }

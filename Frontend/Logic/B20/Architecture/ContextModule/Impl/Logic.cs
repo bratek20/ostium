@@ -30,7 +30,10 @@ namespace B20.Architecture.ContextModule.Impl
 
         public ContextBuilder SetClass<T>() where T : class
         {
-            _builder.RegisterType<T>().AsSelf().SingleInstance().PropertiesAutowired();
+            _builder.RegisterType<T>()
+                .AsSelf()
+                .SingleInstance()
+                .PropertiesAutowired();
             return this;
         }
 
