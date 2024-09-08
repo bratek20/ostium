@@ -44,7 +44,7 @@ namespace Ostium.Logic.Tests
             var c = ContextsFactory.CreateBuilder()
                 .WithModules(
                     new GameModuleMocks(),
-                    new WindowManipulatorMockImpl(),
+                    new WindowManipulatorInMemoryImpl(),
                     new WindowsImpl(),
                     new EventsImpl(),
                     new OstiumLogicImpl()
@@ -66,7 +66,7 @@ namespace Ostium.Logic.Tests
             {
             }
             
-            public GameWindow GameWindow => WindowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
+            public GameWindow GameWindow => WindowManager.Get<GameWindow>();
             
             public RowVM AttackRow => GameWindow.Game.Table.AttackRow;
             public RowVM DefenseRow => GameWindow.Game.Table.DefenseRow;

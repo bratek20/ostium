@@ -11,7 +11,7 @@ namespace Ostium.Logic
 
         protected override void OnClick()
         {
-            WindowManager.Value.Open(WindowIds.GAME_WINDOW);
+            WindowManager.Value.Open<GameWindow>();
         }
     }
 }

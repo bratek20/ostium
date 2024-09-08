@@ -20,8 +20,8 @@ namespace Ostium.Logic.Tests
             var c = scenarios.Setup();
 
             //should not throw
-            c.WindowManager.Get(WindowIds.MAIN_WINDOW);
-            c.WindowManager.Get(WindowIds.GAME_WINDOW);
+            c.WindowManager.Get<MainWindow>();
+            c.WindowManager.Get<GameWindow>();
             
             c.Logic.Start();
             

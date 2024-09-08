@@ -1,17 +1,5 @@
 using B20.Architecture.Contexts.Api;
-using B20.Architecture.Contexts.Context;
-using B20.Architecture.Contexts.Impl;
-using B20.Events.Api;
-using B20.Events.Impl;
-using B20.Ext;
 using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Impl;
-using B20.Infrastructure.HttpClient.Integrations;
-using B20.Infrastructure.HttpClientModule.Context;
-using GameModule.Api;
-using GameModule.Web;
-using HttpClientModule.Api;
-using HttpClientModule.Impl;
 using Ostium.Logic.GameModule.Context;
 
 namespace Ostium.Logic
@@ -29,7 +17,7 @@ namespace Ostium.Logic
 
         public void Start()
         {
-            windowManager.Open(WindowIds.MAIN_WINDOW);
+            windowManager.Open<MainWindow>();
         }
     }
     

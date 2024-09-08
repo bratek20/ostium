@@ -9,8 +9,7 @@ namespace B20.Frontend.Windows.Impl
         private WindowManipulator windowManipulator;
         private Window currentWindow;
         private List<Window> windows;
-        private bool firstOpen = true;
-        
+
         public WindowManagerLogic(
             WindowManipulator windowManipulator,
             IEnumerable<Window> windows
@@ -18,46 +17,42 @@ namespace B20.Frontend.Windows.Impl
         {
             this.windowManipulator = windowManipulator;
             this.windows = windows.ToList();
+            
+            this.windows.ForEach(w => SetVisible(w, false));
         }
 
-        public Window Get(WindowId id)
+        private void SetVisible(Window window, bool visible)
         {
-            var window = windows.Find(w => w.GetId().Value == id.Value);
+            windowManipulator.SetVisible(window, visible);
+        }
+
+        public T Get<T>() where T : class, Window
+        {
+            var window = windows.Find(w => w is T) as T;
             if (window == null)
             {
-                throw new WindowNotFoundException("Window " + id.Value + " not found");
+                throw new WindowNotFoundException("Window " + typeof(T).Name + " not found");
             }
             
             return window;
         }
 
-        public void Open(WindowId id)
+        public void Open<T>() where T : class, Window
         {
-            if (firstOpen)
-            {
-                windows.ForEach(w => SetVisible(w, false));
-                firstOpen = false;
-            }
-
             if (currentWindow != null)
             {
                 SetVisible(currentWindow, false);
             }
             
-            Window window = Get(id);
+            Window window = Get<T>();
             SetVisible(window, true);
             currentWindow = window;
             currentWindow.OnOpen();
         }
 
-        public WindowId GetCurrent()
+        public T GetCurrent<T>() where T : class, Window 
         {
-            return currentWindow.GetId();
-        }
-        
-        private void SetVisible(Window window, bool visible)
-        {
-            windowManipulator.SetVisible(window.GetId(), visible);
+            return currentWindow as T;
         }
     }
 }
