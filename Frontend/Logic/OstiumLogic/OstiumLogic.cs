@@ -32,7 +32,7 @@ namespace Ostium.Logic
         {
             builder
                 .WithModules(
-                    new GameModuleViewModel()
+                    new GameModuleViewModels()
                 )
                 .SetClass<OstiumLogic>()
                 .SetClass<PlayButton>()

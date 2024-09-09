@@ -1,8 +1,9 @@
 using B20.Architecture.Contexts.Api;
+using Ostium.Logic;
 
-namespace Ostium.Logic.GameModule.Context
+namespace GameModule.Context
 {
-    public class GameModuleViewModel: ContextModule
+    public class GameModuleViewModels: ContextModule
     {
         public void Apply(ContextBuilder builder)
         {
