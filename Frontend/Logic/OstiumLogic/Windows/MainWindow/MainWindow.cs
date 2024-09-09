@@ -5,21 +5,11 @@ namespace Ostium.Logic
 {
     public class MainWindow : Window
     {
-        public PlayButton PlayButton { get; private set;  }
+        public PlayButton PlayButton { get; }
         
-        public MainWindow(WindowManager windowManager)
+        public MainWindow(PlayButton playButton)
         {
-            PlayButton = new PlayButton(windowManager);
-        }
-        
-        public WindowId GetId()
-        {
-            return WindowIds.MAIN_WINDOW;
-        }
-
-        public void OnOpen()
-        {
-            
+            PlayButton = playButton;
         }
     }
 }

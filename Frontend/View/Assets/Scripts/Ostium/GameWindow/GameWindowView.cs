@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Ostium.View
 {
-    public class GameWindowView: WindowView
+    public class GameWindowView: WindowView<GameWindow>
     {
         [SerializeField]
         private GameView game;
 
         protected override void OnInit()
         {
-            var gameVM = ValueAs<GameWindow>().Game;
+            var gameVM = ViewModel.Game;
             game.Bind(gameVM);
         }
     }

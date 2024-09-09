@@ -92,17 +92,24 @@ data class GateDurabilityCard(
 }
 
 data class Row(
+    private val type: String,
     private val card: CreatureCard?,
 ) {
+    fun getType(): RowType {
+        return RowType.valueOf(this.type)
+    }
+
     fun getCard(): CreatureCard? {
         return this.card
     }
 
     companion object {
         fun create(
+            type: RowType,
             card: CreatureCard?,
         ): Row {
             return Row(
+                type = type.name,
                 card = card,
             )
         }

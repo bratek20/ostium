@@ -1,4 +1,4 @@
-using B20.Architecture.ContextModule.Api;
+using B20.Architecture.Contexts.Api;
 using GameModule.Api;
 using GameModule.Web;
 using HttpClientModule.Api;

@@ -45,11 +45,13 @@ fun gateDurabilityCard(init: GateDurabilityCardDef.() -> Unit = {}): GateDurabil
 }
 
 data class RowDef(
+    var type: String = RowType.ATTACK.name,
     var card: (CreatureCardDef.() -> Unit)? = null,
 )
 fun row(init: RowDef.() -> Unit = {}): Row {
     val def = RowDef().apply(init)
     return Row.create(
+        type = RowType.valueOf(def.type),
         card = def.card?.let { it -> creatureCard(it) },
     )
 }

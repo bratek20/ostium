@@ -10,7 +10,7 @@ namespace Ostium.Logic
 {
     public partial class RowVM: ElementVm<Row>
     {
-        public OptionalElementVm<CreatureCardVm, CreatureCard> Card { get; }
+        public OptionalCreatureCardVm Card { get; set; }
         
         protected override void OnUpdate()
         {
@@ -20,13 +20,10 @@ namespace Ostium.Logic
 
     public partial class RowVM
     {
-        public RowType Type { get; }
-        public RowVM(RowType type, EventPublisher publisher)
+        public RowType Type => Model.GetType();
+        public RowVM()
         {
             AddTrait(new WithRect());
-
-            Type = type;
-            Card = new OptionalElementVm<CreatureCardVm, CreatureCard>(new CreatureCardVm(publisher));
         }
         
         public bool HasCard => Model.GetCard().IsPresent();

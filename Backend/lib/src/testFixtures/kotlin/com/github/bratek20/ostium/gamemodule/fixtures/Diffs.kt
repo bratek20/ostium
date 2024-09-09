@@ -67,12 +67,17 @@ fun diffGateDurabilityCard(given: GateDurabilityCard, expectedInit: ExpectedGate
 }
 
 data class ExpectedRow(
+    var type: String? = null,
     var cardEmpty: Boolean? = null,
     var card: (ExpectedCreatureCard.() -> Unit)? = null,
 )
 fun diffRow(given: Row, expectedInit: ExpectedRow.() -> Unit, path: String = ""): String {
     val expected = ExpectedRow().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
+
+    expected.type?.let {
+        if (diffRowType(given.getType(), it) != "") { result.add(diffRowType(given.getType(), it, "${path}type.")) }
+    }
 
     expected.cardEmpty?.let {
         if ((given.getCard() == null) != it) { result.add("${path}card empty ${(given.getCard() == null)} != ${it}") }
