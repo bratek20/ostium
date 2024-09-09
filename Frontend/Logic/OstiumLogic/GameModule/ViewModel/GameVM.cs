@@ -39,8 +39,8 @@ namespace Ostium.Logic
     
     public partial class GameVM: ElementVm<Game>
     {
-        public TableVM Table { get; }
-        public HandVm Hand { get; }
+        public TableVM Table { get; set;  }
+        public HandVm Hand { get; set; }
 
         protected override void OnUpdate()
         {
@@ -57,9 +57,6 @@ namespace Ostium.Logic
             this.gameSetupApi = gameSetupApi;
             eventPublisher.AddListener(new GameElementDragStartedListener(this));
             eventPublisher.AddListener(new GameElementDragEndedListener(this));
-            
-            Table = new TableVM(eventPublisher);
-            Hand = new HandVm(eventPublisher);
         }
         
         public void StartGame()

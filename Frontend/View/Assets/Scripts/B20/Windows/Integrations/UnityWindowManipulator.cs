@@ -5,20 +5,32 @@ using UnityEngine;
 
 namespace B20.Frontend.Windows.Integrations
 {
-    public class UnityWindowManipulator: WindowManipulator
+    public class UnityWindowManipulator: MonoBehaviour, WindowManipulator
     {
+        [SerializeField]    
         private List<WindowView> windowViews;
         
-        public UnityWindowManipulator(List<WindowView> windowViews)
+        private WindowView EnsureInitializedAndGetView(Window viewModel)
         {
-            this.windowViews = windowViews;
+            WindowView windowView = windowViews.Find(w => w.Accepts(viewModel));
+            if (windowView == null)
+            {
+                Debug.LogError("Window view not found for view model: " + viewModel.GetType().Name);
+                return null;
+            }
+
+            if (windowView.RawViewModel == null)
+            {
+                windowView.Init(viewModel);
+            }
+            return windowView;
         }
-        
-        public void SetVisible(WindowId id, bool visible)
+
+        public void SetVisible(Window window, bool visible)
         {
-            Debug.Log("Setting window visibility: " + id.Value + " to " + visible);
-            WindowView windowView = windowViews.Find(w => w.Value.GetId().Value == id.Value);
-            windowView.SetActive(visible);
+            Debug.Log("Setting window visibility: " + window.GetType().Name + " to " + visible);
+            var view = EnsureInitializedAndGetView(window);
+            view.SetActive(visible);
         }
     }
 }

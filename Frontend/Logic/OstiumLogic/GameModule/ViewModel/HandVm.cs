@@ -7,7 +7,7 @@ namespace Ostium.Logic
 {
     public partial class HandVm: ElementVm<Hand>
     {
-        public ElementListVm<CreatureCardVm, CreatureCard> Cards { get; }
+        public CreateCardListVm Cards { get; set; }
 
         protected override void OnUpdate()
         {
@@ -17,11 +17,6 @@ namespace Ostium.Logic
 
     public partial class HandVm
     {
-        public HandVm(EventPublisher eventPublisher)
-        {
-            Cards = new ElementListVm<CreatureCardVm, CreatureCard>(() => new CreatureCardVm(eventPublisher));
-        }
-        
         public bool Contains(CreatureCardVm card)
         {
             return Model.GetCards().Exists(c => c.GetId().Equals(card.Model.GetId()));

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using B20.Architecture.Exceptions;
-using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Impl;
+using B20.Architecture.Contexts.Context;
 using B20.Architecture.Exceptions.Fixtures;
+using B20.Frontend.Windows.Api;
+using B20.Frontend.Windows.Context;
+using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Fixtures;
 using Xunit;
 
@@ -10,43 +10,45 @@ namespace B20.Frontend.Windows.Tests
 {
     public class WindowsImplTest
     {
-        class TestWindow : Window
+        class NotRegisteredWindow : Window
         {
-            private WindowId id;
-            public TestWindow(string id)
-            {
-                this.id = new WindowId(id);
-            }
-            
-            public WindowId GetId()
-            {
-                return id;
-            }
-
-            public void OnOpen()
-            {
-                
-            }
         }
         
-        private WindowManipulatorMock manipulatorMock;
+        class Window1 : Window
+        {
+        }
+        
+        class Window2 : Window
+        {
+        }
+        
+        private InMemoryWindowManipulator manipulator;
         private WindowManager windowManager;
 
         public WindowsImplTest()
         {
-            manipulatorMock = new WindowManipulatorMock();
-            windowManager = new WindowManagerLogic(manipulatorMock);
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    new WindowsImpl(),
+                    new WindowManipulatorInMemoryImpl()
+                )
+                .AddImpl<Window, Window1>()
+                .AddImpl<Window, Window2>()
+                .Build();
+            
+            manipulator = c.Get<InMemoryWindowManipulator>();
+            windowManager = c.Get<WindowManager>();
         }
 
         [Fact]
         public void ShouldThrowExceptionForGetIfWindowNotRegistered()
         {
             Asserts.ThrowsApiException(
-                () => windowManager.Get(new WindowId("notRegistered")),
+                () => windowManager.Get<NotRegisteredWindow>(),
                 e =>
                 {
                     e.Type = typeof(WindowNotFoundException);
-                    e.Message = "Window notRegistered not found";
+                    e.Message = "Window NotRegisteredWindow not found";
                 }
             );
         }
@@ -55,25 +57,28 @@ namespace B20.Frontend.Windows.Tests
         public void ShouldHandleWindowLogic()
         {
             // Creation
-            var window1 = new TestWindow("window1");
-            var window2 = new TestWindow("window2");
+            AssertVisible<Window1>(false);
+            AssertVisible<Window2>(false);
             
-            windowManager.Register(window1);
-            windowManager.Register(window2);
-            
-            manipulatorMock.AssertNoSetVisibleCalls();
-            Assert.Equal(window1, windowManager.Get(new WindowId("window1")));
-            Assert.Equal(window2, windowManager.Get(new WindowId("window2")));
+            Assert.IsType<Window1>(windowManager.Get<Window1>());
+            Assert.IsType<Window2>(windowManager.Get<Window2>());
             
             // Open first window
-            windowManager.Open(new WindowId("window1"));
-            manipulatorMock.AssertVisible("window1", true);
-            manipulatorMock.AssertVisible("window2", false);
+            windowManager.Open<Window1>();
+            AssertVisible<Window1>(true);
+            AssertVisible<Window2>(false);
+            Assert.IsType<Window1>(windowManager.GetCurrent());
 
             // Open second window
-            windowManager.Open(new WindowId("window2"));
-            manipulatorMock.AssertVisible("window1", false);
-            manipulatorMock.AssertVisible("window2", true);
+            windowManager.Open<Window2>();
+            AssertVisible<Window1>(false);
+            AssertVisible<Window2>(true);
+            Assert.IsType<Window2>(windowManager.GetCurrent());
+        }
+        
+        private void AssertVisible<T>(bool visible) where T : Window
+        {
+            AssertExt.Equal(manipulator.GetVisible<T>(), visible);
         }
     }
 }
