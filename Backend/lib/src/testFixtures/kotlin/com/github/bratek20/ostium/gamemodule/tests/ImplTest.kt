@@ -104,7 +104,7 @@ open class GameModuleImplTest {
     }
 
     @Test
-    fun `move card`() {
+    fun `move card to empty row`() {
         api.startGame()
         api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
         loggerMock.reset()
@@ -132,4 +132,29 @@ open class GameModuleImplTest {
             "Card Mouse1 moved from ATTACK to DEFENSE row"
         )
     }
+
+    @Test
+    fun `move card to row with card`() {
+        api.startGame()
+        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+        api.playCard(creatureCardId("Mouse2"), RowType.DEFENSE)
+
+        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
+
+        assertGame(game) {
+            table = {
+                attackRow = {
+                    card = {
+                        id = "Mouse2"
+                    }
+                }
+                defenseRow = {
+                    card = {
+                        id = "Mouse1"
+                    }
+                }
+            }
+        }
+    }
+
 }

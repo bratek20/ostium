@@ -41,14 +41,21 @@ class GameApiLogic(
             RowType.DEFENSE -> defenseRowCard
         } ?: throw IllegalStateException("No card in $from row")
 
+        var toCurrentCard: CreatureCard? = null
         when (to) {
-            RowType.ATTACK -> attackRowCard = card
-            RowType.DEFENSE -> defenseRowCard = card
+            RowType.ATTACK -> {
+                toCurrentCard = attackRowCard
+                attackRowCard = card
+            }
+            RowType.DEFENSE -> {
+                toCurrentCard = defenseRowCard
+                defenseRowCard = card
+            }
         }
 
         when (from) {
-            RowType.ATTACK -> attackRowCard = null
-            RowType.DEFENSE -> defenseRowCard = null
+            RowType.ATTACK -> attackRowCard = toCurrentCard
+            RowType.DEFENSE -> defenseRowCard = toCurrentCard
         }
 
         logger.info("Card $cardId moved from $from to $to row")
