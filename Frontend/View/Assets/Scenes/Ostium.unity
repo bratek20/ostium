@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366543179}
   - component: {fileID: 1366543178}
+  - component: {fileID: 1366543180}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -235,9 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6dd0aefb62a14746bf915ee04320cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainWindow: {fileID: 1658245379}
-  gameWindow: {fileID: 1361700673}
-  useBuiltInServer: 1
+  windowManipulator: {fileID: 1366543180}
 --- !u!4 &1366543179
 Transform:
   m_ObjectHideFlags: 0
@@ -253,6 +252,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1366543180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366543177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defe6403998340f38bd3830ebf382767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windowViews:
+  - {fileID: 1658245379}
+  - {fileID: 1361700673}
 --- !u!224 &1658245376 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1492237568931252662, guid: c0614b3711f5dd849bd9f00f90ef872a, type: 3}

@@ -1,32 +1,35 @@
-using System;
 using B20.Frontend.Windows.Api;
-using B20.Logic;
 using UnityEngine;
 
 namespace B20.View
 {
-    public interface WindowView 
+    public abstract class WindowView: MonoBehaviour 
     {
-        Window RawViewModel { get; }
-        void SetActive(bool active);
-    }
-    
-    public class WindowView<T>: MonoBehaviour, WindowView where T : Window  
-    {
-        public T ViewModel { get; private set; }
-        public Window RawViewModel => ViewModel;
+        public abstract bool Accepts(Window window);
         
-        protected virtual void OnInit() { }
-        
-        public void Init(T value)
-        {
-            ViewModel = value;
-            OnInit();
-        }
+        public Window RawViewModel { get; private set; }
         
         public void SetActive(bool active)
         {
             gameObject.SetActive(active);
+        }
+        
+        protected virtual void OnInit() { }
+
+        public void Init(Window viewModel)
+        {
+            RawViewModel = viewModel;
+            OnInit();
+        }
+    }
+    
+    public class WindowView<T>: WindowView where T : Window  
+    {
+        public T ViewModel => (T) RawViewModel;
+        
+        public override bool Accepts(Window window)
+        {
+            return window is T;
         }
     }
 }
