@@ -63,9 +63,11 @@ open class GameModuleImplTest {
                     opponentMarker = 15
                 }
                 attackRow = {
+                    type = "ATTACK"
                     cardEmpty = true
                 }
                 defenseRow = {
+                    type = "DEFENSE"
                     cardEmpty = true
                 }
                 gateCard = {
@@ -78,6 +80,7 @@ open class GameModuleImplTest {
     @Test
     fun `play card`() {
         api.startGame()
+        loggerMock.reset()
 
         val game = api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
 
@@ -95,12 +98,16 @@ open class GameModuleImplTest {
                 }
             }
         }
+        loggerMock.assertInfos(
+            "Card Mouse1 played in ATTACK row"
+        )
     }
 
     @Test
     fun `move card`() {
         api.startGame()
         api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+        loggerMock.reset()
 
         val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
 
@@ -121,5 +128,8 @@ open class GameModuleImplTest {
                 }
             }
         }
+        loggerMock.assertInfos(
+            "Card Mouse1 moved from ATTACK to DEFENSE row"
+        )
     }
 }

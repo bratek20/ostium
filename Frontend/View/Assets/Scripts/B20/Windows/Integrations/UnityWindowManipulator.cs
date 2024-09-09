@@ -9,23 +9,6 @@ namespace B20.Frontend.Windows.Integrations
     {
         [SerializeField]    
         private List<WindowView> windowViews;
-
-        public void Init(WindowManager windowManager)
-        {
-            windowViews.ForEach(view =>
-            {
-                var viewModel = windowManager.GetAll().Find(w => view.Accepts(w));
-                if (viewModel == null)
-                {
-                    Debug.LogError("Window view model not found for view: " + view.GetType().Name);
-                }
-                else
-                {
-                    view.Init(viewModel);
-                    Debug.Log("Window view initialized: " + view.GetType().Name);
-                }
-            });
-        }
         
         private WindowView EnsureInitializedAndGetView(Window viewModel)
         {

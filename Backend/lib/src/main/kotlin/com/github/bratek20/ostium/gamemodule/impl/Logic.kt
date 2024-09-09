@@ -31,6 +31,7 @@ class GameApiLogic(
             RowType.DEFENSE -> defenseRowCard = CreatureCard.create(id = cardId)
         }
 
+        logger.info("Card $cardId played in $row row")
         return toApiGame()
     }
 
@@ -50,6 +51,7 @@ class GameApiLogic(
             RowType.DEFENSE -> defenseRowCard = null
         }
 
+        logger.info("Card $cardId moved from $from to $to row")
         return toApiGame()
     }
 
@@ -63,8 +65,14 @@ class GameApiLogic(
                     myMarker = GateDurabilityMarker(15),
                     opponentMarker = GateDurabilityMarker(15)
                 ),
-                attackRow = Row.create(card = attackRowCard),
-                defenseRow = Row.create(card = defenseRowCard),
+                attackRow = Row.create(
+                    type = RowType.ATTACK,
+                    card = attackRowCard
+                ),
+                defenseRow = Row.create(
+                    type = RowType.DEFENSE,
+                    card = defenseRowCard
+                ),
                 gateCard = GateCard.create(false),
             )
         )
