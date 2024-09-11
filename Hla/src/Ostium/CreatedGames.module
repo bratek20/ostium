@@ -14,13 +14,14 @@ Web
         ExposedInterfaces
             CreatedGamesApi
 
-//ViewModels
-    //CreatedGameVm (clickable)
-        //main -> CreatedGame
-            //id (debug)
-            //creator
+//ViewModel
+    //Elements
+        //CreatedGameVm (clickable)
+            //main -> CreatedGame
+                //id (debug)
+                //creator
             
-//Windows
-    //CreatedGamesWindow
-        //createdGames: ElementList<CreatedGameVm>
-        //createGame: Button -> GameWindow
+    //Windows
+        //CreatedGamesWindow
+            //createdGames: CreatedGameVm[]
+            //createGame: CreateGameButton: Button -> GameWindow

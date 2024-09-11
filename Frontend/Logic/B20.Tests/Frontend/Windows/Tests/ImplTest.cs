@@ -16,6 +16,16 @@ namespace B20.Frontend.Windows.Tests
         
         class Window1 : Window
         {
+            private WindowManager windowManager;
+            public Window1(WindowManager windowManager)
+            {
+                this.windowManager = windowManager;
+            }
+            
+            public void OpenWindow2()
+            {
+                windowManager.Open<Window2>();
+            }
         }
         
         class Window2 : Window
@@ -56,12 +66,12 @@ namespace B20.Frontend.Windows.Tests
         [Fact]
         public void ShouldHandleWindowLogic()
         {
-            // Creation
-            AssertVisible<Window1>(false);
-            AssertVisible<Window2>(false);
-            
+            //Creation
             Assert.IsType<Window1>(windowManager.Get<Window1>());
             Assert.IsType<Window2>(windowManager.Get<Window2>());
+            
+            AssertVisible<Window1>(false);
+            AssertVisible<Window2>(false);
             
             // Open first window
             windowManager.Open<Window1>();
@@ -69,8 +79,8 @@ namespace B20.Frontend.Windows.Tests
             AssertVisible<Window2>(false);
             Assert.IsType<Window1>(windowManager.GetCurrent());
 
-            // Open second window
-            windowManager.Open<Window2>();
+            // Open second window from first window
+            windowManager.Get<Window1>().OpenWindow2();
             AssertVisible<Window1>(false);
             AssertVisible<Window2>(true);
             Assert.IsType<Window2>(windowManager.GetCurrent());
