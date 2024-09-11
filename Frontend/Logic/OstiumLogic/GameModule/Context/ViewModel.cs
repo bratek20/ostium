@@ -1,19 +1,21 @@
 using B20.Architecture.Contexts.Api;
-using Ostium.Logic;
+using B20.Frontend.Windows.Api;
+using GameModule.ViewModel;
 
 namespace GameModule.Context
 {
-    public class GameModuleViewModels: ContextModule
+    public class GameModuleViewModel: ContextModule
     {
         public void Apply(ContextBuilder builder)
         {
             builder
-                .SetClass<GameVM>(InjectionMode.Prototype)
-                .SetClass<TableVM>(InjectionMode.Prototype)
+                .AddImpl<Window, GameWindow>()
+                .SetClass<GameVm>(InjectionMode.Prototype)
+                .SetClass<TableVm>(InjectionMode.Prototype)
                 .SetClass<HandVm>(InjectionMode.Prototype)
                 .SetClass<CreateCardListVm>(InjectionMode.Prototype)
                 .SetClass<OptionalCreatureCardVm>(InjectionMode.Prototype)
-                .SetClass<RowVM>(InjectionMode.Prototype)
+                .SetClass<RowVm>(InjectionMode.Prototype)
                 .SetClass<CreatureCardVm>(InjectionMode.Prototype);
         }
     }

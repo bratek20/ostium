@@ -2,7 +2,7 @@ using B20.Frontend.Element;
 using B20.Frontend.Elements;
 using GameModule.Api;
 
-namespace GameModule.ViewModels
+namespace GameModule.ViewModel
 {
     public partial class CreatureCardVm: ElementVm<CreatureCard>
     {
@@ -17,7 +17,7 @@ namespace GameModule.ViewModels
     
     public class CreateCardListVm: ElementListVm<CreatureCardVm, CreatureCard>
     {
-        public CreateCardListVm(Context c) : base(() => c.Get<CreatureCardVm>())
+        public CreateCardListVm(B20.Architecture.Contexts.Api.Context c) : base(() => c.Get<CreatureCardVm>())
         {
             
         }
@@ -40,7 +40,7 @@ namespace GameModule.ViewModels
         }
     }
     
-    public partial class RowVM: ElementVm<Row>
+    public partial class RowVm: ElementVm<Row>
     {
         public OptionalCreatureCardVm Card { get; set; }
         
@@ -50,10 +50,10 @@ namespace GameModule.ViewModels
         }
     }
     
-    public partial class TableVM: ElementVm<Table>
+    public partial class TableVm: ElementVm<Table>
     {
-        public RowVM AttackRow { get; set; }
-        public RowVM DefenseRow { get; set; }
+        public RowVm AttackRow { get; set; }
+        public RowVm DefenseRow { get; set; }
 
         protected override void OnUpdate()
         {
@@ -65,7 +65,7 @@ namespace GameModule.ViewModels
     
     public partial class GameVm: ElementVm<Game>
     {
-        public TableVM Table { get; set;  }
+        public TableVm Table { get; set;  }
         public HandVm Hand { get; set; }
 
         protected override void OnUpdate()

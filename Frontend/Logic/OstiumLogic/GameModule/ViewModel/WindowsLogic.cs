@@ -1,4 +1,4 @@
-namespace GameWindowModule.ViewModels
+namespace GameModule.ViewModel
 {
     public partial class GameWindow
     {

@@ -12,6 +12,8 @@ using B20.Frontend.Windows.Context;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameModule;
+using GameModule.ViewModel;
+using Main.ViewModel;
 using Ostium.Logic.Tests.GameModule.Context;
 
 namespace Ostium.Logic.Tests
@@ -68,8 +70,8 @@ namespace Ostium.Logic.Tests
             
             public GameWindow GameWindow => WindowManager.Get<GameWindow>();
             
-            public RowVM AttackRow => GameWindow.Game.Table.AttackRow;
-            public RowVM DefenseRow => GameWindow.Game.Table.DefenseRow;
+            public RowVm AttackRow => GameWindow.Game.Table.AttackRow;
+            public RowVm DefenseRow => GameWindow.Game.Table.DefenseRow;
             
             public CreatureCardVm CardInAttackRow => AttackRow.Card.Element;
             public CreatureCardVm CardInDefenseRow => DefenseRow.Card.Element;

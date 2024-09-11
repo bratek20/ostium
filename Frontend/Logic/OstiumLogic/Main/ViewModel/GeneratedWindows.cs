@@ -1,9 +1,9 @@
 ﻿using B20.Frontend.Windows.Api;
 using B20.Logic;
 
-namespace MainWindowModule.ViewModels
+namespace Main.ViewModel
 {
-    public class MainWindow : Window
+    public partial class MainWindow : Window
     {
         public PlayButton PlayButton { get; set; }
     }

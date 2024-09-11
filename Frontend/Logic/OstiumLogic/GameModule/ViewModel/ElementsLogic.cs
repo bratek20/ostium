@@ -3,7 +3,7 @@ using B20.Frontend.Elements;
 using B20.Frontend.Traits;
 using GameModule.Api;
 
-namespace GameModule.ViewModels
+namespace GameModule.ViewModel
 {
     public partial class CreatureCardVm
     {
@@ -22,10 +22,10 @@ namespace GameModule.ViewModels
         }
     }
     
-    public partial class RowVM
+    public partial class RowVm
     {
         public RowType Type => Model.GetType();
-        public RowVM()
+        public RowVm()
         {
             AddTrait(new WithRect());
         }

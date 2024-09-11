@@ -6,7 +6,7 @@ using B20.Frontend.Traits;
 using B20.Logic.Utils;
 using GameModule.Api;
 
-namespace GameModule.ViewModels
+namespace GameModule.ViewModel
 {
     class GameElementDragStartedListener: EventListener<ElementDragStartedEvent>
     {
@@ -100,12 +100,12 @@ namespace GameModule.ViewModels
             SelectedCard = Optional<CreatureCardVm>.Empty();
         }
 
-        private List<RowVM> AllRows()
+        private List<RowVm> AllRows()
         {
-            return new List<RowVM> { Table.AttackRow, Table.DefenseRow };
+            return new List<RowVm> { Table.AttackRow, Table.DefenseRow };
         }
         
-        private Optional<RowVM> FindRowWithPointInside(Position2d p)
+        private Optional<RowVm> FindRowWithPointInside(Position2d p)
         {
             return ListUtils.Find(AllRows(), row => row.GetTrait<WithRect>().Rect.IsInside(p));
         }

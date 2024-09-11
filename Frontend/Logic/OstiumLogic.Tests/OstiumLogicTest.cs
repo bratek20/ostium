@@ -7,6 +7,8 @@ using B20.Logic.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
 using GameComponents;
 using GameModule.Api;
+using GameModule.ViewModel;
+using Main.ViewModel;
 using Xunit;
 
 namespace Ostium.Logic.Tests
@@ -156,13 +158,13 @@ namespace Ostium.Logic.Tests
             });
         }
         
-        void AssertCardInRow(RowVM row, string cardName)
+        void AssertCardInRow(RowVm row, string cardName)
         {
             Assert.True(row.HasCard);
             Asserts.AssertCreatureCardId(row.Model.GetCard().Get().GetId(), cardName);
         }
         
-        void AssertRowEmpty(RowVM row)
+        void AssertRowEmpty(RowVm row)
         {
             Assert.False(row.HasCard);
         }
