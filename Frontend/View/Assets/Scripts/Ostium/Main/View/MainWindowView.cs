@@ -1,10 +1,10 @@
-using System;
 using B20.View;
+using Main.ViewModel;
 using UnityEngine;
 
-namespace Ostium.View.MainWindow
+namespace Main.View
 {
-    public class MainWindowView: WindowView<Logic.MainWindow>
+    public class MainWindowView: WindowView<MainWindow>
     {
         [SerializeField] 
         private ButtonView playButton;

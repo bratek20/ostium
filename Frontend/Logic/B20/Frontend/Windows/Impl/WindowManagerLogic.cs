@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using B20.Frontend.Windows.Api;
@@ -8,17 +9,36 @@ namespace B20.Frontend.Windows.Impl
     {
         private WindowManipulator windowManipulator;
         private Window currentWindow;
-        private List<Window> windows;
+        
+        // to break circular dependencies and allow windows to use manager
+        private Lazy<IEnumerable<Window>> lazyWindows; 
+        private List<Window> cachedWindows;
+        private List<Window> Windows
+        {
+            get
+            {
+                if (cachedWindows != null)
+                {
+                    return cachedWindows;
+                }
+                
+                cachedWindows = lazyWindows.Value.ToList();
+                foreach (var window in cachedWindows)
+                {
+                    SetVisible(window, false);
+                }
+                
+                return cachedWindows;
+            }
+        }
 
         public WindowManagerLogic(
             WindowManipulator windowManipulator,
-            IEnumerable<Window> windows
+            Lazy<IEnumerable<Window>> lazyWindows
         )
         {
             this.windowManipulator = windowManipulator;
-            this.windows = windows.ToList();
-            
-            this.windows.ForEach(w => SetVisible(w, false));
+            this.lazyWindows = lazyWindows;
         }
 
         private void SetVisible(Window window, bool visible)
@@ -28,7 +48,7 @@ namespace B20.Frontend.Windows.Impl
 
         public T Get<T>() where T : class, Window
         {
-            var window = windows.Find(w => w is T) as T;
+            var window = Windows.Find(w => w is T) as T;
             if (window == null)
             {
                 throw new WindowNotFoundException("Window " + typeof(T).Name + " not found");

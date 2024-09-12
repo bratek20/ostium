@@ -43,30 +43,31 @@ Web
         ExposedInterfaces
             GameApi
                                 
-//ViewModels
-    //CreatureCardVm
-        //CreatureCard
-            //id -> name
-        //visible: BoolSwitch
-    
-    //RowVm
-        //Row
-            //card
-    
-    //TableVm
-        //Table
-            //attackRow
-            //defenseRow
-            
-    //HandVm
-        //Hand
-            //cards
-            
-    //GameVm
-        //Game
-            //table
-            //hand
+//ViewModel
+    //Elements
+        //CreatureCardVm
+            //CreatureCard
+                //id -> name
+            //visible: BoolSwitch
+        
+        //RowVm
+            //Row
+                //card
+        
+        //TableVm
+            //Table
+                //attackRow
+                //defenseRow
+                
+        //HandVm
+            //Hand
+                //cards
+                
+        //GameVm
+            //Game
+                //table
+                //hand
 
-//Windows
-    //GameWindow
-        //game: GameVm
+    //Windows
+        //GameWindow
+            //game: GameVm

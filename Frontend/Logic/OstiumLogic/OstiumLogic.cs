@@ -4,8 +4,11 @@ using B20.Ext;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Infrastructure.HttpClientModule.Context;
+using GameModule.Context;
 using HttpClientModule.Api;
+using Main.ViewModel;
 using Ostium.Logic.GameModule.Context;
+using Ostium.Logic.MainWindowModule.Context;
 
 namespace Ostium.Logic
 {
@@ -13,9 +16,7 @@ namespace Ostium.Logic
     {
         private WindowManager windowManager;
         
-        public OstiumLogic(
-            WindowManager windowManager
-        )
+        public OstiumLogic(WindowManager windowManager)
         {
             this.windowManager = windowManager;
         }
@@ -32,12 +33,10 @@ namespace Ostium.Logic
         {
             builder
                 .WithModules(
-                    new GameModuleViewModel()
+                    new GameModuleViewModel(),
+                    new MainViewModel()
                 )
-                .SetClass<OstiumLogic>()
-                .SetClass<PlayButton>()
-                .AddImpl<Window, MainWindow>()
-                .AddImpl<Window, GameWindow>();
+                .SetClass<OstiumLogic>();
         }
     }
     

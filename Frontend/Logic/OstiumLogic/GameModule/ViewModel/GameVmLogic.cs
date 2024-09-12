@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using B20.Events.Api;
 using B20.Ext;
-using B20.Frontend.Element;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Logic.Utils;
 using GameModule.Api;
 
-namespace Ostium.Logic
+namespace GameModule.ViewModel
 {
     class GameElementDragStartedListener: EventListener<ElementDragStartedEvent>
     {
-        private GameVM game;
-        public GameElementDragStartedListener(GameVM game)
+        private GameVm game;
+        public GameElementDragStartedListener(GameVm game)
         {
             this.game = game;
         }
@@ -25,8 +24,8 @@ namespace Ostium.Logic
     
     class GameElementDragEndedListener: EventListener<ElementDragEndedEvent>
     {
-        private GameVM game;
-        public GameElementDragEndedListener(GameVM game)
+        private GameVm game;
+        public GameElementDragEndedListener(GameVm game)
         {
             this.game = game;
         }
@@ -36,23 +35,11 @@ namespace Ostium.Logic
             game.HandleElementDragEnded(e);
         }
     }
-    
-    public partial class GameVM: ElementVm<Game>
-    {
-        public TableVM Table { get; set;  }
-        public HandVm Hand { get; set; }
 
-        protected override void OnUpdate()
-        {
-            Table.Update(Model.GetTable());
-            Hand.Update(Model.GetHand());
-        }
-    }
-    
-    public partial class GameVM
+    public partial class GameVm
     {
         private GameApi gameSetupApi;
-        public GameVM(GameApi gameSetupApi, EventPublisher eventPublisher)
+        public GameVm(GameApi gameSetupApi, EventPublisher eventPublisher)
         {
             this.gameSetupApi = gameSetupApi;
             eventPublisher.AddListener(new GameElementDragStartedListener(this));
@@ -113,12 +100,12 @@ namespace Ostium.Logic
             SelectedCard = Optional<CreatureCardVm>.Empty();
         }
 
-        private List<RowVM> AllRows()
+        private List<RowVm> AllRows()
         {
-            return new List<RowVM> { Table.AttackRow, Table.DefenseRow };
+            return new List<RowVm> { Table.AttackRow, Table.DefenseRow };
         }
         
-        private Optional<RowVM> FindRowWithPointInside(Position2d p)
+        private Optional<RowVm> FindRowWithPointInside(Position2d p)
         {
             return ListUtils.Find(AllRows(), row => row.GetTrait<WithRect>().Rect.IsInside(p));
         }
