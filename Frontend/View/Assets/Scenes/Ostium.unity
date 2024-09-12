@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defe6403998340f38bd3830ebf382767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windowViews:
+  windowPrefabs:
   - {fileID: 9041289285158896413, guid: 5c5d545888466a944bccdb3519856ddc, type: 3}
   - {fileID: 3831434279102806826, guid: c0614b3711f5dd849bd9f00f90ef872a, type: 3}
 --- !u!1 &2030486941
