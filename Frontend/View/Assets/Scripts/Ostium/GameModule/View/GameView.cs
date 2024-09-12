@@ -1,10 +1,11 @@
 using B20.View;
+using GameModule.ViewModel;
 using Ostium.Logic;
 using UnityEngine;
 
-namespace Ostium.View
+namespace GameModule.View
 {
-    public class GameView: ElementView<GameVM>
+    public class GameView: ElementView<GameVm>
     {
         [SerializeField]
         private HandView hand;

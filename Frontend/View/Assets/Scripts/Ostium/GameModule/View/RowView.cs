@@ -1,18 +1,19 @@
 using B20.View;
+using GameModule.ViewModel;
 using Ostium.Logic;
 using UnityEngine;
 
-namespace Ostium.View
+namespace GameModule.View
 {
-    public class HandView: ElementView<HandVm>
+    public class RowView: ElementView<RowVm>
     {
         [SerializeField]
-        private CardsListView cards;
+        private OptionalCreateCardView card;
 
         protected override void OnBind()
         {
             base.OnBind();
-            cards.Bind(ViewModel.Cards);
+            card.Bind(ViewModel.Card);
         }
     }
 }

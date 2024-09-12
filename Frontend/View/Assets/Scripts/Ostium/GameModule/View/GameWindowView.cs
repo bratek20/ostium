@@ -1,8 +1,9 @@
 using B20.View;
+using GameModule.ViewModel;
 using Ostium.Logic;
 using UnityEngine;
 
-namespace Ostium.View
+namespace GameModule.View
 {
     public class GameWindowView: WindowView<GameWindow>
     {
@@ -11,8 +12,7 @@ namespace Ostium.View
 
         protected override void OnInit()
         {
-            var gameVM = ViewModel.Game;
-            game.Bind(gameVM);
+            game.Bind(ViewModel.Game);
         }
     }
 }

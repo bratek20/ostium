@@ -1,11 +1,12 @@
 using B20.View;
 using GameModule.Api;
+using GameModule.ViewModel;
 using Ostium.Logic;
 using UnityEngine;
 
-namespace Ostium.View
+namespace GameModule.View
 {
-    public class TableView: ElementView<TableVM>
+    public class TableView: ElementView<TableVm>
     {
         [SerializeField]
         private RowView attackRow;

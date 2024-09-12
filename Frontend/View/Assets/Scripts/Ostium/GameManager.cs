@@ -4,7 +4,7 @@ using B20.Frontend.Windows.Integrations;
 using Ostium.Logic;
 using UnityEngine;
 
-namespace Ostium.View
+namespace GameModule.View
 {
     public class GameManager : MonoBehaviour
     {

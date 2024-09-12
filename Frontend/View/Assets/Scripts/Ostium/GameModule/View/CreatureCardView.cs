@@ -1,9 +1,8 @@
-using B20.Frontend.Postion;
 using B20.View;
-using Ostium.Logic;
+using GameModule.ViewModel;
 using UnityEngine;
 
-namespace Ostium.View
+namespace GameModule.View
 {
     public class CreateCardView: ElementView<CreatureCardVm>
     {
