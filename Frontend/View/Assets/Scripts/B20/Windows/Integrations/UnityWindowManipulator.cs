@@ -8,8 +8,26 @@ namespace B20.Frontend.Windows.Integrations
     public class UnityWindowManipulator: MonoBehaviour, WindowManipulator
     {
         [SerializeField]    
-        private List<WindowView> windowViews;
+        private List<WindowView> windowPrefabs;
         
+        private List<WindowView> windowViews;
+
+        private void Start()
+        {
+            if (GetComponent<Canvas>() == null)
+            {
+                Debug.LogError("UnityWindowManipulator should be placed next to canvas");
+            }
+
+            windowViews = new List<WindowView>();
+            windowPrefabs.ForEach(w =>
+            {
+                var view = Instantiate(w, transform);
+                Debug.Log("Instantiated window view: " + view.GetType().Name);
+                windowViews.Add(view);
+            });
+        }
+
         private WindowView EnsureInitializedAndGetView(Window viewModel)
         {
             WindowView windowView = windowViews.Find(w => w.Accepts(viewModel));
