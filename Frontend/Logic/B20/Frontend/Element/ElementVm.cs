@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Api;
 using B20.Architecture.Exceptions;
 
 namespace B20.Frontend.Element
@@ -24,11 +25,18 @@ namespace B20.Frontend.Element
 
     public abstract class ElementVm<TModelType>: ElementVm
     {
+        public Context Context { get; set; }
+        
         public TModelType Model { get; private set; }
         
         private Action _observerUpdateAction;
         
         protected virtual void OnUpdate() { }
+        
+        protected virtual List<Type> GetTraitTypes()
+        {
+            return new List<Type>();
+        }
         
         public void Update(TModelType model)
         {
@@ -51,11 +59,11 @@ namespace B20.Frontend.Element
 
         private readonly List<Trait> _traits = new List<Trait>();
         
-        protected void AddTrait(Trait t)
-        {
-            _traits.Add(t);
-            t.Init(this);
-        }
+        // protected void AddTrait(Trait t)
+        // {
+        //     _traits.Add(t);
+        //     t.Init(this);
+        // }
         
         public T GetTrait<T>() where T: Trait
         {

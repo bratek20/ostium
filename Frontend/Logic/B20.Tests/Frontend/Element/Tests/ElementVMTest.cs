@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using B20.Logic.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
 
@@ -18,12 +21,14 @@ namespace B20.Frontend.Element.Tests
     class ElementVMTester: ElementVm<SomeModel>
     {
         private int updateCount = 0;
-        
-        public ElementVMTester()
+
+        protected override List<Type> GetTraitTypes()
         {
-            AddTrait(new TraitTester());
+            return ListUtils.Of(
+                typeof(TraitTester)
+            );
         }
-        
+
         protected override void OnUpdate()
         {
             updateCount++;
