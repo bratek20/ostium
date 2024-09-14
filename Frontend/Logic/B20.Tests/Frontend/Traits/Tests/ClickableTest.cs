@@ -1,6 +1,9 @@
+using B20.Architecture.Contexts.Context;
 using B20.Frontend.Element;
 using B20.Frontend.Traits;
 using B20.Architecture.Events.Fixtures;
+using B20.Frontend.Traits.Context;
+using B20.Tests.Architecture.Events.Context;
 using Xunit;
 
 namespace B20.Tests.Frontend.Traits.Tests
@@ -15,8 +18,15 @@ namespace B20.Tests.Frontend.Traits.Tests
         [Fact]
         public void Click_PublishClicked()
         {
-            var publisherMock = new EventPublisherMock();
-            var clickable = new Clickable(publisherMock);
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    new EventsMocks(),
+                    new TraitsImpl()
+                )
+                .Build();
+            var publisherMock = c.Get<EventPublisherMock>();
+            var clickable = c.Get<TraitFactory>().Create(typeof(Clickable)) as Clickable;
+
             var owner = new SomeElementVM();
             clickable.Init(owner);
             

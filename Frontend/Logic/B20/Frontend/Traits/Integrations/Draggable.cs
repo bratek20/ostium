@@ -32,31 +32,30 @@ namespace B20.Frontend.Traits
     public class Draggable : Trait
     {
         private EventPublisher publisher;
-        private Position2dVm position;
+        private WithPosition2d Position => Owner.GetTrait<WithPosition2d>();
         private Position2d startPosition;
         
-        public Draggable(EventPublisher publisher, Position2dVm position)
+        public Draggable(EventPublisher publisher)
         {
             this.publisher = publisher;
-            this.position = position;
         }
 
         public void StartDrag(Position2d p)
         {
             startPosition = p;
-            position.Update(p);
+            Position.Update(p);
             
             publisher.Publish(new ElementDragStartedEvent(Owner, p));
         }
         
         public void OnDrag(Position2d p)
         {
-            position.Update(p);
+            Position.Update(p);
         }
 
         public void EndDrag(Position2d p)
         {
-            position.Update(startPosition);
+            Position.Update(startPosition);
             
             publisher.Publish(new ElementDragEndedEvent(Owner, p));
         }

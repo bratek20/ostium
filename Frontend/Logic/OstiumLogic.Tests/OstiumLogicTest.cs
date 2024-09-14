@@ -60,16 +60,16 @@ namespace Ostium.Logic.Tests
             var card1Name = c.FirstCardInHand.Name.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            Helpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            TraitsHelpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
             AssertSelectedCard(c, "Mouse1");
-            Helpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
+            TraitsHelpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             AssertNoCardSelected(c);
             
             c.GameApiMock.AssertPlayCardLastCall("Mouse1", RowType.ATTACK);
             
             //Playing second card on defense row
-            Helpers.StartDrag(c.SecondCardInHand, new Position2d(0, 0));
-            Helpers.EndDrag(c.SecondCardInHand, new Position2d(20, 20));
+            TraitsHelpers.StartDrag(c.SecondCardInHand, new Position2d(0, 0));
+            TraitsHelpers.EndDrag(c.SecondCardInHand, new Position2d(20, 20));
             
             c.GameApiMock.AssertPlayCardLastCall("Mouse2", RowType.DEFENSE);
         }
@@ -92,9 +92,9 @@ namespace Ostium.Logic.Tests
            
             AssertCardInRow(c.DefenseRow, "Mouse1");
             
-            Helpers.StartDrag(c.CardInDefenseRow, new Position2d(20, 20));
+            TraitsHelpers.StartDrag(c.CardInDefenseRow, new Position2d(20, 20));
             AssertSelectedCard(c, "Mouse1");
-            Helpers.EndDrag(c.CardInDefenseRow, new Position2d(10, 10));
+            TraitsHelpers.EndDrag(c.CardInDefenseRow, new Position2d(10, 10));
             AssertNoCardSelected(c);
             
             c.GameApiMock.AssertMoveCardLastCall("Mouse1", RowType.DEFENSE, RowType.ATTACK);
@@ -119,8 +119,8 @@ namespace Ostium.Logic.Tests
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertCardInRow(c.DefenseRow, "Mouse2");
             
-            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
-            Helpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
+            TraitsHelpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            TraitsHelpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
             c.GameApiMock.AssertMoveCardLastCall("Mouse1", RowType.ATTACK, RowType.DEFENSE);
         }
         
@@ -141,8 +141,8 @@ namespace Ostium.Logic.Tests
             });
             AssertCardInRow(c.AttackRow, "Mouse1");
             
-            Helpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
-            Helpers.EndDrag(c.CardInAttackRow, new Position2d(10, 10));
+            TraitsHelpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
+            TraitsHelpers.EndDrag(c.CardInAttackRow, new Position2d(10, 10));
 
             c.GameApiMock.AssertNoCalls();
         }

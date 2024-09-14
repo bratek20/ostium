@@ -4,7 +4,7 @@ using B20.Frontend.Traits;
 
 namespace B20.Tests.Frontend.Traits.Fixtures
 {
-    public class Helpers
+    public class TraitsHelpers
     {
         public static void Click(ElementVm element)
         {

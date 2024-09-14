@@ -12,7 +12,7 @@ namespace B20.Frontend.Windows.Integrations
         
         private List<WindowView> windowViews;
 
-        private void Start()
+        private void InitWindowViews()
         {
             if (GetComponent<Canvas>() == null)
             {
@@ -30,6 +30,11 @@ namespace B20.Frontend.Windows.Integrations
 
         private WindowView EnsureInitializedAndGetView(Window viewModel)
         {
+            if (windowViews == null)
+            {
+                InitWindowViews();
+            }
+            
             WindowView windowView = windowViews.Find(w => w.Accepts(viewModel));
             if (windowView == null)
             {
