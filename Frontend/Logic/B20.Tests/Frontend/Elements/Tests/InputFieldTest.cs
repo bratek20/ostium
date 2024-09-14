@@ -11,7 +11,7 @@ namespace B20.Tests.Frontend.Elements.Tests
         {
             var inputField = new InputField();
             
-            inputField.Update("Some input");
+            inputField.OnChange("Some input");
             
             AssertExt.Equal(inputField.Model, "Some input");
         }
