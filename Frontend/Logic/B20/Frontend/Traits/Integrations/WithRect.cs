@@ -12,8 +12,13 @@ namespace B20.Frontend.Traits
     public class WithRect : Trait
     {
         private Func<Rect> _rectProvider;
-
-        public Func<Rect> RectProvider
+        
+        public void SetRectProvider(Func<Rect> rectProvider)
+        {
+            _rectProvider = rectProvider;
+        }
+        
+        private Func<Rect> RectProvider
         {
             get 
             {
@@ -22,10 +27,6 @@ namespace B20.Frontend.Traits
                     throw new RectProviderNotSetException();
                 }
                 return _rectProvider;
-            }
-            set
-            {
-                _rectProvider = value;
             }
         }
 

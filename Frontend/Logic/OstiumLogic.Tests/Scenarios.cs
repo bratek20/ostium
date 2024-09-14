@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Events.Context;
+using B20.Architecture.Logs.Context;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Ext;
@@ -47,11 +48,11 @@ namespace Ostium.Logic.Tests
             var c = ContextsFactory.CreateBuilder()
                 .WithModules(
                     new GameModuleMocks(),
+                    
+                    new ConsoleLogsImpl(),
                     new WindowManipulatorInMemoryImpl(),
-                    new WindowsImpl(),
-                    new EventsImpl(),
-                    new TraitsImpl(),
-                    new OstiumLogicPartialImpl()
+                    
+                    new OstiumLogicNoBackendImpl()
                 )
                 .Build();
             
@@ -107,8 +108,8 @@ namespace Ostium.Logic.Tests
                 logic: c.Logic,
                 gameApiMock: c.GameApiMock
             );
-            nc.AttackRow.GetTrait<WithRect>().RectProvider = () => args.AttackRowRect;
-            nc.DefenseRow.GetTrait<WithRect>().RectProvider = () => args.DefenseRowRect;
+            nc.AttackRow.GetTrait<WithRect>().SetRectProvider(() => args.AttackRowRect);
+            nc.DefenseRow.GetTrait<WithRect>().SetRectProvider(() => args.DefenseRowRect);
             return nc;
         }
     }

@@ -19,7 +19,7 @@ namespace B20.Tests.Frontend.Traits.Tests
         [Fact]
         public void IsInside_ShouldThrowIfRectProviderNotSet()
         {
-            Asserts.ThrowsApiException(
+            ExceptionsAsserts.ThrowsApiException(
                 () => withRect.IsInside(Builders.CreatePosition2D()),
                 e => e.Type = typeof(RectProviderNotSetException)
             );
@@ -29,7 +29,7 @@ namespace B20.Tests.Frontend.Traits.Tests
         public void IsInside_SupportsChangeableRect()
         {
             var rect = new Rect(0, 0, 10, 10);
-            withRect.RectProvider = () => rect;
+            withRect.SetRectProvider(() => rect);
             
             Assert.True(withRect.IsInside(new Position2d(5, 5)));
             

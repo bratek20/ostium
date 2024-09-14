@@ -7,11 +7,14 @@ namespace Main.View
     public class MainWindowView: WindowView<MainWindow>
     {
         [SerializeField] 
-        private ButtonView playButton;
+        private InputFieldView username;
+        [SerializeField] 
+        private ButtonView play;
 
         protected override void OnInit()
         {
-            playButton.Init(ViewModel.PlayButton);
+            username.Bind(ViewModel.Username);
+            play.Init(ViewModel.PlayButton);
         }
     }
 }

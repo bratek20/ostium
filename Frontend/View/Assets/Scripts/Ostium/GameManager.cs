@@ -1,4 +1,5 @@
 using B20.Architecture.Contexts.Context;
+using B20.Architecture.Logs.Context;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Integrations;
 using Ostium.Logic;
@@ -17,7 +18,10 @@ namespace GameModule.View
         {
             var c = ContextsFactory.CreateBuilder()
                 .SetImplObject<WindowManipulator>(windowManipulator)
-                .WithModule(new OstiumLogicFullImpl())
+                .WithModules(
+                    new UnityLogsImpl(),
+                    new OstiumLogicFullImpl()
+                )
                 .Build();
 
             logic = c.Get<OstiumLogic>();

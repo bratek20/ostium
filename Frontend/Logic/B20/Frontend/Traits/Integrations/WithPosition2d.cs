@@ -7,9 +7,10 @@ namespace B20.Frontend.UiElements
     public class WithPosition2d : Trait
     {
         private Action<Position2d> _positionSetter;
-        public Action<Position2d> PositionSetter
+
+        public void SetPositionSetter(Action<Position2d> positionSetter)
         {
-            set => _positionSetter = value;
+            _positionSetter = positionSetter;
         }
         
         public Position2d Model { get; private set; }

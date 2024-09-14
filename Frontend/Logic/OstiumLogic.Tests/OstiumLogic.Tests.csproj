@@ -17,4 +17,8 @@
         <ProjectReference Include="..\B20\B20.csproj" />
         <ProjectReference Include="..\OstiumLogic\OstiumLogic.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="GameModule\Tests\" />
+    </ItemGroup>
 </Project>

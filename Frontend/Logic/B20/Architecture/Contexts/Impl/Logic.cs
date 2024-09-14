@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using Autofac.Builder;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using B20.Architecture.Contexts.Api;
 
@@ -19,12 +21,30 @@ namespace B20.Architecture.Contexts.Impl
 
         public T Get<T>() where T : class
         {
-            return _scope.Resolve<T>();
+            return Resolve<T>();
         }
 
         public IEnumerable<T> GetMany<T>() where T : class
         {
-            return _scope.Resolve<IEnumerable<T>>();
+            return Resolve<IEnumerable<T>>();
+        }
+        
+        private T Resolve<T>()
+        {
+            try
+            {
+                return _scope.Resolve<T>();    
+            }
+            catch (DependencyResolutionException e)
+            {
+                if (e.InnerException is DependentClassNotFoundInContextException)
+                {
+                    throw e.InnerException;
+                }
+
+                throw;
+            }
+            
         }
     }
 
@@ -76,6 +96,23 @@ namespace B20.Architecture.Contexts.Impl
             var registration = registrationAction(_builder);
             registration.PropertiesAutowired();
 
+            // Add validation logic to ensure fields are injected
+            registration.OnActivated(e =>
+            {
+                var properties = typeof(T).GetProperties()
+                    .Where(p => p.CanWrite && p.GetSetMethod(true).IsPublic);
+
+                foreach (var prop in properties)
+                {
+                    var value = prop.GetValue(e.Instance);
+                    if (value == null)
+                    {
+                        var message = $"Type '{prop.PropertyType.Name}' could not be injected to '{typeof(T).Name}'";
+                        throw new DependentClassNotFoundInContextException(message);
+                    }
+                }
+            });
+            
             if (mode == InjectionMode.Singleton)
             {
                 registration.SingleInstance();    

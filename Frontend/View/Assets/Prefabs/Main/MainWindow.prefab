@@ -847,7 +847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35fa226554d4485a7ee424e6f0523e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 5961377573873584855}
+  username: {fileID: 1748574797083720570}
+  play: {fileID: 5961377573873584855}
 --- !u!1 &8614491801416488084
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,6 +861,7 @@ GameObject:
   - component: {fileID: 715580559898337383}
   - component: {fileID: 6816769504838059302}
   - component: {fileID: 578414026185523265}
+  - component: {fileID: 1748574797083720570}
   m_Layer: 5
   m_Name: username
   m_TagString: Untagged
@@ -1023,3 +1025,15 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!114 &1748574797083720570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8614491801416488084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a99640d7014e2096131be7add24520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
