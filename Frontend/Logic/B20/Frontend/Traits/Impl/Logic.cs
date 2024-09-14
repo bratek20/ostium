@@ -20,5 +20,10 @@ namespace B20.Frontend.Traits.Impl
             // Invoke the method on the _context instance
             return (Trait)method.Invoke(_context, null);
         }
+
+        public T Create<T>() where T : Trait
+        {
+            return (T)Create(typeof(T));
+        }
     }
 }

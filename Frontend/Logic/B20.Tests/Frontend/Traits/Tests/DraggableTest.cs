@@ -1,8 +1,12 @@
+using System;
+using System.Collections.Generic;
 using B20.Frontend.Element;
 using B20.Frontend.Elements;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Architecture.Events.Fixtures;
+using B20.Logic.Utils;
+using B20.Tests.Frontend.Traits.Fixtures;
 using B20.Tests.Frontend.Types.Fixtures;
 using Xunit;
 
@@ -13,20 +17,33 @@ namespace B20.Tests.Frontend.Traits.Tests
         class SomeModel {}
         class SomeElementVM : ElementVm<SomeModel>
         {
+            protected override List<Type> GetTraitTypes()
+            {
+                return ListUtils.Of(
+                    typeof(WithPosition2d),
+                    typeof(Draggable)
+                );
+            }
         }
 
         private EventPublisherMock publisherMock;
-        private Position2dVm positionVm;
+        private WithPosition2d positionVm;
         private Draggable draggable;
         private SomeElementVM owner;
         
         public DraggableTest()
         {
-            publisherMock = new EventPublisherMock();
-            positionVm = new Position2dVm();
-            draggable = new Draggable(publisherMock, positionVm);
-            owner = new SomeElementVM();
-            draggable.Init(owner);
+            var r = TraitsScenarios.Setup(a =>
+            {
+                a.ContextManipulation = b =>
+                {
+                    b.SetClass<SomeElementVM>();
+                };
+            });
+            publisherMock = r.PublisherMock;
+            owner = r.Context.Get<SomeElementVM>();
+            draggable = owner.GetTrait<Draggable>();
+            positionVm = owner.GetTrait<WithPosition2d>();
         }
 
         [Fact]

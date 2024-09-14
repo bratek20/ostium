@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Context;
+using B20.Frontend.Traits.Context;
 using B20.Logic.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
@@ -53,7 +55,12 @@ namespace B20.Frontend.Element.Tests
         
         public ElementVMTest()
         {
-            elementTester = new ElementVMTester();
+            elementTester = ContextsFactory.CreateBuilder()
+                .WithModule(new TraitsImpl())
+                .SetClass<TraitTester>()
+                .SetClass<OtherTrait>()
+                .SetClass<ElementVMTester>()
+                .Get<ElementVMTester>();
             elementInterf = elementTester;
         }
             
@@ -68,10 +75,10 @@ namespace B20.Frontend.Element.Tests
         [Fact]
         public void ShouldSupportTraits()
         {
+            AssertExt.ListCount(elementInterf.Traits, 1);
+            
             elementTester.AssertHaveTraitTesterWithOwnerInitialized();
-            
-            AssertExt.ListCount(elementInterf.GetTraits(), 1);
-            
+
             Architecture.Exceptions.Fixtures.Asserts.ThrowsApiException(
                 () => elementInterf.GetTrait<OtherTrait>(),
                 e =>

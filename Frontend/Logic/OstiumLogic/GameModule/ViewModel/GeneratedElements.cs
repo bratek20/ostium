@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using B20.Frontend.Element;
 using B20.Frontend.Elements;
+using B20.Frontend.Traits;
 using GameModule.Api;
 
 namespace GameModule.ViewModel
@@ -8,6 +11,11 @@ namespace GameModule.ViewModel
     {
         public LabelVm Name { get; } = new LabelVm();
         public VisibleVm Selected { get; } = new VisibleVm();
+        
+        protected override List<Type> GetTraitTypes()
+        {
+            return new List<Type>() {typeof(WithPosition2d), typeof(Draggable)};
+        }
         
         protected override void OnUpdate()
         {
@@ -43,6 +51,11 @@ namespace GameModule.ViewModel
     public partial class RowVm: ElementVm<Row>
     {
         public OptionalCreatureCardVm Card { get; set; }
+        
+        protected override List<Type> GetTraitTypes()
+        {
+            return new List<Type>() {typeof(WithRect)};
+        }
         
         protected override void OnUpdate()
         {

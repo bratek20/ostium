@@ -7,6 +7,7 @@ using B20.Events.Impl;
 using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
+using B20.Frontend.Traits.Context;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Frontend.Windows.Impl;
@@ -49,6 +50,7 @@ namespace Ostium.Logic.Tests
                     new WindowManipulatorInMemoryImpl(),
                     new WindowsImpl(),
                     new EventsImpl(),
+                    new TraitsImpl(),
                     new OstiumLogicPartialImpl()
                 )
                 .Build();

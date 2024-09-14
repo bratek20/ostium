@@ -1,9 +1,7 @@
-using B20.Architecture.Contexts.Context;
+using B20.Architecture.Exceptions.Fixtures;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
-using B20.Architecture.Exceptions.Fixtures;
-using B20.Frontend.Element;
-using B20.Frontend.Traits.Context;
+using B20.Tests.Frontend.Traits.Fixtures;
 using B20.Tests.Frontend.Types.Fixtures;
 using Xunit;
 
@@ -15,10 +13,7 @@ namespace B20.Tests.Frontend.Traits.Tests
         
         public WithRectTest()
         {
-            withRect = ContextsFactory.CreateBuilder()
-                .WithModule(new TraitsImpl())
-                .Get<TraitFactory>()
-                .Create(typeof(WithRect)) as WithRect;
+            withRect = TraitsScenarios.Setup().TraitFactory.Create<WithRect>();
         }
         
         [Fact]
