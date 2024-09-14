@@ -1,26 +1,29 @@
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
-using Xunit;
 
 namespace B20.Tests.Frontend.Windows.Fixtures
 {
-    public class WindowManipulatorMock : WindowManipulator
+    public class InMemoryWindowManipulator : WindowManipulator
     {
         private Dictionary<string, bool> windowVisibility = new Dictionary<string, bool>();
-
-        public void SetVisible(WindowId id, bool visible)
-        {
-            windowVisibility[id.Value] = visible;
-        }
-
-        public void AssertVisible(string windowId, bool visible)
-        {
-            Assert.Equal(visible, windowVisibility[windowId]);
-        }
         
-        public void AssertNoSetVisibleCalls()
+        public void SetVisible(Window window, bool visible)
         {
-            Assert.Empty(windowVisibility);
+            windowVisibility[window.GetType().Name] = visible;
+        }
+
+        public bool GetVisible<T>() where T : Window
+        {
+            return windowVisibility[typeof(T).Name];
+        }
+    }
+    
+    public class WindowManipulatorInMemoryImpl: ContextModule
+    {
+        public void Apply(ContextBuilder builder)
+        {
+            builder.SetImpl<WindowManipulator, InMemoryWindowManipulator>();
         }
     }
 }

@@ -4,24 +4,22 @@ namespace B20.Frontend.Windows.Api
 {
     public interface Window
     {
-        WindowId GetId();
-
-        void OnOpen();
+        void OnOpen() {}
     }
     
     // outgoing
     public interface WindowManager
     {
-        void Register(Window window);
-        Window Get(WindowId id);
+        T Get<T>() where T : class, Window;
         
-        void Open(WindowId id);
-        WindowId GetCurrent();
+        void Open<T>() where T : class, Window;
+        
+        Window GetCurrent();
     }
     
     // incoming
     public interface WindowManipulator
     {
-        void SetVisible(WindowId id, bool visible);
+        void SetVisible(Window window, bool visible);
     }
 }

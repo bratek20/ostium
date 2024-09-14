@@ -31,6 +31,7 @@ class GameApiLogic(
             RowType.DEFENSE -> defenseRowCard = CreatureCard.create(id = cardId)
         }
 
+        logger.info("Card $cardId played in $row row")
         return toApiGame()
     }
 
@@ -40,16 +41,24 @@ class GameApiLogic(
             RowType.DEFENSE -> defenseRowCard
         } ?: throw IllegalStateException("No card in $from row")
 
+        var toCurrentCard: CreatureCard? = null
         when (to) {
-            RowType.ATTACK -> attackRowCard = card
-            RowType.DEFENSE -> defenseRowCard = card
+            RowType.ATTACK -> {
+                toCurrentCard = attackRowCard
+                attackRowCard = card
+            }
+            RowType.DEFENSE -> {
+                toCurrentCard = defenseRowCard
+                defenseRowCard = card
+            }
         }
 
         when (from) {
-            RowType.ATTACK -> attackRowCard = null
-            RowType.DEFENSE -> defenseRowCard = null
+            RowType.ATTACK -> attackRowCard = toCurrentCard
+            RowType.DEFENSE -> defenseRowCard = toCurrentCard
         }
 
+        logger.info("Card $cardId moved from $from to $to row")
         return toApiGame()
     }
 
@@ -63,8 +72,14 @@ class GameApiLogic(
                     myMarker = GateDurabilityMarker(15),
                     opponentMarker = GateDurabilityMarker(15)
                 ),
-                attackRow = Row.create(card = attackRowCard),
-                defenseRow = Row.create(card = defenseRowCard),
+                attackRow = Row.create(
+                    type = RowType.ATTACK,
+                    card = attackRowCard
+                ),
+                defenseRow = Row.create(
+                    type = RowType.DEFENSE,
+                    card = defenseRowCard
+                ),
                 gateCard = GateCard.create(false),
             )
         )

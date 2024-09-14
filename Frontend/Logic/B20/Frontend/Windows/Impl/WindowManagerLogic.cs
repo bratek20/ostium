@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using B20.Frontend.Windows.Api;
 
 namespace B20.Frontend.Windows.Impl
@@ -7,57 +9,70 @@ namespace B20.Frontend.Windows.Impl
     {
         private WindowManipulator windowManipulator;
         private Window currentWindow;
-        private List<Window> registeredWindows = new List<Window>();
-        private bool firstOpen = true;
         
-        public WindowManagerLogic(WindowManipulator windowManipulator)
+        // to break circular dependencies and allow windows to use manager
+        private Lazy<IEnumerable<Window>> lazyWindows; 
+        private List<Window> cachedWindows;
+        private List<Window> Windows
         {
-            this.windowManipulator = windowManipulator;
-        }
-        
-        public void Register(Window window)
-        {
-            registeredWindows.Add(window);
+            get
+            {
+                if (cachedWindows != null)
+                {
+                    return cachedWindows;
+                }
+                
+                cachedWindows = lazyWindows.Value.ToList();
+                foreach (var window in cachedWindows)
+                {
+                    SetVisible(window, false);
+                }
+                
+                return cachedWindows;
+            }
         }
 
-        public Window Get(WindowId id)
+        public WindowManagerLogic(
+            WindowManipulator windowManipulator,
+            Lazy<IEnumerable<Window>> lazyWindows
+        )
         {
-            var window = registeredWindows.Find(w => w.GetId().Value == id.Value);
+            this.windowManipulator = windowManipulator;
+            this.lazyWindows = lazyWindows;
+        }
+
+        private void SetVisible(Window window, bool visible)
+        {
+            windowManipulator.SetVisible(window, visible);
+        }
+
+        public T Get<T>() where T : class, Window
+        {
+            var window = Windows.Find(w => w is T) as T;
             if (window == null)
             {
-                throw new WindowNotFoundException("Window " + id.Value + " not found");
+                throw new WindowNotFoundException("Window " + typeof(T).Name + " not found");
             }
             
             return window;
         }
 
-        public void Open(WindowId id)
+        public void Open<T>() where T : class, Window
         {
-            if (firstOpen)
-            {
-                registeredWindows.ForEach(w => SetVisible(w, false));
-                firstOpen = false;
-            }
-
             if (currentWindow != null)
             {
                 SetVisible(currentWindow, false);
             }
             
-            Window window = Get(id);
+            Window window = Get<T>();
             SetVisible(window, true);
             currentWindow = window;
             currentWindow.OnOpen();
         }
 
-        public WindowId GetCurrent()
+        public Window GetCurrent() 
         {
-            return currentWindow.GetId();
-        }
-        
-        private void SetVisible(Window window, bool visible)
-        {
-            windowManipulator.SetVisible(window.GetId(), visible);
+            return currentWindow;
         }
     }
 }

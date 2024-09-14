@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Autofac.Extensions.DependencyInjection</id>
+    <version>8.0.0</version>
+    <authors>Autofac Contributors</authors>
+    <owners>Autofac Contributors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://autofac.org/</projectUrl>
+    <description>Autofac implementation of the interfaces in Microsoft.Extensions.DependencyInjection.Abstractions, the .NET Framework dependency injection abstraction.</description>
+    <releaseNotes>Release notes are at https://github.com/autofac/Autofac.Extensions.DependencyInjection/releases</releaseNotes>
+    <copyright>Copyright © 2015 Autofac Contributors</copyright>
+    <tags>autofac di ioc dependencyinjection aspnet aspnetcore</tags>
+    <repository type="git" url="https://github.com/autofac/Autofac.Extensions.DependencyInjection" commit="c715e5f6c82f6481c299411fd0ec1f746f5f6aa5" />
+    <dependencies>
+      <group targetFramework=".NETFramework5.0">
+        <dependency id="Autofac" version="6.4.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework6.0">
+        <dependency id="Autofac" version="6.4.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Autofac" version="6.4.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Autofac" version="6.4.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="6.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <icon>icon.png</icon>
+  </metadata>
+</package>

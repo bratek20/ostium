@@ -23,8 +23,8 @@ namespace GameModule
             init?.Invoke(def);
             return new Table(
                 gateDurabilityCard: BuildGateDurabilityCard(def.GateDurabilityCard),
-                attackRow: new Row(def.AttackRow != null ? BuildCreatureCard(def.AttackRow) : null),
-                defenseRow: new Row(def.DefenseRow != null ? BuildCreatureCard(def.DefenseRow) : null),
+                attackRow: new Row("ATTACK", def.AttackRow != null ? BuildCreatureCard(def.AttackRow) : null),
+                defenseRow: new Row("DEFENSE", def.DefenseRow != null ? BuildCreatureCard(def.DefenseRow) : null),
                 gateCard: BuildGateCard(def.GateCard)
             );
         }

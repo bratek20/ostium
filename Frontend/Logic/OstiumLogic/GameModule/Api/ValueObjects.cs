@@ -102,18 +102,24 @@ namespace GameModule.Api {
     }
 
     public class Row {
+        readonly string type;
         readonly CreatureCard? card;
 
         public Row(
+            string type,
             CreatureCard? card
         ) {
+            this.type = type;
             this.card = card;
+        }
+        public RowType GetType() {
+            return (RowType)Enum.Parse(typeof(RowType), type);
         }
         public Optional<CreatureCard> GetCard() {
             return Optional<CreatureCard>.Of(card);
         }
-        public static Row Create(Optional<CreatureCard> card) {
-            return new Row(card.OrElse(null));
+        public static Row Create(RowType type, Optional<CreatureCard> card) {
+            return new Row(type.ToString(), card.OrElse(null));
         }
     }
 

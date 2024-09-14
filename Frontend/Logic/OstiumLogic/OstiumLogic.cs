@@ -1,71 +1,64 @@
-using B20.Events.Api;
-using B20.Events.Impl;
+using B20.Architecture.Contexts.Api;
+using B20.Architecture.Events.Context;
 using B20.Ext;
+using B20.Frontend.Traits.Context;
 using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Impl;
-using B20.Infrastructure.HttpClient.Integrations;
-using GameModule.Api;
-using GameModule.Web;
+using B20.Frontend.Windows.Context;
+using B20.Infrastructure.HttpClientModule.Context;
+using GameModule.Context;
 using HttpClientModule.Api;
-using HttpClientModule.Impl;
+using Main.ViewModel;
+using Ostium.Logic.GameModule.Context;
+using Ostium.Logic.MainWindowModule.Context;
 
 namespace Ostium.Logic
 {
-    public class OstiumLogicFactory
-    {
-        public static OstiumLogic Create(
-            WindowManipulator windowManipulator
-        ) {
-            return new OstiumLogic(
-                new EventPublisherLogic(), 
-                new WindowManagerLogic(windowManipulator),
-                createWebClientForGameApi()
-            );
-        }
-
-        public static GameApi createWebClientForGameApi()
-        {
-            var factory = new HttpClientFactoryLogic(new DotNetHttpRequester());
-            return new GameApiWebClient(
-                factory,
-                new GameModuleWebClientConfig(
-                    HttpClientConfig.Create(
-                        baseUrl: "http://localhost:8080",
-                        auth: Optional<HttpClientAuth>.Empty()
-                    )
-                )
-            );
-        }
-    }
-
     public class OstiumLogic
     {
-        // context
-        public EventPublisher EventPublisher { get; }
-        public WindowManager WindowManager { get; }
-        public GameApi GameApi { get; }
+        private WindowManager windowManager;
         
-        public OstiumLogic(
-            EventPublisher eventPublisher, 
-            WindowManager windowManager,
-            GameApi gameApi
-        ) {
-            EventPublisher = eventPublisher;
-            WindowManager = windowManager;
-            GameApi = gameApi;
-            
-            RegisterWindows();
-        }
-        
-        private void RegisterWindows()
+        public OstiumLogic(WindowManager windowManager)
         {
-            WindowManager.Register(new MainWindow(WindowManager));
-            WindowManager.Register(new GameWindow(EventPublisher, GameApi));
+            this.windowManager = windowManager;
         }
 
         public void Start()
         {
-            WindowManager.Open(WindowIds.MAIN_WINDOW);
+            windowManager.Open<MainWindow>();
+        }
+    }
+    
+    public class OstiumLogicPartialImpl: ContextModule
+    {
+        public void Apply(ContextBuilder builder)
+        {
+            builder
+                .WithModules(
+                    new GameModuleViewModel(),
+                    new MainViewModel()
+                )
+                .SetClass<OstiumLogic>();
+        }
+    }
+    
+    public class OstiumLogicFullImpl: ContextModule
+    {
+        public void Apply(ContextBuilder builder)
+        {
+            builder
+                .WithModules(
+                    new OstiumLogicPartialImpl(),
+                    new WindowsImpl(),
+                    new EventsImpl(),
+                    new TraitsImpl(),
+                    new DotNetHttpClientModuleImpl(),
+                    new GameModuleWebClient(
+                        HttpClientConfig.Create(
+                            baseUrl: "http://localhost:8080",
+                            auth: Optional<HttpClientAuth>.Empty()
+                        )
+                    )
+                );
         }
     }
 }

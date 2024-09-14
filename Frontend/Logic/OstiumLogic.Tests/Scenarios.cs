@@ -1,14 +1,21 @@
 using System;
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Context;
+using B20.Architecture.Events.Context;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
+using B20.Frontend.Traits.Context;
 using B20.Frontend.Windows.Api;
+using B20.Frontend.Windows.Context;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GameModule;
+using GameModule.ViewModel;
+using Main.ViewModel;
+using Ostium.Logic.Tests.GameModule.Context;
 
 namespace Ostium.Logic.Tests
 {
@@ -37,17 +44,22 @@ namespace Ostium.Logic.Tests
         
         public Context Setup()
         {
-            var gameApiMock = new GameApiMock();
-            var logic = new OstiumLogic(
-                new EventPublisherLogic(), 
-                new WindowManagerLogic(new WindowManipulatorMock()),
-                gameApiMock
-            );
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    new GameModuleMocks(),
+                    new WindowManipulatorInMemoryImpl(),
+                    new WindowsImpl(),
+                    new EventsImpl(),
+                    new TraitsImpl(),
+                    new OstiumLogicPartialImpl()
+                )
+                .Build();
+            
             return new Context(
-                eventPublisher: logic.EventPublisher,
-                windowManager: logic.WindowManager,
-                logic: logic,
-                gameApiMock: gameApiMock
+                eventPublisher: c.Get<EventPublisher>(),
+                windowManager: c.Get<WindowManager>(),
+                logic: c.Get<OstiumLogic>(),
+                gameApiMock: c.Get<GameApiMock>()
             );
         }
         
@@ -58,10 +70,10 @@ namespace Ostium.Logic.Tests
             {
             }
             
-            public GameWindow GameWindow => WindowManager.Get(WindowIds.GAME_WINDOW) as GameWindow;
+            public GameWindow GameWindow => WindowManager.Get<GameWindow>();
             
-            public RowVM AttackRow => GameWindow.Game.Table.AttackRow;
-            public RowVM DefenseRow => GameWindow.Game.Table.DefenseRow;
+            public RowVm AttackRow => GameWindow.Game.Table.AttackRow;
+            public RowVm DefenseRow => GameWindow.Game.Table.DefenseRow;
             
             public CreatureCardVm CardInAttackRow => AttackRow.Card.Element;
             public CreatureCardVm CardInDefenseRow => DefenseRow.Card.Element;
@@ -87,7 +99,7 @@ namespace Ostium.Logic.Tests
             var c = Setup();
             c.GameApiMock.SetGame(args.Game);
             c.Logic.Start();
-            (c.WindowManager.Get(WindowIds.MAIN_WINDOW) as MainWindow).PlayButton.Click();
+            c.WindowManager.Get<MainWindow>().PlayButton.Click();
             
             var nc = new InGameWindowContext(
                 eventPublisher: c.EventPublisher,

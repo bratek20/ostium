@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace B20.Tests.ExtraAsserts
 {
     public class AssertExt
@@ -8,7 +11,12 @@ namespace B20.Tests.ExtraAsserts
         }
         public static void ListCount<T>(System.Collections.Generic.List<T> list, int expected)
         {
-            Xunit.Assert.Equal(expected, list.Count);
+            Equal(list.Count, expected);
+        }
+        
+        public static void EnumerableCount<T>(IEnumerable<T> enumerable, int expected)
+        {
+            Equal(enumerable.Count(), expected);
         }
     }
 }

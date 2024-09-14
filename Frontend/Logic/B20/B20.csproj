@@ -31,6 +31,8 @@
 
     <ItemGroup><!-- Include necessary framework references -->
     
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 

@@ -5,20 +5,55 @@ using UnityEngine;
 
 namespace B20.Frontend.Windows.Integrations
 {
-    public class UnityWindowManipulator: WindowManipulator
+    public class UnityWindowManipulator: MonoBehaviour, WindowManipulator
     {
+        [SerializeField]    
+        private List<WindowView> windowPrefabs;
+        
         private List<WindowView> windowViews;
-        
-        public UnityWindowManipulator(List<WindowView> windowViews)
+
+        private void InitWindowViews()
         {
-            this.windowViews = windowViews;
+            if (GetComponent<Canvas>() == null)
+            {
+                Debug.LogError("UnityWindowManipulator should be placed next to canvas");
+            }
+
+            windowViews = new List<WindowView>();
+            windowPrefabs.ForEach(w =>
+            {
+                var view = Instantiate(w, transform);
+                Debug.Log("Instantiated window view: " + view.GetType().Name);
+                windowViews.Add(view);
+            });
         }
-        
-        public void SetVisible(WindowId id, bool visible)
+
+        private WindowView EnsureInitializedAndGetView(Window viewModel)
         {
-            Debug.Log("Setting window visibility: " + id.Value + " to " + visible);
-            WindowView windowView = windowViews.Find(w => w.Value.GetId().Value == id.Value);
-            windowView.SetActive(visible);
+            if (windowViews == null)
+            {
+                InitWindowViews();
+            }
+            
+            WindowView windowView = windowViews.Find(w => w.Accepts(viewModel));
+            if (windowView == null)
+            {
+                Debug.LogError("Window view not found for view model: " + viewModel.GetType().Name);
+                return null;
+            }
+
+            if (windowView.RawViewModel == null)
+            {
+                windowView.Init(viewModel);
+            }
+            return windowView;
+        }
+
+        public void SetVisible(Window window, bool visible)
+        {
+            Debug.Log("Setting window visibility: " + window.GetType().Name + " to " + visible);
+            var view = EnsureInitializedAndGetView(window);
+            view.SetActive(visible);
         }
     }
 }

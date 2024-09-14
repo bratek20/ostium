@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Context;
+using B20.Architecture.Events.Context;
 using B20.Events.Api;
 using B20.Events.Impl;
 using B20.Logic.Utils;
@@ -59,6 +61,15 @@ namespace B20.Architecture.Events.Tests
 
     public class EventsImplTest
     {
+        private EventPublisher publisher;
+        
+        public EventsImplTest()
+        {
+            publisher = ContextsFactory.CreateBuilder()
+                .WithModule(new EventsImpl())
+                .Get<EventPublisher>();
+        }
+        
         [Fact]
         public void ShouldPublish()
         {
@@ -67,7 +78,6 @@ namespace B20.Architecture.Events.Tests
             var listener2 = new TestListener();
             var otherListener = new OtherTestListener();
             
-            EventPublisher publisher = new EventPublisherLogic();
             publisher.AddListener(listener);
             publisher.AddListener(listener2);
             publisher.AddListener(otherListener);

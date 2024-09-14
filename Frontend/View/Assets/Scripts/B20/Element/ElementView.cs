@@ -1,4 +1,5 @@
 using B20.Frontend.Element;
+using B20.Frontend.Elements;
 using B20.Frontend.Traits;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace B20.View
             ViewModel = value;
             ViewModel.SetObserverUpdateAction(OnObservedViewModelUpdate);
             
-            ViewModel.GetTraits().ForEach(BindTrait);
+            ViewModel.Traits.ForEach(BindTrait);
             
             OnBind();
         }
@@ -36,6 +37,10 @@ namespace B20.View
             if (t is WithRect r)
             {
                 gameObject.AddComponent<WithRectView>().Bind(r);
+            }
+            if (t is WithPosition2d p)
+            {
+                gameObject.AddComponent<WithPosition2dView>().Bind(p);
             }
         }
         
