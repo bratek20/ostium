@@ -1,4 +1,4 @@
-namespace B20.Frontend.Elements
+namespace B20.Frontend.UiElements
 {
     public class TranslatableLabel
     {

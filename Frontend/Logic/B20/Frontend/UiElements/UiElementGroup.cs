@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using B20.Frontend.Element;
 
-namespace B20.Frontend.Elements
+namespace B20.Frontend.UiElements
 {
-    public class ElementListVm<TViewModel, TModel>: 
-        ElementVm<List<TModel>> where TViewModel: ElementVm<TModel>
+    public class UiElementGroup<TViewModel, TModel>: 
+        UiElement<List<TModel>> where TViewModel: UiElement<TModel>
     {
         public List<TViewModel> Elements { get; private set; } = new List<TViewModel>();
 
         private Func<TViewModel> elementFactory;
-        public ElementListVm(Func<TViewModel> elementFactory)
+        public UiElementGroup(Func<TViewModel> elementFactory)
         {
             this.elementFactory = elementFactory;
         }

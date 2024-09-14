@@ -1,8 +1,8 @@
 using System;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 
-namespace B20.Frontend.Elements
+namespace B20.Frontend.UiElements
 {
     public class WithPosition2d : Trait
     {

@@ -6,11 +6,11 @@ using B20.Logic.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
 
-namespace B20.Frontend.Element.Tests
+namespace B20.Frontend.UiElements.Tests
 {
     class TraitTester : Trait
     {
-        public void AssertOwner(ElementVm owner)
+        public void AssertOwner(UiElement owner)
         {
             Assert.Equal(owner, Owner);
         }
@@ -20,7 +20,7 @@ namespace B20.Frontend.Element.Tests
     
     class SomeModel {}
         
-    class ElementVMTester: ElementVm<SomeModel>
+    class ElementVMTester: UiElement<SomeModel>
     {
         private int updateCount = 0;
 
@@ -51,7 +51,7 @@ namespace B20.Frontend.Element.Tests
     public class ElementVMTest
     {
         private ElementVMTester elementTester;
-        private ElementVm elementInterf;
+        private UiElement elementInterf;
         
         public ElementVMTest()
         {

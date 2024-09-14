@@ -1,12 +1,12 @@
 using B20.Events.Api;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 
 namespace B20.Frontend.Traits
 {
     public class ElementClickedEvent: Event
     {
-        public ElementVm Element { get; }
-        public ElementClickedEvent(ElementVm element)
+        public UiElement Element { get; }
+        public ElementClickedEvent(UiElement element)
         {
             Element = element;
         }

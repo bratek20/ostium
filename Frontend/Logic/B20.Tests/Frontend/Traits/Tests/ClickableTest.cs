@@ -1,5 +1,5 @@
 using B20.Architecture.Contexts.Context;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 using B20.Frontend.Traits;
 using B20.Architecture.Events.Fixtures;
 using B20.Frontend.Traits.Context;
@@ -11,7 +11,7 @@ namespace B20.Tests.Frontend.Traits.Tests
     public class ClickableTest
     {
         class SomeModel {}
-        class SomeElementVM: ElementVm<SomeModel>
+        class SomeElementVM: UiElement<SomeModel>
         {
         }
         

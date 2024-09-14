@@ -2,7 +2,7 @@ using System;
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Events.Fixtures;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 using B20.Frontend.Traits.Context;
 using B20.Tests.Architecture.Events.Context;
 

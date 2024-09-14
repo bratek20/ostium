@@ -1,6 +1,6 @@
 using System;
 using B20.Architecture.Exceptions;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 
 namespace B20.Frontend.Traits

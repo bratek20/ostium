@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using B20.Architecture.Exceptions;
 
-namespace B20.Frontend.Element
+namespace B20.Frontend.UiElements
 {
     public class TraitNotFoundException: ApiException
     {
@@ -12,7 +12,7 @@ namespace B20.Frontend.Element
         }
     }
     
-    public interface ElementVm
+    public interface UiElement
     {
         void SetObserverUpdateAction(Action observerUpdateAction);
         
@@ -24,7 +24,7 @@ namespace B20.Frontend.Element
         T GetTrait<T>() where T: Trait;
     }
 
-    public abstract class ElementVm<TModelType>: ElementVm
+    public abstract class UiElement<TModelType>: UiElement
     {
         public TraitFactory TraitFactory { get; set; }
         
