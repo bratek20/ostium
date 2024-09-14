@@ -1,16 +1,15 @@
 using B20.Events.Api;
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 
 namespace B20.Frontend.Traits
 {
     public class ElementDragStartedEvent : Event
     {
-        public ElementVm Element { get; }
+        public UiElement Element { get; }
         public Position2d Position { get; }
         
-        public ElementDragStartedEvent(ElementVm element, Position2d position)
+        public ElementDragStartedEvent(UiElement element, Position2d position)
         {
             Element = element;
             Position = position;
@@ -19,10 +18,10 @@ namespace B20.Frontend.Traits
 
     public class ElementDragEndedEvent : Event
     {
-        public ElementVm Element { get; }
+        public UiElement Element { get; }
         public Position2d Position { get; }
         
-        public ElementDragEndedEvent(ElementVm element, Position2d position)
+        public ElementDragEndedEvent(UiElement element, Position2d position)
         {
             Element = element;
             Position = position;

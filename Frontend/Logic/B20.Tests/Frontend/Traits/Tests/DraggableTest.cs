@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Architecture.Events.Fixtures;
@@ -15,7 +14,7 @@ namespace B20.Tests.Frontend.Traits.Tests
     public class DraggableTest
     {
         class SomeModel {}
-        class SomeElementVM : ElementVm<SomeModel>
+        class SomeElementVM : UiElement<SomeModel>
         {
             protected override List<Type> GetTraitTypes()
             {

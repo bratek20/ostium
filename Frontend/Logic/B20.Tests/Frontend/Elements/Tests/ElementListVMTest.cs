@@ -1,6 +1,5 @@
 using System;
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using B20.Logic.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
@@ -16,14 +15,14 @@ namespace B20.Tests.Frontend.Elements.Tests
             Value = value;
         }
     }
-    public class SomeViewModel: ElementVm<SomeModel> {}
+    public class SomeViewModel: UiElement<SomeModel> {}
     
     public class ElementListVMTest
     {
         [Fact]
         public void ShouldCreateVmElementsWithModel()
         {
-            var list = new ElementListVm<SomeViewModel, SomeModel>(() => new SomeViewModel());
+            var list = new UiElementGroup<SomeViewModel, SomeModel>(() => new SomeViewModel());
             
             list.Update(ListUtils.Of(new SomeModel(1)));
             AssertExt.ListCount(list.Elements, 1);

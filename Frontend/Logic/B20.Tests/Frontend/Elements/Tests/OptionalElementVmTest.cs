@@ -1,5 +1,5 @@
 using B20.Ext;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using Xunit;
 
 namespace B20.Tests.Frontend.Elements.Tests
@@ -9,7 +9,7 @@ namespace B20.Tests.Frontend.Elements.Tests
         [Fact]
         public void ShouldUpdateElement()
         {
-            var element = new OptionalElementVm<SomeViewModel, SomeModel>(new SomeViewModel());
+            var element = new OptionalUiElement<SomeViewModel, SomeModel>(new SomeViewModel());
             
             element.Update(Optional<SomeModel>.Of(new SomeModel(1)));
             Assert.Equal(1, element.Element.Model.Value);

@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using B20.Frontend.Traits;
 using GameModule.Api;
 
 namespace GameModule.ViewModel
 {
-    public partial class CreatureCardVm: ElementVm<CreatureCard>
+    public partial class CreatureCardVm: UiElement<CreatureCard>
     {
-        public LabelVm Name { get; } = new LabelVm();
-        public VisibleVm Selected { get; } = new VisibleVm();
+        public Label Name { get; } = new Label();
+        public BoolSwitch Selected { get; } = new BoolSwitch();
         
         protected override List<Type> GetTraitTypes()
         {
@@ -23,7 +22,7 @@ namespace GameModule.ViewModel
         }
     }
     
-    public class CreateCardListVm: ElementListVm<CreatureCardVm, CreatureCard>
+    public class CreateCardListVm: UiElementGroup<CreatureCardVm, CreatureCard>
     {
         public CreateCardListVm(B20.Architecture.Contexts.Api.Context c) : base(() => c.Get<CreatureCardVm>())
         {
@@ -31,7 +30,7 @@ namespace GameModule.ViewModel
         }
     }
     
-    public partial class HandVm: ElementVm<Hand>
+    public partial class HandVm: UiElement<Hand>
     {
         public CreateCardListVm Cards { get; set; }
 
@@ -41,14 +40,14 @@ namespace GameModule.ViewModel
         }
     }
     
-    public class OptionalCreatureCardVm: OptionalElementVm<CreatureCardVm, CreatureCard>
+    public class OptionalCreatureCardVm: OptionalUiElement<CreatureCardVm, CreatureCard>
     {
         public OptionalCreatureCardVm(CreatureCardVm element) : base(element)
         {
         }
     }
     
-    public partial class RowVm: ElementVm<Row>
+    public partial class RowVm: UiElement<Row>
     {
         public OptionalCreatureCardVm Card { get; set; }
         
@@ -63,7 +62,7 @@ namespace GameModule.ViewModel
         }
     }
     
-    public partial class TableVm: ElementVm<Table>
+    public partial class TableVm: UiElement<Table>
     {
         public RowVm AttackRow { get; set; }
         public RowVm DefenseRow { get; set; }
@@ -76,7 +75,7 @@ namespace GameModule.ViewModel
         }
     }
     
-    public partial class GameVm: ElementVm<Game>
+    public partial class GameVm: UiElement<Game>
     {
         public TableVm Table { get; set;  }
         public HandVm Hand { get; set; }

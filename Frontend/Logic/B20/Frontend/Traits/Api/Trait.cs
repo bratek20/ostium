@@ -1,10 +1,10 @@
-namespace B20.Frontend.Element
+namespace B20.Frontend.UiElements
 {
     public class Trait
     {
-        protected ElementVm Owner { get; private set; }
+        protected UiElement Owner { get; private set; }
         
-        public void Init(ElementVm owner)
+        public void Init(UiElement owner)
         {
             Owner = owner;
         }

@@ -1,6 +1,6 @@
 using System;
 
-namespace B20.Frontend.Element
+namespace B20.Frontend.UiElements
 {
     public interface TraitFactory
     {

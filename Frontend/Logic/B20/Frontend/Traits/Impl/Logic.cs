@@ -1,5 +1,5 @@
 using System;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 
 namespace B20.Frontend.Traits.Impl
 {

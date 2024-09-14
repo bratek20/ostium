@@ -1,4 +1,4 @@
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Traits.Fixtures;
