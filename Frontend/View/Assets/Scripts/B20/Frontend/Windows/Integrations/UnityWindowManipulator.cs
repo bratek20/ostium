@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using B20.Frontend.Windows.Api;
-using B20.View;
+using B20.Frontend.Elements.View;
 using UnityEngine;
 
 namespace B20.Frontend.Windows.Integrations

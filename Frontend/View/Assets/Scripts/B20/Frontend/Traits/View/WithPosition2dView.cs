@@ -1,8 +1,8 @@
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using B20.Types;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Traits.View
 {
     public class WithPosition2dView: TraitView<WithPosition2d>
     {

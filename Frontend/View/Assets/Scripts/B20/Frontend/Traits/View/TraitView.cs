@@ -1,8 +1,7 @@
-using System.Dynamic;
-using B20.Frontend.Element;
+using B20.Frontend.UiElements;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Traits.View
 {
     public abstract class TraitView<T>: MonoBehaviour where T: Trait
     {

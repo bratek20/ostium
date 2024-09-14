@@ -2,7 +2,7 @@ using B20.Frontend.Traits;
 using B20.Types;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Traits.View
 {
     public class WithRectView: TraitView<WithRect>
     {

@@ -1,4 +1,4 @@
-using B20.View;
+using B20.Frontend.Elements.View;
 using Main.ViewModel;
 using UnityEngine;
 

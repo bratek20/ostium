@@ -1,13 +1,12 @@
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Elements.View
 {
-    public class OptionalElementView<TView, TViewModel, TModel>: 
-        ElementView<OptionalElementVm<TViewModel, TModel>>
+    public class OptionalUiElementView<TView, TViewModel, TModel>: 
+        ElementView<OptionalUiElement<TViewModel, TModel>>
         where TView: ElementView<TViewModel>
-        where TViewModel: ElementVm<TModel>
+        where TViewModel: UiElement<TModel>
     {
         [SerializeField]
         private TView elementPrefab;

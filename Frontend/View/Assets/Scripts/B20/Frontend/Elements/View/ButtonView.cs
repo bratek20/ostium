@@ -1,7 +1,7 @@
 using B20.Logic;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Elements.View
 {
     public class ButtonView : MonoBehaviour
     {

@@ -1,8 +1,8 @@
-using B20.View;
+using B20.Frontend.Elements.View;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(VisibleView), true)]
+[CustomEditor(typeof(BoolSwitchView), true)]
 public class VisibleViewEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -11,7 +11,7 @@ public class VisibleViewEditor : Editor
         base.OnInspectorGUI();
 
         // Cast the target object to VisibleView
-        VisibleView visibleView = (VisibleView)target;
+        BoolSwitchView visibleView = (BoolSwitchView)target;
 
         // Display the ViewModel properties
         EditorGUILayout.LabelField("ViewModel Properties", EditorStyles.boldLabel);

@@ -3,7 +3,7 @@ using B20.Types;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace B20.View
+namespace B20.Frontend.Traits.View
 {
     public class DraggableView : TraitView<Draggable>, IBeginDragHandler, IDragHandler, IEndDragHandler
     {

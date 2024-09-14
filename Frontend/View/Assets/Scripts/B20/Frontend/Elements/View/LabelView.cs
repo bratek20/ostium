@@ -1,10 +1,9 @@
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using TMPro;
 
-namespace B20.View
+namespace B20.Frontend.Elements.View
 {
-    public class LabelView : ElementView<LabelVm>
+    public class LabelView : ElementView<Label>
     {
         private TextMeshProUGUI _text;
 

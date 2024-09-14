@@ -1,7 +1,7 @@
 using B20.Frontend.Windows.Api;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Elements.View
 {
     public abstract class WindowView: MonoBehaviour 
     {

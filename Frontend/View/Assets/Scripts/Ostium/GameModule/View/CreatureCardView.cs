@@ -1,4 +1,4 @@
-using B20.View;
+using B20.Frontend.Elements.View;
 using GameModule.ViewModel;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace GameModule.View
         private LabelView name;
         //TODO-REF selected should be image below parent
         [SerializeField]
-        private VisibleView selected;
+        private BoolSwitchView selected;
 
         protected override void OnBind()
         {

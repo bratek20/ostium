@@ -1,9 +1,10 @@
 using B20.Frontend.Elements;
+using B20.Frontend.UiElements;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Elements.View
 {
-    public class VisibleView: ElementView<VisibleVm>
+    public class BoolSwitchView: ElementView<BoolSwitch>
     {
         protected override void OnViewModelUpdate()
         {

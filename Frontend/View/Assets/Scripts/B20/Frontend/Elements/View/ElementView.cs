@@ -1,11 +1,11 @@
-using B20.Frontend.Element;
-using B20.Frontend.Elements;
 using B20.Frontend.Traits;
+using B20.Frontend.Traits.View;
+using B20.Frontend.UiElements;
 using UnityEngine;
 
-namespace B20.View
+namespace B20.Frontend.Elements.View
 {
-    public class ElementView<T>: MonoBehaviour where T: ElementVm
+    public class ElementView<T>: MonoBehaviour where T: UiElement
     {
         public T ViewModel { get; private set; }
 

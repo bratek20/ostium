@@ -1,4 +1,4 @@
-using B20.View;
+using B20.Frontend.Elements.View;
 using GameModule.Api;
 using GameModule.ViewModel;
 using Ostium.Logic;
