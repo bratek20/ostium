@@ -1,6 +1,7 @@
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Events.Context;
 using B20.Ext;
+using B20.Frontend.Traits.Context;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Infrastructure.HttpClientModule.Context;
@@ -49,6 +50,7 @@ namespace Ostium.Logic
                     new OstiumLogicPartialImpl(),
                     new WindowsImpl(),
                     new EventsImpl(),
+                    new TraitsImpl(),
                     new DotNetHttpClientModuleImpl(),
                     new GameModuleWebClient(
                         HttpClientConfig.Create(
