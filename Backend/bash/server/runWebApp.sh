@@ -1,4 +1,4 @@
 #!/bin/bash
 
-java -jar web-app.jar
+java -Xmx256m -Xms256m -XX:+UseG1GC -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled -jar web-app.jar
 
