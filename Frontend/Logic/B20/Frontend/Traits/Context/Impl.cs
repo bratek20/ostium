@@ -11,10 +11,10 @@ namespace B20.Frontend.Traits.Context
         {
             builder
                 .SetImpl<TraitFactory, TraitFactoryLogic>()
-                .SetClass<WithRect>()
-                .SetClass<Clickable>()
-                .SetClass<WithPosition2d>()
-                .SetClass<Draggable>();
+                .SetClass<WithRect>(InjectionMode.Prototype)
+                .SetClass<Clickable>(InjectionMode.Prototype)
+                .SetClass<WithPosition2d>(InjectionMode.Prototype)
+                .SetClass<Draggable>(InjectionMode.Prototype);
         }
     }
 }
