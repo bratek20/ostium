@@ -22,7 +22,7 @@ namespace SingleGame.Tests
                 i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
                 i.Game = g =>
                 {
-                    g.Hand = h =>
+                    g.MyHand = h =>
                     {
                         h.Cards = ListUtils.Of<Action<SingleGameBuilders.CreatureCardDef>>
                         (

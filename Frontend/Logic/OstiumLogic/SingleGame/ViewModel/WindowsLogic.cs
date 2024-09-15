@@ -4,7 +4,7 @@ namespace SingleGame.ViewModel
     {
         public void OnOpen()
         {
-            Game.StartGame();
+            Game.UpdateState();
         }
     }
 }

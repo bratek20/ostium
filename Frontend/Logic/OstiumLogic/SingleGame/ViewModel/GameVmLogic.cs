@@ -40,17 +40,17 @@ namespace SingleGame.ViewModel
 
     public partial class GameVm
     {
-        private SingleGameApi gameSetupApi;
-        public GameVm(SingleGameApi gameSetupApi, EventPublisher eventPublisher)
+        private SingleGameApi singleGameApi;
+        public GameVm(SingleGameApi singleGameApi, EventPublisher eventPublisher)
         {
-            this.gameSetupApi = gameSetupApi;
+            this.singleGameApi = singleGameApi;
             eventPublisher.AddListener(new GameElementDragStartedListener(this));
             eventPublisher.AddListener(new GameElementDragEndedListener(this));
         }
         
-        public void StartGame()
+        public void UpdateState()
         {
-            //Update(gameSetupApi.StartGame());
+            Update(singleGameApi.GetState(new GameId(1), new Username("x")));
         }
 
         private Optional<CreatureCardVm> _selectedCard = Optional<CreatureCardVm>.Empty();
@@ -82,7 +82,7 @@ namespace SingleGame.ViewModel
             {
                 FindRowWithPointInside(ev.Position).Let(row =>
                 {
-                    var game = gameSetupApi.PlayCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, row.Type);
+                    var game = singleGameApi.PlayCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, row.Type);
                     Update(game);
                 });
             }
@@ -95,7 +95,7 @@ namespace SingleGame.ViewModel
                         return;
                     }
                     var otherRow = row.Type == RowType.ATTACK ? Table.MySide.DefenseRow : Table.MySide.AttackRow;
-                    var game = gameSetupApi.MoveCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, otherRow.Type, row.Type);
+                    var game = singleGameApi.MoveCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, otherRow.Type, row.Type);
                     Update(game);
                 });
             }

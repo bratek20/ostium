@@ -24,7 +24,7 @@ namespace SingleGame
         
         private CreatureCardId lastPlayedCard;
         private RowType lastPlayedRow;
-        public GameState PlayCard(CreatureCardId cardId, RowType row)
+        public GameState PlayCard(GameId gameId, Username user, CreatureCardId cardId, RowType row)
         {
             calls++;
             lastPlayedCard = cardId;
@@ -41,7 +41,7 @@ namespace SingleGame
         private CreatureCardId lastMoveCard;
         private RowType lastMoveFrom;
         private RowType lastMoveTo;
-        public GameState MoveCard(CreatureCardId cardId, RowType from, RowType to)
+        public GameState MoveCard(GameId gameId, Username user, CreatureCardId cardId, RowType from, RowType to)
         {
             calls++;
             lastMoveCard = cardId;
@@ -64,17 +64,7 @@ namespace SingleGame
 
         public GameState GetState(GameId gameId, Username user)
         {
-            throw new NotImplementedException();
-        }
-
-        public GameState PlayCard(GameId gameId, Username user, CreatureCardId cardId, RowType row)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GameState MoveCard(GameId gameId, Username user, CreatureCardId cardId, RowType from, RowType to)
-        {
-            throw new NotImplementedException();
+            return game;
         }
     }
 }

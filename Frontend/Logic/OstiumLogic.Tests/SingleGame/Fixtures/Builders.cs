@@ -77,7 +77,7 @@ namespace SingleGame
         public class GameDef
         {
             public Action<TableDef> Table { get; set; } = _ => { };
-            public Action<HandDef> Hand { get; set; } = _ => { };
+            public Action<HandDef> MyHand { get; set; } = _ => { };
         }
 
         public static GameState BuildGame(Action<GameDef> init = null)
@@ -86,7 +86,7 @@ namespace SingleGame
             init?.Invoke(def);
             return GameState.Create(
                 table: BuildTable(def.Table),
-                myHand: BuildHand(def.Hand),
+                myHand: BuildHand(def.MyHand),
                 opponentHand: BuildHand(),
                 myName: new Username(""),
                 opponentName: Optional<Username>.Empty()
