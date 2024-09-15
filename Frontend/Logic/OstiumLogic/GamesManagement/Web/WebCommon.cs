@@ -7,31 +7,21 @@ using HttpClientModule.Api;
 using GamesManagement.Api;
 using User.Api;
 
-namespace CreatedGames.Web {
-    public class CreatedGamesWebClientConfig {
+namespace GamesManagement.Web {
+    public class GamesManagementWebClientConfig {
         public HttpClientConfig Value { get; }
 
-        public CreatedGamesWebClientConfig(
+        public GamesManagementWebClientConfig(
             HttpClientConfig value
         ) {
             Value = value;
         }
     }
 
-    public class CreatedGamesApiGetAllResponse {
-        public List<CreatedGame> Value { get; }
-
-        public CreatedGamesApiGetAllResponse(
-            List<CreatedGame> value
-        ) {
-            Value = value;
-        }
-    }
-
-    public class CreatedGamesApiCreateRequest {
+    public class GamesManagementApiCreateRequest {
         readonly string creator;
 
-        public CreatedGamesApiCreateRequest(
+        public GamesManagementApiCreateRequest(
             string creator
         ) {
             this.creator = creator;
@@ -39,16 +29,48 @@ namespace CreatedGames.Web {
         public Username GetCreator() {
             return new Username(creator);
         }
-        public static CreatedGamesApiCreateRequest Create(Username creator) {
-            return new CreatedGamesApiCreateRequest(creator.Value);
+        public static GamesManagementApiCreateRequest Create(Username creator) {
+            return new GamesManagementApiCreateRequest(creator.Value);
         }
     }
 
-    public class CreatedGamesApiCreateResponse {
+    public class GamesManagementApiCreateResponse {
         public GameId Value { get; }
 
-        public CreatedGamesApiCreateResponse(
+        public GamesManagementApiCreateResponse(
             GameId value
+        ) {
+            Value = value;
+        }
+    }
+
+    public class GamesManagementApiJoinRequest {
+        readonly string joiner;
+        readonly int gameId;
+
+        public GamesManagementApiJoinRequest(
+            string joiner,
+            int gameId
+        ) {
+            this.joiner = joiner;
+            this.gameId = gameId;
+        }
+        public Username GetJoiner() {
+            return new Username(joiner);
+        }
+        public GameId GetGameId() {
+            return new GameId(gameId);
+        }
+        public static GamesManagementApiJoinRequest Create(Username joiner, GameId gameId) {
+            return new GamesManagementApiJoinRequest(joiner.Value, gameId.Value);
+        }
+    }
+
+    public class GamesManagementApiGetAllCreatedResponse {
+        public List<CreatedGame> Value { get; }
+
+        public GamesManagementApiGetAllCreatedResponse(
+            List<CreatedGame> value
         ) {
             Value = value;
         }

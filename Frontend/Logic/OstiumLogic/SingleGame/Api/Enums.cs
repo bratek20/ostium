@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using B20.Ext;
+using GamesManagement.Api;
+using User.Api;
 
 namespace SingleGame.Api {
     public enum RowType {

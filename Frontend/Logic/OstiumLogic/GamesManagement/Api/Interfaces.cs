@@ -6,9 +6,11 @@ using B20.Ext;
 using User.Api;
 
 namespace GamesManagement.Api {
-    public interface CreatedGamesApi {
-        List<CreatedGame> GetAll();
-
+    public interface GamesManagementApi {
         GameId Create(Username creator);
+
+        void Join(Username joiner, GameId gameId);
+
+        List<CreatedGame> GetAllCreated();
     }
 }

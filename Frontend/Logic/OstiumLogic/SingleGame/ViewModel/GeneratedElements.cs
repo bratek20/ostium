@@ -62,7 +62,7 @@ namespace SingleGame.ViewModel
         }
     }
     
-    public partial class TableVm: UiElement<Table>
+    public partial class PlayerSideVm: UiElement<PlayerSide>
     {
         public RowVm AttackRow { get; set; }
         public RowVm DefenseRow { get; set; }
@@ -75,15 +75,28 @@ namespace SingleGame.ViewModel
         }
     }
     
+    public partial class TableVm: UiElement<Table>
+    {
+        public PlayerSideVm MySide { get; set; }
+        public PlayerSideVm OpponentSide { get; set; }
+
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+            MySide.Update(Model.GetMySide());
+            OpponentSide.Update(Model.GetOpponentSide());
+        }
+    }
+    
     public partial class GameVm: UiElement<GameState>
     {
-        public TableVm Table { get; set;  }
-        public HandVm Hand { get; set; }
+        public TableVm Table { get; set; }
+        public HandVm MyHand { get; set; }
 
         protected override void OnUpdate()
         {
             Table.Update(Model.GetTable());
-            Hand.Update(Model.GetHand());
+            MyHand.Update(Model.GetMyHand());
         }
     }
 }

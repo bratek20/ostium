@@ -3,13 +3,16 @@
 using System;
 using System.Collections.Generic;
 using B20.Ext;
+using GamesManagement.Api;
+using User.Api;
 
 namespace SingleGame.Api {
     public interface SingleGameApi {
-        GameState StartGame();
+        /// <exception cref="GameNotFoundException"/>
+        GameState GetState(GameId gameId, Username user);
 
-        GameState PlayCard(CreatureCardId cardId, RowType row);
+        GameState PlayCard(GameId gameId, Username user, CreatureCardId cardId, RowType row);
 
-        GameState MoveCard(CreatureCardId cardId, RowType from, RowType to);
+        GameState MoveCard(GameId gameId, Username user, CreatureCardId cardId, RowType from, RowType to);
     }
 }

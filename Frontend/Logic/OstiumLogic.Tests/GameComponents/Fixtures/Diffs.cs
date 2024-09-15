@@ -9,11 +9,6 @@ namespace GameComponents
 {
     public static class Diffs
     {
-        public static string DiffGateDurabilityMarker(GateDurabilityMarker given, int expected, string path = "")
-        {
-            return given.Value != expected ? $"{path}value {given.Value} != {expected}" : string.Empty;
-        }
-
         public static string DiffCreatureCardId(CreatureCardId given, string expected, string path = "")
         {
             return given.Value != expected ? $"{path}value {given.Value} != {expected}" : string.Empty;
@@ -33,50 +28,6 @@ namespace GameComponents
             if (expected.Id != null && DiffCreatureCardId(given.GetId(), expected.Id) != "")
             {
                 result.Add(DiffCreatureCardId(given.GetId(), expected.Id, $"{path}id."));
-            }
-
-            return string.Join("\n", result);
-        }
-
-        public class ExpectedGateCard
-        {
-            public bool? Destroyed { get; set; }
-        }
-
-        public static string DiffGateCard(GateCard given, Action<ExpectedGateCard> expectedInit, string path = "")
-        {
-            var expected = new ExpectedGateCard();
-            expectedInit?.Invoke(expected);
-            var result = new List<string>();
-
-            if (expected.Destroyed.HasValue && given.GetDestroyed() != expected.Destroyed.Value)
-            {
-                result.Add($"{path}destroyed {given.GetDestroyed()} != {expected.Destroyed}");
-            }
-
-            return string.Join("\n", result);
-        }
-
-        public class ExpectedGateDurabilityCard
-        {
-            public int? MyMarker { get; set; }
-            public int? OpponentMarker { get; set; }
-        }
-
-        public static string DiffGateDurabilityCard(GateDurabilityCard given, Action<ExpectedGateDurabilityCard> expectedInit, string path = "")
-        {
-            var expected = new ExpectedGateDurabilityCard();
-            expectedInit?.Invoke(expected);
-            var result = new List<string>();
-
-            if (expected.MyMarker.HasValue && DiffGateDurabilityMarker(given.GetMyMarker(), expected.MyMarker.Value) != "")
-            {
-                result.Add(DiffGateDurabilityMarker(given.GetMyMarker(), expected.MyMarker.Value, $"{path}myMarker."));
-            }
-
-            if (expected.OpponentMarker.HasValue && DiffGateDurabilityMarker(given.GetOpponentMarker(), expected.OpponentMarker.Value) != "")
-            {
-                result.Add(DiffGateDurabilityMarker(given.GetOpponentMarker(), expected.OpponentMarker.Value, $"{path}opponentMarker."));
             }
 
             return string.Join("\n", result);

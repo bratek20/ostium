@@ -13,12 +13,10 @@ namespace SingleGame
 
         public class ExpectedTable
         {
-            public Action<GameComponents.Diffs.ExpectedGateDurabilityCard> GateDurabilityCard { get; set; }
             public bool? AttackRowEmpty { get; set; }
             public Action<GameComponents.Diffs.ExpectedCreatureCard> AttackRow { get; set; }
             public bool? DefenseRowEmpty { get; set; }
             public Action<GameComponents.Diffs.ExpectedCreatureCard> DefenseRow { get; set; }
-            public Action<GameComponents.Diffs.ExpectedGateCard> GateCard { get; set; }
         }
 
         public static string DiffTable(Table given, Action<ExpectedTable> expectedInit, string path = "")
@@ -26,12 +24,6 @@ namespace SingleGame
             var expected = new ExpectedTable();
             expectedInit?.Invoke(expected);
             var result = new List<string>();
-
-            if (expected.GateDurabilityCard != null)
-            {
-                var diff = GameComponents.Diffs.DiffGateDurabilityCard(given.GetGateDurabilityCard(), expected.GateDurabilityCard, $"{path}gateDurabilityCard.");
-                if (!string.IsNullOrEmpty(diff)) result.Add(diff);
-            }
             //
             // if (expected.AttackRowEmpty.HasValue && given.GetAttackRow().IsEmpty() != expected.AttackRowEmpty.Value)
             // {
@@ -54,12 +46,6 @@ namespace SingleGame
             //     var diff = GameComponents.Diffs.DiffCreatureCard(given.GetDefenseRow().Get(), expected.DefenseRow, $"{path}defenseRow.");
             //     if (!string.IsNullOrEmpty(diff)) result.Add(diff);
             // }
-
-            if (expected.GateCard != null)
-            {
-                var diff = GameComponents.Diffs.DiffGateCard(given.GetGateCard(), expected.GateCard, $"{path}gateCard.");
-                if (!string.IsNullOrEmpty(diff)) result.Add(diff);
-            }
 
             return string.Join("\n", result);
         }
@@ -112,11 +98,11 @@ namespace SingleGame
                 if (!string.IsNullOrEmpty(diff)) result.Add(diff);
             }
 
-            if (expected.Hand != null)
-            {
-                var diff = DiffHand(given.GetHand(), expected.Hand, $"{path}hand.");
-                if (!string.IsNullOrEmpty(diff)) result.Add(diff);
-            }
+            // if (expected.Hand != null)
+            // {
+            //     var diff = DiffHand(given.GetHand(), expected.Hand, $"{path}hand.");
+            //     if (!string.IsNullOrEmpty(diff)) result.Add(diff);
+            // }
 
             return string.Join("\n", result);
         }

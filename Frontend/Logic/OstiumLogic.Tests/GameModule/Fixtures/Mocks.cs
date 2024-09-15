@@ -1,16 +1,18 @@
 using System;
 using B20.Tests.ExtraAsserts;
+using GamesManagement.Api;
 using SingleGame.Api;
+using User.Api;
 
 namespace SingleGame
 {
     public class SingleGameApiMock : SingleGameApi
     {
-        private GameState game = Builders.BuildGame();
+        private GameState game = SingleGameBuilders.BuildGame();
         
-        public void SetGame(Action<Builders.GameDef> init)
+        public void SetGame(Action<SingleGameBuilders.GameDef> init)
         {
-            game = Builders.BuildGame(init);
+            game = SingleGameBuilders.BuildGame(init);
         }
         
         public GameState StartGame()
@@ -58,6 +60,21 @@ namespace SingleGame
         public void AssertNoCalls()
         {
             AssertExt.Equal(calls, 0);
+        }
+
+        public GameState GetState(GameId gameId, Username user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameState PlayCard(GameId gameId, Username user, CreatureCardId cardId, RowType row)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameState MoveCard(GameId gameId, Username user, CreatureCardId cardId, RowType from, RowType to)
+        {
+            throw new NotImplementedException();
         }
     }
 }

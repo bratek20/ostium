@@ -30,13 +30,16 @@ namespace GamesManagement.Api {
     public class CreatedGame {
         readonly int id;
         readonly string creator;
+        readonly string? joiner;
 
         public CreatedGame(
             int id,
-            string creator
+            string creator,
+            string? joiner
         ) {
             this.id = id;
             this.creator = creator;
+            this.joiner = joiner;
         }
         public GameId GetId() {
             return new GameId(id);
@@ -44,8 +47,11 @@ namespace GamesManagement.Api {
         public Username GetCreator() {
             return new Username(creator);
         }
-        public static CreatedGame Create(GameId id, Username creator) {
-            return new CreatedGame(id.Value, creator.Value);
+        public Optional<Username> GetJoiner() {
+            return Optional<string>.Of(joiner).Map( it => new Username(it) );
+        }
+        public static CreatedGame Create(GameId id, Username creator, Optional<Username> joiner) {
+            return new CreatedGame(id.Value, creator.Value, joiner.Map( it => it.Value ).OrElse(null));
         }
     }
 }

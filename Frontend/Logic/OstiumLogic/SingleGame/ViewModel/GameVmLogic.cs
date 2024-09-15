@@ -4,7 +4,9 @@ using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Logic.Utils;
+using GamesManagement.Api;
 using SingleGame.Api;
+using User.Api;
 
 namespace SingleGame.ViewModel
 {
@@ -48,7 +50,7 @@ namespace SingleGame.ViewModel
         
         public void StartGame()
         {
-            Update(gameSetupApi.StartGame());
+            //Update(gameSetupApi.StartGame());
         }
 
         private Optional<CreatureCardVm> _selectedCard = Optional<CreatureCardVm>.Empty();
@@ -66,7 +68,7 @@ namespace SingleGame.ViewModel
 
         private bool IsInHand(CreatureCardVm card)
         {
-            return Hand.Contains(card);
+            return MyHand.Contains(card);
         }
 
         public void HandleElementDragStarted(ElementDragStartedEvent elementDragStartedEvent)
@@ -80,7 +82,7 @@ namespace SingleGame.ViewModel
             {
                 FindRowWithPointInside(ev.Position).Let(row =>
                 {
-                    var game = gameSetupApi.PlayCard(SelectedCard.Get().Id, row.Type);
+                    var game = gameSetupApi.PlayCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, row.Type);
                     Update(game);
                 });
             }
@@ -92,8 +94,8 @@ namespace SingleGame.ViewModel
                     {
                         return;
                     }
-                    var otherRow = row.Type == RowType.ATTACK ? Table.DefenseRow : Table.AttackRow;
-                    var game = gameSetupApi.MoveCard(SelectedCard.Get().Id, otherRow.Type, row.Type);
+                    var otherRow = row.Type == RowType.ATTACK ? Table.MySide.DefenseRow : Table.MySide.AttackRow;
+                    var game = gameSetupApi.MoveCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, otherRow.Type, row.Type);
                     Update(game);
                 });
             }
@@ -102,7 +104,7 @@ namespace SingleGame.ViewModel
 
         private List<RowVm> AllRows()
         {
-            return new List<RowVm> { Table.AttackRow, Table.DefenseRow };
+            return new List<RowVm> { Table.MySide.AttackRow, Table.MySide.DefenseRow };
         }
         
         private Optional<RowVm> FindRowWithPointInside(Position2d p)

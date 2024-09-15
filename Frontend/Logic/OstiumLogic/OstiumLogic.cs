@@ -65,7 +65,7 @@ namespace Ostium.Logic
                 .WithModules(
                     new OstiumLogicNoBackendImpl(),
                     new DotNetHttpClientModuleImpl(),
-                    new GameModuleWebClient(
+                    new SingleGameWebClient(
                         HttpClientConfig.Create(
                             baseUrl: "http://localhost:8080",
                             auth: Optional<HttpClientAuth>.Empty()

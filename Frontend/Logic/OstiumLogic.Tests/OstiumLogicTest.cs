@@ -5,11 +5,12 @@ using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
-using GameComponents;
 using SingleGame.Api;
 using SingleGame.ViewModel;
 using Main.ViewModel;
+using SingleGame;
 using Xunit;
+using Asserts = GameComponents.Asserts;
 
 namespace Ostium.Logic.Tests
 {
@@ -47,7 +48,7 @@ namespace Ostium.Logic.Tests
                 {
                     g.Hand = h =>
                     {
-                        h.Cards = ListUtils.Of<Action<Builders.CreatureCardDef>>
+                        h.Cards = ListUtils.Of<Action<SingleGameBuilders.CreatureCardDef>>
                         (
                             card => { card.Id = "Mouse1"; },
                             card => { card.Id = "Mouse2"; }
@@ -85,7 +86,10 @@ namespace Ostium.Logic.Tests
                 {
                     g.Table = t => 
                     {
-                        t.DefenseRow = r => { r.Id = "Mouse1"; };
+                        t.MySide = s => 
+                        {
+                            s.DefenseRow = r => { r.Id = "Mouse1"; };
+                        };
                     };
                 };
             });
@@ -111,8 +115,11 @@ namespace Ostium.Logic.Tests
                 {
                     g.Table = t => 
                     {
-                        t.AttackRow = r => { r.Id = "Mouse1"; };
-                        t.DefenseRow = r => { r.Id = "Mouse2"; };
+                        t.MySide = s => 
+                        {
+                            s.AttackRow = r => { r.Id = "Mouse1"; };
+                            s.DefenseRow = r => { r.Id = "Mouse2"; };
+                        };
                     };
                 };
             });
@@ -135,7 +142,10 @@ namespace Ostium.Logic.Tests
                 {
                     g.Table = t => 
                     {
-                        t.AttackRow = r => { r.Id = "Mouse1"; };
+                        t.MySide = s => 
+                        {
+                            s.AttackRow = r => { r.Id = "Mouse1"; };
+                        };
                     };
                 };
             });

@@ -3,29 +3,10 @@
 using System;
 using System.Collections.Generic;
 using B20.Ext;
+using GamesManagement.Api;
+using User.Api;
 
 namespace SingleGame.Api {
-    public class GateDurabilityMarker {
-        public int Value { get; }
-
-        public GateDurabilityMarker(
-            int value
-        ) {
-            Value = value;
-        }
-
-        public override bool Equals(object? obj) {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Value == ((GateDurabilityMarker)obj).Value;
-        }
-
-        public override int GetHashCode() {
-            return Value.GetHashCode();
-        }
-    }
-
     public class CreatureCardId {
         public string Value { get; }
 
@@ -63,44 +44,6 @@ namespace SingleGame.Api {
         }
     }
 
-    public class GateCard {
-        readonly bool destroyed;
-
-        public GateCard(
-            bool destroyed
-        ) {
-            this.destroyed = destroyed;
-        }
-        public bool GetDestroyed() {
-            return destroyed;
-        }
-        public static GateCard Create(bool destroyed) {
-            return new GateCard(destroyed);
-        }
-    }
-
-    public class GateDurabilityCard {
-        readonly int myMarker;
-        readonly int opponentMarker;
-
-        public GateDurabilityCard(
-            int myMarker,
-            int opponentMarker
-        ) {
-            this.myMarker = myMarker;
-            this.opponentMarker = opponentMarker;
-        }
-        public GateDurabilityMarker GetMyMarker() {
-            return new GateDurabilityMarker(myMarker);
-        }
-        public GateDurabilityMarker GetOpponentMarker() {
-            return new GateDurabilityMarker(opponentMarker);
-        }
-        public static GateDurabilityCard Create(GateDurabilityMarker myMarker, GateDurabilityMarker opponentMarker) {
-            return new GateDurabilityCard(myMarker.Value, opponentMarker.Value);
-        }
-    }
-
     public class Row {
         readonly string type;
         readonly CreatureCard? card;
@@ -123,25 +66,16 @@ namespace SingleGame.Api {
         }
     }
 
-    public class Table {
-        readonly GateDurabilityCard gateDurabilityCard;
+    public class PlayerSide {
         readonly Row attackRow;
         readonly Row defenseRow;
-        readonly GateCard gateCard;
 
-        public Table(
-            GateDurabilityCard gateDurabilityCard,
+        public PlayerSide(
             Row attackRow,
-            Row defenseRow,
-            GateCard gateCard
+            Row defenseRow
         ) {
-            this.gateDurabilityCard = gateDurabilityCard;
             this.attackRow = attackRow;
             this.defenseRow = defenseRow;
-            this.gateCard = gateCard;
-        }
-        public GateDurabilityCard GetGateDurabilityCard() {
-            return gateDurabilityCard;
         }
         public Row GetAttackRow() {
             return attackRow;
@@ -149,11 +83,30 @@ namespace SingleGame.Api {
         public Row GetDefenseRow() {
             return defenseRow;
         }
-        public GateCard GetGateCard() {
-            return gateCard;
+        public static PlayerSide Create(Row attackRow, Row defenseRow) {
+            return new PlayerSide(attackRow, defenseRow);
         }
-        public static Table Create(GateDurabilityCard gateDurabilityCard, Row attackRow, Row defenseRow, GateCard gateCard) {
-            return new Table(gateDurabilityCard, attackRow, defenseRow, gateCard);
+    }
+
+    public class Table {
+        readonly PlayerSide mySide;
+        readonly PlayerSide opponentSide;
+
+        public Table(
+            PlayerSide mySide,
+            PlayerSide opponentSide
+        ) {
+            this.mySide = mySide;
+            this.opponentSide = opponentSide;
+        }
+        public PlayerSide GetMySide() {
+            return mySide;
+        }
+        public PlayerSide GetOpponentSide() {
+            return opponentSide;
+        }
+        public static Table Create(PlayerSide mySide, PlayerSide opponentSide) {
+            return new Table(mySide, opponentSide);
         }
     }
 
@@ -175,23 +128,41 @@ namespace SingleGame.Api {
 
     public class GameState {
         readonly Table table;
-        readonly Hand hand;
+        readonly Hand myHand;
+        readonly Hand opponentHand;
+        readonly string myName;
+        readonly string? opponentName;
 
         public GameState(
             Table table,
-            Hand hand
+            Hand myHand,
+            Hand opponentHand,
+            string myName,
+            string? opponentName
         ) {
             this.table = table;
-            this.hand = hand;
+            this.myHand = myHand;
+            this.opponentHand = opponentHand;
+            this.myName = myName;
+            this.opponentName = opponentName;
         }
         public Table GetTable() {
             return table;
         }
-        public Hand GetHand() {
-            return hand;
+        public Hand GetMyHand() {
+            return myHand;
         }
-        public static GameState Create(Table table, Hand hand) {
-            return new GameState(table, hand);
+        public Hand GetOpponentHand() {
+            return opponentHand;
+        }
+        public Username GetMyName() {
+            return new Username(myName);
+        }
+        public Optional<Username> GetOpponentName() {
+            return Optional<string>.Of(opponentName).Map( it => new Username(it) );
+        }
+        public static GameState Create(Table table, Hand myHand, Hand opponentHand, Username myName, Optional<Username> opponentName) {
+            return new GameState(table, myHand, opponentHand, myName.Value, opponentName.Map( it => it.Value ).OrElse(null));
         }
     }
 }

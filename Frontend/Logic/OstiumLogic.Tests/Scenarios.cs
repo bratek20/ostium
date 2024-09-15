@@ -73,13 +73,13 @@ namespace Ostium.Logic.Tests
             
             public GameWindow GameWindow => WindowManager.Get<GameWindow>();
             
-            public RowVm AttackRow => GameWindow.Game.Table.AttackRow;
-            public RowVm DefenseRow => GameWindow.Game.Table.DefenseRow;
+            public RowVm AttackRow => GameWindow.Game.Table.MySide.AttackRow;
+            public RowVm DefenseRow => GameWindow.Game.Table.MySide.DefenseRow;
             
             public CreatureCardVm CardInAttackRow => AttackRow.Card.Element;
             public CreatureCardVm CardInDefenseRow => DefenseRow.Card.Element;
             
-            public List<CreatureCardVm> CardsInHand => GameWindow.Game.Hand.Cards.Elements;
+            public List<CreatureCardVm> CardsInHand => GameWindow.Game.MyHand.Cards.Elements;
             public CreatureCardVm FirstCardInHand => CardsInHand[0];
             public CreatureCardVm SecondCardInHand => CardsInHand[1];
             
@@ -88,7 +88,7 @@ namespace Ostium.Logic.Tests
 
         public class InGameWindowArgs
         {
-            public Action<Builders.GameDef> Game = null;
+            public Action<SingleGameBuilders.GameDef> Game = null;
             public Rect AttackRowRect { get; set; } = new Rect(0, 0, 100, 100);
             public Rect DefenseRowRect { get; set; } = new Rect(0, 100, 100, 100);
         }

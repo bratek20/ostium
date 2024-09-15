@@ -7,21 +7,24 @@ using HttpClientModule.Api;
 using GamesManagement.Api;
 using User.Api;
 
-namespace CreatedGames.Web {
-    public class CreatedGamesApiWebClient: CreatedGamesApi {
+namespace GamesManagement.Web {
+    public class GamesManagementApiWebClient: GamesManagementApi {
         readonly HttpClient client;
 
-        public CreatedGamesApiWebClient(
+        public GamesManagementApiWebClient(
             HttpClientFactory factory,
-            CreatedGamesWebClientConfig config
+            GamesManagementWebClientConfig config
         ) {
             this.client = factory.Create(config.Value);
         }
-        public List<CreatedGame> GetAll() {
-            return client.Post("/createdGamesApi/getAll", Optional<object>.Empty()).GetBody<CreatedGamesApiGetAllResponse>().Get().Value;
-        }
         public GameId Create(Username creator) {
-            return client.Post("/createdGamesApi/create", Optional<CreatedGamesApiCreateRequest>.Of(CreatedGamesApiCreateRequest.Create(creator))).GetBody<CreatedGamesApiCreateResponse>().Get().Value;
+            return client.Post("/ostium/gamesManagementApi/create", Optional<GamesManagementApiCreateRequest>.Of(GamesManagementApiCreateRequest.Create(creator))).GetBody<GamesManagementApiCreateResponse>().Get().Value;
+        }
+        public void Join(Username joiner, GameId gameId) {
+            client.Post("/ostium/gamesManagementApi/join", Optional<GamesManagementApiJoinRequest>.Of(GamesManagementApiJoinRequest.Create(joiner, gameId)));
+        }
+        public List<CreatedGame> GetAllCreated() {
+            return client.Post("/ostium/gamesManagementApi/getAllCreated", Optional<object>.Empty()).GetBody<GamesManagementApiGetAllCreatedResponse>().Get().Value;
         }
     }
 }

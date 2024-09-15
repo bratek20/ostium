@@ -5,10 +5,10 @@ using HttpClientModule.Api;
 
 namespace Ostium.Logic.GameModule.Context
 {
-    public class GameModuleWebClient : ContextModule
+    public class SingleGameWebClient : ContextModule
     {
         private readonly HttpClientConfig _config;
-        public GameModuleWebClient(HttpClientConfig config)
+        public SingleGameWebClient(HttpClientConfig config)
         {
             _config = config;
         }
@@ -16,8 +16,8 @@ namespace Ostium.Logic.GameModule.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .SetImplObject(new GameModuleWebClientConfig(_config))
-                .SetImpl<SingleGameApi, GameApiWebClient>();
+                .SetImplObject(new SingleGameWebClientConfig(_config))
+                .SetImpl<SingleGameApi, SingleGameApiWebClient>();
         }
     }
 }
