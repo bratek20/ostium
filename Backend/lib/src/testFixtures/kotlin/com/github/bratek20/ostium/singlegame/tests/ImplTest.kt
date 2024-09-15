@@ -8,6 +8,7 @@ import com.github.bratek20.ostium.gamesmanagement.api.GameId
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.assertGameId
+import com.github.bratek20.ostium.gamesmanagement.fixtures.gameId
 import com.github.bratek20.ostium.singlegame.api.GameNotFoundException
 import com.github.bratek20.ostium.singlegame.api.SingleGameApi
 import com.github.bratek20.ostium.singlegame.api.RowType
@@ -15,6 +16,7 @@ import com.github.bratek20.ostium.singlegame.context.SingleGameImpl
 import com.github.bratek20.ostium.singlegame.fixtures.assertGameState
 import com.github.bratek20.ostium.singlegame.fixtures.creatureCardId
 import com.github.bratek20.ostium.user.api.Username
+import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -45,9 +47,12 @@ open class SingleGameImplTest {
     private lateinit var loggerMock: LoggerMock
 
     companion object {
-        val GAME_ID: GameId = GameId(1)
-        val CREATOR: Username = Username("creator")
-        val JOINER: Username = Username("joiner")
+        val GAME_ID = gameId(1)
+        val CREATOR = username("creator")
+        val JOINER = username("joiner")
+        
+        val MOUSE_1 = creatureCardId("Mouse1")
+        val MOUSE_2 = creatureCardId("Mouse2")
     }
 
     @BeforeEach
@@ -70,12 +75,13 @@ open class SingleGameImplTest {
         )
 
     }
+
     @Nested
     inner class OneGameScope {
         @BeforeEach
         fun singleGameCreated() {
             val gameId = managementApi.create(CREATOR)
-            assertGameId(gameId, 1)
+            assertGameId(gameId, GAME_ID.value)
         }
 
         @Test
@@ -130,6 +136,32 @@ open class SingleGameImplTest {
             }
         }
 
+        @Test
+        fun `other created game should heve separate state`() {
+            api.playCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK)
+
+            val newGameId = managementApi.create(JOINER)
+
+            val state = api.getState(newGameId, JOINER)
+
+            assertGameState(state) {
+                myName = JOINER.value
+                opponentName = null
+                table = {
+                    mySide = {
+                        attackRow = {
+                            cardEmpty = true
+                        }
+                    }
+                    opponentSide = {
+                        attackRow = {
+                            cardEmpty = true
+                        }
+                    }
+                }
+            }
+        }
+
         @Nested
         inner class OpponentJoinedScope {
             @BeforeEach
@@ -151,8 +183,8 @@ open class SingleGameImplTest {
             fun `creator and joiner played card`() {
                 loggerMock.reset()
 
-                val state1 = api.playCard(GAME_ID, CREATOR, creatureCardId("Mouse1"), RowType.ATTACK)
-                val state2 = api.playCard(GAME_ID, JOINER, creatureCardId("Mouse2"), RowType.DEFENSE)
+                val state1 = api.playCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK)
+                val state2 = api.playCard(GAME_ID, JOINER, MOUSE_2, RowType.DEFENSE)
 
                 assertGameState(state1) {
                     myHand = {
@@ -234,13 +266,13 @@ open class SingleGameImplTest {
 
             @Test
             fun `creator and joiner moved card to empty row`() {
-                api.playCard(GAME_ID, CREATOR, creatureCardId("Mouse1"), RowType.ATTACK)
-                api.playCard(GAME_ID, JOINER, creatureCardId("Mouse2"), RowType.DEFENSE)
+                api.playCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK)
+                api.playCard(GAME_ID, JOINER, MOUSE_2, RowType.DEFENSE)
 
                 loggerMock.reset()
 
-                val state1 = api.moveCard(GAME_ID, CREATOR, creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
-                val state2 = api.moveCard(GAME_ID, JOINER, creatureCardId("Mouse2"), RowType.DEFENSE, RowType.ATTACK)
+                val state1 = api.moveCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK, RowType.DEFENSE)
+                val state2 = api.moveCard(GAME_ID, JOINER, MOUSE_2, RowType.DEFENSE, RowType.ATTACK)
 
                 assertGameState(state1) {
                     myHand = {
@@ -285,37 +317,31 @@ open class SingleGameImplTest {
                     "User `joiner` moved card `Mouse2` from DEFENSE to ATTACK row"
                 )
             }
+
+            @Test
+            fun `creator moved card to row with card`() {
+                api.playCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK)
+                api.playCard(GAME_ID, CREATOR, MOUSE_2, RowType.DEFENSE)
+        
+                val state = api.moveCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK, RowType.DEFENSE)
+
+                assertGameState(state) {
+                    table = {
+                        mySide = {
+                            attackRow = {
+                                card = {
+                                    id = "Mouse2"
+                                }
+                            }
+                            defenseRow = {
+                                card = {
+                                    id = "Mouse1"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-
-
-//
-
-//
-
-//
-//    @Test
-//    fun `move card to row with card`() {
-//        api.startGame()
-//        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
-//        api.playCard(creatureCardId("Mouse2"), RowType.DEFENSE)
-//
-//        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
-//
-//        assertGame(game) {
-//            table = {
-//                attackRow = {
-//                    card = {
-//                        id = "Mouse2"
-//                    }
-//                }
-//                defenseRow = {
-//                    card = {
-//                        id = "Mouse1"
-//                    }
-//                }
-//            }
-//        }
-//    }
-
 }
