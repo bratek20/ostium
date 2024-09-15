@@ -12,7 +12,12 @@ Interfaces
         join(joiner: Username, gameId: GameId): void
         
         getAllCreated(): CreatedGame[]
-        
+
+Web
+    Http
+        ExposedInterfaces
+            GamesManagementApi
+
 //ViewModel
     //Elements
         //CreatedGameVm (clickable)

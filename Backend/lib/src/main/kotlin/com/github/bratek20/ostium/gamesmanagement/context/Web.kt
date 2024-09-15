@@ -10,24 +10,24 @@ import com.github.bratek20.infrastructure.httpserver.api.WebServerModule
 import com.github.bratek20.ostium.gamesmanagement.api.*
 import com.github.bratek20.ostium.gamesmanagement.web.*
 
-class CreatedGamesWebClient(
+class GamesManagementWebClient(
     private val config: HttpClientConfig
 ): ContextModule {
     override fun apply(builder: ContextBuilder) {
         builder
-            .setImplObject(CreatedGamesWebClientConfig::class.java, CreatedGamesWebClientConfig(config))
+            .setImplObject(GamesManagementWebClientConfig::class.java, GamesManagementWebClientConfig(config))
             .setImpl(GamesManagementApi::class.java, GamesManagementApiWebClient::class.java)
     }
 }
 
-class CreatedGamesWebServer: WebServerModule {
+class GamesManagementWebServer: WebServerModule {
     override fun getImpl(): ContextModule {
-        return CreatedGamesImpl()
+        return GamesManagementImpl()
     }
 
     override fun getControllers(): List<Class<*>> {
         return listOf(
-            CreatedGamesApiController::class.java,
+            GamesManagementApiController::class.java,
         )
     }
 }

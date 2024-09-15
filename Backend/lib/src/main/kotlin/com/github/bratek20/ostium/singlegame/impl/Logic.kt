@@ -1,7 +1,9 @@
 package com.github.bratek20.ostium.singlegame.impl
 
 import com.github.bratek20.logs.api.Logger
+import com.github.bratek20.ostium.gamesmanagement.api.GameId
 import com.github.bratek20.ostium.singlegame.api.*
+import com.github.bratek20.ostium.user.api.Username
 
 class SingleGameApiLogic(
     private val logger: Logger
@@ -17,12 +19,7 @@ class SingleGameApiLogic(
     private var attackRowCard: CreatureCard? = null
     private var defenseRowCard: CreatureCard? = null
 
-    override fun startGame(): Game {
-        logger.info("Game started")
-        return toApiGame()
-    }
-
-    override fun playCard(cardId: CreatureCardId, row: RowType): Game {
+    override fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState {
         val card = hand.first { it.getId() == cardId }
         hand.remove(card)
 
@@ -35,7 +32,7 @@ class SingleGameApiLogic(
         return toApiGame()
     }
 
-    override fun moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game {
+    override fun moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
         val card = when (from) {
             RowType.ATTACK -> attackRowCard
             RowType.DEFENSE -> defenseRowCard
@@ -62,26 +59,42 @@ class SingleGameApiLogic(
         return toApiGame()
     }
 
-    private fun toApiGame(): Game {
-        return Game.create(
-            hand = Hand.create(
+    private fun toApiGame(): GameState {
+        return GameState.create(
+            myHand = Hand.create(
                 cards = hand.toList()
             ),
+            opponentHand = Hand.create(
+                cards = emptyList()
+            ),
             table = Table.create(
-                gateDurabilityCard = GateDurabilityCard.create(
-                    myMarker = GateDurabilityMarker(15),
-                    opponentMarker = GateDurabilityMarker(15)
+                mySide = PlayerSide.create(
+                    attackRow = Row.create(
+                        type = RowType.ATTACK,
+                        card = attackRowCard
+                    ),
+                    defenseRow = Row.create(
+                        type = RowType.DEFENSE,
+                        card = defenseRowCard
+                    ),
                 ),
-                attackRow = Row.create(
-                    type = RowType.ATTACK,
-                    card = attackRowCard
+                opponentSide = PlayerSide.create(
+                    attackRow = Row.create(
+                        type = RowType.ATTACK,
+                        card = null
+                    ),
+                    defenseRow = Row.create(
+                        type = RowType.DEFENSE,
+                        card = null
+                    ),
                 ),
-                defenseRow = Row.create(
-                    type = RowType.DEFENSE,
-                    card = defenseRowCard
-                ),
-                gateCard = GateCard.create(false),
-            )
+            ),
+            myName = Username("Player1"),
+            opponentName = null,
         )
+    }
+
+    override fun getState(gameId: GameId): GameState {
+        TODO("Not yet implemented")
     }
 }

@@ -36,7 +36,12 @@ Interfaces
         playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState
         
         moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState
-                                
+
+Web
+    Http
+        ExposedInterfaces
+            SingleGameApi
+
 //ViewModel
     //Elements
         //CreatureCardVm

@@ -6,18 +6,41 @@ import com.github.bratek20.infrastructure.httpclient.api.HttpClientConfig
 
 import com.github.bratek20.ostium.singlegame.api.*
 
-class GameModuleWebClientConfig(
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.user.api.*
+
+class SingleGameWebClientConfig(
     val value: HttpClientConfig
 ) {
 }
-class GameApiStartGameResponse(
-    val value: Game
+class SingleGameApiGetStateRequest(
+    private val gameId: Int
+) {
+    fun getGameId(): GameId {
+        return GameId(gameId)
+    }
+    companion object {
+        fun create(gameId: GameId): SingleGameApiGetStateRequest {
+            return SingleGameApiGetStateRequest(gameId.value)
+        }
+    }
+}
+class SingleGameApiGetStateResponse(
+    val value: GameState
 ) {
 }
-class GameApiPlayCardRequest(
+class SingleGameApiPlayCardRequest(
+    private val gameId: Int,
+    private val user: String,
     private val cardId: String,
     private val row: String
 ) {
+    fun getGameId(): GameId {
+        return GameId(gameId)
+    }
+    fun getUser(): Username {
+        return Username(user)
+    }
     fun getCardId(): CreatureCardId {
         return CreatureCardId(cardId)
     }
@@ -25,20 +48,28 @@ class GameApiPlayCardRequest(
         return RowType.valueOf(row)
     }
     companion object {
-        fun create(cardId: CreatureCardId, row: RowType): GameApiPlayCardRequest {
-            return GameApiPlayCardRequest(cardId.value, row.name)
+        fun create(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): SingleGameApiPlayCardRequest {
+            return SingleGameApiPlayCardRequest(gameId.value, user.value, cardId.value, row.name)
         }
     }
 }
-class GameApiPlayCardResponse(
-    val value: Game
+class SingleGameApiPlayCardResponse(
+    val value: GameState
 ) {
 }
-class GameApiMoveCardRequest(
+class SingleGameApiMoveCardRequest(
+    private val gameId: Int,
+    private val user: String,
     private val cardId: String,
     private val from: String,
     private val to: String
 ) {
+    fun getGameId(): GameId {
+        return GameId(gameId)
+    }
+    fun getUser(): Username {
+        return Username(user)
+    }
     fun getCardId(): CreatureCardId {
         return CreatureCardId(cardId)
     }
@@ -49,12 +80,12 @@ class GameApiMoveCardRequest(
         return RowType.valueOf(to)
     }
     companion object {
-        fun create(cardId: CreatureCardId, from: RowType, to: RowType): GameApiMoveCardRequest {
-            return GameApiMoveCardRequest(cardId.value, from.name, to.name)
+        fun create(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): SingleGameApiMoveCardRequest {
+            return SingleGameApiMoveCardRequest(gameId.value, user.value, cardId.value, from.name, to.name)
         }
     }
 }
-class GameApiMoveCardResponse(
-    val value: Game
+class SingleGameApiMoveCardResponse(
+    val value: GameState
 ) {
 }

@@ -14,22 +14,28 @@ import org.springframework.web.bind.annotation.RestController
 import com.github.bratek20.ostium.gamesmanagement.api.*
 
 @RestController
-@RequestMapping("/createdGamesApi")
-class CreatedGamesApiController(
+@RequestMapping("/gamesManagementApi")
+class GamesManagementApiController(
     private val api: GamesManagementApi,
 ) {
     private val serializer: Serializer = SerializationFactory.createSerializer()
 
-    @PostMapping("/getAll")
-    fun getAll(): Struct {
-        // no request needed
-        return serializer.asStruct(CreatedGamesApiGetAllResponse(api.getAll()))
-    }
-
     @PostMapping("/create")
     fun create(@RequestBody rawRequest: Struct): Struct {
-        val request = serializer.fromStruct(rawRequest, CreatedGamesApiCreateRequest::class.java)
-        return serializer.asStruct(CreatedGamesApiCreateResponse(api.create(request.getCreator())))
+        val request = serializer.fromStruct(rawRequest, GamesManagementApiCreateRequest::class.java)
+        return serializer.asStruct(GamesManagementApiCreateResponse(api.create(request.getCreator())))
+    }
+
+    @PostMapping("/join")
+    fun join(@RequestBody rawRequest: Struct): Unit {
+        val request = serializer.fromStruct(rawRequest, GamesManagementApiJoinRequest::class.java)
+        api.join(request.getJoiner(), request.getGameId())
+    }
+
+    @PostMapping("/getAllCreated")
+    fun getAllCreated(): Struct {
+        // no request needed
+        return serializer.asStruct(GamesManagementApiGetAllCreatedResponse(api.getAllCreated()))
     }
 }
 

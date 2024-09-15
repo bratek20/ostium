@@ -4,6 +4,9 @@ package com.github.bratek20.ostium.gamesmanagement.fixtures
 
 import org.assertj.core.api.Assertions.assertThat
 
+import com.github.bratek20.ostium.user.api.*
+import com.github.bratek20.ostium.user.fixtures.*
+
 import com.github.bratek20.ostium.gamesmanagement.api.*
 
 fun assertGameId(given: GameId, expected: Int) {

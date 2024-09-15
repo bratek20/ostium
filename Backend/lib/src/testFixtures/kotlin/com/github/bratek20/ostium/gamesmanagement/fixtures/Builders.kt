@@ -3,6 +3,7 @@
 package com.github.bratek20.ostium.gamesmanagement.fixtures
 
 import com.github.bratek20.ostium.user.api.*
+import com.github.bratek20.ostium.user.fixtures.*
 
 import com.github.bratek20.ostium.gamesmanagement.api.*
 
@@ -13,11 +14,13 @@ fun gameId(value: Int = 0): GameId {
 data class CreatedGameDef(
     var id: Int = 0,
     var creator: String = "someValue",
+    var joiner: String? = null,
 )
 fun createdGame(init: CreatedGameDef.() -> Unit = {}): CreatedGame {
     val def = CreatedGameDef().apply(init)
     return CreatedGame.create(
         id = GameId(def.id),
         creator = Username(def.creator),
+        joiner = def.joiner?.let { it -> Username(it) },
     )
 }

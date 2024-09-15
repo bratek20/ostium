@@ -10,16 +10,20 @@ import com.github.bratek20.ostium.user.api.*
 
 class GamesManagementApiWebClient(
     factory: HttpClientFactory,
-    config: CreatedGamesWebClientConfig,
+    config: GamesManagementWebClientConfig,
 ): GamesManagementApi {
     private val client = factory.create(config.value)
 
-    override fun getAll(): List<CreatedGame> {
-        return client.post("/createdGamesApi/getAll", null).getBody(CreatedGamesApiGetAllResponse::class.java).value
+    override fun create(creator: Username): GameId {
+        return client.post("/gamesManagementApi/create", GamesManagementApiCreateRequest.create(creator)).getBody(GamesManagementApiCreateResponse::class.java).value
     }
 
-    override fun create(creator: Username): GameId {
-        return client.post("/createdGamesApi/create", CreatedGamesApiCreateRequest.create(creator)).getBody(CreatedGamesApiCreateResponse::class.java).value
+    override fun join(joiner: Username, gameId: GameId): Unit {
+        client.post("/gamesManagementApi/join", GamesManagementApiJoinRequest.create(joiner, gameId))
+    }
+
+    override fun getAllCreated(): List<CreatedGame> {
+        return client.post("/gamesManagementApi/getAllCreated", null).getBody(GamesManagementApiGetAllCreatedResponse::class.java).value
     }
 }
 

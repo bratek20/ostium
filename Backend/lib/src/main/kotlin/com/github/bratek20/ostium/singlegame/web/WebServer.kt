@@ -14,28 +14,28 @@ import org.springframework.web.bind.annotation.RestController
 import com.github.bratek20.ostium.singlegame.api.*
 
 @RestController
-@RequestMapping("/gameApi")
-class GameApiController(
+@RequestMapping("/singleGameApi")
+class SingleGameApiController(
     private val api: SingleGameApi,
 ) {
     private val serializer: Serializer = SerializationFactory.createSerializer()
 
-    @PostMapping("/startGame")
-    fun startGame(): Struct {
-        // no request needed
-        return serializer.asStruct(GameApiStartGameResponse(api.startGame()))
+    @PostMapping("/getState")
+    fun getState(@RequestBody rawRequest: Struct): Struct {
+        val request = serializer.fromStruct(rawRequest, SingleGameApiGetStateRequest::class.java)
+        return serializer.asStruct(SingleGameApiGetStateResponse(api.getState(request.getGameId())))
     }
 
     @PostMapping("/playCard")
     fun playCard(@RequestBody rawRequest: Struct): Struct {
-        val request = serializer.fromStruct(rawRequest, GameApiPlayCardRequest::class.java)
-        return serializer.asStruct(GameApiPlayCardResponse(api.playCard(request.getCardId(), request.getRow())))
+        val request = serializer.fromStruct(rawRequest, SingleGameApiPlayCardRequest::class.java)
+        return serializer.asStruct(SingleGameApiPlayCardResponse(api.playCard(request.getGameId(), request.getUser(), request.getCardId(), request.getRow())))
     }
 
     @PostMapping("/moveCard")
     fun moveCard(@RequestBody rawRequest: Struct): Struct {
-        val request = serializer.fromStruct(rawRequest, GameApiMoveCardRequest::class.java)
-        return serializer.asStruct(GameApiMoveCardResponse(api.moveCard(request.getCardId(), request.getFrom(), request.getTo())))
+        val request = serializer.fromStruct(rawRequest, SingleGameApiMoveCardRequest::class.java)
+        return serializer.asStruct(SingleGameApiMoveCardResponse(api.moveCard(request.getGameId(), request.getUser(), request.getCardId(), request.getFrom(), request.getTo())))
     }
 }
 

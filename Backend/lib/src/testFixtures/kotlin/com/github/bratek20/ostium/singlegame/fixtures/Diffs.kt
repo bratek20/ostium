@@ -2,12 +2,12 @@
 
 package com.github.bratek20.ostium.singlegame.fixtures
 
-import com.github.bratek20.ostium.singlegame.api.*
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.gamesmanagement.fixtures.*
+import com.github.bratek20.ostium.user.api.*
+import com.github.bratek20.ostium.user.fixtures.*
 
-fun diffGateDurabilityMarker(given: GateDurabilityMarker, expected: Int, path: String = ""): String {
-    if (given.value != expected) { return "${path}value ${given.value} != ${expected}" }
-    return ""
-}
+import com.github.bratek20.ostium.singlegame.api.*
 
 fun diffCreatureCardId(given: CreatureCardId, expected: String, path: String = ""): String {
     if (given.value != expected) { return "${path}value ${given.value} != ${expected}" }
@@ -28,39 +28,6 @@ fun diffCreatureCard(given: CreatureCard, expectedInit: ExpectedCreatureCard.() 
 
     expected.id?.let {
         if (diffCreatureCardId(given.getId(), it) != "") { result.add(diffCreatureCardId(given.getId(), it, "${path}id.")) }
-    }
-
-    return result.joinToString("\n")
-}
-
-data class ExpectedGateCard(
-    var destroyed: Boolean? = null,
-)
-fun diffGateCard(given: GateCard, expectedInit: ExpectedGateCard.() -> Unit, path: String = ""): String {
-    val expected = ExpectedGateCard().apply(expectedInit)
-    val result: MutableList<String> = mutableListOf()
-
-    expected.destroyed?.let {
-        if (given.getDestroyed() != it) { result.add("${path}destroyed ${given.getDestroyed()} != ${it}") }
-    }
-
-    return result.joinToString("\n")
-}
-
-data class ExpectedGateDurabilityCard(
-    var myMarker: Int? = null,
-    var opponentMarker: Int? = null,
-)
-fun diffGateDurabilityCard(given: GateDurabilityCard, expectedInit: ExpectedGateDurabilityCard.() -> Unit, path: String = ""): String {
-    val expected = ExpectedGateDurabilityCard().apply(expectedInit)
-    val result: MutableList<String> = mutableListOf()
-
-    expected.myMarker?.let {
-        if (diffGateDurabilityMarker(given.getMyMarker(), it) != "") { result.add(diffGateDurabilityMarker(given.getMyMarker(), it, "${path}myMarker.")) }
-    }
-
-    expected.opponentMarker?.let {
-        if (diffGateDurabilityMarker(given.getOpponentMarker(), it) != "") { result.add(diffGateDurabilityMarker(given.getOpponentMarker(), it, "${path}opponentMarker.")) }
     }
 
     return result.joinToString("\n")
@@ -90,19 +57,13 @@ fun diffRow(given: Row, expectedInit: ExpectedRow.() -> Unit, path: String = "")
     return result.joinToString("\n")
 }
 
-data class ExpectedTable(
-    var gateDurabilityCard: (ExpectedGateDurabilityCard.() -> Unit)? = null,
+data class ExpectedPlayerSide(
     var attackRow: (ExpectedRow.() -> Unit)? = null,
     var defenseRow: (ExpectedRow.() -> Unit)? = null,
-    var gateCard: (ExpectedGateCard.() -> Unit)? = null,
 )
-fun diffTable(given: Table, expectedInit: ExpectedTable.() -> Unit, path: String = ""): String {
-    val expected = ExpectedTable().apply(expectedInit)
+fun diffPlayerSide(given: PlayerSide, expectedInit: ExpectedPlayerSide.() -> Unit, path: String = ""): String {
+    val expected = ExpectedPlayerSide().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
-
-    expected.gateDurabilityCard?.let {
-        if (diffGateDurabilityCard(given.getGateDurabilityCard(), it) != "") { result.add(diffGateDurabilityCard(given.getGateDurabilityCard(), it, "${path}gateDurabilityCard.")) }
-    }
 
     expected.attackRow?.let {
         if (diffRow(given.getAttackRow(), it) != "") { result.add(diffRow(given.getAttackRow(), it, "${path}attackRow.")) }
@@ -112,8 +73,23 @@ fun diffTable(given: Table, expectedInit: ExpectedTable.() -> Unit, path: String
         if (diffRow(given.getDefenseRow(), it) != "") { result.add(diffRow(given.getDefenseRow(), it, "${path}defenseRow.")) }
     }
 
-    expected.gateCard?.let {
-        if (diffGateCard(given.getGateCard(), it) != "") { result.add(diffGateCard(given.getGateCard(), it, "${path}gateCard.")) }
+    return result.joinToString("\n")
+}
+
+data class ExpectedTable(
+    var mySide: (ExpectedPlayerSide.() -> Unit)? = null,
+    var opponentSide: (ExpectedPlayerSide.() -> Unit)? = null,
+)
+fun diffTable(given: Table, expectedInit: ExpectedTable.() -> Unit, path: String = ""): String {
+    val expected = ExpectedTable().apply(expectedInit)
+    val result: MutableList<String> = mutableListOf()
+
+    expected.mySide?.let {
+        if (diffPlayerSide(given.getMySide(), it) != "") { result.add(diffPlayerSide(given.getMySide(), it, "${path}mySide.")) }
+    }
+
+    expected.opponentSide?.let {
+        if (diffPlayerSide(given.getOpponentSide(), it) != "") { result.add(diffPlayerSide(given.getOpponentSide(), it, "${path}opponentSide.")) }
     }
 
     return result.joinToString("\n")
@@ -134,20 +110,40 @@ fun diffHand(given: Hand, expectedInit: ExpectedHand.() -> Unit, path: String = 
     return result.joinToString("\n")
 }
 
-data class ExpectedGame(
+data class ExpectedGameState(
     var table: (ExpectedTable.() -> Unit)? = null,
-    var hand: (ExpectedHand.() -> Unit)? = null,
+    var myHand: (ExpectedHand.() -> Unit)? = null,
+    var opponentHand: (ExpectedHand.() -> Unit)? = null,
+    var myName: String? = null,
+    var opponentNameEmpty: Boolean? = null,
+    var opponentName: String? = null,
 )
-fun diffGame(given: Game, expectedInit: ExpectedGame.() -> Unit, path: String = ""): String {
-    val expected = ExpectedGame().apply(expectedInit)
+fun diffGameState(given: GameState, expectedInit: ExpectedGameState.() -> Unit, path: String = ""): String {
+    val expected = ExpectedGameState().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
 
     expected.table?.let {
         if (diffTable(given.getTable(), it) != "") { result.add(diffTable(given.getTable(), it, "${path}table.")) }
     }
 
-    expected.hand?.let {
-        if (diffHand(given.getHand(), it) != "") { result.add(diffHand(given.getHand(), it, "${path}hand.")) }
+    expected.myHand?.let {
+        if (diffHand(given.getMyHand(), it) != "") { result.add(diffHand(given.getMyHand(), it, "${path}myHand.")) }
+    }
+
+    expected.opponentHand?.let {
+        if (diffHand(given.getOpponentHand(), it) != "") { result.add(diffHand(given.getOpponentHand(), it, "${path}opponentHand.")) }
+    }
+
+    expected.myName?.let {
+        if (diffUsername(given.getMyName(), it) != "") { result.add(diffUsername(given.getMyName(), it, "${path}myName.")) }
+    }
+
+    expected.opponentNameEmpty?.let {
+        if ((given.getOpponentName() == null) != it) { result.add("${path}opponentName empty ${(given.getOpponentName() == null)} != ${it}") }
+    }
+
+    expected.opponentName?.let {
+        if (diffUsername(given.getOpponentName()!!, it) != "") { result.add(diffUsername(given.getOpponentName()!!, it, "${path}opponentName.")) }
     }
 
     return result.joinToString("\n")

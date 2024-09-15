@@ -6,22 +6,25 @@ import com.github.bratek20.infrastructure.httpclient.api.HttpClientFactory
 
 import com.github.bratek20.ostium.singlegame.api.*
 
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.user.api.*
+
 class SingleGameApiWebClient(
     factory: HttpClientFactory,
-    config: GameModuleWebClientConfig,
+    config: SingleGameWebClientConfig,
 ): SingleGameApi {
     private val client = factory.create(config.value)
 
-    override fun startGame(): Game {
-        return client.post("/gameApi/startGame", null).getBody(GameApiStartGameResponse::class.java).value
+    override fun getState(gameId: GameId): GameState {
+        return client.post("/singleGameApi/getState", SingleGameApiGetStateRequest.create(gameId)).getBody(SingleGameApiGetStateResponse::class.java).value
     }
 
-    override fun playCard(cardId: CreatureCardId, row: RowType): Game {
-        return client.post("/gameApi/playCard", GameApiPlayCardRequest.create(cardId, row)).getBody(GameApiPlayCardResponse::class.java).value
+    override fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState {
+        return client.post("/singleGameApi/playCard", SingleGameApiPlayCardRequest.create(gameId, user, cardId, row)).getBody(SingleGameApiPlayCardResponse::class.java).value
     }
 
-    override fun moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game {
-        return client.post("/gameApi/moveCard", GameApiMoveCardRequest.create(cardId, from, to)).getBody(GameApiMoveCardResponse::class.java).value
+    override fun moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
+        return client.post("/singleGameApi/moveCard", SingleGameApiMoveCardRequest.create(gameId, user, cardId, from, to)).getBody(SingleGameApiMoveCardResponse::class.java).value
     }
 }
 

@@ -27,6 +27,7 @@ data class GameId(
 data class CreatedGame(
     private val id: Int,
     private val creator: String,
+    private val joiner: String?,
 ) {
     fun getId(): GameId {
         return GameId(this.id)
@@ -36,14 +37,20 @@ data class CreatedGame(
         return Username(this.creator)
     }
 
+    fun getJoiner(): Username? {
+        return this.joiner?.let { it -> Username(it) }
+    }
+
     companion object {
         fun create(
             id: GameId,
             creator: Username,
+            joiner: Username?,
         ): CreatedGame {
             return CreatedGame(
                 id = id.value,
                 creator = creator.value,
+                joiner = joiner?.let { it -> it.value },
             )
         }
     }

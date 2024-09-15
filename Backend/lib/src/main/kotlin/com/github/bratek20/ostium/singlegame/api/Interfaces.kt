@@ -2,10 +2,13 @@
 
 package com.github.bratek20.ostium.singlegame.api
 
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.user.api.*
+
 interface SingleGameApi {
-    fun startGame(): Game
+    fun getState(gameId: GameId): GameState
 
-    fun playCard(cardId: CreatureCardId, row: RowType): Game
+    fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState
 
-    fun moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game
+    fun moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState
 }

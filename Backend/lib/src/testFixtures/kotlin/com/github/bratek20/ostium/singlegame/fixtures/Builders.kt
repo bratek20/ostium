@@ -2,11 +2,12 @@
 
 package com.github.bratek20.ostium.singlegame.fixtures
 
-import com.github.bratek20.ostium.singlegame.api.*
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.gamesmanagement.fixtures.*
+import com.github.bratek20.ostium.user.api.*
+import com.github.bratek20.ostium.user.fixtures.*
 
-fun gateDurabilityMarker(value: Int = 0): GateDurabilityMarker {
-    return GateDurabilityMarker(value)
-}
+import com.github.bratek20.ostium.singlegame.api.*
 
 fun creatureCardId(value: String = "someValue"): CreatureCardId {
     return CreatureCardId(value)
@@ -22,28 +23,6 @@ fun creatureCard(init: CreatureCardDef.() -> Unit = {}): CreatureCard {
     )
 }
 
-data class GateCardDef(
-    var destroyed: Boolean = false,
-)
-fun gateCard(init: GateCardDef.() -> Unit = {}): GateCard {
-    val def = GateCardDef().apply(init)
-    return GateCard.create(
-        destroyed = def.destroyed,
-    )
-}
-
-data class GateDurabilityCardDef(
-    var myMarker: Int = 0,
-    var opponentMarker: Int = 0,
-)
-fun gateDurabilityCard(init: GateDurabilityCardDef.() -> Unit = {}): GateDurabilityCard {
-    val def = GateDurabilityCardDef().apply(init)
-    return GateDurabilityCard.create(
-        myMarker = GateDurabilityMarker(def.myMarker),
-        opponentMarker = GateDurabilityMarker(def.opponentMarker),
-    )
-}
-
 data class RowDef(
     var type: String = RowType.ATTACK.name,
     var card: (CreatureCardDef.() -> Unit)? = null,
@@ -56,19 +35,27 @@ fun row(init: RowDef.() -> Unit = {}): Row {
     )
 }
 
-data class TableDef(
-    var gateDurabilityCard: (GateDurabilityCardDef.() -> Unit) = {},
+data class PlayerSideDef(
     var attackRow: (RowDef.() -> Unit) = {},
     var defenseRow: (RowDef.() -> Unit) = {},
-    var gateCard: (GateCardDef.() -> Unit) = {},
+)
+fun playerSide(init: PlayerSideDef.() -> Unit = {}): PlayerSide {
+    val def = PlayerSideDef().apply(init)
+    return PlayerSide.create(
+        attackRow = row(def.attackRow),
+        defenseRow = row(def.defenseRow),
+    )
+}
+
+data class TableDef(
+    var mySide: (PlayerSideDef.() -> Unit) = {},
+    var opponentSide: (PlayerSideDef.() -> Unit) = {},
 )
 fun table(init: TableDef.() -> Unit = {}): Table {
     val def = TableDef().apply(init)
     return Table.create(
-        gateDurabilityCard = gateDurabilityCard(def.gateDurabilityCard),
-        attackRow = row(def.attackRow),
-        defenseRow = row(def.defenseRow),
-        gateCard = gateCard(def.gateCard),
+        mySide = playerSide(def.mySide),
+        opponentSide = playerSide(def.opponentSide),
     )
 }
 
@@ -82,14 +69,20 @@ fun hand(init: HandDef.() -> Unit = {}): Hand {
     )
 }
 
-data class GameDef(
+data class GameStateDef(
     var table: (TableDef.() -> Unit) = {},
-    var hand: (HandDef.() -> Unit) = {},
+    var myHand: (HandDef.() -> Unit) = {},
+    var opponentHand: (HandDef.() -> Unit) = {},
+    var myName: String = "someValue",
+    var opponentName: String? = null,
 )
-fun game(init: GameDef.() -> Unit = {}): Game {
-    val def = GameDef().apply(init)
-    return Game.create(
+fun gameState(init: GameStateDef.() -> Unit = {}): GameState {
+    val def = GameStateDef().apply(init)
+    return GameState.create(
         table = table(def.table),
-        hand = hand(def.hand),
+        myHand = hand(def.myHand),
+        opponentHand = hand(def.opponentHand),
+        myName = Username(def.myName),
+        opponentName = def.opponentName?.let { it -> Username(it) },
     )
 }

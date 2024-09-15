@@ -4,13 +4,12 @@ package com.github.bratek20.ostium.singlegame.fixtures
 
 import org.assertj.core.api.Assertions.assertThat
 
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.gamesmanagement.fixtures.*
+import com.github.bratek20.ostium.user.api.*
+import com.github.bratek20.ostium.user.fixtures.*
+
 import com.github.bratek20.ostium.singlegame.api.*
-
-fun assertGateDurabilityMarker(given: GateDurabilityMarker, expected: Int) {
-    val diff = diffGateDurabilityMarker(given, expected)
-    assertThat(diff).withFailMessage(diff).isEqualTo("")
-}
-
 
 fun assertCreatureCardId(given: CreatureCardId, expected: String) {
     val diff = diffCreatureCardId(given, expected)
@@ -22,18 +21,13 @@ fun assertCreatureCard(given: CreatureCard, expectedInit: ExpectedCreatureCard.(
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 
-fun assertGateCard(given: GateCard, expectedInit: ExpectedGateCard.() -> Unit) {
-    val diff = diffGateCard(given, expectedInit)
-    assertThat(diff).withFailMessage(diff).isEqualTo("")
-}
-
-fun assertGateDurabilityCard(given: GateDurabilityCard, expectedInit: ExpectedGateDurabilityCard.() -> Unit) {
-    val diff = diffGateDurabilityCard(given, expectedInit)
-    assertThat(diff).withFailMessage(diff).isEqualTo("")
-}
-
 fun assertRow(given: Row, expectedInit: ExpectedRow.() -> Unit) {
     val diff = diffRow(given, expectedInit)
+    assertThat(diff).withFailMessage(diff).isEqualTo("")
+}
+
+fun assertPlayerSide(given: PlayerSide, expectedInit: ExpectedPlayerSide.() -> Unit) {
+    val diff = diffPlayerSide(given, expectedInit)
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 
@@ -47,7 +41,7 @@ fun assertHand(given: Hand, expectedInit: ExpectedHand.() -> Unit) {
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 
-fun assertGame(given: Game, expectedInit: ExpectedGame.() -> Unit) {
-    val diff = diffGame(given, expectedInit)
+fun assertGameState(given: GameState, expectedInit: ExpectedGameState.() -> Unit) {
+    val diff = diffGameState(given, expectedInit)
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }

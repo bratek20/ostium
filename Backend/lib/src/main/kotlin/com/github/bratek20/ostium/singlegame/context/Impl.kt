@@ -6,7 +6,7 @@ import com.github.bratek20.architecture.context.api.ContextModule
 import com.github.bratek20.ostium.singlegame.api.*
 import com.github.bratek20.ostium.singlegame.impl.*
 
-class GameModuleImpl: ContextModule {
+class SingleGameImpl: ContextModule {
     override fun apply(builder: ContextBuilder) {
         builder
             .setImpl(SingleGameApi::class.java, SingleGameApiLogic::class.java)

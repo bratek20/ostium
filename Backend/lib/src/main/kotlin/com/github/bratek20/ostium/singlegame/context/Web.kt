@@ -10,24 +10,24 @@ import com.github.bratek20.infrastructure.httpserver.api.WebServerModule
 import com.github.bratek20.ostium.singlegame.api.*
 import com.github.bratek20.ostium.singlegame.web.*
 
-class GameModuleWebClient(
+class SingleGameWebClient(
     private val config: HttpClientConfig
 ): ContextModule {
     override fun apply(builder: ContextBuilder) {
         builder
-            .setImplObject(GameModuleWebClientConfig::class.java, GameModuleWebClientConfig(config))
+            .setImplObject(SingleGameWebClientConfig::class.java, SingleGameWebClientConfig(config))
             .setImpl(SingleGameApi::class.java, SingleGameApiWebClient::class.java)
     }
 }
 
-class GameModuleWebServer: WebServerModule {
+class SingleGameWebServer: WebServerModule {
     override fun getImpl(): ContextModule {
-        return GameModuleImpl()
+        return SingleGameImpl()
     }
 
     override fun getControllers(): List<Class<*>> {
         return listOf(
-            GameApiController::class.java,
+            SingleGameApiController::class.java,
         )
     }
 }

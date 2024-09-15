@@ -8,27 +8,43 @@ import com.github.bratek20.ostium.gamesmanagement.api.*
 
 import com.github.bratek20.ostium.user.api.*
 
-class CreatedGamesWebClientConfig(
+class GamesManagementWebClientConfig(
     val value: HttpClientConfig
 ) {
 }
-class CreatedGamesApiGetAllResponse(
-    val value: List<CreatedGame>
-) {
-}
-class CreatedGamesApiCreateRequest(
+class GamesManagementApiCreateRequest(
     private val creator: String
 ) {
     fun getCreator(): Username {
         return Username(creator)
     }
     companion object {
-        fun create(creator: Username): CreatedGamesApiCreateRequest {
-            return CreatedGamesApiCreateRequest(creator.value)
+        fun create(creator: Username): GamesManagementApiCreateRequest {
+            return GamesManagementApiCreateRequest(creator.value)
         }
     }
 }
-class CreatedGamesApiCreateResponse(
+class GamesManagementApiCreateResponse(
     val value: GameId
+) {
+}
+class GamesManagementApiJoinRequest(
+    private val joiner: String,
+    private val gameId: Int
+) {
+    fun getJoiner(): Username {
+        return Username(joiner)
+    }
+    fun getGameId(): GameId {
+        return GameId(gameId)
+    }
+    companion object {
+        fun create(joiner: Username, gameId: GameId): GamesManagementApiJoinRequest {
+            return GamesManagementApiJoinRequest(joiner.value, gameId.value)
+        }
+    }
+}
+class GamesManagementApiGetAllCreatedResponse(
+    val value: List<CreatedGame>
 ) {
 }

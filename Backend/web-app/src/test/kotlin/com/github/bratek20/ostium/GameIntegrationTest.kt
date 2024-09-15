@@ -11,7 +11,7 @@ import com.github.bratek20.logs.LogsMocks
 import com.github.bratek20.ostium.singlegame.api.SingleGameApi
 import com.github.bratek20.ostium.singlegame.context.GameModuleWebClient
 import com.github.bratek20.ostium.singlegame.context.GameModuleWebServer
-import com.github.bratek20.ostium.singlegame.tests.GameModuleImplTest
+import com.github.bratek20.ostium.singlegame.tests.SingleGameImplTest
 
 //TODO-REF TestWebApp should accept also normal modules
 class WebServerLogMocks: WebServerModule {
@@ -24,7 +24,7 @@ class WebServerLogMocks: WebServerModule {
     }
 }
 
-class GameIntegrationTest: GameModuleImplTest() {
+class GameIntegrationTest: SingleGameImplTest() {
     override fun createContext(): Context {
         val c = TestWebApp(
             modules = listOf(

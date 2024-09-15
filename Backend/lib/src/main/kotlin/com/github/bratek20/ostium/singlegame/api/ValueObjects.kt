@@ -2,25 +2,8 @@
 
 package com.github.bratek20.ostium.singlegame.api
 
-data class GateDurabilityMarker(
-    val value: Int
-) {
-    override fun toString(): String {
-        return value.toString()
-    }
-
-    operator fun plus(other: GateDurabilityMarker): GateDurabilityMarker {
-        return GateDurabilityMarker(this.value + other.value)
-    }
-
-    operator fun minus(other: GateDurabilityMarker): GateDurabilityMarker {
-        return GateDurabilityMarker(this.value - other.value)
-    }
-
-    operator fun times(amount: Int): GateDurabilityMarker {
-        return GateDurabilityMarker(this.value * amount)
-    }
-}
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.user.api.*
 
 data class CreatureCardId(
     val value: String
@@ -43,49 +26,6 @@ data class CreatureCard(
         ): CreatureCard {
             return CreatureCard(
                 id = id.value,
-            )
-        }
-    }
-}
-
-data class GateCard(
-    private val destroyed: Boolean,
-) {
-    fun getDestroyed(): Boolean {
-        return this.destroyed
-    }
-
-    companion object {
-        fun create(
-            destroyed: Boolean,
-        ): GateCard {
-            return GateCard(
-                destroyed = destroyed,
-            )
-        }
-    }
-}
-
-data class GateDurabilityCard(
-    private val myMarker: Int,
-    private val opponentMarker: Int,
-) {
-    fun getMyMarker(): GateDurabilityMarker {
-        return GateDurabilityMarker(this.myMarker)
-    }
-
-    fun getOpponentMarker(): GateDurabilityMarker {
-        return GateDurabilityMarker(this.opponentMarker)
-    }
-
-    companion object {
-        fun create(
-            myMarker: GateDurabilityMarker,
-            opponentMarker: GateDurabilityMarker,
-        ): GateDurabilityCard {
-            return GateDurabilityCard(
-                myMarker = myMarker.value,
-                opponentMarker = opponentMarker.value,
             )
         }
     }
@@ -116,16 +56,10 @@ data class Row(
     }
 }
 
-data class Table(
-    private val gateDurabilityCard: GateDurabilityCard,
+data class PlayerSide(
     private val attackRow: Row,
     private val defenseRow: Row,
-    private val gateCard: GateCard,
 ) {
-    fun getGateDurabilityCard(): GateDurabilityCard {
-        return this.gateDurabilityCard
-    }
-
     fun getAttackRow(): Row {
         return this.attackRow
     }
@@ -134,22 +68,39 @@ data class Table(
         return this.defenseRow
     }
 
-    fun getGateCard(): GateCard {
-        return this.gateCard
+    companion object {
+        fun create(
+            attackRow: Row,
+            defenseRow: Row,
+        ): PlayerSide {
+            return PlayerSide(
+                attackRow = attackRow,
+                defenseRow = defenseRow,
+            )
+        }
+    }
+}
+
+data class Table(
+    private val mySide: PlayerSide,
+    private val opponentSide: PlayerSide,
+) {
+    fun getMySide(): PlayerSide {
+        return this.mySide
+    }
+
+    fun getOpponentSide(): PlayerSide {
+        return this.opponentSide
     }
 
     companion object {
         fun create(
-            gateDurabilityCard: GateDurabilityCard,
-            attackRow: Row,
-            defenseRow: Row,
-            gateCard: GateCard,
+            mySide: PlayerSide,
+            opponentSide: PlayerSide,
         ): Table {
             return Table(
-                gateDurabilityCard = gateDurabilityCard,
-                attackRow = attackRow,
-                defenseRow = defenseRow,
-                gateCard = gateCard,
+                mySide = mySide,
+                opponentSide = opponentSide,
             )
         }
     }
@@ -173,26 +124,47 @@ data class Hand(
     }
 }
 
-data class Game(
+data class GameState(
     private val table: Table,
-    private val hand: Hand,
+    private val myHand: Hand,
+    private val opponentHand: Hand,
+    private val myName: String,
+    private val opponentName: String?,
 ) {
     fun getTable(): Table {
         return this.table
     }
 
-    fun getHand(): Hand {
-        return this.hand
+    fun getMyHand(): Hand {
+        return this.myHand
+    }
+
+    fun getOpponentHand(): Hand {
+        return this.opponentHand
+    }
+
+    fun getMyName(): Username {
+        return Username(this.myName)
+    }
+
+    fun getOpponentName(): Username? {
+        return this.opponentName?.let { it -> Username(it) }
     }
 
     companion object {
         fun create(
             table: Table,
-            hand: Hand,
-        ): Game {
-            return Game(
+            myHand: Hand,
+            opponentHand: Hand,
+            myName: Username,
+            opponentName: Username?,
+        ): GameState {
+            return GameState(
                 table = table,
-                hand = hand,
+                myHand = myHand,
+                opponentHand = opponentHand,
+                myName = myName.value,
+                opponentName = opponentName?.let { it -> it.value },
             )
         }
     }
