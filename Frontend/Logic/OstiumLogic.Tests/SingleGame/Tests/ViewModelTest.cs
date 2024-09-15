@@ -1,37 +1,17 @@
-﻿using System;
+using System;
 using B20.Frontend.Postion;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
-using Main.ViewModel;
-using SingleGame;
+using Ostium.Logic.Tests;
 using SingleGame.Api;
 using SingleGame.ViewModel;
 using Xunit;
 
-namespace Ostium.Logic.Tests
+namespace SingleGame.Tests
 {
-    public class OstiumLogicTest
+    public class ViewModelTest
     {
         private Scenarios scenarios = new Scenarios();
-        
-        [Fact]
-        public void ShouldStartOnMainScreenAndSwitchToGameScreen()
-        {
-            var c = scenarios.Setup();
-
-            //should not throw
-            c.WindowManager.Get<MainWindow>();
-            c.WindowManager.Get<GameWindow>();
-            
-            c.Logic.Start();
-
-            Assert.IsType<MainWindow>(c.WindowManager.GetCurrent());
-            
-            //Clicking play button
-            c.WindowManager.Get<MainWindow>().PlayButton.Click();
-
-            Assert.IsType<GameWindow>(c.WindowManager.GetCurrent());
-        }
 
         [Fact]
         public void ShouldPlayCards()
