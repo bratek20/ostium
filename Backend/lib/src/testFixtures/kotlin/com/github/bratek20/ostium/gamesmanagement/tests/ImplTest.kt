@@ -4,6 +4,7 @@ import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.assertCreatedGame
+import com.github.bratek20.ostium.gamesmanagement.fixtures.gameId
 import com.github.bratek20.ostium.user.fixtures.username
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -21,6 +22,7 @@ open class GamesManagementImplTest {
 
         assertThat(api.getAllCreated()).hasSize(0)
 
+        // create
         api.create(username("test"))
 
         val games = api.getAllCreated()
@@ -28,19 +30,28 @@ open class GamesManagementImplTest {
         assertCreatedGame(games[0]) {
             id = 1
             creator = "test"
+            joinerEmpty = true
         }
 
-        api.create(username("test2"))
+        // join
+        api.join(username("test2"), gameId(1))
 
-        val games2 = api.getAllCreated()
-        assertThat(games2).hasSize(2)
-        assertCreatedGame(games2[0]) {
+        val gamesAfterJoin = api.getAllCreated()
+        assertThat(gamesAfterJoin).hasSize(1)
+        assertCreatedGame(gamesAfterJoin[0]) {
             id = 1
             creator = "test"
+            joiner = "test2"
         }
-        assertCreatedGame(games2[1]) {
+
+        // create second
+        api.create(username("test3"))
+
+        val gamesAfterSecondCreate = api.getAllCreated()
+        assertThat(gamesAfterSecondCreate).hasSize(2)
+        assertCreatedGame(gamesAfterSecondCreate[1]) {
             id = 2
-            creator = "test2"
+            creator = "test3"
         }
     }
 }

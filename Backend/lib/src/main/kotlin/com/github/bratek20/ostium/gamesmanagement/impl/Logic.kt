@@ -16,10 +16,12 @@ class GamesManagementApiLogic: GamesManagementApi {
     }
 
     override fun join(joiner: Username, gameId: GameId) {
-        TODO("Not yet implemented")
+        val game = games.first { it.getId() == gameId }
+        games.remove(game)
+        games.add(CreatedGame.create(game.getId(), game.getCreator(), joiner))
     }
 
     override fun getAllCreated(): List<CreatedGame> {
-        TODO("Not yet implemented")
+        return games
     }
 }
