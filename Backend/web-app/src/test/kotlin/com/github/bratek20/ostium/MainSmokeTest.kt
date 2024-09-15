@@ -3,10 +3,10 @@ package com.github.bratek20.ostium
 import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
-import com.github.bratek20.ostium.createdgames.api.CreatedGamesApi
-import com.github.bratek20.ostium.createdgames.context.CreatedGamesWebClient
-import com.github.bratek20.ostium.gamemodule.api.GameApi
-import com.github.bratek20.ostium.gamemodule.context.GameModuleWebClient
+import com.github.bratek20.ostium.gamesmanagement.api.CreatedGamesApi
+import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesWebClient
+import com.github.bratek20.ostium.singlegame.api.GameApi
+import com.github.bratek20.ostium.singlegame.context.GameModuleWebClient
 import org.junit.jupiter.api.Test
 
 class MainSmokeTest {

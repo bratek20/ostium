@@ -4,8 +4,8 @@ import com.github.bratek20.infrastructure.httpclient.api.HttpClientConfig
 import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.logs.api.Logger
 import com.github.bratek20.logs.context.Slf4jLogsImpl
-import com.github.bratek20.ostium.gamemodule.api.GameApi
-import com.github.bratek20.ostium.gamemodule.context.GameModuleWebClient
+import com.github.bratek20.ostium.singlegame.api.GameApi
+import com.github.bratek20.ostium.singlegame.context.GameModuleWebClient
 
 fun main(args: Array<String>) {
     var serverUrl = "http://localhost:8080"

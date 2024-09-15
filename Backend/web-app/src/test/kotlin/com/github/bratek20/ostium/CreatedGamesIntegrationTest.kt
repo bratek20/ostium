@@ -4,10 +4,10 @@ import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
 import com.github.bratek20.infrastructure.httpserver.fixtures.TestWebApp
-import com.github.bratek20.ostium.createdgames.api.CreatedGamesApi
-import com.github.bratek20.ostium.createdgames.context.CreatedGamesWebClient
-import com.github.bratek20.ostium.createdgames.context.CreatedGamesWebServer
-import com.github.bratek20.ostium.createdgames.tests.CreatedGamesImplTest
+import com.github.bratek20.ostium.gamesmanagement.api.CreatedGamesApi
+import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesWebClient
+import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesWebServer
+import com.github.bratek20.ostium.gamesmanagement.tests.CreatedGamesImplTest
 
 class CreatedGamesIntegrationTest: CreatedGamesImplTest() {
     override fun createApi(): CreatedGamesApi {

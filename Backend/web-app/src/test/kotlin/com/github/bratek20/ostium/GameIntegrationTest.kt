@@ -8,10 +8,10 @@ import com.github.bratek20.infrastructure.httpserver.api.WebServerModule
 import com.github.bratek20.infrastructure.httpserver.fixtures.TestWebApp
 import com.github.bratek20.logs.LoggerMock
 import com.github.bratek20.logs.LogsMocks
-import com.github.bratek20.ostium.gamemodule.api.GameApi
-import com.github.bratek20.ostium.gamemodule.context.GameModuleWebClient
-import com.github.bratek20.ostium.gamemodule.context.GameModuleWebServer
-import com.github.bratek20.ostium.gamemodule.tests.GameModuleImplTest
+import com.github.bratek20.ostium.singlegame.api.GameApi
+import com.github.bratek20.ostium.singlegame.context.GameModuleWebClient
+import com.github.bratek20.ostium.singlegame.context.GameModuleWebServer
+import com.github.bratek20.ostium.singlegame.tests.GameModuleImplTest
 
 //TODO-REF TestWebApp should accept also normal modules
 class WebServerLogMocks: WebServerModule {
