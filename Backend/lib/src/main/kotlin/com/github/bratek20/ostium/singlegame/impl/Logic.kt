@@ -7,10 +7,10 @@ import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.singlegame.api.*
 import com.github.bratek20.ostium.user.api.Username
 
-class SingleGameApiLogic(
-    private val managementApi: GamesManagementApi,
-    private val logger: Logger
-): SingleGameApi {
+class GameStateLogic(
+    private val logger: Logger,
+    private val createdGame: CreatedGame
+) {
     private val hand: MutableList<CreatureCard> = mutableListOf(
         CreatureCard.create(
             id = CreatureCardId("Mouse1"),
@@ -22,21 +22,7 @@ class SingleGameApiLogic(
     private var attackRowCard: CreatureCard? = null
     private var defenseRowCard: CreatureCard? = null
 
-    private fun getCreatedGameOrThrow(gameId: GameId, user: Username): CreatedGame {
-        val game = managementApi.getAllCreated().firstOrNull { it.getId() == gameId }
-        if (game == null) {
-            val message = "Game ${gameId.value} for user `${user.value}` not found"
-            throw GameNotFoundException(message)
-        }
-        return game
-    }
-
-    override fun getState(gameId: GameId, user: Username): GameState {
-        getCreatedGameOrThrow(gameId, user)
-        return toApiGame()
-    }
-
-    override fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState {
+    fun playCard(user: Username, cardId: CreatureCardId, row: RowType): GameState {
         val card = hand.first { it.getId() == cardId }
         hand.remove(card)
 
@@ -46,10 +32,10 @@ class SingleGameApiLogic(
         }
 
         logger.info("Card $cardId played in $row row")
-        return toApiGame()
+        return toApi()
     }
 
-    override fun moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
+    fun moveCard(user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
         val card = when (from) {
             RowType.ATTACK -> attackRowCard
             RowType.DEFENSE -> defenseRowCard
@@ -73,16 +59,17 @@ class SingleGameApiLogic(
         }
 
         logger.info("Card $cardId moved from $from to $to row")
-        return toApiGame()
+        return toApi()
     }
 
-    private fun toApiGame(): GameState {
+
+    fun toApi(): GameState {
         return GameState.create(
             myHand = Hand.create(
                 cards = hand.toList()
             ),
             opponentHand = Hand.create(
-                cards = emptyList()
+                cards = hand.toList()
             ),
             table = Table.create(
                 mySide = PlayerSide.create(
@@ -106,8 +93,45 @@ class SingleGameApiLogic(
                     ),
                 ),
             ),
-            myName = Username("Player1"),
+            myName = createdGame.getCreator(),
             opponentName = null,
         )
+    }
+}
+
+class SingleGameApiLogic(
+    private val managementApi: GamesManagementApi,
+    private val logger: Logger
+): SingleGameApi {
+    private val games: MutableMap<GameId, GameStateLogic> = mutableMapOf()
+
+    private fun getCreatedGameOrThrow(gameId: GameId, user: Username): CreatedGame {
+        val game = managementApi.getAllCreated().firstOrNull { it.getId() == gameId }
+        if (game == null) {
+            val message = "Game ${gameId.value} for user `${user.value}` not found"
+            throw GameNotFoundException(message)
+        }
+        return game
+    }
+
+    private fun getGameOrThrow(gameId: GameId, user: Username): GameStateLogic {
+        val game = games[gameId]
+        if (game == null) {
+            val createdGame = getCreatedGameOrThrow(gameId, user)
+            games[gameId] = GameStateLogic(logger, createdGame)
+        }
+        return games[gameId]!!
+    }
+
+    override fun getState(gameId: GameId, user: Username): GameState {
+        return getGameOrThrow(gameId, user).toApi()
+    }
+
+    override fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState {
+        return getGameOrThrow(gameId, user).playCard(user, cardId, row)
+    }
+
+    override fun moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
+        return getGameOrThrow(gameId, user).moveCard(user, cardId, from, to)
     }
 }
