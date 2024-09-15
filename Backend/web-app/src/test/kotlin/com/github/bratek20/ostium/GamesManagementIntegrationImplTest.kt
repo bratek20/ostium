@@ -5,15 +5,15 @@ import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
 import com.github.bratek20.infrastructure.httpserver.fixtures.TestWebApp
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
-import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesWebClient
-import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesWebServer
+import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementWebClient
+import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementWebServer
 import com.github.bratek20.ostium.gamesmanagement.tests.GamesManagementImplTest
 
-class CreatedGamesIntegrationTest: GamesManagementImplTest() {
+class GamesManagementIntegrationImplTest: GamesManagementImplTest() {
     override fun createApi(): GamesManagementApi {
         val c = TestWebApp(
             modules = listOf(
-                CreatedGamesWebServer(),
+                GamesManagementWebServer(),
             ),
         ).run()
 
@@ -21,7 +21,7 @@ class CreatedGamesIntegrationTest: GamesManagementImplTest() {
         return someContextBuilder()
             .withModules(
                 HttpClientImpl(),
-                CreatedGamesWebClient(
+                GamesManagementWebClient(
                     config = httpClientConfig {
                         baseUrl = "http://localhost:${c.port}"
                     }
