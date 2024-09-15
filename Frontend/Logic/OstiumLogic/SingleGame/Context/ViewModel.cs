@@ -1,5 +1,6 @@
 using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
+using SingleGame.Api;
 using SingleGame.ViewModel;
 
 namespace SingleGame.Context
@@ -12,6 +13,7 @@ namespace SingleGame.Context
                 .AddImpl<Window, GameWindow>()
                 .SetClass<GameVm>(InjectionMode.Prototype)
                 .SetClass<TableVm>(InjectionMode.Prototype)
+                .SetClass<PlayerSideVm>(InjectionMode.Prototype)
                 .SetClass<HandVm>(InjectionMode.Prototype)
                 .SetClass<CreateCardListVm>(InjectionMode.Prototype)
                 .SetClass<OptionalCreatureCardVm>(InjectionMode.Prototype)
