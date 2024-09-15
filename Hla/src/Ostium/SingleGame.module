@@ -6,42 +6,36 @@ Enums
 ValueObjects
     CreatureCard
         id: CreatureCardId: string
-
-    GateCard
-        destroyed: bool
-
-    GateDurabilityMarker: int
-    GateDurabilityCard
-        myMarker: GateDurabilityMarker
-        opponentMarker: GateDurabilityMarker
     
     Row
         type: RowType
         card: CreatureCard?
         
-    Table
-        gateDurabilityCard: GateDurabilityCard
+    PlayerSide
         attackRow: Row
         defenseRow: Row
-        gateCard: GateCard
+        
+    Table
+        mySide: PlayerSide
+        opponentSide: PlayerSide
     
     Hand
         cards: CreatureCard[]
     
-    Game
+    GameState
         table: Table
-        hand: Hand
-
-Interfaces
-    GameApi
-        startGame(): Game
-        playCard(cardId: CreatureCardId, row: RowType): Game
-        moveCard(cardId: CreatureCardId, from: RowType, to: RowType): Game
-
-Web
-    Http
-        ExposedInterfaces
-            GameApi
+        myHand: Hand
+        opponentHand: Hand
+        myName: Username
+        opponentName: Username?
+            
+Interfaces        
+    SingleGame
+        getState(gameId: GameId): GameState
+          
+        playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState
+        
+        moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState
                                 
 //ViewModel
     //Elements
@@ -64,10 +58,13 @@ Web
                 //cards
                 
         //GameVm
-            //Game
+            //GameState
+                //opponentName
+                //opponentHand
                 //table
-                //hand
-
-    //Windows
+                //myHand
+                //myName
+    
+    //Windows                
         //GameWindow
             //game: GameVm

@@ -1,27 +1,27 @@
-ValueObjects    
+ValueObjects
+    GameId: int
+    
     CreatedGame
-        id: GameId: int
+        id: GameId
         creator: Username
+        joiner: Username?
         
 Interfaces
-    CreatedGamesApi
-        getAll(): CreatedGame[]
-        
+    GamesManagementApi
         create(creator: Username): GameId
-
-Web
-    Http
-        ExposedInterfaces
-            CreatedGamesApi
-
+        join(joiner: Username, gameId: GameId): void
+        
+        getAllCreated(): CreatedGame[]
+        
 //ViewModel
     //Elements
         //CreatedGameVm (clickable)
             //main -> CreatedGame
-                //id (debug)
+                //id //(debug)
                 //creator
-            
+                //joiner
+    
     //Windows
-        //CreatedGamesWindow
+        //GamesManagementWindow
             //createdGames: CreatedGameVm[]
             //createGame: CreateGameButton
