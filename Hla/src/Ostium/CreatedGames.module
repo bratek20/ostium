@@ -24,4 +24,4 @@ Web
     //Windows
         //CreatedGamesWindow
             //createdGames: CreatedGameVm[]
-            //createGame: CreateGameButton: Button -> GameWindow
+            //createGame: CreateGameButton
