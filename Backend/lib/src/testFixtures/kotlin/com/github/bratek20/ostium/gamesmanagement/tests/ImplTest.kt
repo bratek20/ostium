@@ -1,6 +1,8 @@
 package com.github.bratek20.ostium.gamesmanagement.tests
 
 import com.github.bratek20.architecture.context.someContextBuilder
+import com.github.bratek20.logs.LoggerMock
+import com.github.bratek20.logs.LogsMocks
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.assertCreatedGame
@@ -10,20 +12,37 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 open class GamesManagementImplTest {
-    open fun createApi(): GamesManagementApi = someContextBuilder()
-        .withModules(GamesManagementImpl())
-        .get(GamesManagementApi::class.java)
+    class Context(
+        val api: GamesManagementApi,
+        val loggerMock: LoggerMock
+    )
+    open fun createContext(): Context {
+        val c = someContextBuilder()
+            .withModules(
+                LogsMocks(),
+                GamesManagementImpl()
+            )
+            .build()
+
+        return Context(
+            api = c.get(GamesManagementApi::class.java),
+            loggerMock = c.get(LoggerMock::class.java)
+        )
+    }
 
     @Test
     fun `should work`() {
-        val api = someContextBuilder()
-            .withModules(GamesManagementImpl())
-            .get(GamesManagementApi::class.java)
+        val c = createContext()
+        val api = c.api
+        val loggerMock = c.loggerMock
 
         assertThat(api.getAllCreated()).hasSize(0)
 
         // create
         api.create(username("test"))
+        loggerMock.assertInfos(
+            "User `test` created game with id 1"
+        )
 
         val games = api.getAllCreated()
         assertThat(games).hasSize(1)
@@ -34,7 +53,12 @@ open class GamesManagementImplTest {
         }
 
         // join
+        loggerMock.reset()
         api.join(username("test2"), gameId(1))
+
+        loggerMock.assertInfos(
+            "User `test2` joined game with id 1"
+        )
 
         val gamesAfterJoin = api.getAllCreated()
         assertThat(gamesAfterJoin).hasSize(1)
@@ -46,7 +70,6 @@ open class GamesManagementImplTest {
 
         // create second
         api.create(username("test3"))
-
         val gamesAfterSecondCreate = api.getAllCreated()
         assertThat(gamesAfterSecondCreate).hasSize(2)
         assertCreatedGame(gamesAfterSecondCreate[1]) {
