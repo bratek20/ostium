@@ -9,8 +9,12 @@ import com.github.bratek20.ostium.user.api.Username
 
 class GameStateLogic(
     private val logger: Logger,
-    private val createdGame: CreatedGame
+    private var createdGame: CreatedGame
 ) {
+    fun update(createdGame: CreatedGame) {
+        this.createdGame = createdGame
+    }
+
     private val hand: MutableList<CreatureCard> = mutableListOf(
         CreatureCard.create(
             id = CreatureCardId("Mouse1"),
@@ -32,7 +36,7 @@ class GameStateLogic(
         }
 
         logger.info("Card $cardId played in $row row")
-        return toApi()
+        return toApi(user)
     }
 
     fun moveCard(user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
@@ -59,11 +63,11 @@ class GameStateLogic(
         }
 
         logger.info("Card $cardId moved from $from to $to row")
-        return toApi()
+        return toApi(user)
     }
 
 
-    fun toApi(): GameState {
+    fun toApi(user: Username): GameState {
         return GameState.create(
             myHand = Hand.create(
                 cards = hand.toList()
@@ -93,8 +97,8 @@ class GameStateLogic(
                     ),
                 ),
             ),
-            myName = createdGame.getCreator(),
-            opponentName = null,
+            myName = user,
+            opponentName = if(user == createdGame.getCreator()) createdGame.getJoiner() else createdGame.getCreator()
         )
     }
 }
@@ -115,16 +119,17 @@ class SingleGameApiLogic(
     }
 
     private fun getGameOrThrow(gameId: GameId, user: Username): GameStateLogic {
-        val game = games[gameId]
-        if (game == null) {
-            val createdGame = getCreatedGameOrThrow(gameId, user)
+        val createdGame = getCreatedGameOrThrow(gameId, user)
+        if (!games.containsKey(gameId)) {
             games[gameId] = GameStateLogic(logger, createdGame)
         }
-        return games[gameId]!!
+        val game = games[gameId]!!
+        game.update(createdGame)
+        return game
     }
 
     override fun getState(gameId: GameId, user: Username): GameState {
-        return getGameOrThrow(gameId, user).toApi()
+        return getGameOrThrow(gameId, user).toApi(user)
     }
 
     override fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState {

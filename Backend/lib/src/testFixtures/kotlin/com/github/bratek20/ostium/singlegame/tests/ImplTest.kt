@@ -79,7 +79,7 @@ open class SingleGameImplTest {
         }
 
         @Test
-        fun `initial created game state `() {
+        fun `initial creator game state`() {
             val game = api.getState(GAME_ID, CREATOR)
 
             assertGameState(game) {
@@ -126,6 +126,24 @@ open class SingleGameImplTest {
                             cardEmpty = true
                         }
                     }
+                }
+            }
+        }
+
+        @Nested
+        inner class OpponentJoinedScope {
+            @BeforeEach
+            fun opponentJoined() {
+                managementApi.join(JOINER, GAME_ID)
+            }
+
+            @Test
+            fun `initial opponent game state`() {
+                val game = api.getState(GAME_ID, JOINER)
+
+                assertGameState(game) {
+                    myName = JOINER.value
+                    opponentName = CREATOR.value
                 }
             }
         }
