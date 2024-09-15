@@ -231,6 +231,60 @@ open class SingleGameImplTest {
                     "User `joiner` played card `Mouse2` in DEFENSE row"
                 )
             }
+
+            @Test
+            fun `creator and joiner moved card to empty row`() {
+                api.playCard(GAME_ID, CREATOR, creatureCardId("Mouse1"), RowType.ATTACK)
+                api.playCard(GAME_ID, JOINER, creatureCardId("Mouse2"), RowType.DEFENSE)
+
+                loggerMock.reset()
+
+                val state1 = api.moveCard(GAME_ID, CREATOR, creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
+                val state2 = api.moveCard(GAME_ID, JOINER, creatureCardId("Mouse2"), RowType.DEFENSE, RowType.ATTACK)
+
+                assertGameState(state1) {
+                    myHand = {
+                        cards = listOf {
+                            id = "Mouse2"
+                        }
+                    }
+                    table = {
+                        mySide = {
+                            attackRow = {
+                                cardEmpty = true
+                            }
+                            defenseRow = {
+                                card = {
+                                    id = "Mouse1"
+                                }
+                            }
+                        }
+                    }
+                }
+                assertGameState(state2) {
+                    myHand = {
+                        cards = listOf {
+                            id = "Mouse1"
+                        }
+                    }
+                    table = {
+                        mySide = {
+                            attackRow = {
+                                card = {
+                                    id = "Mouse2"
+                                }
+                            }
+                            defenseRow = {
+                                cardEmpty = true
+                            }
+                        }
+                    }
+                }
+                loggerMock.assertInfos(
+                    "User `creator` moved card `Mouse1` from ATTACK to DEFENSE row",
+                    "User `joiner` moved card `Mouse2` from DEFENSE to ATTACK row"
+                )
+            }
         }
     }
 
@@ -238,35 +292,7 @@ open class SingleGameImplTest {
 //
 
 //
-//    @Test
-//    fun `move card to empty row`() {
-//        api.startGame()
-//        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
-//        loggerMock.reset()
-//
-//        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
-//
-//        assertGame(game) {
-//            hand = {
-//                cards = listOf {
-//                    id = "Mouse2"
-//                }
-//            }
-//            table = {
-//                attackRow = {
-//                    cardEmpty = true
-//                }
-//                defenseRow = {
-//                    card = {
-//                        id = "Mouse1"
-//                    }
-//                }
-//            }
-//        }
-//        loggerMock.assertInfos(
-//            "Card Mouse1 moved from ATTACK to DEFENSE row"
-//        )
-//    }
+
 //
 //    @Test
 //    fun `move card to row with card`() {

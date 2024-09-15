@@ -61,7 +61,7 @@ class SideLogic(
             RowType.DEFENSE -> defenseRowCard = toCurrentCard
         }
 
-        logger.info("Card $cardId moved from $from to $to row")
+        logger.info("User `$user` moved card `$cardId` from $from to $to row")
     }
 
     fun getApiHand(): Hand {
