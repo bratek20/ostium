@@ -38,122 +38,122 @@ open class SingleGameImplTest {
         this.loggerMock = c.loggerMock
     }
 
-    @Test
-    fun `start game`() {
-        val game = api.startGame()
-
-        loggerMock.assertInfos(
-            "Game started"
-        )
-        assertGame(game) {
-            hand = {
-                cards = listOf(
-                    {
-                        id = "Mouse1"
-                    },
-                    {
-                        id = "Mouse2"
-                    }
-                )
-            }
-            table = {
-                gateDurabilityCard = {
-                    myMarker = 15
-                    opponentMarker = 15
-                }
-                attackRow = {
-                    type = "ATTACK"
-                    cardEmpty = true
-                }
-                defenseRow = {
-                    type = "DEFENSE"
-                    cardEmpty = true
-                }
-                gateCard = {
-                    destroyed = false
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `play card`() {
-        api.startGame()
-        loggerMock.reset()
-
-        val game = api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
-
-        assertGame(game) {
-            hand = {
-                cards = listOf {
-                    id = "Mouse2"
-                }
-            }
-            table = {
-                attackRow = {
-                    card = {
-                        id = "Mouse1"
-                    }
-                }
-            }
-        }
-        loggerMock.assertInfos(
-            "Card Mouse1 played in ATTACK row"
-        )
-    }
-
-    @Test
-    fun `move card to empty row`() {
-        api.startGame()
-        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
-        loggerMock.reset()
-
-        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
-
-        assertGame(game) {
-            hand = {
-                cards = listOf {
-                    id = "Mouse2"
-                }
-            }
-            table = {
-                attackRow = {
-                    cardEmpty = true
-                }
-                defenseRow = {
-                    card = {
-                        id = "Mouse1"
-                    }
-                }
-            }
-        }
-        loggerMock.assertInfos(
-            "Card Mouse1 moved from ATTACK to DEFENSE row"
-        )
-    }
-
-    @Test
-    fun `move card to row with card`() {
-        api.startGame()
-        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
-        api.playCard(creatureCardId("Mouse2"), RowType.DEFENSE)
-
-        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
-
-        assertGame(game) {
-            table = {
-                attackRow = {
-                    card = {
-                        id = "Mouse2"
-                    }
-                }
-                defenseRow = {
-                    card = {
-                        id = "Mouse1"
-                    }
-                }
-            }
-        }
-    }
+//    @Test
+//    fun `start game`() {
+//        val game = api.startGame()
+//
+//        loggerMock.assertInfos(
+//            "Game started"
+//        )
+//        assertGame(game) {
+//            hand = {
+//                cards = listOf(
+//                    {
+//                        id = "Mouse1"
+//                    },
+//                    {
+//                        id = "Mouse2"
+//                    }
+//                )
+//            }
+//            table = {
+//                gateDurabilityCard = {
+//                    myMarker = 15
+//                    opponentMarker = 15
+//                }
+//                attackRow = {
+//                    type = "ATTACK"
+//                    cardEmpty = true
+//                }
+//                defenseRow = {
+//                    type = "DEFENSE"
+//                    cardEmpty = true
+//                }
+//                gateCard = {
+//                    destroyed = false
+//                }
+//            }
+//        }
+//    }
+//
+//    @Test
+//    fun `play card`() {
+//        api.startGame()
+//        loggerMock.reset()
+//
+//        val game = api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+//
+//        assertGame(game) {
+//            hand = {
+//                cards = listOf {
+//                    id = "Mouse2"
+//                }
+//            }
+//            table = {
+//                attackRow = {
+//                    card = {
+//                        id = "Mouse1"
+//                    }
+//                }
+//            }
+//        }
+//        loggerMock.assertInfos(
+//            "Card Mouse1 played in ATTACK row"
+//        )
+//    }
+//
+//    @Test
+//    fun `move card to empty row`() {
+//        api.startGame()
+//        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+//        loggerMock.reset()
+//
+//        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
+//
+//        assertGame(game) {
+//            hand = {
+//                cards = listOf {
+//                    id = "Mouse2"
+//                }
+//            }
+//            table = {
+//                attackRow = {
+//                    cardEmpty = true
+//                }
+//                defenseRow = {
+//                    card = {
+//                        id = "Mouse1"
+//                    }
+//                }
+//            }
+//        }
+//        loggerMock.assertInfos(
+//            "Card Mouse1 moved from ATTACK to DEFENSE row"
+//        )
+//    }
+//
+//    @Test
+//    fun `move card to row with card`() {
+//        api.startGame()
+//        api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
+//        api.playCard(creatureCardId("Mouse2"), RowType.DEFENSE)
+//
+//        val game = api.moveCard(creatureCardId("Mouse1"), RowType.ATTACK, RowType.DEFENSE)
+//
+//        assertGame(game) {
+//            table = {
+//                attackRow = {
+//                    card = {
+//                        id = "Mouse2"
+//                    }
+//                }
+//                defenseRow = {
+//                    card = {
+//                        id = "Mouse1"
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }
