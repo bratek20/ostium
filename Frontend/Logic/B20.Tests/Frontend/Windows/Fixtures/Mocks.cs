@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
+using Xunit;
 
 namespace B20.Tests.Frontend.Windows.Fixtures
 {
@@ -24,6 +26,31 @@ namespace B20.Tests.Frontend.Windows.Fixtures
         public void Apply(ContextBuilder builder)
         {
             builder.SetImpl<WindowManipulator, InMemoryWindowManipulator>();
+        }
+    }
+
+    public class WindowManagerMock : WindowManager
+    {
+        public T Get<T>() where T : class, Window
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private Type lastOpenedWindow;
+        
+        public void Open<T>() where T : class, Window
+        {
+            lastOpenedWindow = typeof(T);    
+        }
+        
+        public void AssertLastOpenedWindow<T>() where T : class, Window
+        {
+            Assert.True(lastOpenedWindow == typeof(T), "Last opened window is not " + typeof(T).Name);
+        }
+
+        public Window GetCurrent()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

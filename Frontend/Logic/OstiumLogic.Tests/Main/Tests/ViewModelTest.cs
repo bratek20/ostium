@@ -1,4 +1,12 @@
+using B20.Architecture.Contexts.Context;
+using B20.Frontend.Traits.Context;
+using B20.Frontend.UiElements.Context;
+using B20.Frontend.Windows.Context;
+using B20.Tests.Architecture.Logs.Context;
+using B20.Tests.Frontend.Windows.Context;
+using B20.Tests.Frontend.Windows.Fixtures;
 using Main.ViewModel;
+using Ostium.Logic.MainWindowModule.Context;
 using SingleGame.ViewModel;
 using Xunit;
 
@@ -6,25 +14,29 @@ namespace Ostium.Logic.Tests.Main.Tests
 {
     public class MainViewModelTest
     {
-        private Scenarios scenarios = new Scenarios();
-        
         [Fact]
-        public void ShouldStartOnMainScreenAndSwitchToGameScreen()
+        public void ShouldGoToGameWindowWhenPlayButtonClicked()
         {
-            var c = scenarios.Setup();
-
-            //should not throw
-            c.WindowManager.Get<MainWindow>();
-            c.WindowManager.Get<GameWindow>();
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    //TODO-REF below one should be somehow grouped
+                    new LogsMocks(),
+                    new TraitsImpl(),
+                    new UiElementsImpl(),
+                    
+                    //reasonable mock
+                    new WindowsMocks(),
+                    
+                    //tested module
+                    new MainViewModel()
+                ).Build();
             
-            c.Logic.Start();
+            var mainWindow = c.Get<MainWindow>();
+            var windowManagerMock = c.Get<WindowManagerMock>();
 
-            Assert.IsType<MainWindow>(c.WindowManager.GetCurrent());
-            
-            //Clicking play button
-            c.WindowManager.Get<MainWindow>().PlayButton.Click();
+            mainWindow.PlayButton.Click();
 
-            Assert.IsType<GameWindow>(c.WindowManager.GetCurrent());
+            windowManagerMock.AssertLastOpenedWindow<GameWindow>();
         }
 
     }
