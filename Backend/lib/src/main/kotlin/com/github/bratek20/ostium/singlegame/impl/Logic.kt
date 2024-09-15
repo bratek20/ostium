@@ -7,12 +7,12 @@ import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.singlegame.api.*
 import com.github.bratek20.ostium.user.api.Username
 
-class GameStateLogic(
+class SideLogic(
     private val logger: Logger,
-    private var createdGame: CreatedGame
+    private var user: Username?
 ) {
-    fun update(createdGame: CreatedGame) {
-        this.createdGame = createdGame
+    fun update(user: Username?) {
+        this.user = user
     }
 
     private val hand: MutableList<CreatureCard> = mutableListOf(
@@ -26,7 +26,7 @@ class GameStateLogic(
     private var attackRowCard: CreatureCard? = null
     private var defenseRowCard: CreatureCard? = null
 
-    fun playCard(user: Username, cardId: CreatureCardId, row: RowType): GameState {
+    fun playCard(cardId: CreatureCardId, row: RowType) {
         val card = hand.first { it.getId() == cardId }
         hand.remove(card)
 
@@ -35,11 +35,10 @@ class GameStateLogic(
             RowType.DEFENSE -> defenseRowCard = CreatureCard.create(id = cardId)
         }
 
-        logger.info("Card $cardId played in $row row")
-        return toApi(user)
+        logger.info("User `$user` played card `$cardId` in $row row")
     }
 
-    fun moveCard(user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
+    fun moveCard(cardId: CreatureCardId, from: RowType, to: RowType) {
         val card = when (from) {
             RowType.ATTACK -> attackRowCard
             RowType.DEFENSE -> defenseRowCard
@@ -63,42 +62,75 @@ class GameStateLogic(
         }
 
         logger.info("Card $cardId moved from $from to $to row")
+    }
+
+    fun getApiHand(): Hand {
+        return Hand.create(
+            cards = hand.toList()
+        )
+    }
+
+    fun getTablePart(): PlayerSide {
+        return PlayerSide.create(
+            attackRow = Row.create(
+                type = RowType.ATTACK,
+                card = attackRowCard
+            ),
+            defenseRow = Row.create(
+                type = RowType.DEFENSE,
+                card = defenseRowCard
+            ),
+        )
+    }
+
+    fun getName(): Username? {
+        return user
+    }
+}
+
+class GameStateLogic(
+    private val logger: Logger,
+    private var createdGame: CreatedGame
+) {
+    private val creatorSide = SideLogic(logger, createdGame.getCreator())
+    private val joinerSide = SideLogic(logger, createdGame.getJoiner())
+
+    fun update(createdGame: CreatedGame) {
+        this.createdGame = createdGame
+        joinerSide.update(createdGame.getJoiner())
+    }
+
+    private fun getMySide(user: Username): SideLogic {
+        return if (user == createdGame.getCreator()) creatorSide else joinerSide
+    }
+
+    private fun getOpponentSide(user: Username): SideLogic {
+        return if (user == createdGame.getCreator()) joinerSide else creatorSide
+    }
+
+    fun playCard(user: Username, cardId: CreatureCardId, row: RowType): GameState {
+        getMySide(user).playCard(cardId, row)
         return toApi(user)
     }
 
+    fun moveCard(user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState {
+        getMySide(user).moveCard(cardId, from, to)
+        return toApi(user)
+    }
 
     fun toApi(user: Username): GameState {
+        val mySide = getMySide(user)
+        val opponentSide = getOpponentSide(user)
+
         return GameState.create(
-            myHand = Hand.create(
-                cards = hand.toList()
-            ),
-            opponentHand = Hand.create(
-                cards = hand.toList()
-            ),
+            myHand = mySide.getApiHand(),
+            opponentHand = opponentSide.getApiHand(),
             table = Table.create(
-                mySide = PlayerSide.create(
-                    attackRow = Row.create(
-                        type = RowType.ATTACK,
-                        card = attackRowCard
-                    ),
-                    defenseRow = Row.create(
-                        type = RowType.DEFENSE,
-                        card = defenseRowCard
-                    ),
-                ),
-                opponentSide = PlayerSide.create(
-                    attackRow = Row.create(
-                        type = RowType.ATTACK,
-                        card = null
-                    ),
-                    defenseRow = Row.create(
-                        type = RowType.DEFENSE,
-                        card = null
-                    ),
-                ),
+                mySide = mySide.getTablePart(),
+                opponentSide = opponentSide.getTablePart()
             ),
-            myName = user,
-            opponentName = if(user == createdGame.getCreator()) createdGame.getJoiner() else createdGame.getCreator()
+            myName = mySide.getName()!!,
+            opponentName = opponentSide.getName()
         )
     }
 }

@@ -146,36 +146,97 @@ open class SingleGameImplTest {
                     opponentName = CREATOR.value
                 }
             }
+
+            @Test
+            fun `creator and joiner played card`() {
+                loggerMock.reset()
+
+                val state1 = api.playCard(GAME_ID, CREATOR, creatureCardId("Mouse1"), RowType.ATTACK)
+                val state2 = api.playCard(GAME_ID, JOINER, creatureCardId("Mouse2"), RowType.DEFENSE)
+
+                assertGameState(state1) {
+                    myHand = {
+                        cards = listOf {
+                            id = "Mouse2"
+                        }
+                    }
+                    opponentHand = {
+                        cards = listOf(
+                            {
+                                id = "Mouse1"
+                            },
+                            {
+                                id = "Mouse2"
+                            }
+                        )
+                    }
+                    table = {
+                        mySide = {
+                            attackRow = {
+                                card = {
+                                    id = "Mouse1"
+                                }
+                            }
+                            defenseRow = {
+                                cardEmpty = true
+                            }
+                        }
+                        opponentSide = {
+                            attackRow = {
+                                cardEmpty = true
+                            }
+                            defenseRow = {
+                                cardEmpty = true
+                            }
+                        }
+                    }
+                }
+                assertGameState(state2) {
+                    myHand = {
+                        cards = listOf {
+                            id = "Mouse1"
+                        }
+                    }
+                    opponentHand = {
+                        cards = listOf {
+                            id = "Mouse2"
+                        }
+                    }
+                    table = {
+                        mySide = {
+                            attackRow = {
+                                cardEmpty = true
+                            }
+                            defenseRow = {
+                                card = {
+                                    id = "Mouse2"
+                                }
+                            }
+                        }
+                        opponentSide = {
+                            attackRow = {
+                                card = {
+                                    id = "Mouse1"
+                                }
+                            }
+                            defenseRow = {
+                                cardEmpty = true
+                            }
+                        }
+                    }
+                }
+
+                loggerMock.assertInfos(
+                    "User `creator` played card `Mouse1` in ATTACK row",
+                    "User `joiner` played card `Mouse2` in DEFENSE row"
+                )
+            }
         }
     }
 
 
 //
-//    @Test
-//    fun `play card`() {
-//        api.startGame()
-//        loggerMock.reset()
-//
-//        val game = api.playCard(creatureCardId("Mouse1"), RowType.ATTACK)
-//
-//        assertGame(game) {
-//            hand = {
-//                cards = listOf {
-//                    id = "Mouse2"
-//                }
-//            }
-//            table = {
-//                attackRow = {
-//                    card = {
-//                        id = "Mouse1"
-//                    }
-//                }
-//            }
-//        }
-//        loggerMock.assertInfos(
-//            "Card Mouse1 played in ATTACK row"
-//        )
-//    }
+
 //
 //    @Test
 //    fun `move card to empty row`() {
