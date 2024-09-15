@@ -16,7 +16,7 @@ class CreatedGamesWebClient(
     override fun apply(builder: ContextBuilder) {
         builder
             .setImplObject(CreatedGamesWebClientConfig::class.java, CreatedGamesWebClientConfig(config))
-            .setImpl(CreatedGamesApi::class.java, CreatedGamesApiWebClient::class.java)
+            .setImpl(GamesManagementApi::class.java, GamesManagementApiWebClient::class.java)
     }
 }
 

@@ -30,7 +30,7 @@ ValueObjects
         opponentName: Username?
             
 Interfaces        
-    SingleGame
+    SingleGameApi
         getState(gameId: GameId): GameState
           
         playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState

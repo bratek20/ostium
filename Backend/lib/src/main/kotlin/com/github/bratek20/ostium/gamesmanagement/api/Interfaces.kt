@@ -4,7 +4,7 @@ package com.github.bratek20.ostium.gamesmanagement.api
 
 import com.github.bratek20.ostium.user.api.*
 
-interface CreatedGamesApi {
+interface GamesManagementApi {
     fun getAll(): List<CreatedGame>
 
     fun create(creator: Username): GameId

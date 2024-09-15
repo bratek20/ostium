@@ -8,7 +8,7 @@ import com.github.bratek20.infrastructure.httpserver.api.WebServerModule
 import com.github.bratek20.infrastructure.httpserver.fixtures.TestWebApp
 import com.github.bratek20.logs.LoggerMock
 import com.github.bratek20.logs.LogsMocks
-import com.github.bratek20.ostium.singlegame.api.GameApi
+import com.github.bratek20.ostium.singlegame.api.SingleGameApi
 import com.github.bratek20.ostium.singlegame.context.GameModuleWebClient
 import com.github.bratek20.ostium.singlegame.context.GameModuleWebServer
 import com.github.bratek20.ostium.singlegame.tests.GameModuleImplTest
@@ -41,7 +41,7 @@ class GameIntegrationTest: GameModuleImplTest() {
                         baseUrl = "http://localhost:${c.port}"
                     }
                 )
-            ).get(GameApi::class.java)
+            ).get(SingleGameApi::class.java)
 
         return Context(
             api = api,

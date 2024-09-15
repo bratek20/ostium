@@ -3,9 +3,9 @@ package com.github.bratek20.ostium
 import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
-import com.github.bratek20.ostium.gamesmanagement.api.CreatedGamesApi
+import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesWebClient
-import com.github.bratek20.ostium.singlegame.api.GameApi
+import com.github.bratek20.ostium.singlegame.api.SingleGameApi
 import com.github.bratek20.ostium.singlegame.context.GameModuleWebClient
 import org.junit.jupiter.api.Test
 
@@ -24,10 +24,10 @@ class MainSmokeTest {
                 GameModuleWebClient(httpConfig)
             )
 
-        val createdGamesApi = c.get(CreatedGamesApi::class.java)
-        val gameApi = c.get(GameApi::class.java)
+        val gamesManagementApi = c.get(GamesManagementApi::class.java)
+        val singleGameApi = c.get(SingleGameApi::class.java)
 
-        createdGamesApi.getAll()
-        gameApi.startGame()
+        gamesManagementApi.getAll()
+        singleGameApi.startGame()
     }
 }

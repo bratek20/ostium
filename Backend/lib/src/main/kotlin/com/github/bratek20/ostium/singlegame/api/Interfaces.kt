@@ -2,7 +2,7 @@
 
 package com.github.bratek20.ostium.singlegame.api
 
-interface GameApi {
+interface SingleGameApi {
     fun startGame(): Game
 
     fun playCard(cardId: CreatureCardId, row: RowType): Game

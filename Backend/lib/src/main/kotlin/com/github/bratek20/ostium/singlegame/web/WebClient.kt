@@ -6,10 +6,10 @@ import com.github.bratek20.infrastructure.httpclient.api.HttpClientFactory
 
 import com.github.bratek20.ostium.singlegame.api.*
 
-class GameApiWebClient(
+class SingleGameApiWebClient(
     factory: HttpClientFactory,
     config: GameModuleWebClientConfig,
-): GameApi {
+): SingleGameApi {
     private val client = factory.create(config.value)
 
     override fun startGame(): Game {

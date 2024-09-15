@@ -16,7 +16,7 @@ import com.github.bratek20.ostium.singlegame.api.*
 @RestController
 @RequestMapping("/gameApi")
 class GameApiController(
-    private val api: GameApi,
+    private val api: SingleGameApi,
 ) {
     private val serializer: Serializer = SerializationFactory.createSerializer()
 

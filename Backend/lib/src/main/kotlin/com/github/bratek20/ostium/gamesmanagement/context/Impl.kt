@@ -9,6 +9,6 @@ import com.github.bratek20.ostium.gamesmanagement.impl.*
 class CreatedGamesImpl: ContextModule {
     override fun apply(builder: ContextBuilder) {
         builder
-            .setImpl(CreatedGamesApi::class.java, CreatedGamesApiLogic::class.java)
+            .setImpl(GamesManagementApi::class.java, GamesManagementApiLogic::class.java)
     }
 }

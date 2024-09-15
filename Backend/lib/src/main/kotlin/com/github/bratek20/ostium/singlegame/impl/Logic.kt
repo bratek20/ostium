@@ -3,9 +3,9 @@ package com.github.bratek20.ostium.singlegame.impl
 import com.github.bratek20.logs.api.Logger
 import com.github.bratek20.ostium.singlegame.api.*
 
-class GameApiLogic(
+class SingleGameApiLogic(
     private val logger: Logger
-): GameApi {
+): SingleGameApi {
     private val hand: MutableList<CreatureCard> = mutableListOf(
         CreatureCard.create(
             id = CreatureCardId("Mouse1"),

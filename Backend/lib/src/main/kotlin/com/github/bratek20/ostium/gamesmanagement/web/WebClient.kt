@@ -8,10 +8,10 @@ import com.github.bratek20.ostium.gamesmanagement.api.*
 
 import com.github.bratek20.ostium.user.api.*
 
-class CreatedGamesApiWebClient(
+class GamesManagementApiWebClient(
     factory: HttpClientFactory,
     config: CreatedGamesWebClientConfig,
-): CreatedGamesApi {
+): GamesManagementApi {
     private val client = factory.create(config.value)
 
     override fun getAll(): List<CreatedGame> {

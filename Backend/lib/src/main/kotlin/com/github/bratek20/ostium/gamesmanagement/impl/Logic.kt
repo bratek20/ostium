@@ -4,7 +4,7 @@ import com.github.bratek20.ostium.gamesmanagement.api.*
 
 import com.github.bratek20.ostium.user.api.*
 
-class CreatedGamesApiLogic: CreatedGamesApi {
+class GamesManagementApiLogic: GamesManagementApi {
     private val games = mutableListOf<CreatedGame>()
     private var nextId = 1
 

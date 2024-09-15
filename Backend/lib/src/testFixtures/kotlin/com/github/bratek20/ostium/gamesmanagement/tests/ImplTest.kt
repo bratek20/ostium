@@ -1,7 +1,7 @@
 package com.github.bratek20.ostium.gamesmanagement.tests
 
 import com.github.bratek20.architecture.context.someContextBuilder
-import com.github.bratek20.ostium.gamesmanagement.api.CreatedGamesApi
+import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.CreatedGamesImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.assertCreatedGame
 import com.github.bratek20.ostium.user.fixtures.username
@@ -9,15 +9,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 open class CreatedGamesImplTest {
-    open fun createApi(): CreatedGamesApi = someContextBuilder()
+    open fun createApi(): GamesManagementApi = someContextBuilder()
         .withModules(CreatedGamesImpl())
-        .get(CreatedGamesApi::class.java)
+        .get(GamesManagementApi::class.java)
 
     @Test
     fun `should work`() {
         val api = someContextBuilder()
             .withModules(CreatedGamesImpl())
-            .get(CreatedGamesApi::class.java)
+            .get(GamesManagementApi::class.java)
 
         assertThat(api.getAll()).hasSize(0)
 
