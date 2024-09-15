@@ -1,7 +1,7 @@
 using B20.Frontend.Windows.Api;
-using GameModule.ViewModel;
+using SingleGame.ViewModel;
 
-namespace GameModule.ViewModel
+namespace SingleGame.ViewModel
 {
     public partial class GameWindow : Window
     {

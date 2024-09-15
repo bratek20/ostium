@@ -6,8 +6,8 @@ using B20.Frontend.Windows.Api;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
 using GameComponents;
-using GameModule.Api;
-using GameModule.ViewModel;
+using SingleGame.Api;
+using SingleGame.ViewModel;
 using Main.ViewModel;
 using Xunit;
 

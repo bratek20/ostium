@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 using HttpClientModule.Api;
-using GameModule.Api;
+using SingleGame.Api;
 
-namespace GameModule.Web {
+namespace SingleGame.Web {
     public class GameModuleWebClientConfig {
         public HttpClientConfig Value { get; }
 
@@ -18,10 +18,10 @@ namespace GameModule.Web {
     }
 
     public class GameApiStartGameResponse {
-        public Game Value { get; }
+        public GameState Value { get; }
 
         public GameApiStartGameResponse(
-            Game value
+            GameState value
         ) {
             Value = value;
         }
@@ -50,10 +50,10 @@ namespace GameModule.Web {
     }
 
     public class GameApiPlayCardResponse {
-        public Game Value { get; }
+        public GameState Value { get; }
 
         public GameApiPlayCardResponse(
-            Game value
+            GameState value
         ) {
             Value = value;
         }
@@ -88,10 +88,10 @@ namespace GameModule.Web {
     }
 
     public class GameApiMoveCardResponse {
-        public Game Value { get; }
+        public GameState Value { get; }
 
         public GameApiMoveCardResponse(
-            Game value
+            GameState value
         ) {
             Value = value;
         }

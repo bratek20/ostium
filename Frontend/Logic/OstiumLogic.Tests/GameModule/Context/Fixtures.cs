@@ -1,6 +1,6 @@
 using B20.Architecture.Contexts.Api;
-using GameModule;
-using GameModule.Api;
+using SingleGame;
+using SingleGame.Api;
 
 namespace Ostium.Logic.Tests.GameModule.Context
 {
@@ -8,7 +8,7 @@ namespace Ostium.Logic.Tests.GameModule.Context
     {
         public void Apply(ContextBuilder builder)
         {
-            builder.SetImpl<GameApi, GameApiMock>();
+            builder.SetImpl<SingleGameApi, SingleGameApiMock>();
         }
     }
 }

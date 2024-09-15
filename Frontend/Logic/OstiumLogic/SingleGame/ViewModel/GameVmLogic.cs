@@ -4,9 +4,9 @@ using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Logic.Utils;
-using GameModule.Api;
+using SingleGame.Api;
 
-namespace GameModule.ViewModel
+namespace SingleGame.ViewModel
 {
     class GameElementDragStartedListener: EventListener<ElementDragStartedEvent>
     {
@@ -38,8 +38,8 @@ namespace GameModule.ViewModel
 
     public partial class GameVm
     {
-        private GameApi gameSetupApi;
-        public GameVm(GameApi gameSetupApi, EventPublisher eventPublisher)
+        private SingleGameApi gameSetupApi;
+        public GameVm(SingleGameApi gameSetupApi, EventPublisher eventPublisher)
         {
             this.gameSetupApi = gameSetupApi;
             eventPublisher.AddListener(new GameElementDragStartedListener(this));

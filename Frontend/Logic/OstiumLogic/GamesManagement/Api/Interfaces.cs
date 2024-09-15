@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using B20.Ext;
 using User.Api;
 
-namespace CreatedGames.Api {
+namespace GamesManagement.Api {
     public interface CreatedGamesApi {
         List<CreatedGame> GetAll();
 

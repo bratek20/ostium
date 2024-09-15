@@ -1,10 +1,10 @@
 using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
-using GameModule.ViewModel;
+using SingleGame.ViewModel;
 
-namespace GameModule.Context
+namespace SingleGame.Context
 {
-    public class GameModuleViewModel: ContextModule
+    public class SingleGameViewModel: ContextModule
     {
         public void Apply(ContextBuilder builder)
         {

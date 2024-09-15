@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 
-namespace GameModule.Api {
+namespace SingleGame.Api {
     public enum RowType {
         ATTACK,
         DEFENSE,

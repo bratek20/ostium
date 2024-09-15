@@ -6,7 +6,7 @@ using B20.Frontend.UiElements.Context;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Infrastructure.HttpClientModule.Context;
-using GameModule.Context;
+using SingleGame.Context;
 using HttpClientModule.Api;
 using Main.ViewModel;
 using Ostium.Logic.GameModule.Context;
@@ -35,7 +35,7 @@ namespace Ostium.Logic
         {
             builder
                 .WithModules(
-                    new GameModuleViewModel(),
+                    new SingleGameViewModel(),
                     new MainViewModel()
                 )
                 .SetClass<OstiumLogic>();

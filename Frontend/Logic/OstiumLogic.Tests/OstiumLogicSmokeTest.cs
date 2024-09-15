@@ -10,8 +10,8 @@ using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Infrastructure.HttpClientModule.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
-using GameModule;
-using GameModule.Api;
+using SingleGame;
+using SingleGame.Api;
 using HttpClientModule.Api;
 using Main.ViewModel;
 using Ostium.Logic.GameModule.Context;
@@ -23,7 +23,7 @@ namespace Ostium.Logic.Tests
 {
     public class OstiumLogicSmokeTest
     {
-        private GameApi CreateWebApi()
+        private SingleGameApi CreateWebApi()
         {
             return ContextsFactory.CreateBuilder()
                 .WithModules(
@@ -35,7 +35,7 @@ namespace Ostium.Logic.Tests
                         )
                     )
                 )
-                .Get<GameApi>();
+                .Get<SingleGameApi>();
         }
         
         [Fact(

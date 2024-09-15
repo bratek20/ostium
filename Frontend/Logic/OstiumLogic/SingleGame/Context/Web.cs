@@ -1,6 +1,6 @@
 using B20.Architecture.Contexts.Api;
-using GameModule.Api;
-using GameModule.Web;
+using SingleGame.Api;
+using SingleGame.Web;
 using HttpClientModule.Api;
 
 namespace Ostium.Logic.GameModule.Context
@@ -17,7 +17,7 @@ namespace Ostium.Logic.GameModule.Context
         {
             builder
                 .SetImplObject(new GameModuleWebClientConfig(_config))
-                .SetImpl<GameApi, GameApiWebClient>();
+                .SetImpl<SingleGameApi, GameApiWebClient>();
         }
     }
 }

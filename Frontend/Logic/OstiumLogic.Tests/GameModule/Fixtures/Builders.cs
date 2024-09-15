@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using GameModule.Api;
+using SingleGame.Api;
 
 
-namespace GameModule
+namespace SingleGame
 {
     public static class Builders
     {
@@ -49,11 +49,11 @@ namespace GameModule
             public Action<HandDef> Hand { get; set; } = _ => { };
         }
 
-        public static Game BuildGame(Action<GameDef> init = null)
+        public static GameState BuildGame(Action<GameDef> init = null)
         {
             var def = new GameDef();
             init?.Invoke(def);
-            return Game.Create(
+            return GameState.Create(
                 table: BuildTable(def.Table),
                 hand: BuildHand(def.Hand)
             );

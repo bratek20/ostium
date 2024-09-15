@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using B20.Frontend.UiElements;
 using B20.Frontend.Traits;
-using GameModule.Api;
+using SingleGame.Api;
 
-namespace GameModule.ViewModel
+namespace SingleGame.ViewModel
 {
     public partial class CreatureCardVm: UiElement<CreatureCard>
     {
@@ -75,7 +75,7 @@ namespace GameModule.ViewModel
         }
     }
     
-    public partial class GameVm: UiElement<Game>
+    public partial class GameVm: UiElement<GameState>
     {
         public TableVm Table { get; set;  }
         public HandVm Hand { get; set; }

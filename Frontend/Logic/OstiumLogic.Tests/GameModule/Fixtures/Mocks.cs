@@ -1,19 +1,19 @@
 using System;
 using B20.Tests.ExtraAsserts;
-using GameModule.Api;
+using SingleGame.Api;
 
-namespace GameModule
+namespace SingleGame
 {
-    public class GameApiMock : GameApi
+    public class SingleGameApiMock : SingleGameApi
     {
-        private Game game = Builders.BuildGame();
+        private GameState game = Builders.BuildGame();
         
         public void SetGame(Action<Builders.GameDef> init)
         {
             game = Builders.BuildGame(init);
         }
         
-        public Game StartGame()
+        public GameState StartGame()
         {
             return game;
         }
@@ -22,7 +22,7 @@ namespace GameModule
         
         private CreatureCardId lastPlayedCard;
         private RowType lastPlayedRow;
-        public Game PlayCard(CreatureCardId cardId, RowType row)
+        public GameState PlayCard(CreatureCardId cardId, RowType row)
         {
             calls++;
             lastPlayedCard = cardId;
@@ -39,7 +39,7 @@ namespace GameModule
         private CreatureCardId lastMoveCard;
         private RowType lastMoveFrom;
         private RowType lastMoveTo;
-        public Game MoveCard(CreatureCardId cardId, RowType from, RowType to)
+        public GameState MoveCard(CreatureCardId cardId, RowType from, RowType to)
         {
             calls++;
             lastMoveCard = cardId;

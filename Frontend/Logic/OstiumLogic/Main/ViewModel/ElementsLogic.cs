@@ -1,5 +1,5 @@
 ﻿using B20.Frontend.Windows.Api;
-using GameModule.ViewModel;
+using SingleGame.ViewModel;
 
 namespace Main.ViewModel
 {

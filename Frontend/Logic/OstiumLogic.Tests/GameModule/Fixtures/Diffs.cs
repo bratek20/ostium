@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using GameModule.Api;
+using SingleGame.Api;
 
-namespace GameModule
+namespace SingleGame
 {
     public static class Diffs
     {
@@ -100,7 +100,7 @@ namespace GameModule
             public Action<ExpectedHand> Hand { get; set; }
         }
 
-        public static string DiffGame(GameModule.Api.Game given, Action<ExpectedGame> expectedInit, string path = "")
+        public static string DiffGame(GameState given, Action<ExpectedGame> expectedInit, string path = "")
         {
             var expected = new ExpectedGame();
             expectedInit?.Invoke(expected);

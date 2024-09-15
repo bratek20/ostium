@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 using HttpClientModule.Api;
-using CreatedGames.Api;
+using GamesManagement.Api;
 using User.Api;
 
 namespace CreatedGames.Web {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 
-namespace GameModule.Api {
+namespace SingleGame.Api {
     public class GateDurabilityMarker {
         public int Value { get; }
 
@@ -173,11 +173,11 @@ namespace GameModule.Api {
         }
     }
 
-    public class Game {
+    public class GameState {
         readonly Table table;
         readonly Hand hand;
 
-        public Game(
+        public GameState(
             Table table,
             Hand hand
         ) {
@@ -190,8 +190,8 @@ namespace GameModule.Api {
         public Hand GetHand() {
             return hand;
         }
-        public static Game Create(Table table, Hand hand) {
-            return new Game(table, hand);
+        public static GameState Create(Table table, Hand hand) {
+            return new GameState(table, hand);
         }
     }
 }

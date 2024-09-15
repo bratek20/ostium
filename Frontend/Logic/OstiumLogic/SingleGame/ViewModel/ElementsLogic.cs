@@ -1,6 +1,6 @@
-using GameModule.Api;
+using SingleGame.Api;
 
-namespace GameModule.ViewModel
+namespace SingleGame.ViewModel
 {
     public partial class CreatureCardVm
     {

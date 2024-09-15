@@ -13,8 +13,8 @@ using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Frontend.Windows.Impl;
 using B20.Tests.Frontend.Windows.Fixtures;
-using GameModule;
-using GameModule.ViewModel;
+using SingleGame;
+using SingleGame.ViewModel;
 using Main.ViewModel;
 using Ostium.Logic.Tests.GameModule.Context;
 
@@ -27,13 +27,13 @@ namespace Ostium.Logic.Tests
             public EventPublisher EventPublisher { get; }
             public WindowManager WindowManager { get; }
             public OstiumLogic Logic { get; }
-            public GameApiMock GameApiMock { get; }
+            public SingleGameApiMock GameApiMock { get; }
 
             public Context(
                 EventPublisher eventPublisher, 
                 WindowManager windowManager, 
                 OstiumLogic logic,
-                GameApiMock gameApiMock
+                SingleGameApiMock gameApiMock
             )
             {
                 this.EventPublisher = eventPublisher;
@@ -60,13 +60,13 @@ namespace Ostium.Logic.Tests
                 eventPublisher: c.Get<EventPublisher>(),
                 windowManager: c.Get<WindowManager>(),
                 logic: c.Get<OstiumLogic>(),
-                gameApiMock: c.Get<GameApiMock>()
+                gameApiMock: c.Get<SingleGameApiMock>()
             );
         }
         
         public class InGameWindowContext : Context
         {
-            public InGameWindowContext(EventPublisher eventPublisher, WindowManager windowManager, OstiumLogic logic, GameApiMock gameApiMock)
+            public InGameWindowContext(EventPublisher eventPublisher, WindowManager windowManager, OstiumLogic logic, SingleGameApiMock gameApiMock)
                 : base(eventPublisher, windowManager, logic, gameApiMock)
             {
             }

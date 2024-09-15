@@ -1,6 +1,6 @@
 using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
-using GameModule.ViewModel;
+using SingleGame.ViewModel;
 using Main.ViewModel;
 
 namespace Ostium.Logic.MainWindowModule.Context
