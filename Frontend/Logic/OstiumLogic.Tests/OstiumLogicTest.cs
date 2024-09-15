@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using B20.Frontend.Postion;
-using B20.Frontend.Traits;
-using B20.Frontend.Windows.Api;
 using B20.Logic.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
-using SingleGame.Api;
-using SingleGame.ViewModel;
 using Main.ViewModel;
 using SingleGame;
+using SingleGame.Api;
+using SingleGame.ViewModel;
 using Xunit;
-using Asserts = GameComponents.Asserts;
 
 namespace Ostium.Logic.Tests
 {
@@ -171,7 +167,7 @@ namespace Ostium.Logic.Tests
         void AssertCardInRow(RowVm row, string cardName)
         {
             Assert.True(row.HasCard);
-            Asserts.AssertCreatureCardId(row.Model.GetCard().Get().GetId(), cardName);
+            SingleGameAsserts.AssertCreatureCardId(row.Model.GetCard().Get().GetId(), cardName);
         }
         
         void AssertRowEmpty(RowVm row)
@@ -183,7 +179,7 @@ namespace Ostium.Logic.Tests
         {
             Assert.True(c.SelectedCard.IsPresent());
             Assert.True(c.SelectedCard.Get().Selected.Model);
-            Asserts.AssertCreatureCardId(c.SelectedCard.Get().Id, cardName);
+            SingleGameAsserts.AssertCreatureCardId(c.SelectedCard.Get().Id, cardName);
         }
         
         void AssertNoCardSelected(Scenarios.InGameWindowContext c)

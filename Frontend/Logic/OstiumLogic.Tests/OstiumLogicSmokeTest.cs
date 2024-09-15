@@ -1,23 +1,16 @@
-using System;
-using System.Collections.Generic;
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
-using B20.Architecture.Events.Context;
 using B20.Architecture.Logs.Context;
 using B20.Ext;
-using B20.Frontend.Traits.Context;
 using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Context;
 using B20.Infrastructure.HttpClientModule.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
-using SingleGame;
-using SingleGame.Api;
 using HttpClientModule.Api;
 using Main.ViewModel;
 using Ostium.Logic.GameModule.Context;
 using Ostium.Logic.Tests.GameModule.Context;
+using SingleGame.Api;
 using Xunit;
-using Diffs = GameComponents.Diffs;
 
 namespace Ostium.Logic.Tests
 {
