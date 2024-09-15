@@ -53,7 +53,7 @@ namespace B20.Frontend.Windows.Tests
         [Fact]
         public void ShouldThrowExceptionForGetIfWindowNotRegistered()
         {
-            Asserts.ThrowsApiException(
+            ExceptionsAsserts.ThrowsApiException(
                 () => windowManager.Get<NotRegisteredWindow>(),
                 e =>
                 {

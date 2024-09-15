@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using B20.Architecture.Contexts.Context;
+using B20.Architecture.Exceptions.Fixtures;
 using B20.Frontend.Traits.Context;
 using B20.Logic.Utils;
 using B20.Tests.ExtraAsserts;
@@ -79,7 +80,7 @@ namespace B20.Frontend.UiElements.Tests
             
             elementTester.AssertHaveTraitTesterWithOwnerInitialized();
 
-            Architecture.Exceptions.Fixtures.Asserts.ThrowsApiException(
+            ExceptionsAsserts.ThrowsApiException(
                 () => elementInterf.GetTrait<OtherTrait>(),
                 e =>
                 {

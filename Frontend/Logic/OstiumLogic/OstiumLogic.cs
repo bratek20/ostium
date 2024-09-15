@@ -2,6 +2,7 @@ using B20.Architecture.Contexts.Api;
 using B20.Architecture.Events.Context;
 using B20.Ext;
 using B20.Frontend.Traits.Context;
+using B20.Frontend.UiElements.Context;
 using B20.Frontend.Windows.Api;
 using B20.Frontend.Windows.Context;
 using B20.Infrastructure.HttpClientModule.Context;
@@ -40,8 +41,8 @@ namespace Ostium.Logic
                 .SetClass<OstiumLogic>();
         }
     }
-    
-    public class OstiumLogicFullImpl: ContextModule
+
+    public class OstiumLogicNoBackendImpl: ContextModule
     {
         public void Apply(ContextBuilder builder)
         {
@@ -50,7 +51,19 @@ namespace Ostium.Logic
                     new OstiumLogicPartialImpl(),
                     new WindowsImpl(),
                     new EventsImpl(),
-                    new TraitsImpl(),
+                    new UiElementsImpl(),
+                    new TraitsImpl()
+                );
+        }
+    }
+    
+    public class OstiumLogicFullImpl: ContextModule
+    {
+        public void Apply(ContextBuilder builder)
+        {
+            builder
+                .WithModules(
+                    new OstiumLogicNoBackendImpl(),
                     new DotNetHttpClientModuleImpl(),
                     new GameModuleWebClient(
                         HttpClientConfig.Create(

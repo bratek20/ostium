@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Impl;
+using B20.Architecture.Exceptions.Fixtures;
 using B20.Tests.ExtraAsserts;
 using Xunit;
 
@@ -271,6 +272,23 @@ namespace B20.Tests.Architecture.Context.Tests
             public void ShouldNotRequireAlreadySetField()
             {
                 AssertExt.Equal(obj.ClassWithValue.Value, 5);
+            }
+            
+            [Fact]
+            public void ShouldThrowIfCouldNotInjectTypeToField()
+            {
+                var c = CreateBuilder()
+                    .SetClass<ClassWithField>()
+                    .Build();
+                
+                ExceptionsAsserts.ThrowsApiException(
+                    () => obj = c.Get<ClassWithField>(),
+                    e =>
+                    {
+                        e.Type = typeof(DependentClassNotFoundInContextException);
+                        e.Message = "Type 'SimpleClass' could not be injected to 'ClassWithField'";
+                    }
+                );
             }
         }
     }

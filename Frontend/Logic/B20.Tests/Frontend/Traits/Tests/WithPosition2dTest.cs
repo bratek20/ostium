@@ -14,7 +14,7 @@ namespace B20.Tests.Frontend.Traits.Tests
             var trait = TraitsScenarios.Setup().TraitFactory.Create<WithPosition2d>();
             
             Position2d currentPosition = null;
-            trait.PositionSetter = p => currentPosition = p;
+            trait.SetPositionSetter(p => currentPosition = p);
             
             trait.Update(new Position2d(1, 2));
 

@@ -12,7 +12,7 @@ namespace B20.Frontend.Traits.View
         {
             base.OnBind();
             rectTransform = gameObject.GetComponent<RectTransform>();
-            Trait.RectProvider = () => TypesConverter.Convert(rectTransform);
+            Trait.SetRectProvider(() => TypesConverter.Convert(rectTransform));
             Debug.Log("WithRectView, rect: " + Trait.Rect + ", gameObject: " + gameObject);
         }
     }
