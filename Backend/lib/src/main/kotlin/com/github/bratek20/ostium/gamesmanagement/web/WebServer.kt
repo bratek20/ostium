@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 import com.github.bratek20.ostium.gamesmanagement.api.*
 
 @RestController
-@RequestMapping("/gamesManagementApi")
+@RequestMapping("/ostium/gamesManagementApi")
 class GamesManagementApiController(
     private val api: GamesManagementApi,
 ) {

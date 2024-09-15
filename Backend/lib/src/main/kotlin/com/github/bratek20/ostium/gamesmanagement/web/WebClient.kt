@@ -15,15 +15,15 @@ class GamesManagementApiWebClient(
     private val client = factory.create(config.value)
 
     override fun create(creator: Username): GameId {
-        return client.post("/gamesManagementApi/create", GamesManagementApiCreateRequest.create(creator)).getBody(GamesManagementApiCreateResponse::class.java).value
+        return client.post("/ostium/gamesManagementApi/create", GamesManagementApiCreateRequest.create(creator)).getBody(GamesManagementApiCreateResponse::class.java).value
     }
 
     override fun join(joiner: Username, gameId: GameId): Unit {
-        client.post("/gamesManagementApi/join", GamesManagementApiJoinRequest.create(joiner, gameId))
+        client.post("/ostium/gamesManagementApi/join", GamesManagementApiJoinRequest.create(joiner, gameId))
     }
 
     override fun getAllCreated(): List<CreatedGame> {
-        return client.post("/gamesManagementApi/getAllCreated", null).getBody(GamesManagementApiGetAllCreatedResponse::class.java).value
+        return client.post("/ostium/gamesManagementApi/getAllCreated", null).getBody(GamesManagementApiGetAllCreatedResponse::class.java).value
     }
 }
 

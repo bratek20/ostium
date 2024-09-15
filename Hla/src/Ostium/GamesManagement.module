@@ -9,6 +9,7 @@ ValueObjects
 Interfaces
     GamesManagementApi
         create(creator: Username): GameId
+
         join(joiner: Username, gameId: GameId): void
         
         getAllCreated(): CreatedGame[]
@@ -17,6 +18,7 @@ Web
     Http
         ExposedInterfaces
             GamesManagementApi
+        urlPathPrefix = "/ostium"
 
 //ViewModel
     //Elements
