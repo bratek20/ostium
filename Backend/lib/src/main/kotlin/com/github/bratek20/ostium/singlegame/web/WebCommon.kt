@@ -14,14 +14,18 @@ class SingleGameWebClientConfig(
 ) {
 }
 class SingleGameApiGetStateRequest(
-    private val gameId: Int
+    private val gameId: Int,
+    private val user: String
 ) {
     fun getGameId(): GameId {
         return GameId(gameId)
     }
+    fun getUser(): Username {
+        return Username(user)
+    }
     companion object {
-        fun create(gameId: GameId): SingleGameApiGetStateRequest {
-            return SingleGameApiGetStateRequest(gameId.value)
+        fun create(gameId: GameId, user: Username): SingleGameApiGetStateRequest {
+            return SingleGameApiGetStateRequest(gameId.value, user.value)
         }
     }
 }

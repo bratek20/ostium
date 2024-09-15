@@ -6,7 +6,10 @@ import com.github.bratek20.ostium.gamesmanagement.api.*
 import com.github.bratek20.ostium.user.api.*
 
 interface SingleGameApi {
-    fun getState(gameId: GameId): GameState
+    @Throws(
+        GameNotFoundException::class,
+    )
+    fun getState(gameId: GameId, user: Username): GameState
 
     fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState
 

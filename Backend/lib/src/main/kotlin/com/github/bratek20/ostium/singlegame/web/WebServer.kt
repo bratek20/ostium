@@ -23,7 +23,7 @@ class SingleGameApiController(
     @PostMapping("/getState")
     fun getState(@RequestBody rawRequest: Struct): Struct {
         val request = serializer.fromStruct(rawRequest, SingleGameApiGetStateRequest::class.java)
-        return serializer.asStruct(SingleGameApiGetStateResponse(api.getState(request.getGameId())))
+        return serializer.asStruct(SingleGameApiGetStateResponse(api.getState(request.getGameId(), request.getUser())))
     }
 
     @PostMapping("/playCard")

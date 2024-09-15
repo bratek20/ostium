@@ -34,10 +34,12 @@ ValueObjects
             
 Interfaces        
     SingleGameApi
-        getState(gameId: GameId): GameState
+        getState(gameId: GameId, user: Username): GameState
+            throws
+                GameNotFoundException
           
         playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState
-        
+
         moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState
 
 Web

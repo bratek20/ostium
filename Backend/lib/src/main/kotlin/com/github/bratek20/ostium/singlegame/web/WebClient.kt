@@ -15,8 +15,8 @@ class SingleGameApiWebClient(
 ): SingleGameApi {
     private val client = factory.create(config.value)
 
-    override fun getState(gameId: GameId): GameState {
-        return client.post("/ostium/singleGameApi/getState", SingleGameApiGetStateRequest.create(gameId)).getBody(SingleGameApiGetStateResponse::class.java).value
+    override fun getState(gameId: GameId, user: Username): GameState {
+        return client.post("/ostium/singleGameApi/getState", SingleGameApiGetStateRequest.create(gameId, user)).getBody(SingleGameApiGetStateResponse::class.java).value
     }
 
     override fun playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState {
