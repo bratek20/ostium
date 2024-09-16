@@ -38,7 +38,7 @@ namespace B20.Tests.Frontend.Windows.Fixtures
         
         private Type lastOpenedWindow;
         
-        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : class, Window<TWindowState> where TWindowState : WindowState
+        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : Window<TWindowState> where TWindowState : WindowState
         {
             lastOpenedWindow = typeof(TWindow);   
         }

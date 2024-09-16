@@ -25,7 +25,7 @@ namespace Ostium.Logic
 
         public void Start()
         {
-            windowManager.Open<MainWindow>();
+            windowManager.Open<MainWindow, EmptyWindowState>(new EmptyWindowState());
         }
     }
     

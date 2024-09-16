@@ -4,7 +4,7 @@ namespace SingleGame.ViewModel
 {
     public partial class GameWindow
     {
-        public void OnOpen(EmptyWindowState s)
+        protected override void OnOpen()
         {
             Game.UpdateState();
         }

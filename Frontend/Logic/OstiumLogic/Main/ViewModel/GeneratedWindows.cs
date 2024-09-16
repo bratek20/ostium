@@ -4,7 +4,7 @@ using B20.Logic;
 
 namespace Main.ViewModel
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window<EmptyWindowState>
     {
         public InputField Username { get; set; }
         public PlayButton PlayButton { get; set; }

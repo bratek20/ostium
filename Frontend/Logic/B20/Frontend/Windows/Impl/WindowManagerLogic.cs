@@ -57,7 +57,7 @@ namespace B20.Frontend.Windows.Impl
             return window;
         }
 
-        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : class, Window<TWindowState> where TWindowState : WindowState
+        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : Window<TWindowState> where TWindowState : WindowState
         {
             if (currentWindow != null)
             {
@@ -68,7 +68,7 @@ namespace B20.Frontend.Windows.Impl
             SetVisible(window, true);
             
             currentWindow = window;
-            window.OnOpen(state);
+            window.Open(state);
         }
 
         public Window GetCurrent() 

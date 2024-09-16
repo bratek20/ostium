@@ -5,9 +5,16 @@ namespace B20.Frontend.Windows.Api
         
     } 
     
-    public interface Window<T>: Window where T : WindowState
+    public abstract class Window<T>: Window where T : WindowState
     {
-        void OnOpen(T state) { }
+        protected T State { get; private set; }
+        public void Open(T state)
+        {
+            State = state;
+            OnOpen();
+        }
+        
+        protected virtual void OnOpen() { }
     }
 
     public interface WindowState
@@ -24,7 +31,7 @@ namespace B20.Frontend.Windows.Api
         T Get<T>() where T : class, Window;
 
         void Open<TWindow, TWindowState>(TWindowState state) 
-            where TWindow : class, Window<TWindowState> 
+            where TWindow : Window<TWindowState> 
             where TWindowState : WindowState;
         
         Window GetCurrent();
