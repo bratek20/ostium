@@ -1,4 +1,5 @@
 ﻿using B20.Frontend.Windows.Api;
+using B20.Logic;
 using User.Api;
 
 namespace GamesManagement.ViewModel
@@ -14,5 +15,7 @@ namespace GamesManagement.ViewModel
                 Username = username;
             }
         }
+        public CreatedGameVmGroup CreatedGames { get; set; }
+        public Button CreateGame { get; set; }
     }
 }
