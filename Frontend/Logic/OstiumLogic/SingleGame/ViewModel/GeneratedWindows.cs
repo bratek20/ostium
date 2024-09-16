@@ -3,7 +3,7 @@ using SingleGame.ViewModel;
 
 namespace SingleGame.ViewModel
 {
-    public partial class GameWindow : Window
+    public partial class GameWindow : Window<EmptyWindowState>
     {
         public GameVm Game { get; set; }
     }

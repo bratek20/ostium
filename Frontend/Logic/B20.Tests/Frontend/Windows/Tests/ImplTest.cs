@@ -14,7 +14,7 @@ namespace B20.Frontend.Windows.Tests
         {
         }
         
-        class Window1 : Window
+        class Window1 : Window<EmptyWindowState>
         {
             private WindowManager windowManager;
             public Window1(WindowManager windowManager)
@@ -24,11 +24,20 @@ namespace B20.Frontend.Windows.Tests
             
             public void OpenWindow2()
             {
-                windowManager.Open<Window2>();
+                windowManager.Open<Window2, Window2State>(new Window2State
+                    {
+                        Value = 42
+                    }
+                );
             }
         }
         
-        class Window2 : Window
+        class Window2State : WindowState
+        {
+            public int Value { get; set; }
+        }
+        
+        class Window2 : Window<Window2State>
         {
         }
         
@@ -74,7 +83,7 @@ namespace B20.Frontend.Windows.Tests
             AssertVisible<Window2>(false);
             
             // Open first window
-            windowManager.Open<Window1>();
+            windowManager.Open<Window1, EmptyWindowState>(new EmptyWindowState());
             AssertVisible<Window1>(true);
             AssertVisible<Window2>(false);
             Assert.IsType<Window1>(windowManager.GetCurrent());

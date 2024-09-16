@@ -34,6 +34,7 @@ namespace Ostium.Logic.Tests.Main.Tests
             var mainWindow = c.Get<MainWindow>();
             var windowManagerMock = c.Get<WindowManagerMock>();
 
+            mainWindow.Username.OnTextChange("MyUsername");
             mainWindow.PlayButton.Click();
 
             windowManagerMock.AssertLastOpenedWindow<GameWindow>();

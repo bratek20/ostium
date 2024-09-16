@@ -14,7 +14,7 @@ namespace Main.ViewModel
 
         protected override void OnClick()
         {
-            windowManager.Open<GameWindow>();
+            windowManager.Open<GameWindow>(new EmptyWindowState());
         }
     }
 }

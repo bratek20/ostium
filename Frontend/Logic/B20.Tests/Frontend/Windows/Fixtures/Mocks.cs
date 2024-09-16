@@ -35,14 +35,14 @@ namespace B20.Tests.Frontend.Windows.Fixtures
         {
             throw new System.NotImplementedException();
         }
-
+        
         private Type lastOpenedWindow;
         
-        public void Open<T>() where T : class, Window
+        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : class, Window<TWindowState> where TWindowState : WindowState
         {
-            lastOpenedWindow = typeof(T);    
+            lastOpenedWindow = typeof(TWindow);   
         }
-        
+
         public void AssertLastOpenedWindow<T>() where T : class, Window
         {
             Assert.True(lastOpenedWindow == typeof(T), "Last opened window is not " + typeof(T).Name);

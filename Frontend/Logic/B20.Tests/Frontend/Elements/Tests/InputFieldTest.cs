@@ -24,11 +24,11 @@ namespace B20.Tests.Frontend.Elements.Tests
             var loggerMock = c.Get<LoggerMock>();
             var inputField = c.Get<InputField>();
             
-            inputField.OnChange("Some input");
+            inputField.OnTextChange("Some input");
             
             AssertExt.Equal(inputField.Model, "Some input");
             loggerMock.AssertInfos(
-                "Input field changed to `Some input`"
+                "Input field text changed to `Some input`"
             );
         }
     }
