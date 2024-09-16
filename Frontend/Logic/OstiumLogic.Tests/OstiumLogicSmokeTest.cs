@@ -58,7 +58,7 @@ namespace Ostium.Logic.Tests
             {
                 builder
                     .WithModules(
-                        new GameModuleMocks()
+                        new SingleGameMocks()
                     );
             }
         }

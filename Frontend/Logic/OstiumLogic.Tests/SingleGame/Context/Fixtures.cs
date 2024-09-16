@@ -4,7 +4,7 @@ using SingleGame.Api;
 
 namespace Ostium.Logic.Tests.GameModule.Context
 {
-    public class GameModuleMocks: ContextModule
+    public class SingleGameMocks: ContextModule
     {
         public void Apply(ContextBuilder builder)
         {

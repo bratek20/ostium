@@ -2,77 +2,34 @@ using System;
 using System.Collections.Generic;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Events.Context;
-using B20.Architecture.Logs.Context;
-using B20.Events.Api;
-using B20.Events.Impl;
 using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Frontend.Traits.Context;
+using B20.Frontend.UiElements.Context;
 using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Context;
-using B20.Frontend.Windows.Impl;
-using B20.Tests.Frontend.Windows.Fixtures;
-using SingleGame;
-using SingleGame.ViewModel;
-using Main.ViewModel;
+using B20.Tests.Architecture.Logs.Context;
+using B20.Tests.Frontend.Windows.Context;
 using Ostium.Logic.Tests.GameModule.Context;
+using SingleGame;
+using SingleGame.Context;
+using SingleGame.ViewModel;
 
 namespace Ostium.Logic.Tests
 {
     public class Scenarios
     {
-        public class Context
+        public class InGameWindowContext
         {
-            public EventPublisher EventPublisher { get; }
-            public WindowManager WindowManager { get; }
-            public OstiumLogic Logic { get; }
+            private GameWindow GameWindow { get; }
             public SingleGameApiMock GameApiMock { get; }
 
-            public Context(
-                EventPublisher eventPublisher, 
-                WindowManager windowManager, 
-                OstiumLogic logic,
-                SingleGameApiMock gameApiMock
-            )
+            public InGameWindowContext(GameWindow gameWindow, SingleGameApiMock gameApiMock)
             {
-                this.EventPublisher = eventPublisher;
-                this.WindowManager = windowManager;
-                this.Logic = logic;
-                this.GameApiMock = gameApiMock;
+                GameWindow = gameWindow;
+                GameApiMock = gameApiMock;
             }
-        }
-        
-        public Context Setup()
-        {
-            var c = ContextsFactory.CreateBuilder()
-                .WithModules(
-                    new GameModuleMocks(),
-                    
-                    new ConsoleLogsImpl(),
-                    new WindowManipulatorInMemoryImpl(),
-                    
-                    new OstiumLogicNoBackendImpl()
-                )
-                .Build();
-            
-            return new Context(
-                eventPublisher: c.Get<EventPublisher>(),
-                windowManager: c.Get<WindowManager>(),
-                logic: c.Get<OstiumLogic>(),
-                gameApiMock: c.Get<SingleGameApiMock>()
-            );
-        }
-        
-        public class InGameWindowContext : Context
-        {
-            public InGameWindowContext(EventPublisher eventPublisher, WindowManager windowManager, OstiumLogic logic, SingleGameApiMock gameApiMock)
-                : base(eventPublisher, windowManager, logic, gameApiMock)
-            {
-            }
-            
-            public GameWindow GameWindow => WindowManager.Get<GameWindow>();
-            
+
             public RowVm AttackRow => GameWindow.Game.Table.MySide.AttackRow;
             public RowVm DefenseRow => GameWindow.Game.Table.MySide.DefenseRow;
             
@@ -97,17 +54,29 @@ namespace Ostium.Logic.Tests
             var args = new InGameWindowArgs();
             init?.Invoke(args);
             
-            var c = Setup();
-            c.GameApiMock.SetGame(args.Game);
-            c.Logic.Start();
-            c.WindowManager.Get<MainWindow>().PlayButton.Click();
+            var c = ContextsFactory.CreateBuilder()
+                .WithModules(
+                    //TODO-REF below one should be somehow grouped
+                    new LogsMocks(),
+                    new TraitsImpl(),
+                    new UiElementsImpl(),
+                    new EventsImpl(),
+                    
+                    //reasonable mock
+                    new WindowsMocks(),
+                    new SingleGameMocks(),
+                    
+                    //tested module
+                    new SingleGameViewModel()
+                ).Build();
             
-            var nc = new InGameWindowContext(
-                eventPublisher: c.EventPublisher,
-                windowManager: c.WindowManager,
-                logic: c.Logic,
-                gameApiMock: c.GameApiMock
-            );
+            var apiMock = c.Get<SingleGameApiMock>();
+            apiMock.SetGame(args.Game);
+            
+            var window = c.Get<GameWindow>();
+            window.Open(new EmptyWindowState());
+            
+            var nc = new InGameWindowContext(window, apiMock);
             nc.AttackRow.GetTrait<WithRect>().SetRectProvider(() => args.AttackRowRect);
             nc.DefenseRow.GetTrait<WithRect>().SetRectProvider(() => args.DefenseRowRect);
             return nc;
