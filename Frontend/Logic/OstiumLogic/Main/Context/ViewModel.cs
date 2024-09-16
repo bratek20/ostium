@@ -10,8 +10,7 @@ namespace Ostium.Logic.MainWindowModule.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .AddImpl<Window, MainWindow>()
-                .SetClass<PlayButton>(InjectionMode.Prototype);
+                .AddImpl<Window, MainWindow>();
         }
     }
 }

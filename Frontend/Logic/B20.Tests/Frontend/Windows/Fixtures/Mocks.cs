@@ -37,15 +37,18 @@ namespace B20.Tests.Frontend.Windows.Fixtures
         }
         
         private Type lastOpenedWindow;
+        private object lastOpenedWindowState;
         
-        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : Window<TWindowState> where TWindowState : WindowState
+        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : Window<TWindowState>
         {
-            lastOpenedWindow = typeof(TWindow);   
+            lastOpenedWindow = typeof(TWindow);
+            lastOpenedWindowState = state;
         }
 
-        public void AssertLastOpenedWindow<T>() where T : class, Window
+        public void AssertLastOpenedWindow<TWindow, TWindowState>(Action<TWindowState> stateAssertion = null) where TWindow: Window<TWindowState>
         {
-            Assert.True(lastOpenedWindow == typeof(T), "Last opened window is not " + typeof(T).Name);
+            Assert.True(lastOpenedWindow == typeof(TWindow), "Last opened window is not " + typeof(TWindow).Name);
+            stateAssertion?.Invoke((TWindowState) lastOpenedWindowState);
         }
 
         public Window GetCurrent()

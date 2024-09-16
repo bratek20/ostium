@@ -1,12 +1,19 @@
-﻿namespace B20.Logic
+﻿using System;
+
+namespace B20.Logic
 {
-    public abstract class Button
+    public class Button
     {
+        private Action onClick;
+        
         public void Click()
         {
-            OnClick();
+            onClick();
         }
 
-        protected abstract void OnClick();
+        public void OnClick(Action onClick)
+        {
+            this.onClick = onClick;
+        }
     }
 }

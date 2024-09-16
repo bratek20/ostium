@@ -32,7 +32,7 @@ namespace B20.Frontend.Windows.Tests
             }
         }
         
-        class Window2State : WindowState
+        class Window2State
         {
             public int Value { get; set; }
         }

@@ -57,7 +57,7 @@ namespace B20.Frontend.Windows.Impl
             return window;
         }
 
-        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : Window<TWindowState> where TWindowState : WindowState
+        public void Open<TWindow, TWindowState>(TWindowState state) where TWindow : Window<TWindowState>
         {
             if (currentWindow != null)
             {
