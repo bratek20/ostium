@@ -30,5 +30,7 @@ Web
     
     //Windows
         //GamesManagementWindow
+            State
+                username: Username
             //createdGames: CreatedGameVm[]
-            //createGame: CreateGameButton
+            //createGame: Button

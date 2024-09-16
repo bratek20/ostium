@@ -6,6 +6,7 @@ using B20.Tests.Architecture.Logs.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
+using GamesManagement.ViewModel;
 using Main.ViewModel;
 using Ostium.Logic.MainWindowModule.Context;
 using Xunit;

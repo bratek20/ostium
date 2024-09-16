@@ -5,4 +5,4 @@
             //username: InputField //InputField <Username>
             
             //grayed out if username is not set
-            //play: PlayButton
+            //play: Button

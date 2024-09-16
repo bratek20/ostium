@@ -6,6 +6,7 @@ using B20.Tests.Architecture.Logs.Context;
 using B20.Tests.Frontend.Windows.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.Context;
+using GamesManagement.ViewModel;
 using Main.ViewModel;
 using Ostium.Logic.MainWindowModule.Context;
 using SingleGame.ViewModel;

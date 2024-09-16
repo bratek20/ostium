@@ -1,7 +1,6 @@
 using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
-using SingleGame.ViewModel;
-using Main.ViewModel;
+using GamesManagement.ViewModel;
 
 namespace GamesManagement.Context
 {

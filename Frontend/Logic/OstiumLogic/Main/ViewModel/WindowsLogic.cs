@@ -1,4 +1,5 @@
 using B20.Frontend.Windows.Api;
+using GamesManagement.ViewModel;
 using User.Api;
 
 namespace Main.ViewModel

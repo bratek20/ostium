@@ -1,9 +1,7 @@
-﻿using B20.Frontend.UiElements;
-using B20.Frontend.Windows.Api;
-using B20.Logic;
+﻿using B20.Frontend.Windows.Api;
 using User.Api;
 
-namespace Main.ViewModel
+namespace GamesManagement.ViewModel
 {
     public partial class GamesManagementWindow : Window<GamesManagementWindow.State>
     {
