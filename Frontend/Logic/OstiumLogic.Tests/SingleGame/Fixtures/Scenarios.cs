@@ -9,11 +9,14 @@ using B20.Frontend.Traits.Context;
 using B20.Frontend.UiElements.Context;
 using B20.Frontend.Windows.Api;
 using B20.Tests.Architecture.Logs.Context;
+using B20.Tests.Frontend.TestHelpers;
 using B20.Tests.Frontend.Windows.Context;
+using GamesManagement.Api;
 using Ostium.Logic.Tests.GameModule.Context;
 using SingleGame;
 using SingleGame.Context;
 using SingleGame.ViewModel;
+using User.Api;
 
 namespace Ostium.Logic.Tests
 {
@@ -40,7 +43,7 @@ namespace Ostium.Logic.Tests
             public CreatureCardVm FirstCardInHand => CardsInHand[0];
             public CreatureCardVm SecondCardInHand => CardsInHand[1];
             
-            public Optional<CreatureCardVm> SelectedCard => GameWindow.Game.SelectedCard;
+            public Optional<CreatureCardVm> SelectedCard => GameWindow.SelectedCard;
         }
 
         public class InGameWindowArgs
@@ -56,14 +59,9 @@ namespace Ostium.Logic.Tests
             
             var c = ContextsFactory.CreateBuilder()
                 .WithModules(
-                    //TODO-REF below one should be somehow grouped
-                    new LogsMocks(),
-                    new TraitsImpl(),
-                    new UiElementsImpl(),
-                    new EventsImpl(),
-                    
+                    new ViewModelTesting(),
+
                     //reasonable mock
-                    new WindowsMocks(),
                     new SingleGameMocks(),
                     
                     //tested module
@@ -74,7 +72,7 @@ namespace Ostium.Logic.Tests
             apiMock.SetGame(args.Game);
             
             var window = c.Get<GameWindow>();
-            window.Open(new EmptyWindowState());
+            window.Open(new GameWindowState(new Username("testUser"), new GameId(42)));
             
             var nc = new InGameWindowContext(window, apiMock);
             nc.AttackRow.GetTrait<WithRect>().SetRectProvider(() => args.AttackRowRect);

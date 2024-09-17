@@ -38,20 +38,32 @@ namespace SingleGame
             AssertExt.Equal(lastPlayedRow, expectedRow);
         }
 
+        private GameId lastMoveGameId;
+        private Username lastMoveUser;
         private CreatureCardId lastMoveCard;
         private RowType lastMoveFrom;
         private RowType lastMoveTo;
         public GameState MoveCard(GameId gameId, Username user, CreatureCardId cardId, RowType from, RowType to)
         {
             calls++;
+            lastMoveGameId = gameId;
+            lastMoveUser = user;
             lastMoveCard = cardId;
             lastMoveFrom = from;
             lastMoveTo = to;
             return game;
         }
 
-        public void AssertMoveCardLastCall(string expectedCardId, RowType expectedFrom, RowType expectedTo)
+        public void AssertMoveCardLastCall(
+            int expectedGameId,
+            string expectedUser,
+            string expectedCardId, 
+            RowType expectedFrom, 
+            RowType expectedTo
+        )
         {
+            AssertExt.Equal(lastMoveGameId, new GameId(expectedGameId));
+            AssertExt.Equal(lastMoveUser, new Username(expectedUser));
             AssertExt.Equal(lastMoveCard.Value, expectedCardId);
             AssertExt.Equal(lastMoveFrom, expectedFrom);
             AssertExt.Equal(lastMoveTo, expectedTo);

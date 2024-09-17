@@ -22,8 +22,6 @@ namespace GamesManagement.Tests
                 .WithModules(
                     new ViewModelTesting(),
 
-                    new WindowsMocks(),
-                    
                     new GameManagementMocks(),
                     
                     new GamesManagementViewModel()

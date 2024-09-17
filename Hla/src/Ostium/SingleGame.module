@@ -78,4 +78,7 @@ Web
     
     //Windows                
         //GameWindow
+            //State
+                gameId: GameId
+                user: Username
             //game: GameVm

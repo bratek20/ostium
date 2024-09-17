@@ -77,7 +77,13 @@ namespace SingleGame.Tests
             TraitsHelpers.EndDrag(c.CardInDefenseRow, new Position2d(10, 10));
             AssertNoCardSelected(c);
             
-            c.GameApiMock.AssertMoveCardLastCall("Mouse1", RowType.DEFENSE, RowType.ATTACK);
+            c.GameApiMock.AssertMoveCardLastCall(
+                42,
+                "testUser",
+                "Mouse1", 
+                RowType.DEFENSE, 
+                RowType.ATTACK
+                );
         }
 
         [Fact]
@@ -104,7 +110,13 @@ namespace SingleGame.Tests
             
             TraitsHelpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
             TraitsHelpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
-            c.GameApiMock.AssertMoveCardLastCall("Mouse1", RowType.ATTACK, RowType.DEFENSE);
+            c.GameApiMock.AssertMoveCardLastCall(
+                42,
+                "testUser",
+                "Mouse1", 
+                RowType.ATTACK, 
+                RowType.DEFENSE
+            );
         }
         
         [Fact]
