@@ -50,7 +50,7 @@ namespace SingleGame.ViewModel
         
         protected override void OnOpen()
         {
-            Game.Update(singleGameApi.GetState(new GameId(1), new Username("x")));
+            Game.Update(singleGameApi.GetState(State.GameId, State.User));
         }
 
         private Optional<CreatureCardVm> _selectedCard = Optional<CreatureCardVm>.Empty();
@@ -82,7 +82,7 @@ namespace SingleGame.ViewModel
             {
                 FindRowWithPointInside(ev.Position).Let(row =>
                 {
-                    var game = singleGameApi.PlayCard(new GameId(1), new Username("x"), SelectedCard.Get().Id, row.Type);
+                    var game = singleGameApi.PlayCard(State.GameId, State.User, SelectedCard.Get().Id, row.Type);
                     Game.Update(game);
                 });
             }

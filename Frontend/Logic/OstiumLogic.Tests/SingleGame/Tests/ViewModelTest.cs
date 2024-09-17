@@ -14,7 +14,7 @@ namespace SingleGame.Tests
         private Scenarios scenarios = new Scenarios();
 
         [Fact]
-        public void ShouldPlayCards()
+        public void ShouldLoadStateAndPlayCards()
         {
             var c = scenarios.InGameWindow(i =>
             {
@@ -33,6 +33,8 @@ namespace SingleGame.Tests
                 };
             });
             
+            c.GameApiMock.AssertGetStateLastCall(42, "testUser");
+            
             //Playing first card on attack row
             var card1Name = c.FirstCardInHand.Name.Model;
             Assert.Equal("Mouse1", card1Name);
@@ -42,13 +44,23 @@ namespace SingleGame.Tests
             TraitsHelpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
             AssertNoCardSelected(c);
             
-            c.GameApiMock.AssertPlayCardLastCall("Mouse1", RowType.ATTACK);
+            c.GameApiMock.AssertPlayCardLastCall(
+                42,
+                "testUser",
+                "Mouse1", 
+                RowType.ATTACK
+                );
             
             //Playing second card on defense row
             TraitsHelpers.StartDrag(c.SecondCardInHand, new Position2d(0, 0));
             TraitsHelpers.EndDrag(c.SecondCardInHand, new Position2d(20, 20));
             
-            c.GameApiMock.AssertPlayCardLastCall("Mouse2", RowType.DEFENSE);
+            c.GameApiMock.AssertPlayCardLastCall(
+                42,
+                "testUser",
+                "Mouse2", 
+                RowType.DEFENSE
+            );
         }
         
         [Fact]

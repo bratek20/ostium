@@ -15,25 +15,31 @@ namespace SingleGame
             game = SingleGameBuilders.BuildGame(init);
         }
         
-        public GameState StartGame()
-        {
-            return game;
-        }
-
         private int calls = 0;
         
+        private GameId lastPlayedGameId;
+        private Username lastPlayedUser;
         private CreatureCardId lastPlayedCard;
         private RowType lastPlayedRow;
         public GameState PlayCard(GameId gameId, Username user, CreatureCardId cardId, RowType row)
         {
             calls++;
+            lastPlayedGameId = gameId;
+            lastPlayedUser = user;
             lastPlayedCard = cardId;
             lastPlayedRow = row;
             return game;
         }
 
-        public void AssertPlayCardLastCall(String expectedCardId, RowType expectedRow)
+        public void AssertPlayCardLastCall(
+            int expectedGameId,
+            string expectedUser,
+            String expectedCardId, 
+            RowType expectedRow
+        )
         {
+            AssertExt.Equal(lastPlayedGameId, new GameId(expectedGameId));
+            AssertExt.Equal(lastPlayedUser, new Username(expectedUser));
             AssertExt.Equal(lastPlayedCard, new CreatureCardId(expectedCardId));
             AssertExt.Equal(lastPlayedRow, expectedRow);
         }
@@ -74,9 +80,23 @@ namespace SingleGame
             AssertExt.Equal(calls, 0);
         }
 
+        private GameId lastGetStateGameId;
+        private Username lastGetStateUser;
+        
         public GameState GetState(GameId gameId, Username user)
         {
+            lastGetStateGameId = gameId;
+            lastGetStateUser = user;
             return game;
+        }
+        
+        public void AssertGetStateLastCall(
+            int expectedGameId,
+            string expectedUser
+        )
+        {
+            AssertExt.Equal(lastGetStateGameId, new GameId(expectedGameId));
+            AssertExt.Equal(lastGetStateUser, new Username(expectedUser));
         }
     }
 }
