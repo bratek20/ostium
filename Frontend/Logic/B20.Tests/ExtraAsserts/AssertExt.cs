@@ -9,7 +9,7 @@ namespace B20.Tests.ExtraAsserts
         {
             Xunit.Assert.Equal(expected, actual);
         }
-        public static void ListCount<T>(System.Collections.Generic.List<T> list, int expected)
+        public static void ListCount<T>(List<T> list, int expected)
         {
             Equal(list.Count, expected);
         }

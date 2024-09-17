@@ -1,4 +1,4 @@
-namespace GameModule.View
+namespace SingleGame.View
 {
     public class ElementsView
     {

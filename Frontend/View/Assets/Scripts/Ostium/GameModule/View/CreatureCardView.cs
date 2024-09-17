@@ -1,8 +1,8 @@
 using B20.Frontend.Elements.View;
-using GameModule.ViewModel;
+using SingleGame.ViewModel;
 using UnityEngine;
 
-namespace GameModule.View
+namespace SingleGame.View
 {
     public class CreateCardView: ElementView<CreatureCardVm>
     {

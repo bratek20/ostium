@@ -1,10 +1,10 @@
 using B20.Frontend.Elements.View;
-using GameModule.Api;
-using GameModule.ViewModel;
+using SingleGame.Api;
+using SingleGame.ViewModel;
 using Ostium.Logic;
 using UnityEngine;
 
-namespace GameModule.View
+namespace SingleGame.View
 {
     public class TableView: ElementView<TableVm>
     {

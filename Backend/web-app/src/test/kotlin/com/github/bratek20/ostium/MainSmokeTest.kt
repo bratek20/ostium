@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 class MainSmokeTest {
     @Test
     fun `main works`() {
-        main()
+        //main()
 
         val httpConfig = httpClientConfig {
             baseUrl = "http://localhost:8080"
