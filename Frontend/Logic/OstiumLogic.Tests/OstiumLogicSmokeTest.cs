@@ -9,6 +9,7 @@ using HttpClientModule.Api;
 using Main.ViewModel;
 using Ostium.Logic.GameModule.Context;
 using Ostium.Logic.Tests.GameModule.Context;
+using Ostium.Logic.Tests.GamesManagement.Context;
 using SingleGame.Api;
 using Xunit;
 
@@ -58,6 +59,7 @@ namespace Ostium.Logic.Tests
             {
                 builder
                     .WithModules(
+                        new GameManagementMocks(),
                         new SingleGameMocks()
                     );
             }

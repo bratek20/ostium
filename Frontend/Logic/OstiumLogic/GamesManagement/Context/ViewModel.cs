@@ -9,7 +9,9 @@ namespace GamesManagement.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .AddImpl<Window, GamesManagementWindow>();
+                .AddImpl<Window, GamesManagementWindow>()
+                .SetClass<CreatedGameVmGroup>(InjectionMode.Prototype)
+                .SetClass<CreatedGameVm>(InjectionMode.Prototype);
         }
     }
 }
