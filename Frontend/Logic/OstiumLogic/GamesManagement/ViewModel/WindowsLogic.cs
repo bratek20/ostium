@@ -1,14 +1,18 @@
+using B20.Frontend.Windows.Api;
 using GamesManagement.Api;
+using SingleGame.ViewModel;
 
 namespace GamesManagement.ViewModel
 {
     public partial class GamesManagementWindow
     {
         private GamesManagementApi api;
+        private WindowManager windowManager;
 
-        public GamesManagementWindow(GamesManagementApi api)
+        public GamesManagementWindow(GamesManagementApi api, WindowManager windowManager)
         {
             this.api = api;
+            this.windowManager = windowManager;
         }
 
         protected override void OnOpen()
@@ -20,7 +24,8 @@ namespace GamesManagement.ViewModel
         
         private void OnCreateClicked()
         {
-            api.Create(State.Username);
+            var gameId = api.Create(State.Username);
+            windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(State.Username, gameId));
         }
     }
 }

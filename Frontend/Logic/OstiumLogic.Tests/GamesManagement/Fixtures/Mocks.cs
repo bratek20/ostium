@@ -13,7 +13,7 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
         public GameId Create(Username creator)
         {
             lastCreateCreator = creator;
-            return new GameId(1);
+            return new GameId(666);
         }
         
         public void AssertCreateCalled(Username creator)

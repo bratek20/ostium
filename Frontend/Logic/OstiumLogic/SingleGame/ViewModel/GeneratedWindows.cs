@@ -9,7 +9,7 @@ namespace SingleGame.ViewModel
     {
         public Username User { get; }
         public GameId GameId { get; }
-        
+
         public GameWindowState(Username user, GameId gameId)
         {
             User = user;
