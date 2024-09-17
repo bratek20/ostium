@@ -19,6 +19,7 @@ class LogsWebServer: WebServerModule {
     }
 }
 
+val version = "0.0.1"
 fun main() {
     SpringWebApp(
         modules = listOf(
@@ -28,5 +29,5 @@ fun main() {
         ),
     ).run()
         .get(Logger::class.java)
-        .info("Server is running!")
+        .info("Server is running! Version: $version")
 }
