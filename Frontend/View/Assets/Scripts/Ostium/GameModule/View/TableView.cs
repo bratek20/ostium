@@ -9,16 +9,16 @@ namespace SingleGame.View
     public class TableView: ElementView<TableVm>
     {
         [SerializeField]
-        private RowView attackRow;
+        private PlayerSideView mySide;
         [SerializeField]
-        private RowView defenseRow;
+        private PlayerSideView opponentSide;
 
         protected override void OnBind()
         {
             base.OnBind();
         
-            attackRow.Bind(ViewModel.AttackRow);
-            defenseRow.Bind(ViewModel.DefenseRow);
+            mySide.Bind(ViewModel.MySide);
+            opponentSide.Bind(ViewModel.OpponentSide);
         }
     }
 }

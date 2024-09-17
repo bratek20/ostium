@@ -8,14 +8,17 @@ namespace SingleGame.View
     public class GameView: ElementView<GameVm>
     {
         [SerializeField]
-        private HandView hand;
+        private HandView myHand;
         [SerializeField]
         private TableView table;
+        // [SerializeField]
+        // private HandView opponentHand;
         
         protected override void OnBind()
         {
-            hand.Bind(ViewModel.Hand);
+            myHand.Bind(ViewModel.MyHand);
             table.Bind(ViewModel.Table);
+            //opponentHand.Bind(ViewModel.OpponentHand);
         }
     }
 }
