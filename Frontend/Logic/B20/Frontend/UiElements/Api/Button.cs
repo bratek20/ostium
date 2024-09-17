@@ -1,13 +1,25 @@
 ﻿using System;
+using B20.Architecture.Exceptions;
 
 namespace B20.Logic
 {
+    public class ButtonOnClickNotSetException : ApiException
+    {
+        public ButtonOnClickNotSetException(string message) : base(message)
+        {
+        }
+    }
+    
     public class Button
     {
         private Action onClick;
         
         public void Click()
         {
+            if (onClick == null)
+            {
+                throw new ButtonOnClickNotSetException("Button OnClick not set");
+            }
             onClick();
         }
 

@@ -40,7 +40,7 @@ namespace Ostium.Logic.Tests.Main.Tests
             mainWindow.Username.OnTextChange("MyUsername");
             mainWindow.PlayButton.Click();
 
-            windowManagerMock.AssertLastOpenedWindow<GamesManagementWindow, GamesManagementWindow.State>(
+            windowManagerMock.AssertLastOpenedWindow<GamesManagementWindow, GamesManagementWindowState>(
                 s =>
                 {
                     AssertExt.Equal(s.Username.Value, "MyUsername");

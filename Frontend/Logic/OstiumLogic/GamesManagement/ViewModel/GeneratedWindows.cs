@@ -4,17 +4,18 @@ using User.Api;
 
 namespace GamesManagement.ViewModel
 {
-    public partial class GamesManagementWindow : Window<GamesManagementWindow.State>
+    public class GamesManagementWindowState
     {
-        public class State
-        {
-            public Username Username { get; }
+        public Username Username { get; }
             
-            public State(Username username)
-            {
-                Username = username;
-            }
+        public GamesManagementWindowState(Username username)
+        {
+            Username = username;
         }
+    }
+    
+    public partial class GamesManagementWindow : Window<GamesManagementWindowState>
+    {
         public CreatedGameVmGroup CreatedGames { get; set; }
         public Button CreateGame { get; set; }
     }

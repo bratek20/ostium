@@ -1,25 +1,22 @@
 using B20.Architecture.Contexts.Context;
-using B20.Frontend.Traits.Context;
-using B20.Frontend.UiElements.Context;
-using B20.Frontend.Windows.Context;
-using B20.Tests.Architecture.Logs.Context;
+using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.TestHelpers;
 using B20.Tests.Frontend.Windows.Context;
-using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.Context;
 using GamesManagement.ViewModel;
-using Main.ViewModel;
-using Ostium.Logic.MainWindowModule.Context;
 using Ostium.Logic.Tests.GamesManagement.Context;
-using SingleGame.ViewModel;
+using Ostium.Logic.Tests.GamesManagement.Fixtures;
+using User.Api;
 using Xunit;
 
 namespace GamesManagement.Tests
 {
     public class GamesManagementViewModelTest
     {
-        [Fact]
-        public void ShouldLoadCreatedGames()
+        private GamesManagementWindow window;
+        private GamesManagementApiMock apiMock;
+        
+        public GamesManagementViewModelTest()
         {
             var c = ContextsFactory.CreateBuilder()
                 .WithModules(
@@ -32,8 +29,25 @@ namespace GamesManagement.Tests
                     new GamesManagementViewModel()
                 ).Build();
             
-            var window = c.Get<GamesManagementWindow>();
-            var windowManagerMock = c.Get<WindowManagerMock>();
+            window = c.Get<GamesManagementWindow>();
+            apiMock = c.Get<GamesManagementApiMock>();
+            //var windowManagerMock = c.Get<WindowManagerMock>();
+            
+            window.Open(new GamesManagementWindowState(new Username("testUser")));
+        }
+
+        [Fact]
+        public void ShouldLoadCreatedGames()
+        {
+            AssertExt.ListCount(window.CreatedGames.Elements, 1);
+        }
+        
+        [Fact]
+        public void ShouldCreateGameWhenButtonClicked()
+        {
+            window.CreateGame.Click();
+            
+            apiMock.AssertCreateCalled(new Username("testUser"));
         }
 
     }

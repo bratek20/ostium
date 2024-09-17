@@ -1,6 +1,4 @@
-using B20.Frontend.Windows.Api;
 using GamesManagement.Api;
-using User.Api;
 
 namespace GamesManagement.ViewModel
 {
@@ -15,7 +13,14 @@ namespace GamesManagement.ViewModel
 
         protected override void OnOpen()
         {
+            CreateGame.OnClick(OnCreateClicked);
             
+            CreatedGames.Update(api.GetAllCreated());
+        }
+        
+        private void OnCreateClicked()
+        {
+            api.Create(State.Username);
         }
     }
 }

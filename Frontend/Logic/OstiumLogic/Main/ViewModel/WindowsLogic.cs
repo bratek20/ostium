@@ -21,8 +21,8 @@ namespace Main.ViewModel
         private void OnPlayButtonClicked()
         {
             var username = Username.Model;
-            windowManager.Open<GamesManagementWindow, GamesManagementWindow.State>(
-                new GamesManagementWindow.State(new Username(username))
+            windowManager.Open<GamesManagementWindow, GamesManagementWindowState>(
+                new GamesManagementWindowState(new Username(username))
             );
         }
     }
