@@ -1,6 +1,7 @@
 using B20.Architecture.Contexts.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.TestHelpers;
+using B20.Tests.Frontend.Traits.Fixtures;
 using B20.Tests.Frontend.Windows.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.Context;
@@ -38,9 +39,20 @@ namespace GamesManagement.Tests
         }
 
         [Fact]
-        public void ShouldLoadCreatedGames()
+        public void ShouldLoadCreatedGamesAndJoinGameOnClick()
         {
             AssertExt.ListCount(window.CreatedGames.Elements, 1);
+            
+            TraitsHelpers.Click(window.CreatedGames.Elements[0]);
+            
+            apiMock.AssertJoinCalled("testUser", 69);
+            
+            windowManagerMock.AssertLastOpenedWindow<GameWindow, GameWindowState>(
+                state =>
+                {
+                    AssertExt.Equal(state.GameId.Value, 69);
+                    AssertExt.Equal(state.User.Value, "testUser");
+                });
         }
         
         [Fact]

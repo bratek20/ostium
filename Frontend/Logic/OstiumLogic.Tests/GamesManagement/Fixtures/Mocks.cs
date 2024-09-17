@@ -21,16 +21,25 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
             AssertExt.Equal(creator, lastCreateCreator);
         }
 
+        private Username lastJoinJoiner;
+        private GameId lastJoinGameId;
         public void Join(Username joiner, GameId gameId)
         {
-            throw new System.NotImplementedException();
+            lastJoinJoiner = joiner;
+            lastJoinGameId = gameId;
+        }
+        
+        public void AssertJoinCalled(string joiner, int gameId)
+        {
+            AssertExt.Equal(joiner, lastJoinJoiner.Value);
+            AssertExt.Equal(gameId, lastJoinGameId.Value);
         }
 
         public List<CreatedGame> GetAllCreated()
         {
             return ListUtils.Of(
                 CreatedGame.Create(
-                    new GameId(1),
+                    new GameId(69),
                     new Username("user1"),
                     Optional<Username>.Empty()
                 )

@@ -3,5 +3,4 @@ using SingleGame.ViewModel;
 
 namespace GamesManagement.ViewModel
 {
-
 }

@@ -32,7 +32,7 @@ namespace B20.Tests.Frontend.Traits.Tests
             
             clickable.Click();
             
-            publisherMock.AssertOneEventPublished<ElementClickedEvent>(
+            publisherMock.AssertOneEventPublished<UiElementClickedEvent>(
                 e => e.Element.Equals(owner)
             );
         }
