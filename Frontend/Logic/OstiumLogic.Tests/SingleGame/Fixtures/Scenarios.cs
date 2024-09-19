@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Events.Context;
 using B20.Ext;
 using B20.Frontend.Postion;
+using B20.Frontend.Timer.Api;
 using B20.Frontend.Traits;
 using B20.Frontend.Traits.Context;
 using B20.Frontend.UiElements.Context;
@@ -26,11 +28,15 @@ namespace Ostium.Logic.Tests
         {
             private GameWindow GameWindow { get; }
             public SingleGameApiMock GameApiMock { get; }
+            private Context Context { get; }
 
-            public InGameWindowContext(GameWindow gameWindow, SingleGameApiMock gameApiMock)
+            public TimerApi TimerApi => Context.Get<TimerApi>();
+            
+            public InGameWindowContext(GameWindow gameWindow, SingleGameApiMock gameApiMock, Context c)
             {
                 GameWindow = gameWindow;
                 GameApiMock = gameApiMock;
+                Context = c;
             }
 
             public RowVm AttackRow => GameWindow.Game.Table.MySide.AttackRow;
@@ -74,7 +80,7 @@ namespace Ostium.Logic.Tests
             var window = c.Get<GameWindow>();
             window.Open(new GameWindowState(new Username("testUser"), new GameId(42)));
             
-            var nc = new InGameWindowContext(window, apiMock);
+            var nc = new InGameWindowContext(window, apiMock, c);
             nc.AttackRow.GetTrait<WithRect>().SetRectProvider(() => args.AttackRowRect);
             nc.DefenseRow.GetTrait<WithRect>().SetRectProvider(() => args.DefenseRowRect);
             return nc;

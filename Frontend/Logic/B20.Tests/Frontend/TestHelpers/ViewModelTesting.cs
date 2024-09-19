@@ -1,5 +1,6 @@
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Events.Context;
+using B20.Frontend.Timer.Context;
 using B20.Frontend.Traits.Context;
 using B20.Frontend.UiElements.Context;
 using B20.Tests.Architecture.Logs.Context;
@@ -16,7 +17,8 @@ namespace B20.Tests.Frontend.TestHelpers
                 new TraitsImpl(),
                 new UiElementsImpl(),
                 new EventsImpl(),
-                new WindowsMocks()
+                new WindowsMocks(),
+                new TimerImpl()
             );
         }
     }

@@ -82,9 +82,11 @@ namespace SingleGame
 
         private GameId lastGetStateGameId;
         private Username lastGetStateUser;
+        private int getStateCalls = 0;
         
         public GameState GetState(GameId gameId, Username user)
         {
+            getStateCalls++;
             lastGetStateGameId = gameId;
             lastGetStateUser = user;
             return game;
@@ -97,6 +99,11 @@ namespace SingleGame
         {
             AssertExt.Equal(lastGetStateGameId, new GameId(expectedGameId));
             AssertExt.Equal(lastGetStateUser, new Username(expectedUser));
+        }
+        
+        public void AssertGetStateCallsNumber(int expectedCalls)
+        {
+            AssertExt.Equal(getStateCalls, expectedCalls);
         }
     }
 }

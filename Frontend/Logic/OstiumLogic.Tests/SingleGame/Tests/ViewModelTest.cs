@@ -64,6 +64,20 @@ namespace SingleGame.Tests
         }
         
         [Fact]
+        public void ShouldGetStateEvery5Seconds()
+        {
+            var c = scenarios.InGameWindow();
+            
+            c.GameApiMock.AssertGetStateCallsNumber(1); // one right away
+            
+            c.TimerApi.Progress(4999);
+            c.GameApiMock.AssertGetStateCallsNumber(1); // not yet
+            
+            c.TimerApi.Progress(1);
+            c.GameApiMock.AssertGetStateCallsNumber(2); // now
+        }
+        
+        [Fact]
         public void ShouldMovePlayedCardBetweenRowsByDragging()
         {
             var c = scenarios.InGameWindow(i =>

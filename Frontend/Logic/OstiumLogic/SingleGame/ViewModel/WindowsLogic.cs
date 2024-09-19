@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using B20.Events.Api;
 using B20.Ext;
 using B20.Frontend.Postion;
+using B20.Frontend.Timer.Api;
 using B20.Frontend.Traits;
 using B20.Logic.Utils;
 using GamesManagement.Api;
@@ -41,14 +42,21 @@ namespace SingleGame.ViewModel
     public partial class GameWindow
     {
         private SingleGameApi singleGameApi;
-        public GameWindow(SingleGameApi singleGameApi, EventPublisher eventPublisher)
+        public GameWindow(SingleGameApi singleGameApi, EventPublisher eventPublisher, TimerApi timerApi)
         {
             this.singleGameApi = singleGameApi;
             eventPublisher.AddListener(new GameElementDragStartedListener(this));
             eventPublisher.AddListener(new GameElementDragEndedListener(this));
+            
+            timerApi.Schedule(Update, 5);
         }
         
         protected override void OnOpen()
+        {
+            Update();
+        }
+        
+        private void Update()
         {
             Game.Update(singleGameApi.GetState(State.GameId, State.User));
         }
