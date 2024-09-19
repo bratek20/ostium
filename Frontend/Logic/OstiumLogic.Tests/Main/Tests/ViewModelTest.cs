@@ -4,6 +4,7 @@ using B20.Frontend.UiElements.Context;
 using B20.Frontend.Windows.Api;
 using B20.Tests.Architecture.Logs.Context;
 using B20.Tests.ExtraAsserts;
+using B20.Tests.Frontend.TestHelpers;
 using B20.Tests.Frontend.Windows.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.ViewModel;
@@ -20,13 +21,7 @@ namespace Ostium.Logic.Tests.Main.Tests
         {
             var c = ContextsFactory.CreateBuilder()
                 .WithModules(
-                    //TODO-REF below one should be somehow grouped
-                    new LogsMocks(),
-                    new TraitsImpl(),
-                    new UiElementsImpl(),
-                    
-                    //reasonable mock
-                    new WindowsMocks(),
+                    new ViewModelTesting(),
                     
                     //tested module
                     new MainViewModel()

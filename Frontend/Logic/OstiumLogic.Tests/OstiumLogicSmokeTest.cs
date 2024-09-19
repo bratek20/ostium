@@ -1,18 +1,11 @@
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Logs.Context;
-using B20.Ext;
 using B20.Frontend.Windows.Api;
-using B20.Infrastructure.HttpClientModule.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.ViewModel;
-using HttpClientModule.Api;
 using Main.ViewModel;
-using Ostium.Logic.GameModule.Context;
-using Ostium.Logic.Tests.GameModule.Context;
-using Ostium.Logic.Tests.GamesManagement.Context;
-using SingleGame.Api;
 using SingleGame.ViewModel;
 using Xunit;
 

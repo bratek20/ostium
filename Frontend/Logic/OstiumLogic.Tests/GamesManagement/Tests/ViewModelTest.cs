@@ -56,7 +56,7 @@ namespace GamesManagement.Tests
         }
         
         [Fact]
-        public void ShouldCreateGameAndGoToTheGame()
+        public void ShouldCreateGameWhenButtonClickedAndGoToTheGame()
         {
             window.CreateGame.Click();
             
