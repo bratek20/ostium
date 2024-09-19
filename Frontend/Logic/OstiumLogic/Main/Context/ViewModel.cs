@@ -1,6 +1,6 @@
 using B20.Architecture.Contexts.Api;
 using B20.Frontend.Windows.Api;
-using GameModule.ViewModel;
+using SingleGame.ViewModel;
 using Main.ViewModel;
 
 namespace Ostium.Logic.MainWindowModule.Context
@@ -10,8 +10,7 @@ namespace Ostium.Logic.MainWindowModule.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .AddImpl<Window, MainWindow>()
-                .SetClass<PlayButton>(InjectionMode.Prototype);
+                .AddImpl<Window, MainWindow>();
         }
     }
 }

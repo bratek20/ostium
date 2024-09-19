@@ -14,7 +14,7 @@ namespace Main.View
         protected override void OnInit()
         {
             username.Bind(ViewModel.Username);
-            play.Init(ViewModel.PlayButton);
+            play.Bind(ViewModel.PlayButton);
         }
     }
 }

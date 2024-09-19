@@ -1,97 +1,53 @@
-using System;
-using System.Collections.Generic;
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
-using B20.Architecture.Events.Context;
 using B20.Architecture.Logs.Context;
-using B20.Ext;
-using B20.Frontend.Traits.Context;
 using B20.Frontend.Windows.Api;
-using B20.Frontend.Windows.Context;
-using B20.Infrastructure.HttpClientModule.Context;
+using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Fixtures;
-using GameModule;
-using GameModule.Api;
-using HttpClientModule.Api;
+using GamesManagement.ViewModel;
 using Main.ViewModel;
-using Ostium.Logic.GameModule.Context;
-using Ostium.Logic.Tests.GameModule.Context;
+using SingleGame.ViewModel;
 using Xunit;
-using Diffs = GameComponents.Diffs;
 
 namespace Ostium.Logic.Tests
 {
     public class OstiumLogicSmokeTest
     {
-        private GameApi CreateWebApi()
-        {
-            return ContextsFactory.CreateBuilder()
-                .WithModules(
-                    new DotNetHttpClientModuleImpl(),
-                    new GameModuleWebClient(
-                        HttpClientConfig.Create(
-                            baseUrl: "http://localhost:8080",
-                            auth: Optional<HttpClientAuth>.Empty()
-                        )
-                    )
-                )
-                .Get<GameApi>();
-        }
+        private Context c;
         
-        [Fact(
-            Skip = "Comment this line to test local server connection"
-        )]
-        public void ShouldUseLocalServer()
+        public OstiumLogicSmokeTest()
         {
-            var api = CreateWebApi();
-            var game = api.StartGame();
-
-            Asserts.AssertGame(game, expected =>
-            {
-                expected.Hand = hand =>
-                {
-                    hand.Cards = new List<Action<Diffs.ExpectedCreatureCard>>
-                    {
-                        card => { card.Id = "Mouse1"; },
-                        card => { card.Id = "Mouse2"; }
-                    };
-                };
-            });
-        }
-        
-        public class OstiumMockedBackendImpl: ContextModule
-        {
-            public void Apply(ContextBuilder builder)
-            {
-                builder
-                    .WithModules(
-                        new GameModuleMocks()
-                    );
-            }
-        }
-        
-        [Fact]
-        public void GreenPathFlow()
-        {
-            var b = ContextsFactory.CreateBuilder()
+            c = ContextsFactory.CreateBuilder()
                 .WithModules(
                     //NEED TO BE SET BY UNITY
                     new WindowManipulatorInMemoryImpl(),
                     new ConsoleLogsImpl(),
                     
                     //EXPOSED BY LOGIC
-                    new OstiumLogicNoBackendImpl(),
-                    new OstiumMockedBackendImpl()
+                    new OstiumLogicFullImpl()
                 )
                 .Build();
-            
-            var logic = b.Get<OstiumLogic>();
-            var windowManager = b.Get<WindowManager>();
+        }
 
+        [Fact(
+            //Skip = "Comment this line to test local server connection"
+        )]
+        public void GreenPathTest()
+        {
+            var windowManager = c.Get<WindowManager>();
+            var logic = c.Get<OstiumLogic>();
             logic.Start();
             
-            var mainWindow = windowManager.Get<MainWindow>();
+            var mainWindow = windowManager.GetCurrent() as MainWindow;
+            mainWindow.Username.OnTextChange("SomeUser");
             mainWindow.PlayButton.Click();
+            
+            var gamesManagementWindow = windowManager.GetCurrent() as GamesManagementWindow;
+            gamesManagementWindow.CreateGame.Click();
+            
+            var gameWindow = windowManager.GetCurrent() as GameWindow;
+            
+            AssertExt.ListCount(gameWindow.Game.MyHand.Cards.Model, 2);
         }
     }
 }

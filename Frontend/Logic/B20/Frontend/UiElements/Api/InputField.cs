@@ -6,10 +6,10 @@ namespace B20.Frontend.UiElements
     {
         public Logger Logger { get; set; }
         
-        public void OnChange(string value)
+        public void OnTextChange(string text)
         {
-            Logger.Info($"Input field changed to `{value}`");
-            Update(value);
+            Logger.Info($"Input field text changed to `{text}`");
+            Update(text);
         }
     }
 }

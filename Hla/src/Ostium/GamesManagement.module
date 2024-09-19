@@ -1,0 +1,36 @@
+ValueObjects
+    GameId: int
+    
+    CreatedGame
+        id: GameId
+        creator: Username
+        joiner: Username?
+        
+Interfaces
+    GamesManagementApi
+        create(creator: Username): GameId
+
+        join(joiner: Username, gameId: GameId): void
+        
+        getAllCreated(): CreatedGame[]
+
+Web
+    Http
+        ExposedInterfaces
+            GamesManagementApi
+        urlPathPrefix = "/ostium"
+
+//ViewModel
+    //Elements
+        //CreatedGameVm (clickable)
+            //main -> CreatedGame
+                //id //(debug)
+                //creator
+                //joiner
+    
+    //Windows
+        //GamesManagementWindow
+            State
+                username: Username
+            //createdGames: CreatedGameVm[]
+            //createGame: Button

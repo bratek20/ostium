@@ -9,7 +9,7 @@ namespace B20.Frontend.Elements.View
 
         private UnityEngine.UI.Button uiButton;
 
-        public void Init(Button value)
+        public void Bind(Button value)
         {
             Value = value;
             uiButton = GetComponent<UnityEngine.UI.Button>();

@@ -3,10 +3,11 @@ package com.github.bratek20.ostium
 import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.infrastructure.httpclient.context.HttpClientImpl
 import com.github.bratek20.infrastructure.httpclient.fixtures.httpClientConfig
-import com.github.bratek20.ostium.createdgames.api.CreatedGamesApi
-import com.github.bratek20.ostium.createdgames.context.CreatedGamesWebClient
-import com.github.bratek20.ostium.gamemodule.api.GameApi
-import com.github.bratek20.ostium.gamemodule.context.GameModuleWebClient
+import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
+import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementWebClient
+import com.github.bratek20.ostium.singlegame.api.SingleGameApi
+import com.github.bratek20.ostium.singlegame.context.SingleGameWebClient
+import com.github.bratek20.ostium.user.api.Username
 import org.junit.jupiter.api.Test
 
 class MainSmokeTest {
@@ -20,14 +21,16 @@ class MainSmokeTest {
         val c = someContextBuilder()
             .withModules(
                 HttpClientImpl(),
-                CreatedGamesWebClient(httpConfig),
-                GameModuleWebClient(httpConfig)
+                GamesManagementWebClient(httpConfig),
+                SingleGameWebClient(httpConfig)
             )
 
-        val createdGamesApi = c.get(CreatedGamesApi::class.java)
-        val gameApi = c.get(GameApi::class.java)
+        val gamesManagementApi = c.get(GamesManagementApi::class.java)
+        val singleGameApi = c.get(SingleGameApi::class.java)
 
-        createdGamesApi.getAll()
-        gameApi.startGame()
+        val username = Username("test")
+
+        val gameId = gamesManagementApi.create(username)
+        singleGameApi.getState(gameId, username)
     }
 }

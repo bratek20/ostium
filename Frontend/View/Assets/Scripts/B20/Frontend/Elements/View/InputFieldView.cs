@@ -20,7 +20,7 @@ namespace B20.Frontend.Elements.View
         
         private void OnValueChanged(string newText)
         {
-            ViewModel.OnChange(newText);
+            ViewModel.OnTextChange(newText);
         }
     }
 }

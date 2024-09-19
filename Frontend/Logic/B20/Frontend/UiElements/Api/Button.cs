@@ -1,12 +1,31 @@
-﻿namespace B20.Logic
+﻿using System;
+using B20.Architecture.Exceptions;
+
+namespace B20.Logic
 {
-    public abstract class Button
+    public class ButtonOnClickNotSetException : ApiException
     {
+        public ButtonOnClickNotSetException(string message) : base(message)
+        {
+        }
+    }
+    
+    public class Button
+    {
+        private Action onClick;
+        
         public void Click()
         {
-            OnClick();
+            if (onClick == null)
+            {
+                throw new ButtonOnClickNotSetException("Button OnClick not set");
+            }
+            onClick();
         }
 
-        protected abstract void OnClick();
+        public void OnClick(Action onClick)
+        {
+            this.onClick = onClick;
+        }
     }
 }

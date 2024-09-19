@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../../../Backend/bash/server
+cd ../../../Backend/bash
 
-./runWebApp.sh
+./server/runWebApp.sh
 

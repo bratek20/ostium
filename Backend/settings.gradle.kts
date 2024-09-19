@@ -53,4 +53,3 @@ rootProject.name = "ostium-backend"
 
 include("lib")
 include("web-app")
-include("web-app-tester")

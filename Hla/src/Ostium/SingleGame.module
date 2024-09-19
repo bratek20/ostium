@@ -1,0 +1,84 @@
+//Dependencies
+    //GamesManagement (Impl)
+
+Enums
+    RowType
+        ATTACK
+        DEFENSE
+
+ValueObjects
+    CreatureCard
+        id: CreatureCardId: string
+    
+    Row
+        type: RowType
+        card: CreatureCard?
+        
+    PlayerSide
+        attackRow: Row
+        defenseRow: Row
+        
+    Table
+        mySide: PlayerSide
+        opponentSide: PlayerSide
+    
+    Hand
+        cards: CreatureCard[]
+    
+    GameState
+        table: Table
+        myHand: Hand
+        opponentHand: Hand
+        myName: Username
+        opponentName: Username?
+            
+Interfaces        
+    SingleGameApi
+        getState(gameId: GameId, user: Username): GameState
+            throws
+                GameNotFoundException
+          
+        playCard(gameId: GameId, user: Username, cardId: CreatureCardId, row: RowType): GameState
+
+        moveCard(gameId: GameId, user: Username, cardId: CreatureCardId, from: RowType, to: RowType): GameState
+
+Web
+    Http
+        ExposedInterfaces
+            SingleGameApi
+        urlPathPrefix = "/ostium"
+
+//ViewModel
+    //Elements
+        //CreatureCardVm
+            //CreatureCard
+                //id -> name
+            //visible: BoolSwitch
+        
+        //RowVm
+            //Row
+                //card
+        
+        //TableVm
+            //Table
+                //attackRow
+                //defenseRow
+                
+        //HandVm
+            //Hand
+                //cards
+                
+        //GameVm
+            //GameState
+                //opponentName
+                //opponentHand
+                //table
+                //myHand
+                //myName
+    
+    //Windows                
+        //GameWindow
+            //State
+                gameId: GameId
+                user: Username
+            //game: GameVm

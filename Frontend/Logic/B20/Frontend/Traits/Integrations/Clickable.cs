@@ -3,10 +3,10 @@ using B20.Frontend.UiElements;
 
 namespace B20.Frontend.Traits
 {
-    public class ElementClickedEvent: Event
+    public class UiElementClickedEvent: Event
     {
         public UiElement Element { get; }
-        public ElementClickedEvent(UiElement element)
+        public UiElementClickedEvent(UiElement element)
         {
             Element = element;
         }
@@ -22,7 +22,7 @@ namespace B20.Frontend.Traits
         
         public void Click()
         {
-            publisher.Publish(new ElementClickedEvent(Owner));
+            publisher.Publish(new UiElementClickedEvent(Owner));
         }
     }
 }
