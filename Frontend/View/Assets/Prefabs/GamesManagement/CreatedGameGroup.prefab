@@ -89,4 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elementPrefab: {fileID: 5411306644481288954, guid: efc3bb3b093903949b3bff39069ab9fa, type: 3}
-  elementSpacing: 1
+  elementSpacing: 225
