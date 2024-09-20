@@ -11,6 +11,8 @@ namespace GamesManagement.Api {
 
         void Join(Username joiner, GameId gameId);
 
+        void Delete(GameId gameId);
+
         List<CreatedGame> GetAllCreated();
     }
 }

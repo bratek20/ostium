@@ -45,7 +45,13 @@ namespace GamesManagement.ViewModel
         protected override void OnOpen()
         {
             CreateGame.OnClick(OnCreateClicked);
+            CreatedGames.OnElementCreated(createdGame => createdGame.Delete.OnClick(() => HandleCreatedGameDeleteButtonClicked(createdGame)));
             
+            Refresh();
+        }
+        
+        private void Refresh()
+        {
             CreatedGames.Update(api.GetAllCreated());
         }
         
@@ -53,6 +59,12 @@ namespace GamesManagement.ViewModel
         {
             var gameId = api.Create(State.Username);
             windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(State.Username, gameId));
+        }
+        
+        private void HandleCreatedGameDeleteButtonClicked(CreatedGameVm game)
+        {
+            api.Delete(game.Model.GetId());
+            Refresh();
         }
     }
 }

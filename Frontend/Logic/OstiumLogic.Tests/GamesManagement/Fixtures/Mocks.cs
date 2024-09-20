@@ -28,15 +28,28 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
             lastJoinJoiner = joiner;
             lastJoinGameId = gameId;
         }
+
+        private GameId lastDeleteGameId;
+        public void Delete(GameId gameId)
+        {
+            lastDeleteGameId = gameId;
+        }
         
+        public void AssertDeleteCalled(int gameId)
+        {
+            AssertExt.Equal(gameId, lastDeleteGameId.Value);
+        }
+
         public void AssertJoinCalled(string joiner, int gameId)
         {
             AssertExt.Equal(joiner, lastJoinJoiner.Value);
             AssertExt.Equal(gameId, lastJoinGameId.Value);
         }
 
+        private int getCreatedCalls = 0;
         public List<CreatedGame> GetAllCreated()
         {
+            getCreatedCalls++;
             return ListUtils.Of(
                 CreatedGame.Create(
                     new GameId(69),
@@ -44,6 +57,11 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
                     Optional<Username>.Empty()
                 )
             );
+        }
+        
+        public void AssertGetAllCreatedCalled(int expectedCalls)
+        {
+            AssertExt.Equal(getCreatedCalls, expectedCalls);
         }
     }
 }

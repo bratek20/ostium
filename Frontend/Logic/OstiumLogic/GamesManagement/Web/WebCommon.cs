@@ -66,6 +66,22 @@ namespace GamesManagement.Web {
         }
     }
 
+    public class GamesManagementApiDeleteRequest {
+        readonly int gameId;
+
+        public GamesManagementApiDeleteRequest(
+            int gameId
+        ) {
+            this.gameId = gameId;
+        }
+        public GameId GetGameId() {
+            return new GameId(gameId);
+        }
+        public static GamesManagementApiDeleteRequest Create(GameId gameId) {
+            return new GamesManagementApiDeleteRequest(gameId.Value);
+        }
+    }
+
     public class GamesManagementApiGetAllCreatedResponse {
         public List<CreatedGame> Value { get; }
 

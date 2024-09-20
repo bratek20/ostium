@@ -47,6 +47,9 @@ namespace B20.Frontend.UiElements
             }
         }
 
+        private bool _started = false;
+        protected virtual void OnStart() { }
+
         protected virtual void OnUpdate() { }
         
         protected virtual List<Type> GetTraitTypes()
@@ -57,6 +60,11 @@ namespace B20.Frontend.UiElements
         public void Update(TModelType model)
         {
             Model = model;
+            if (!_started)
+            {
+                OnStart();
+                _started = true;
+            }
             
             OnUpdate();
             

@@ -2,22 +2,18 @@ using System;
 using System.Collections.Generic;
 using B20.Frontend.Traits;
 using B20.Frontend.UiElements;
+using B20.Logic;
 using GamesManagement.Api;
 
 namespace GamesManagement.ViewModel
 {
-    //CreatedGameVm (clickable)
-    //main -> CreatedGame
-    //id //(debug)
-    //creator
-    //joiner
-    
     public partial class CreatedGameVm: UiElement<CreatedGame>
     {
         public Label Id { get; } = new Label();
         public Label Creator { get; } = new Label();
         public OptionalUiElement<Label, string> Joiner { get; } = new OptionalUiElement<Label, string>(new Label());
-
+        public Button Delete { get; set; }
+        
         protected override List<Type> GetTraitTypes()
         {
             return new List<Type>()

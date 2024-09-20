@@ -21,8 +21,9 @@ namespace B20.Frontend.UiElements.Tests
     
     class SomeModel {}
         
-    class ElementVMTester: UiElement<SomeModel>
+    class UiElementTester: UiElement<SomeModel>
     {
+        private int startCount = 0;
         private int updateCount = 0;
 
         protected override List<Type> GetTraitTypes()
@@ -32,9 +33,19 @@ namespace B20.Frontend.UiElements.Tests
             );
         }
 
+        protected override void OnStart()
+        {
+            startCount++;
+        }
+
         protected override void OnUpdate()
         {
             updateCount++;
+        }
+        
+        public void AssertStartCount(int expected)
+        {
+            Assert.Equal(expected, startCount);
         }
         
         public void AssertUpdateCount(int expected)
@@ -49,28 +60,34 @@ namespace B20.Frontend.UiElements.Tests
         }
     }
     
-    public class ElementVMTest
+    public class UiElementTest
     {
-        private ElementVMTester elementTester;
+        private UiElementTester elementTester;
         private UiElement elementInterf;
         
-        public ElementVMTest()
+        public UiElementTest()
         {
             elementTester = ContextsFactory.CreateBuilder()
                 .WithModule(new TraitsImpl())
                 .SetClass<TraitTester>()
                 .SetClass<OtherTrait>()
-                .SetClass<ElementVMTester>()
-                .Get<ElementVMTester>();
+                .SetClass<UiElementTester>()
+                .Get<UiElementTester>();
             elementInterf = elementTester;
         }
             
         [Fact]
-        public void ShouldCallOnUpdate()
+        public void ShouldCallOnUpdateEveryUpdateAndOnStartBeforeFirstOnUpdate()
         {
             elementTester.Update(new SomeModel());
             
+            elementTester.AssertStartCount(1);
             elementTester.AssertUpdateCount(1);
+            
+            elementTester.Update(new SomeModel());
+            
+            elementTester.AssertStartCount(1);
+            elementTester.AssertUpdateCount(2);
         }
         
         [Fact]
@@ -85,7 +102,7 @@ namespace B20.Frontend.UiElements.Tests
                 e =>
                 {
                     e.Type = typeof(TraitNotFoundException);
-                    e.Message = "Trait OtherTrait not found for ElementVMTester";
+                    e.Message = "Trait OtherTrait not found for UiElementTester";
                 }
             );
         }
