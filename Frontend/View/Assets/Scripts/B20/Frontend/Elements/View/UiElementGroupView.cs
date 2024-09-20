@@ -13,7 +13,9 @@ namespace B20.Frontend.Elements.View
         private TView elementPrefab;
 
         [SerializeField]
-        private int elementSpacing = 1;
+        private int elementSpacingX = 0;
+        [SerializeField]
+        private int elementSpacingY = 0;
 
         private readonly List<TView> _elementViews = new List<TView>();
         
@@ -42,7 +44,7 @@ namespace B20.Frontend.Elements.View
                 element.Refresh();
 
                 // Update the position for the next element
-                currentPosition += new Vector3(elementSpacing, 0, 0);
+                currentPosition += new Vector3(elementSpacingX, elementSpacingY, 0);
             }
         }
     }

@@ -23,6 +23,9 @@ namespace GamesManagement.Web {
         public void Join(Username joiner, GameId gameId) {
             client.Post("/ostium/gamesManagementApi/join", Optional<GamesManagementApiJoinRequest>.Of(GamesManagementApiJoinRequest.Create(joiner, gameId)));
         }
+        public void Delete(GameId gameId) {
+            client.Post("/ostium/gamesManagementApi/delete", Optional<GamesManagementApiDeleteRequest>.Of(GamesManagementApiDeleteRequest.Create(gameId)));
+        }
         public List<CreatedGame> GetAllCreated() {
             return client.Post("/ostium/gamesManagementApi/getAllCreated", Optional<object>.Empty()).GetBody<GamesManagementApiGetAllCreatedResponse>().Get().Value;
         }

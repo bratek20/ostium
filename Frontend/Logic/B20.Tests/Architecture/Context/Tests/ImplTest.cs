@@ -8,7 +8,7 @@ using Xunit;
 
 namespace B20.Tests.Architecture.Context.Tests
 {
-    public class ImplTest
+    public class ContextImplTest
     {
         public static ContextBuilder CreateBuilder()
         {
@@ -30,6 +30,19 @@ namespace B20.Tests.Architecture.Context.Tests
             }
         }
 
+        [Fact]
+        public void ShouldThrowIfClassNotFound()
+        {
+            ExceptionsAsserts.ThrowsApiException(
+                () => CreateBuilder().Build().Get<SimpleClass>(),
+                e =>
+                {
+                    e.Type = typeof(ClassNotFoundInContextException);
+                    e.Message = "Class 'SimpleClass' not found in context";
+                }
+            );    
+        }
+        
         [Fact]
         public void TestReferencingClass()
         {

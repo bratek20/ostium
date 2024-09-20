@@ -56,6 +56,17 @@ namespace GamesManagement.Tests
         }
         
         [Fact]
+        public void ShouldDeleteGameAndRefreshWhenDeleteButtonClicked()
+        {
+            apiMock.AssertGetAllCreatedCalled(1);
+
+            window.CreatedGames.Elements[0].Delete.Click();
+            
+            apiMock.AssertDeleteCalled(69);
+            apiMock.AssertGetAllCreatedCalled(2);
+        }
+        
+        [Fact]
         public void ShouldCreateGameWhenButtonClickedAndGoToTheGame()
         {
             window.CreateGame.Click();

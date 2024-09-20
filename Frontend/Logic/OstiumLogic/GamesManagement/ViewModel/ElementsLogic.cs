@@ -1,6 +1,6 @@
-﻿using B20.Frontend.Windows.Api;
-using SingleGame.ViewModel;
-
-namespace GamesManagement.ViewModel
+﻿namespace GamesManagement.ViewModel
 {
+    public partial class CreatedGameVm
+    {
+    }
 }

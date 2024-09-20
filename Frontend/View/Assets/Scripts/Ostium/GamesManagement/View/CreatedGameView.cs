@@ -10,12 +10,15 @@ namespace SingleGame.View
         private LabelView id;
         [SerializeField]
         private LabelView creator;
+        [SerializeField]
+        private ButtonView delete;
 
         protected override void OnBind()
         {
             base.OnBind();
             id.Bind(ViewModel.Id);
             creator.Bind(ViewModel.Creator);
+            delete.Bind(ViewModel.Delete);
         }
     }
 }

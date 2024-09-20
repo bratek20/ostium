@@ -32,6 +32,12 @@ class GamesManagementApiController(
         api.join(request.getJoiner(), request.getGameId())
     }
 
+    @PostMapping("/delete")
+    fun delete(@RequestBody rawRequest: Struct): Unit {
+        val request = serializer.fromStruct(rawRequest, GamesManagementApiDeleteRequest::class.java)
+        api.delete(request.getGameId())
+    }
+
     @PostMapping("/getAllCreated")
     fun getAllCreated(): Struct {
         // no request needed

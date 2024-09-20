@@ -29,6 +29,13 @@ class GamesManagementApiLogic(
         logger.info("User `$joiner` joined game with id ${game.getId()}")
     }
 
+    override fun delete(gameId: GameId) {
+        val game = games.first { it.getId() == gameId }
+        games.remove(game)
+
+        logger.info("Game with id ${game.getId()} deleted")
+    }
+
     override fun getAllCreated(): List<CreatedGame> {
         return games
     }

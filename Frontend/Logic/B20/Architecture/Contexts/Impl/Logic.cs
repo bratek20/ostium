@@ -4,6 +4,7 @@ using System.Linq;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
+using Autofac.Core.Registration;
 using Autofac.Extensions.DependencyInjection;
 using B20.Architecture.Contexts.Api;
 
@@ -40,6 +41,10 @@ namespace B20.Architecture.Contexts.Impl
                 if (e.InnerException is DependentClassNotFoundInContextException)
                 {
                     throw e.InnerException;
+                }
+                if (e is ComponentNotRegisteredException)
+                {
+                    throw new ClassNotFoundInContextException($"Class '{typeof(T).Name}' not found in context");
                 }
 
                 throw;

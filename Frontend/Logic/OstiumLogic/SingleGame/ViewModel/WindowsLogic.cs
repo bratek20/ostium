@@ -42,18 +42,21 @@ namespace SingleGame.ViewModel
     public partial class GameWindow
     {
         private SingleGameApi singleGameApi;
+        private TimerApi timerApi;
+        
         public GameWindow(SingleGameApi singleGameApi, EventPublisher eventPublisher, TimerApi timerApi)
         {
             this.singleGameApi = singleGameApi;
+            this.timerApi = timerApi;
+            
             eventPublisher.AddListener(new GameElementDragStartedListener(this));
             eventPublisher.AddListener(new GameElementDragEndedListener(this));
-            
-            timerApi.Schedule(Update, 5);
         }
         
         protected override void OnOpen()
         {
             Update();
+            timerApi.Schedule(Update, 5);
         }
         
         private void Update()

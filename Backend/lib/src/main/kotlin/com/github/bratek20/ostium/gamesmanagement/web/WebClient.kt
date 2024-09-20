@@ -22,6 +22,10 @@ class GamesManagementApiWebClient(
         client.post("/ostium/gamesManagementApi/join", GamesManagementApiJoinRequest.create(joiner, gameId))
     }
 
+    override fun delete(gameId: GameId): Unit {
+        client.post("/ostium/gamesManagementApi/delete", GamesManagementApiDeleteRequest.create(gameId))
+    }
+
     override fun getAllCreated(): List<CreatedGame> {
         return client.post("/ostium/gamesManagementApi/getAllCreated", null).getBody(GamesManagementApiGetAllCreatedResponse::class.java).value
     }

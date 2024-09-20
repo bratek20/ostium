@@ -11,6 +11,8 @@ Interfaces
         create(creator: Username): GameId
 
         join(joiner: Username, gameId: GameId): void
+
+        delete(gameId: GameId): void
         
         getAllCreated(): CreatedGame[]
 
@@ -27,6 +29,7 @@ Web
                 //id //(debug)
                 //creator
                 //joiner
+            //delete: Button
     
     //Windows
         //GamesManagementWindow

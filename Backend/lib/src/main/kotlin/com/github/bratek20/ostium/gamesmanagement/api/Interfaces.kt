@@ -9,5 +9,7 @@ interface GamesManagementApi {
 
     fun join(joiner: Username, gameId: GameId): Unit
 
+    fun delete(gameId: GameId): Unit
+
     fun getAllCreated(): List<CreatedGame>
 }
