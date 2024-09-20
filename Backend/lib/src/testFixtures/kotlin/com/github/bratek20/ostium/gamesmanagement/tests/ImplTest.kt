@@ -76,5 +76,19 @@ open class GamesManagementImplTest {
             id = 2
             creator = "test3"
         }
+
+        //delete
+        loggerMock.reset()
+        api.delete(gameId(1))
+
+        val gamesAfterDelete = api.getAllCreated()
+        assertThat(gamesAfterDelete).hasSize(1)
+        assertCreatedGame(gamesAfterDelete[0]) {
+            id = 2
+        }
+
+        loggerMock.assertInfos(
+            "Game with id 1 deleted"
+        )
     }
 }

@@ -44,6 +44,18 @@ class GamesManagementApiJoinRequest(
         }
     }
 }
+class GamesManagementApiDeleteRequest(
+    private val gameId: Int
+) {
+    fun getGameId(): GameId {
+        return GameId(gameId)
+    }
+    companion object {
+        fun create(gameId: GameId): GamesManagementApiDeleteRequest {
+            return GamesManagementApiDeleteRequest(gameId.value)
+        }
+    }
+}
 class GamesManagementApiGetAllCreatedResponse(
     val value: List<CreatedGame>
 ) {
