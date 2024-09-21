@@ -11,6 +11,9 @@ namespace SingleGame.View
     public class GameManager : MonoBehaviour
     {
         [SerializeField]
+        private ServerType serverType;
+        
+        [SerializeField]
         private UnityWindowManipulator windowManipulator;
 
         private OstiumLogic logic;
@@ -22,7 +25,7 @@ namespace SingleGame.View
                 .SetImplObject<WindowManipulator>(windowManipulator)
                 .WithModules(
                     new UnityLogsImpl(),
-                    new OstiumLogicFullImpl()
+                    new OstiumLogicFullImpl(serverType)
                 )
                 .Build();
 

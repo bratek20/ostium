@@ -71,11 +71,6 @@ namespace HttpClientModule.Impl
             return new HttpResponseLogic(200, response);
         }
 
-        public HttpResponse Post(string path, Optional<object> body)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public HttpResponse Post<T>(string path, Optional<T> body)
         {
             string content = body.IsPresent() ? serializer.Serialize(body.Get()).GetValue() : "";

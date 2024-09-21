@@ -1,5 +1,6 @@
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Events.Context;
+using B20.Architecture.Exceptions;
 using B20.Ext;
 using B20.Frontend.Timer.Context;
 using B20.Frontend.Traits.Context;
@@ -51,13 +52,38 @@ namespace Ostium.Logic
                 .SetClass<OstiumLogic>();
         }
     }
-    
+
+    public enum ServerType
+    {
+        Local, 
+        Cloud
+    }
     public class OstiumLogicFullImpl: ContextModule
     {
+        private ServerType serverType;
+
+        public OstiumLogicFullImpl(ServerType serverType)
+        {
+            this.serverType = serverType;
+        }
+
         public void Apply(ContextBuilder builder)
         {
+            string baseUrl;
+            switch (serverType)
+            {
+                case ServerType.Local:
+                    baseUrl = "http://localhost:8080";
+                    break;
+                case ServerType.Cloud:
+                    baseUrl = "http://138.2.170.242";
+                    break;
+                default:
+                    throw new ShouldNeverHappenException();
+            }
+
             var httpConfig = HttpClientConfig.Create(
-                baseUrl: "http://localhost:8080",
+                baseUrl: baseUrl,
                 auth: Optional<HttpClientAuth>.Empty()
             );
             

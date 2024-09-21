@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6dd0aefb62a14746bf915ee04320cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serverType: 1
   windowManipulator: {fileID: 1969435445}
 --- !u!4 &1366543179
 Transform:

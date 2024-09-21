@@ -13,27 +13,13 @@ namespace Ostium.Logic.Tests
 {
     public class OstiumLogicSmokeTest
     {
-        private Context c;
-        
-        public OstiumLogicSmokeTest()
-        {
-            c = ContextsFactory.CreateBuilder()
-                .WithModules(
-                    //NEED TO BE SET BY UNITY
-                    new WindowManipulatorInMemoryImpl(),
-                    new ConsoleLogsImpl(),
-                    
-                    //EXPOSED BY LOGIC
-                    new OstiumLogicFullImpl()
-                )
-                .Build();
-        }
-
         [Fact(
-            Skip = "Comment this line to test local server connection"
+            Skip = "Comment this line to test real server interaction"
         )]
         public void GreenPathTest()
         {
+            var c = CreateContext(ServerType.Cloud);
+            
             var windowManager = c.Get<WindowManager>();
             var logic = c.Get<OstiumLogic>();
             logic.Start();
@@ -48,6 +34,20 @@ namespace Ostium.Logic.Tests
             var gameWindow = windowManager.GetCurrent() as GameWindow;
             
             AssertExt.ListCount(gameWindow.Game.MyHand.Cards.Model, 2);
+        }
+
+        private Context CreateContext(ServerType serverType)
+        {
+            return ContextsFactory.CreateBuilder()
+                .WithModules(
+                    //NEED TO BE SET BY UNITY
+                    new WindowManipulatorInMemoryImpl(),
+                    new ConsoleLogsImpl(),
+                    
+                    //EXPOSED BY LOGIC
+                    new OstiumLogicFullImpl(serverType)
+                )
+                .Build();
         }
     }
 }
