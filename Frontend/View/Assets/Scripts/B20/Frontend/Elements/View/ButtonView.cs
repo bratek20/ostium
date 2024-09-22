@@ -1,4 +1,4 @@
-using B20.Logic;
+using B20.Frontend.UiElements;
 using UnityEngine;
 
 namespace B20.Frontend.Elements.View
