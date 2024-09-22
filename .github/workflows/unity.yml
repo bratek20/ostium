@@ -1,9 +1,11 @@
 name: Unity - Builder
 run-name: ${{ github.actor }} is working on a new shiny build  🚀
 on:
-  push:
-    branches:
-      - inprogress1337
+  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - main
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -24,9 +26,13 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          projectPath: Frontend/View
           targetPlatform: Android
           buildName: test
           buildsPath: BuildTools.BuildRunner.Build
           customParameters: -config "./build_config.json"
-      - name: Distribute
-        run: echo "distribute"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test
+          path: ./BuildTools.BuildRunner.Build/Android/test.apk
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
