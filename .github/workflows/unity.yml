@@ -1,14 +1,10 @@
 name: Unity - Builder
 run-name: ${{ github.actor }} is working on a new shiny build  🚀
 on:
-  push:
-    branches:
-      - feat/unity-ci
+  # push:
+  #   branches:
+  #     - feat/unity-ci
   workflow_dispatch:
-# on:
-#   push:
-#     branches:
-#       - main
 jobs:
   Unity-Build:
     runs-on: ubuntu-latest
