@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using B20.Frontend.UiElements;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
 

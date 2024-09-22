@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Exceptions.Fixtures;
 using B20.Frontend.Traits.Context;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
 

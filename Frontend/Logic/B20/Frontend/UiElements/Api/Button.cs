@@ -1,7 +1,7 @@
 ﻿using System;
 using B20.Architecture.Exceptions;
 
-namespace B20.Logic
+namespace B20.Frontend.UiElements
 {
     public class ButtonOnClickNotSetException : ApiException
     {

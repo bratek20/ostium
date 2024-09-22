@@ -4,7 +4,7 @@ using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 using B20.Frontend.Traits;
 using B20.Architecture.Events.Fixtures;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
 using B20.Tests.Frontend.Types.Fixtures;
 using Xunit;

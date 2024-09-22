@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 
-namespace B20.Logic.Utils
+namespace B20.Frontend.UiElements.Utils
 {
     public class ListUtils
     {

@@ -1,5 +1,5 @@
 using B20.Architecture.Exceptions.Fixtures;
-using B20.Logic;
+using B20.Frontend.UiElements;
 using Xunit;
 
 namespace B20.Tests.Frontend.Elements.Tests

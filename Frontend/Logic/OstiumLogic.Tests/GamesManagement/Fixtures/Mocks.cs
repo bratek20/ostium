@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using B20.Ext;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using B20.Tests.ExtraAsserts;
 using GamesManagement.Api;
 using User.Api;

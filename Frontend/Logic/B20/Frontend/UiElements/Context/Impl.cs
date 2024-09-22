@@ -1,5 +1,5 @@
 using B20.Architecture.Contexts.Api;
-using B20.Logic;
+using B20.Frontend.UiElements;
 
 namespace B20.Frontend.UiElements.Context
 {
@@ -9,7 +9,9 @@ namespace B20.Frontend.UiElements.Context
         {
             builder
                 .SetClass<InputField>(InjectionMode.Prototype)
-                .SetClass<Button>(InjectionMode.Prototype);
+                .SetClass<Button>(InjectionMode.Prototype)
+                .SetClass<Label>(InjectionMode.Prototype)
+                .SetClass<OptionalLabel>(InjectionMode.Prototype);
         }
     }
 }

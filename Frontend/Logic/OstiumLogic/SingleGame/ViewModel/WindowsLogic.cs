@@ -4,7 +4,7 @@ using B20.Ext;
 using B20.Frontend.Postion;
 using B20.Frontend.Timer.Api;
 using B20.Frontend.Traits;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using GamesManagement.Api;
 using SingleGame.Api;
 using User.Api;

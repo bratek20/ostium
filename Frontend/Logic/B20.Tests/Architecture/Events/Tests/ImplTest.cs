@@ -4,7 +4,7 @@ using B20.Architecture.Contexts.Context;
 using B20.Architecture.Events.Context;
 using B20.Events.Api;
 using B20.Events.Impl;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using Xunit;
 
 namespace B20.Architecture.Events.Tests

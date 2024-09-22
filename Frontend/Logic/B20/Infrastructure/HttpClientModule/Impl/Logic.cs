@@ -1,5 +1,5 @@
 ﻿using B20.Ext;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using System.Collections.Generic;
 using B20.Architecture.Serialization.Context;
 using HttpClientModule.Api;

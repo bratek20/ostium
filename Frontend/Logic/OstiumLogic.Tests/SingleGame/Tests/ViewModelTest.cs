@@ -1,6 +1,6 @@
 using System;
 using B20.Frontend.Postion;
-using B20.Logic.Utils;
+using B20.Frontend.UiElements.Utils;
 using B20.Tests.Frontend.Traits.Fixtures;
 using Ostium.Logic.Tests;
 using SingleGame.Api;

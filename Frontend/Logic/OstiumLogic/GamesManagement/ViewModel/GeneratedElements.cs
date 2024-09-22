@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using B20.Frontend.Traits;
 using B20.Frontend.UiElements;
-using B20.Logic;
 using GamesManagement.Api;
 
 namespace GamesManagement.ViewModel
 {
     public partial class CreatedGameVm: UiElement<CreatedGame>
     {
-        public Label Id { get; } = new Label();
-        public Label Creator { get; } = new Label();
-        public OptionalUiElement<Label, string> Joiner { get; } = new OptionalUiElement<Label, string>(new Label());
+        public Label Id { get; set;  }
+        public Label Creator { get; set; }
+        public OptionalLabel Joiner { get; set; }
         public Button Delete { get; set; }
         
         protected override List<Type> GetTraitTypes()
@@ -24,7 +23,7 @@ namespace GamesManagement.ViewModel
 
         protected override void OnUpdate()
         {
-            Id.Update(Model.GetId().Value.ToString());
+            Id.Update(Model.GetId().Value);
             Creator.Update(Model.GetCreator().Value);
             Joiner.Update(Model.GetJoiner().Map(it => it.Value));
         }
