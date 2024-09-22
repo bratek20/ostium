@@ -1,0 +1,37 @@
+name: Unity - Builder
+run-name: ${{ github.actor }} is working on a new shiny build  🚀
+on:
+  # push:
+  #   branches:
+  #     - feat/unity-ci
+  workflow_dispatch:
+jobs:
+  Unity-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      - name: Build
+        uses: game-ci/unity-builder@v4.2.3
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: Frontend/View
+          targetPlatform: Android
+          buildName: test
+          buildsPath: BuildTools.BuildRunner.Build
+          customParameters: -config "./build_config.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test
+          path: ./BuildTools.BuildRunner.Build/Android/test.apk
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
