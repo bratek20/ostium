@@ -22,18 +22,18 @@ Web
             GamesManagementApi
         urlPathPrefix = "/ostium"
 
-//ViewModel
-    //Elements
-        //CreatedGameVm (clickable)
-            //main -> CreatedGame
-                //id //(debug)
-                //creator
-                //joiner
-            //delete: Button
+ViewModel
+    Elements
+        CreatedGameVm (clickable)
+            CreatedGame
+                id //(debug)
+                creator
+                joiner
+            delete: Button
     
-    //Windows
-        //GamesManagementWindow
+    Windows
+        GamesManagementWindow
             State
                 username: Username
-            //createdGames: CreatedGameVm[]
-            //createGame: Button
+            createdGames: CreatedGameVm[]
+            createGame: Button
