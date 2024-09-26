@@ -48,37 +48,37 @@ Web
             SingleGameApi
         urlPathPrefix = "/ostium"
 
-//ViewModel
-    //Elements
-        //CreatureCardVm
-            //CreatureCard
-                //id -> name
-            //visible: BoolSwitch
+ViewModel
+    Elements
+        CreatureCardVm
+            CreatureCard
+                id// -> name
+            visible: BoolSwitch
         
-        //RowVm
-            //Row
-                //card
+        RowVm
+            Row
+                card
         
-        //TableVm
-            //Table
-                //attackRow
-                //defenseRow
+        TableVm
+            Table
+                attackRow
+                defenseRow
                 
-        //HandVm
-            //Hand
-                //cards
+        HandVm
+            Hand
+                cards
                 
-        //GameVm
-            //GameState
-                //opponentName
-                //opponentHand
-                //table
-                //myHand
-                //myName
+        GameVm
+            GameState
+                opponentName
+                opponentHand
+                table
+                myHand
+                myName
     
-    //Windows                
-        //GameWindow
-            //State
+    Windows                
+        GameWindow
+            State
                 gameId: GameId
                 user: Username
-            //game: GameVm
+            game: GameVm

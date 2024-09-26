@@ -8,7 +8,7 @@ namespace SingleGame.ViewModel
 {
     public partial class CreatureCardVm: UiElement<CreatureCard>
     {
-        public Label Name { get; } = new Label();
+        public Label Id { get; } = new Label();
         public BoolSwitch Selected { get; } = new BoolSwitch();
         
         protected override List<Type> GetTraitTypes()
@@ -18,7 +18,7 @@ namespace SingleGame.ViewModel
         
         protected override void OnUpdate()
         {
-            Name.Update(Model.GetId().Value);
+            Id.Update(Model.GetId().Value);
         }
     }
     

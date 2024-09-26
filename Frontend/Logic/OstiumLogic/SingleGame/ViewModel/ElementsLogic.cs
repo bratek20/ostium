@@ -4,7 +4,7 @@ namespace SingleGame.ViewModel
 {
     public partial class CreatureCardVm
     {
-        public CreatureCardId Id => Model.GetId();
+        public CreatureCardId ModelId => Model.GetId();
         
         public void SetSelected(bool selected)
         {

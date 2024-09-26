@@ -36,7 +36,7 @@ namespace SingleGame.Tests
             c.GameApiMock.AssertGetStateLastCall(42, "testUser");
             
             //Playing first card on attack row
-            var card1Name = c.FirstCardInHand.Name.Model;
+            var card1Name = c.FirstCardInHand.Id.Model;
             Assert.Equal("Mouse1", card1Name);
             
             TraitsHelpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
@@ -197,7 +197,7 @@ namespace SingleGame.Tests
         {
             Assert.True(c.SelectedCard.IsPresent());
             Assert.True(c.SelectedCard.Get().Selected.Model);
-            SingleGameAsserts.AssertCreatureCardId(c.SelectedCard.Get().Id, cardName);
+            SingleGameAsserts.AssertCreatureCardId(c.SelectedCard.Get().ModelId, cardName);
         }
         
         void AssertNoCardSelected(Scenarios.InGameWindowContext c)
