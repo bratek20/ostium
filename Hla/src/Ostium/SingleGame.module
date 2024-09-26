@@ -52,12 +52,12 @@ ViewModel
     Elements
         CreatureCardVm
             CreatureCard
-                id// -> name
+                id // -> name
             visible: BoolSwitch
         
         RowVm
             Row
-                card
+               card
         
         TableVm
             Table
