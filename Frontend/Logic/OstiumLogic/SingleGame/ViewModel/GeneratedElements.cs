@@ -13,6 +13,9 @@ namespace SingleGame.ViewModel {
     public partial class CreatureCardVm: UiElement<CreatureCard> {
         public Label Id { get; set; }
         public BoolSwitch Selected { get; set; }
+        protected override List<Type> GetTraitTypes() {
+            return new List<Type>() { typeof(WithPosition2d), typeof(Draggable) };
+        }
         protected override void OnUpdate() {
             Id.Update(Model.GetId().Value);
         }
@@ -20,11 +23,9 @@ namespace SingleGame.ViewModel {
 
     public partial class RowVm: UiElement<Row> {
         public OptionalCreatureCardVm Card { get; set; }
-        protected override List<Type> GetTraitTypes()
-        {
+        protected override List<Type> GetTraitTypes() {
             return new List<Type>() { typeof(WithRect) };
         }
-
         protected override void OnUpdate() {
             Card.Update(Model.GetCard());
         }

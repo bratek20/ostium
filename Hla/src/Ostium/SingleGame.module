@@ -50,12 +50,12 @@ Web
 
 ViewModel
     Elements
-        CreatureCardVm (draggable)
+        CreatureCardVm (withPosition2d, draggable)
             CreatureCard
                 id // -> name
             selected: BoolSwitch
         
-        RowVm
+        RowVm (withRect)
             Row
                card
         
