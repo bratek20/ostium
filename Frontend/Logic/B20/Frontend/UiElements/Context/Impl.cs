@@ -11,7 +11,8 @@ namespace B20.Frontend.UiElements.Context
                 .SetClass<InputField>(InjectionMode.Prototype)
                 .SetClass<Button>(InjectionMode.Prototype)
                 .SetClass<Label>(InjectionMode.Prototype)
-                .SetClass<OptionalLabel>(InjectionMode.Prototype);
+                .SetClass<OptionalLabel>(InjectionMode.Prototype)
+                .SetClass<BoolSwitch>(InjectionMode.Prototype);
         }
     }
 }

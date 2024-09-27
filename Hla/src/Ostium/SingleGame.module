@@ -50,19 +50,24 @@ Web
 
 ViewModel
     Elements
-        CreatureCardVm
+        CreatureCardVm (draggable)
             CreatureCard
                 id // -> name
-            visible: BoolSwitch
+            selected: BoolSwitch
         
         RowVm
             Row
                card
         
-        TableVm
-            Table
+        PlayerSideVm
+            PlayerSide
                 attackRow
                 defenseRow
+                
+        TableVm
+            Table
+                mySide
+                opponentSide
                 
         HandVm
             Hand
@@ -79,6 +84,6 @@ ViewModel
     Windows                
         GameWindow
             State
-                gameId: GameId
                 user: Username
+                gameId: GameId
             game: GameVm
