@@ -35,12 +35,15 @@ namespace GamesManagement.Web {
     }
 
     public class GamesManagementApiCreateResponse {
-        public GameId Value { get; }
+        readonly int value;
 
         public GamesManagementApiCreateResponse(
-            GameId value
+            int value
         ) {
-            Value = value;
+            this.value = value;
+        }
+        public GameId GetValue() {
+            return new GameId(value);
         }
     }
 
@@ -83,12 +86,15 @@ namespace GamesManagement.Web {
     }
 
     public class GamesManagementApiGetAllCreatedResponse {
-        public List<CreatedGame> Value { get; }
+        readonly List<CreatedGame> value;
 
         public GamesManagementApiGetAllCreatedResponse(
             List<CreatedGame> value
         ) {
-            Value = value;
+            this.value = value;
+        }
+        public List<CreatedGame> GetValue() {
+            return value;
         }
     }
 }

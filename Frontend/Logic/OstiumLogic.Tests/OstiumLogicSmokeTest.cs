@@ -14,7 +14,7 @@ namespace Ostium.Logic.Tests
     public class OstiumLogicSmokeTest
     {
         [Fact(
-            Skip = "Comment this line to test real server interaction"
+            //Skip = "Comment this line to test real server interaction"
         )]
         public void GreenPathTest()
         {
