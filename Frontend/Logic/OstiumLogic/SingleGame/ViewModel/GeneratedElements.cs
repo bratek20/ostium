@@ -56,7 +56,7 @@ namespace SingleGame.ViewModel {
         }
     }
 
-    public partial class GameVm: UiElement<GameState> {
+    public partial class GameStateVm: UiElement<GameState> {
         public OptionalLabel OpponentName { get; set; }
         public HandVm OpponentHand { get; set; }
         public TableVm Table { get; set; }

@@ -61,7 +61,7 @@ namespace SingleGame.ViewModel
         
         private void Update()
         {
-            Game.Update(singleGameApi.GetState(State.GameId, State.User));
+            GameState.Update(singleGameApi.GetState(State.GameId, State.User));
         }
 
         private Optional<CreatureCardVm> _selectedCard = Optional<CreatureCardVm>.Empty();
@@ -79,7 +79,7 @@ namespace SingleGame.ViewModel
 
         private bool IsInHand(CreatureCardVm card)
         {
-            return Game.MyHand.Contains(card);
+            return GameState.MyHand.Contains(card);
         }
 
         public void HandleElementDragStarted(ElementDragStartedEvent elementDragStartedEvent)
@@ -94,7 +94,7 @@ namespace SingleGame.ViewModel
                 FindRowWithPointInside(ev.Position).Let(row =>
                 {
                     var game = singleGameApi.PlayCard(State.GameId, State.User, SelectedCard.Get().ModelId, row.Type);
-                    Game.Update(game);
+                    GameState.Update(game);
                 });
             }
             else // is in table
@@ -105,9 +105,9 @@ namespace SingleGame.ViewModel
                     {
                         return;
                     }
-                    var otherRow = row.Type == RowType.ATTACK ? Game.Table.MySide.DefenseRow : Game.Table.MySide.AttackRow;
+                    var otherRow = row.Type == RowType.ATTACK ? GameState.Table.MySide.DefenseRow : GameState.Table.MySide.AttackRow;
                     var game = singleGameApi.MoveCard(State.GameId, State.User, SelectedCard.Get().ModelId, otherRow.Type, row.Type);
-                    Game.Update(game);
+                    GameState.Update(game);
                 });
             }
             SelectedCard = Optional<CreatureCardVm>.Empty();
@@ -115,7 +115,7 @@ namespace SingleGame.ViewModel
 
         private List<RowVm> AllRows()
         {
-            return new List<RowVm> { Game.Table.MySide.AttackRow, Game.Table.MySide.DefenseRow };
+            return new List<RowVm> { GameState.Table.MySide.AttackRow, GameState.Table.MySide.DefenseRow };
         }
         
         private Optional<RowVm> FindRowWithPointInside(Position2d p)

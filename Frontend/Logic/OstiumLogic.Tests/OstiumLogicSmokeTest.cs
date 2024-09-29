@@ -54,7 +54,7 @@ namespace Ostium.Logic.Tests
             
             var gameWindow = windowManager.GetCurrent() as GameWindow;
             
-            AssertExt.ListCount(gameWindow.Game.MyHand.Cards.Model, 2);
+            AssertExt.ListCount(gameWindow.GameState.MyHand.Cards.Model, 2);
         }
 
         private Context CreateContext(ServerType serverType)
