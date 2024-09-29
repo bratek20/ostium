@@ -16,8 +16,10 @@ namespace Ostium.Logic.Tests.Main.Tests
 {
     public class MainViewModelTest
     {
-        [Fact]
-        public void ShouldOpenManagementWindowPassingUsernameWhenPlayClicked()
+        private MainWindow mainWindow;
+        private WindowManagerMock windowManagerMock;
+        
+        public MainViewModelTest()
         {
             var c = ContextsFactory.CreateBuilder()
                 .WithModules(
@@ -27,21 +29,37 @@ namespace Ostium.Logic.Tests.Main.Tests
                     new MainViewModel()
                 ).Build();
             
-            var mainWindow = c.Get<MainWindow>();
-            var windowManagerMock = c.Get<WindowManagerMock>();
+            mainWindow = c.Get<MainWindow>();
+            windowManagerMock = c.Get<WindowManagerMock>();
 
             mainWindow.Open(new EmptyWindowState());
-            
+        }
+        
+        [Fact]
+        public void ShouldOpenManagementWindowPassingUsernameWhenPlayClicked()
+        {
             mainWindow.Username.OnTextChange("MyUsername");
             mainWindow.PlayButton.Click();
 
+            AssertGameManagementWindowOpened("MyUsername");
+        }
+        
+        [Fact]
+        public void ShouldUseDefaultUserIfNoTextChanged()
+        {
+            mainWindow.PlayButton.Click();
+
+            AssertGameManagementWindowOpened("DefaultUser");
+        }
+        
+        private void AssertGameManagementWindowOpened(string expectedUsername)
+        {
             windowManagerMock.AssertLastOpenedWindow<GamesManagementWindow, GamesManagementWindowState>(
                 s =>
                 {
-                    AssertExt.Equal(s.Username.Value, "MyUsername");
+                    AssertExt.Equal(s.Username.Value, expectedUsername);
                 }
             );
         }
-
     }
 }

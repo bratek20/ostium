@@ -16,6 +16,8 @@ namespace Main.ViewModel
         protected override void OnOpen()
         {
             PlayButton.OnClick(OnPlayButtonClicked);
+            
+            Username.Update("DefaultUser");
         }
         
         private void OnPlayButtonClicked()
