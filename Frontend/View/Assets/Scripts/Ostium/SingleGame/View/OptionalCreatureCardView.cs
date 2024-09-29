@@ -5,5 +5,8 @@ using Ostium.Logic;
 
 namespace SingleGame.View
 {
-    public class CardsListView: UiElementGroupView<CreateCardView, CreatureCardVm, CreatureCard> { }
+    public class OptionalCreatureCardView: OptionalUiElementView<CreatureCardView, CreatureCardVm, CreatureCard>
+    {
+        
+    }
 }

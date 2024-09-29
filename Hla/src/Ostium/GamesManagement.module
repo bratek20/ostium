@@ -28,7 +28,7 @@ ViewModel
             CreatedGame
                 id //(debug)
                 creator
-                joiner
+                //joiner
             delete: Button
     
     Windows

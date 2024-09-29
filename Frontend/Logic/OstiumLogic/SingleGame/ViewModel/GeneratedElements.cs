@@ -57,17 +57,11 @@ namespace SingleGame.ViewModel {
     }
 
     public partial class GameStateVm: UiElement<GameState> {
-        public OptionalLabel OpponentName { get; set; }
-        public HandVm OpponentHand { get; set; }
         public TableVm Table { get; set; }
         public HandVm MyHand { get; set; }
-        public Label MyName { get; set; }
         protected override void OnUpdate() {
-            OpponentName.Update(Model.GetOpponentName().Map( it => it.Value ));
-            OpponentHand.Update(Model.GetOpponentHand());
             Table.Update(Model.GetTable());
             MyHand.Update(Model.GetMyHand());
-            MyName.Update(Model.GetMyName().Value);
         }
     }
 

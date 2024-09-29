@@ -521,7 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: {fileID: 5247121757689303351}
   creator: {fileID: 2396130250575593884}
-  delete: {fileID: 280535996194571642}
+  joiner: {fileID: 0}
 --- !u!1 &8266459526959007452
 GameObject:
   m_ObjectHideFlags: 0

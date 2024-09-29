@@ -75,11 +75,11 @@ ViewModel
                 
         GameStateVm
             GameState
-                opponentName
-                opponentHand
+                //opponentName
+                //opponentHand
                 table
                 myHand
-                myName
+                //myName
     
     Windows                
         GameWindow
