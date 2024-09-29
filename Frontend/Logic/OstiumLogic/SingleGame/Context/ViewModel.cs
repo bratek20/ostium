@@ -11,7 +11,7 @@ namespace SingleGame.Context
         {
             builder
                 .AddImpl<Window, GameWindow>()
-                .SetClass<GameVm>(InjectionMode.Prototype)
+                .SetClass<GameStateVm>(InjectionMode.Prototype)
                 .SetClass<TableVm>(InjectionMode.Prototype)
                 .SetClass<PlayerSideVm>(InjectionMode.Prototype)
                 .SetClass<HandVm>(InjectionMode.Prototype)

@@ -2,17 +2,18 @@ using B20.Frontend.Elements.View;
 using SingleGame.ViewModel;
 using Ostium.Logic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SingleGame.View
 {
     public class GameWindowView: WindowView<GameWindow>
     {
         [SerializeField]
-        private GameView game;
+        private GameStateView gameState;
 
         protected override void OnInit()
         {
-            game.Bind(ViewModel.Game);
+            gameState.Bind(ViewModel.GameState);
         }
     }
 }

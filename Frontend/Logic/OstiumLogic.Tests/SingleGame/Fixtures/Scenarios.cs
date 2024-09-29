@@ -39,13 +39,13 @@ namespace Ostium.Logic.Tests
                 Context = c;
             }
 
-            public RowVm AttackRow => GameWindow.Game.Table.MySide.AttackRow;
-            public RowVm DefenseRow => GameWindow.Game.Table.MySide.DefenseRow;
+            public RowVm AttackRow => GameWindow.GameState.Table.MySide.AttackRow;
+            public RowVm DefenseRow => GameWindow.GameState.Table.MySide.DefenseRow;
             
             public CreatureCardVm CardInAttackRow => AttackRow.Card.Element;
             public CreatureCardVm CardInDefenseRow => DefenseRow.Card.Element;
             
-            public List<CreatureCardVm> CardsInHand => GameWindow.Game.MyHand.Cards.Elements;
+            public List<CreatureCardVm> CardsInHand => GameWindow.GameState.MyHand.Cards.Elements;
             public CreatureCardVm FirstCardInHand => CardsInHand[0];
             public CreatureCardVm SecondCardInHand => CardsInHand[1];
             

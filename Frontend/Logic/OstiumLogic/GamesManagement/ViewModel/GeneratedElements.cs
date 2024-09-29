@@ -12,7 +12,6 @@ namespace GamesManagement.ViewModel {
     public partial class CreatedGameVm: UiElement<CreatedGame> {
         public Label Id { get; set; }
         public Label Creator { get; set; }
-        public OptionalLabel Joiner { get; set; }
         public Button Delete { get; set; }
         protected override List<Type> GetTraitTypes() {
             return new List<Type>() { typeof(Clickable) };
@@ -20,7 +19,6 @@ namespace GamesManagement.ViewModel {
         protected override void OnUpdate() {
             Id.Update(Model.GetId().Value);
             Creator.Update(Model.GetCreator().Value);
-            Joiner.Update(Model.GetJoiner().Map( it => it.Value ));
         }
     }
 

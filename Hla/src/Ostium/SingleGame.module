@@ -73,17 +73,17 @@ ViewModel
             Hand
                 cards
                 
-        GameVm
+        GameStateVm
             GameState
-                opponentName
-                opponentHand
+                //opponentName
+                //opponentHand
                 table
                 myHand
-                myName
+                //myName
     
     Windows                
         GameWindow
             State
                 user: Username
                 gameId: GameId
-            game: GameVm
+            gameState: GameStateVm

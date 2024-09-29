@@ -24,6 +24,6 @@ namespace SingleGame.ViewModel {
     }
 
     public partial class GameWindow: Window<GameWindowState> {
-        public GameVm Game { get; set; }
+        public GameStateVm GameState { get; set; }
     }
 }
