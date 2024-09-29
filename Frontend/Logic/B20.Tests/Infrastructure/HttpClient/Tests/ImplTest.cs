@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using B20.Architecture.Logs.Fixtures;
 using B20.Ext;
 using B20.Tests.ExtraAsserts;
 using HttpClientModule.Api;
@@ -13,11 +14,13 @@ namespace HttpClientModule.Tests
     {
         private readonly HttpRequesterMock requesterMock;
         private readonly HttpClientFactory factory;
+        private readonly LoggerMock loggerMock;
 
         public HttpClientImplTest()
         {
             requesterMock = new HttpRequesterMock();
-            factory = new HttpClientFactoryLogic(requesterMock);
+            loggerMock = new LoggerMock();
+            factory = new HttpClientFactoryLogic(requesterMock, loggerMock);
         }
         
         class CreateArgs {
@@ -72,7 +75,17 @@ namespace HttpClientModule.Tests
 
         private class SomeResponse
         {
-            public string value;
+            readonly string value;
+            
+            public SomeResponse(string value)
+            {
+                this.value = value;
+            }
+            
+            public string GetValue()
+            {
+                return value;
+            }
         }
         
         [Fact]
@@ -96,7 +109,7 @@ namespace HttpClientModule.Tests
             AssertExt.Equal(response.GetStatusCode(), 200);
 
             var responseBody = response.GetBody<SomeResponse>().Get();
-            AssertExt.Equal(responseBody.value, "response value");
+            AssertExt.Equal(responseBody.GetValue(), "response value");
 
             requesterMock.AssertCalledOnce(e =>
             {
@@ -109,6 +122,13 @@ namespace HttpClientModule.Tests
                     new HttpHeader("Authorization", "Basic abc")
                 };
             });
+            
+            loggerMock.AssertInfos(
+                "Calling POST, " 
+                + "url: http://localhost:8080/test, "
+                + "content: {\"value\":\"request value\"}, "
+                + "response: {\"value\": \"response value\"}"
+            );
         }
     }
 }

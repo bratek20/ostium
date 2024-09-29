@@ -7,15 +7,14 @@ namespace SingleGame.View
     public class CreateCardView: ElementView<CreatureCardVm>
     {
         [SerializeField]
-        private LabelView name;
-        //TODO-REF selected should be image below parent
+        private LabelView id;
         [SerializeField]
         private BoolSwitchView selected;
 
         protected override void OnBind()
         {
             base.OnBind();
-            name.Bind(ViewModel.Name);
+            id.Bind(ViewModel.Id);
             selected.Bind(ViewModel.Selected);
         }
     }

@@ -15,7 +15,7 @@ namespace SingleGame.Context
                 .SetClass<TableVm>(InjectionMode.Prototype)
                 .SetClass<PlayerSideVm>(InjectionMode.Prototype)
                 .SetClass<HandVm>(InjectionMode.Prototype)
-                .SetClass<CreateCardListVm>(InjectionMode.Prototype)
+                .SetClass<CreatureCardVmGroup>(InjectionMode.Prototype)
                 .SetClass<OptionalCreatureCardVm>(InjectionMode.Prototype)
                 .SetClass<RowVm>(InjectionMode.Prototype)
                 .SetClass<CreatureCardVm>(InjectionMode.Prototype);

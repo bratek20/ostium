@@ -103,7 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elementPrefab: {fileID: 3557555159404192530, guid: c78dd3d260b7ff0488af8e7c37c09619, type: 3}
-  elementSpacing: 275
+  elementSpacingX: 300
+  elementSpacingY: 0
 --- !u!1 &5697810120070254969
 GameObject:
   m_ObjectHideFlags: 0

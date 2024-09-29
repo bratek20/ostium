@@ -1,6 +1,7 @@
 ﻿using B20.Ext;
 using B20.Frontend.UiElements.Utils;
 using System.Collections.Generic;
+using B20.Architecture.Logs.Api;
 using B20.Architecture.Serialization.Context;
 using HttpClientModule.Api;
 using Serialization.Api;
@@ -50,11 +51,13 @@ namespace HttpClientModule.Impl
         
         private readonly HttpRequester requester;
         private readonly HttpClientConfig config;
+        private readonly Logger logger;
 
-        public HttpClientLogic(HttpRequester requester, HttpClientConfig config)
+        public HttpClientLogic(HttpRequester requester, HttpClientConfig config, Logger logger)
         {
             this.requester = requester;
             this.config = config;
+            this.logger = logger;
         }
 
         public HttpResponse Get(string path)
@@ -81,9 +84,10 @@ namespace HttpClientModule.Impl
                 headers.Add(new HttpHeader("Authorization", config.GetAuth().Get().GetValue()));
             }
 
+            var url = config.GetBaseUrl() + path;
             var response = requester.Send(
                 HttpRequest.Create(
-                    url: config.GetBaseUrl() + path,
+                    url: url,
                     method: HttpMethod.POST,
                     content: Optional<string>.Of(content),
                     contentType: "application/json",
@@ -91,6 +95,8 @@ namespace HttpClientModule.Impl
                 )
             );
 
+            logger.Info($"Calling POST, url: {url}, content: {content}, response: {response}");
+            
             return new HttpResponseLogic(200, response);
         }
     }
@@ -98,15 +104,17 @@ namespace HttpClientModule.Impl
     public class HttpClientFactoryLogic : HttpClientFactory
     {
         private readonly HttpRequester requester;
+        private readonly Logger logger;
 
-        public HttpClientFactoryLogic(HttpRequester requester)
+        public HttpClientFactoryLogic(HttpRequester requester, Logger logger)
         {
             this.requester = requester;
+            this.logger = logger;
         }
 
-        public Api.HttpClient Create(HttpClientConfig config)
+        public HttpClient Create(HttpClientConfig config)
         {
-            return new HttpClientLogic(requester, config);
+            return new HttpClientLogic(requester, config, logger);
         }
     }
 }

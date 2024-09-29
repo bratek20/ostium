@@ -93,7 +93,7 @@ namespace SingleGame.ViewModel
             {
                 FindRowWithPointInside(ev.Position).Let(row =>
                 {
-                    var game = singleGameApi.PlayCard(State.GameId, State.User, SelectedCard.Get().Id, row.Type);
+                    var game = singleGameApi.PlayCard(State.GameId, State.User, SelectedCard.Get().ModelId, row.Type);
                     Game.Update(game);
                 });
             }
@@ -106,7 +106,7 @@ namespace SingleGame.ViewModel
                         return;
                     }
                     var otherRow = row.Type == RowType.ATTACK ? Game.Table.MySide.DefenseRow : Game.Table.MySide.AttackRow;
-                    var game = singleGameApi.MoveCard(State.GameId, State.User, SelectedCard.Get().Id, otherRow.Type, row.Type);
+                    var game = singleGameApi.MoveCard(State.GameId, State.User, SelectedCard.Get().ModelId, otherRow.Type, row.Type);
                     Game.Update(game);
                 });
             }

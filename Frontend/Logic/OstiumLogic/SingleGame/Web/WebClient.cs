@@ -20,13 +20,13 @@ namespace SingleGame.Web {
         }
         /// <exception cref="GameNotFoundException"/>
         public GameState GetState(GameId gameId, Username user) {
-            return client.Post("/ostium/singleGameApi/getState", Optional<SingleGameApiGetStateRequest>.Of(SingleGameApiGetStateRequest.Create(gameId, user))).GetBody<SingleGameApiGetStateResponse>().Get().Value;
+            return client.Post("/ostium/singleGameApi/getState", Optional<SingleGameApiGetStateRequest>.Of(SingleGameApiGetStateRequest.Create(gameId, user))).GetBody<SingleGameApiGetStateResponse>().Get().GetValue();
         }
         public GameState PlayCard(GameId gameId, Username user, CreatureCardId cardId, RowType row) {
-            return client.Post("/ostium/singleGameApi/playCard", Optional<SingleGameApiPlayCardRequest>.Of(SingleGameApiPlayCardRequest.Create(gameId, user, cardId, row))).GetBody<SingleGameApiPlayCardResponse>().Get().Value;
+            return client.Post("/ostium/singleGameApi/playCard", Optional<SingleGameApiPlayCardRequest>.Of(SingleGameApiPlayCardRequest.Create(gameId, user, cardId, row))).GetBody<SingleGameApiPlayCardResponse>().Get().GetValue();
         }
         public GameState MoveCard(GameId gameId, Username user, CreatureCardId cardId, RowType from, RowType to) {
-            return client.Post("/ostium/singleGameApi/moveCard", Optional<SingleGameApiMoveCardRequest>.Of(SingleGameApiMoveCardRequest.Create(gameId, user, cardId, from, to))).GetBody<SingleGameApiMoveCardResponse>().Get().Value;
+            return client.Post("/ostium/singleGameApi/moveCard", Optional<SingleGameApiMoveCardRequest>.Of(SingleGameApiMoveCardRequest.Create(gameId, user, cardId, from, to))).GetBody<SingleGameApiMoveCardResponse>().Get().GetValue();
         }
     }
 }

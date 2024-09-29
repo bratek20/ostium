@@ -18,7 +18,7 @@ namespace GamesManagement.Web {
             this.client = factory.Create(config.Value);
         }
         public GameId Create(Username creator) {
-            return client.Post("/ostium/gamesManagementApi/create", Optional<GamesManagementApiCreateRequest>.Of(GamesManagementApiCreateRequest.Create(creator))).GetBody<GamesManagementApiCreateResponse>().Get().Value;
+            return client.Post("/ostium/gamesManagementApi/create", Optional<GamesManagementApiCreateRequest>.Of(GamesManagementApiCreateRequest.Create(creator))).GetBody<GamesManagementApiCreateResponse>().Get().GetValue();
         }
         public void Join(Username joiner, GameId gameId) {
             client.Post("/ostium/gamesManagementApi/join", Optional<GamesManagementApiJoinRequest>.Of(GamesManagementApiJoinRequest.Create(joiner, gameId)));
@@ -27,7 +27,7 @@ namespace GamesManagement.Web {
             client.Post("/ostium/gamesManagementApi/delete", Optional<GamesManagementApiDeleteRequest>.Of(GamesManagementApiDeleteRequest.Create(gameId)));
         }
         public List<CreatedGame> GetAllCreated() {
-            return client.Post("/ostium/gamesManagementApi/getAllCreated", Optional<object>.Empty()).GetBody<GamesManagementApiGetAllCreatedResponse>().Get().Value;
+            return client.Post("/ostium/gamesManagementApi/getAllCreated", Optional<object>.Empty()).GetBody<GamesManagementApiGetAllCreatedResponse>().Get().GetValue();
         }
     }
 }

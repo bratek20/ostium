@@ -42,12 +42,15 @@ namespace SingleGame.Web {
     }
 
     public class SingleGameApiGetStateResponse {
-        public GameState Value { get; }
+        readonly GameState value;
 
         public SingleGameApiGetStateResponse(
             GameState value
         ) {
-            Value = value;
+            this.value = value;
+        }
+        public GameState GetValue() {
+            return value;
         }
     }
 
@@ -86,12 +89,15 @@ namespace SingleGame.Web {
     }
 
     public class SingleGameApiPlayCardResponse {
-        public GameState Value { get; }
+        readonly GameState value;
 
         public SingleGameApiPlayCardResponse(
             GameState value
         ) {
-            Value = value;
+            this.value = value;
+        }
+        public GameState GetValue() {
+            return value;
         }
     }
 
@@ -136,12 +142,15 @@ namespace SingleGame.Web {
     }
 
     public class SingleGameApiMoveCardResponse {
-        public GameState Value { get; }
+        readonly GameState value;
 
         public SingleGameApiMoveCardResponse(
             GameState value
         ) {
-            Value = value;
+            this.value = value;
+        }
+        public GameState GetValue() {
+            return value;
         }
     }
 }
