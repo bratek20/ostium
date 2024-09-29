@@ -73,7 +73,7 @@ ViewModel
             Hand
                 cards
                 
-        GameVm
+        GameStateVm
             GameState
                 opponentName
                 opponentHand
@@ -86,4 +86,4 @@ ViewModel
             State
                 user: Username
                 gameId: GameId
-            game: GameVm
+            gameState: GameStateVm
