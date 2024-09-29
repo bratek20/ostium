@@ -26,10 +26,21 @@ namespace Ostium.Logic.Tests
         [Fact(
             //Skip = "Comment this line to test real server interaction"
         )]
-        public void GreenPathTest()
+        public void CloudGreenPathTest()
         {
-            var c = CreateContext(ServerType.Cloud);
-            
+            GreenPathTest(CreateContext(ServerType.Cloud));
+        }
+        
+        [Fact(
+            Skip = "Comment this line to test real server interaction"
+        )]
+        public void LocalGreenPathTest()
+        {
+            GreenPathTest(CreateContext(ServerType.Local));
+        }
+        
+        void GreenPathTest(Context c)
+        {
             var windowManager = c.Get<WindowManager>();
             var logic = c.Get<OstiumLogic>();
             logic.Start();

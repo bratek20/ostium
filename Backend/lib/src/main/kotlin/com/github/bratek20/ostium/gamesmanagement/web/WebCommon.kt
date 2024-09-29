@@ -25,8 +25,11 @@ class GamesManagementApiCreateRequest(
     }
 }
 class GamesManagementApiCreateResponse(
-    val value: GameId
+    private val value: Int
 ) {
+    fun getValue(): GameId {
+        return GameId(value)
+    }
 }
 class GamesManagementApiJoinRequest(
     private val joiner: String,
@@ -57,6 +60,9 @@ class GamesManagementApiDeleteRequest(
     }
 }
 class GamesManagementApiGetAllCreatedResponse(
-    val value: List<CreatedGame>
+    private val value: List<CreatedGame>
 ) {
+    fun getValue(): List<CreatedGame> {
+        return value
+    }
 }

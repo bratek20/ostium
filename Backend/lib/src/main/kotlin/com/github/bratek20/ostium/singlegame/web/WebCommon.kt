@@ -30,8 +30,11 @@ class SingleGameApiGetStateRequest(
     }
 }
 class SingleGameApiGetStateResponse(
-    val value: GameState
+    private val value: GameState
 ) {
+    fun getValue(): GameState {
+        return value
+    }
 }
 class SingleGameApiPlayCardRequest(
     private val gameId: Int,
@@ -58,8 +61,11 @@ class SingleGameApiPlayCardRequest(
     }
 }
 class SingleGameApiPlayCardResponse(
-    val value: GameState
+    private val value: GameState
 ) {
+    fun getValue(): GameState {
+        return value
+    }
 }
 class SingleGameApiMoveCardRequest(
     private val gameId: Int,
@@ -90,6 +96,9 @@ class SingleGameApiMoveCardRequest(
     }
 }
 class SingleGameApiMoveCardResponse(
-    val value: GameState
+    private val value: GameState
 ) {
+    fun getValue(): GameState {
+        return value
+    }
 }

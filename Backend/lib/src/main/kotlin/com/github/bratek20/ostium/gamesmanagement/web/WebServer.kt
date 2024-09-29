@@ -23,7 +23,7 @@ class GamesManagementApiController(
     @PostMapping("/create")
     fun create(@RequestBody rawRequest: Struct): Struct {
         val request = serializer.fromStruct(rawRequest, GamesManagementApiCreateRequest::class.java)
-        return serializer.asStruct(GamesManagementApiCreateResponse(api.create(request.getCreator())))
+        return serializer.asStruct(GamesManagementApiCreateResponse(api.create(request.getCreator()).value))
     }
 
     @PostMapping("/join")
