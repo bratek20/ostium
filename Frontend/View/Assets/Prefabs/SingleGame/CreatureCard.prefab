@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7435622267611240689}
   - component: {fileID: 5162951314656719423}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Id
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -325,5 +325,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d1fa73ae3c4388aa3d3b41f66c3d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 5162951314656719423}
+  id: {fileID: 5162951314656719423}
   selected: {fileID: 4535521714183039930}
