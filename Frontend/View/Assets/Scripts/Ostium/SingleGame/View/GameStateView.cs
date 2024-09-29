@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SingleGame.View
 {
-    public class GameView: ElementView<GameVm>
+    public class GameStateView: ElementView<GameStateVm>
     {
         [SerializeField]
         private HandView myHand;
