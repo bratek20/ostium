@@ -14,11 +14,13 @@ profiles:
   - name: "Frontend"
     language: "C_SHARP"
     paths:
-      project: "../../../Frontend/Logic"
+      project: "../../../Frontend"
       src:
-        default: "OstiumLogic"
+        default: "Logic/OstiumLogic"
         overrides:
           - submodule: "Tests"
-            path: "OstiumLogic.Tests"
+            path: "Logic/OstiumLogic.Tests"
           - submodule: "Fixtures"
-            path: "OstiumLogic.Tests"
+            path: "Logic/OstiumLogic.Tests"
+          - submodule: "View"
+            path: "View/Assets/Scripts/Ostium"
