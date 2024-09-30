@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using B20.Ext;
 using B20.Frontend.Elements.View;
-using GamesManagement.Api;
 using UnityEngine;
+using GamesManagement.Api;
 using GamesManagement.ViewModel;
 using User.Api;
 

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using B20.Ext;
 using B20.Frontend.Elements.View;
 using UnityEngine;
+using SingleGame.Api;
 using SingleGame.ViewModel;
 using GamesManagement.Api;
-using SingleGame.Api;
 using User.Api;
 
 namespace SingleGame.View {
