@@ -12,8 +12,9 @@ namespace GamesManagement.View
         [SerializeField] 
         private ButtonView createGame;
 
-        protected override void OnInit()
+        protected override void OnBind()
         {
+            base.OnBind();
             createdGames.Bind(ViewModel.CreatedGames);
             createGame.Bind(ViewModel.CreateGame);
         }

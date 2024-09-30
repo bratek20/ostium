@@ -11,7 +11,7 @@ namespace SingleGame.View
         [SerializeField]
         private GameStateView gameState;
 
-        protected override void OnInit()
+        protected override void OnBind()
         {
             gameState.Bind(ViewModel.GameState);
         }

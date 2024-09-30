@@ -44,7 +44,7 @@ namespace B20.Frontend.Windows.Integrations
 
             if (windowView.RawViewModel == null)
             {
-                windowView.Init(viewModel);
+                windowView.Bind(viewModel);
             }
             return windowView;
         }
