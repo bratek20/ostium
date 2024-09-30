@@ -26,12 +26,13 @@ public class PrefabCreator : MonoBehaviour
 
         // Step 5: Save the GameObject as a prefab
         string prefabPath = $"{folderPath}/MyPrefab.prefab";
-        PrefabUtility.SaveAsPrefabAsset(newObject, prefabPath);
+        bool success = false;
+        PrefabUtility.SaveAsPrefabAsset(newObject, prefabPath, out success);
 
         // Clean up
         DestroyImmediate(newObject);
 
-        Debug.Log($"Prefab created at: {prefabPath}");
+        Debug.Log($"Prefab created at: {prefabPath}, success: {success}");
     }
 }
 
