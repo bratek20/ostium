@@ -11,7 +11,7 @@ namespace Main.View
         [SerializeField] 
         private ButtonView play;
 
-        protected override void OnInit()
+        protected override void OnBind()
         {
             username.Bind(ViewModel.Username);
             play.Bind(ViewModel.PlayButton);

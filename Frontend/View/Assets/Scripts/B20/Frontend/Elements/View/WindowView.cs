@@ -14,12 +14,12 @@ namespace B20.Frontend.Elements.View
             gameObject.SetActive(active);
         }
         
-        protected virtual void OnInit() { }
+        protected virtual void OnBind() { }
 
-        public void Init(Window viewModel)
+        public void Bind(Window viewModel)
         {
             RawViewModel = viewModel;
-            OnInit();
+            OnBind();
         }
     }
     

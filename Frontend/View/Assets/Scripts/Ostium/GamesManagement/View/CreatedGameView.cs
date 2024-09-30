@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using B20.Ext;
 using B20.Frontend.Elements.View;
 using UnityEngine;
+using GamesManagement.Api;
 using GamesManagement.ViewModel;
 using User.Api;
 
@@ -14,10 +15,13 @@ namespace GamesManagement.View {
         LabelView id;
         [SerializeField]
         LabelView creator;
+        [SerializeField]
+        ButtonView delete;
         protected override void OnBind() {
             base.OnBind();
             id.Bind(ViewModel.Id);
             creator.Bind(ViewModel.Creator);
+            delete.Bind(ViewModel.Delete);
         }
     }
 }
