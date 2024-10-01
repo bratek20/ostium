@@ -8,7 +8,7 @@ namespace Other
         [MenuItem("HLA/Create CreatedGameView Prefab")]
         public static void CreatePrefab()
         {
-            new PrefabCreator().CreatePrefab2(new PrefabCreator.Args
+            new PrefabCreator().CreatePrefab(new PrefabCreator.Args
             {
                 prefabName = "EmptyView",
                 viewTypeName = "SomeNamespace.TestEmptyView"
