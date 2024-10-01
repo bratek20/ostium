@@ -8,11 +8,14 @@ public class PrefabCreatorTest
 {
     private const string PrefabPath = "Assets/Prefabs/CreatedGameView.prefab";
 
+    private GameObject prefab;
+    
     [SetUp]
     public void Setup()
     {
         // Make sure to run the prefab creation before each test if needed
         PrefabCreator.CreatePrefab();
+        prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
     }
 
     [TearDown]
@@ -28,22 +31,23 @@ public class PrefabCreatorTest
     [Test]
     public void PrefabIsCreated()
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
         Assert.IsNotNull(prefab, "Prefab should be created and exist at the specified path.");
     }
 
     [Test]
     public void PrefabHasCorrectHierarchy()
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
-        Assert.IsNotNull(prefab, "Prefab should be created and exist at the specified path.");
-
         Transform createdGameViewTransform = prefab.transform;
         Assert.AreEqual(3, createdGameViewTransform.childCount, "Prefab should have exactly 3 child objects (IdLabel, CreatorLabel, DeleteButton).");
-
-        Assert.IsNotNull(createdGameViewTransform.Find("IdLabel"), "IdLabel should exist as a child.");
-        Assert.IsNotNull(createdGameViewTransform.Find("CreatorLabel"), "CreatorLabel should exist as a child.");
-        Assert.IsNotNull(createdGameViewTransform.Find("DeleteButton"), "DeleteButton should exist as a child.");
+        
+        AssertChildExists("id");
+        AssertChildExists("creator");
+        AssertChildExists("delete");
+    }
+    
+    private void AssertChildExists(string childName)
+    {
+        Assert.IsNotNull(prefab.transform.Find(childName), $"{childName} should exist as a child.");
     }
 
     [Test]
@@ -64,6 +68,15 @@ public class PrefabCreatorTest
         Assert.AreEqual(Color.grey, backgroundImage.color, "The background image should have a grey color.");
     }
 
+    private const float EXPECTED_LABEL_WIDTH = 300;
+    private const float EXPECTED_LABEL_HEIGHT = 100;
+    
+    private const float EXPECTED_BUTTON_WIDTH = 200;
+    private const float EXPECTED_BUTTON_HEIGHT = 80;
+    
+    private const float EXPECTED_PADDING = 25;
+    private const float EXPECTED_SPACING = 25;
+    
     [Test]
     public void PrefabHasCorrectSizeBasedOnChildren()
     {
@@ -73,33 +86,36 @@ public class PrefabCreatorTest
         RectTransform rectTransform = prefab.GetComponent<RectTransform>();
         Assert.IsNotNull(rectTransform, "Prefab should have a RectTransform component.");
 
+        AssertChildSize("id", EXPECTED_LABEL_WIDTH, EXPECTED_LABEL_HEIGHT);
+        AssertChildSize("creator", EXPECTED_LABEL_WIDTH, EXPECTED_LABEL_HEIGHT);
+        AssertChildSize("delete", EXPECTED_BUTTON_WIDTH, EXPECTED_BUTTON_HEIGHT);
+        
         // Expected size based on child sizes
-        float expectedWidth = Mathf.Max(400f, 400f) + 50f; // Maximum width of the children + padding (left + right)
-        float expectedHeight = 50f + 50f + 50f + (2 * 25f) + 50f; // Sum of child heights + spacing + padding (top + bottom)
+        float expectedWidth = Mathf.Max(EXPECTED_LABEL_WIDTH, EXPECTED_BUTTON_WIDTH) + 2 * EXPECTED_PADDING;
+        float expectedHeight = 2 * EXPECTED_LABEL_HEIGHT + EXPECTED_BUTTON_HEIGHT + 2 * EXPECTED_PADDING + 2 * EXPECTED_SPACING;
 
         Assert.AreEqual(new Vector2(expectedWidth, expectedHeight), rectTransform.sizeDelta, "The container size should match the calculated size based on children and padding.");
+    }
+    
+    private void AssertChildSize(string childName, float expectedWidth, float expectedHeight)
+    {
+        RectTransform childTransform = prefab.transform.Find(childName).GetComponent<RectTransform>();
+        Assert.IsNotNull(childTransform, $"{childName} should have a RectTransform component.");
+        Assert.AreEqual(new Vector2(expectedWidth, expectedHeight), childTransform.sizeDelta, $"{childName} should have the expected size.");
     }
 
     [Test]
     public void ChildrenArePositionedCorrectly()
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
-        Assert.IsNotNull(prefab, "Prefab should be created and exist at the specified path.");
-
-        RectTransform idLabelTransform = prefab.transform.Find("IdLabel").GetComponent<RectTransform>();
-        RectTransform creatorLabelTransform = prefab.transform.Find("CreatorLabel").GetComponent<RectTransform>();
-        RectTransform deleteButtonTransform = prefab.transform.Find("DeleteButton").GetComponent<RectTransform>();
-
-        Assert.IsNotNull(idLabelTransform, "IdLabel should have a RectTransform component.");
-        Assert.IsNotNull(creatorLabelTransform, "CreatorLabel should have a RectTransform component.");
-        Assert.IsNotNull(deleteButtonTransform, "DeleteButton should have a RectTransform component.");
-
-        // Check positions: children should be spaced by 25 units, and their positions should respect the padding
-        float padding = 25f;
-        float spacing = 25f;
-
-        Assert.AreEqual(new Vector2(0, -padding), idLabelTransform.anchoredPosition, "IdLabel should be positioned at the top with padding.");
-        Assert.AreEqual(new Vector2(0, -(50f + padding + spacing)), creatorLabelTransform.anchoredPosition, "CreatorLabel should be positioned below IdLabel with spacing.");
-        Assert.AreEqual(new Vector2(0, -(50f + 50f + padding + (2 * spacing))), deleteButtonTransform.anchoredPosition, "DeleteButton should be positioned below CreatorLabel with spacing.");
+        AssertChildPostion("id", 115);
+        AssertChildPostion("creator", -10);
+        AssertChildPostion("delete", -125);
+    }
+    
+    private void AssertChildPostion(string childName, float yPosition)
+    {
+        RectTransform childTransform = prefab.transform.Find(childName).GetComponent<RectTransform>();
+        Assert.IsNotNull(childTransform, $"{childName} should have a RectTransform component.");
+        Assert.AreEqual(new Vector2(0, yPosition), childTransform.anchoredPosition, $"{childName} should be positioned correctly.");
     }
 }
