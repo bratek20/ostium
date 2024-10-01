@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -5,10 +7,56 @@ using UnityEngine.UI;
 using GamesManagement.View;
 using B20.Frontend.Elements.View;
 
-public class PrefabCreator : MonoBehaviour
+public class PrefabCreator
 {
-    [MenuItem("HLA/Create CreatedGameView Prefab")]
-    public static void CreatePrefab()
+    public class Field
+    {
+        public string name;
+        public string type;
+    }
+    
+    public class Args
+    {
+        public string prefabName;
+        public string viewTypeName;
+    }
+
+    public void CreatePrefab2(Args args)
+    {
+        // Create the prefab object with a given name
+        GameObject createdGameViewObject = new GameObject(args.prefabName, typeof(RectTransform), typeof(Image));
+
+        // Retrieve the type from the given typeName
+        var type = Type.GetType(args.viewTypeName);
+
+        // Check if the type is valid
+        if (type == null)
+        {
+            Debug.LogError($"Type '{args.viewTypeName}' not found.");
+            return;
+        }
+
+        // Add the component of the retrieved type to the GameObject
+        createdGameViewObject.AddComponent(type);
+        
+        string folderPath = "Assets/Prefabs";
+        if (!AssetDatabase.IsValidFolder(folderPath))
+        {
+            AssetDatabase.CreateFolder("Assets", "Prefabs");
+        }
+
+        // Step 11: Save the CreatedGameView GameObject as a prefab
+        string prefabPath = $"{folderPath}/{args.prefabName}.prefab";
+        bool success = false;
+        PrefabUtility.SaveAsPrefabAsset(createdGameViewObject, prefabPath, out success);
+
+        // Clean up
+        GameObject.DestroyImmediate(createdGameViewObject);
+
+        Debug.Log($"{args.prefabName} Prefab created at: {prefabPath}, success: {success}");
+    }
+
+    public void CreatePrefab()
     {
         // Constants for spacing and padding
         float padding = 25f;
@@ -93,7 +141,7 @@ public class PrefabCreator : MonoBehaviour
         PrefabUtility.SaveAsPrefabAsset(createdGameViewObject, prefabPath, out success);
 
         // Clean up
-        DestroyImmediate(createdGameViewObject);
+        GameObject.DestroyImmediate(createdGameViewObject);
 
         Debug.Log($"CreatedGameView Prefab created at: {prefabPath}, success: {success}");
     }

@@ -1,23 +1,57 @@
+using B20.Frontend.Elements.View;
+using B20.Frontend.UiElements;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using GamesManagement.View;
+using SingleGame.View;
+using SomeNamespace;
 
 public class PrefabCreatorTest
 {
     private const string PrefabPath = "Assets/Prefabs/CreatedGameView.prefab";
 
+    private PrefabCreator creator;
     private GameObject prefab;
-    
+
     [SetUp]
     public void Setup()
     {
+        creator = new PrefabCreator();
         // Make sure to run the prefab creation before each test if needed
-        PrefabCreator.CreatePrefab();
+        creator.CreatePrefab();
         prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
     }
 
+    [Test]
+    public void ShouldCreateBasedOnArgs()
+    {
+        creator.CreatePrefab2(new PrefabCreator.Args
+        {
+            prefabName = "TestEmptyView",
+            viewTypeName = "SomeNamespace.TestEmptyView"
+        });
+        
+        var prefab = AssertPrefabCreatedAndGet("TestEmptyView");
+        AssertPrefabHasComponent<TestEmptyView>(prefab);
+        
+        DeletePrefab("TestEmptyView");
+    }
+    
+    private GameObject AssertPrefabCreatedAndGet(string prefabName)
+    {
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/{prefabName}.prefab");
+        Assert.IsNotNull(prefab, $"{prefabName} prefab should be created and exist at the specified path.");
+        return prefab;
+    }
+    
+    private void AssertPrefabHasComponent<T>(GameObject prefab) where T : Component
+    {
+        T component = prefab.GetComponent<T>();
+        Assert.IsNotNull(component, $"Prefab should have the {typeof(T)} component.");
+    }
+    
     [TearDown]
     public void Cleanup()
     {
@@ -25,6 +59,15 @@ public class PrefabCreatorTest
         if (AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) != null)
         {
             AssetDatabase.DeleteAsset(PrefabPath);
+        }
+    }
+    
+    private void DeletePrefab(string prefabName)
+    {
+        string prefabPath = $"Assets/Prefabs/{prefabName}.prefab";
+        if (AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) != null)
+        {
+            AssetDatabase.DeleteAsset(prefabPath);
         }
     }
 
