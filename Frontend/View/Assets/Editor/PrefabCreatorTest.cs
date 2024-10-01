@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using B20.Frontend.Elements.View;
 using B20.Frontend.UiElements;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ public class PrefabCreatorTest
 {
     private const string PrefabPath = "Assets/Prefabs/CreatedGameView.prefab";
 
-    private PrefabCreator creator;
+    protected PrefabCreator creator;
     private GameObject prefab;
 
     [SetUp]
@@ -25,7 +26,7 @@ public class PrefabCreatorTest
     }
 
     [Test]
-    public void ShouldCreateBasedOnArgs()
+    public void ShouldCreatePrefabForEmptyView()
     {
         creator.CreatePrefab2(new PrefabCreator.Args
         {
@@ -36,7 +37,49 @@ public class PrefabCreatorTest
         var prefab = AssertPrefabCreatedAndGet("TestEmptyView");
         AssertPrefabHasComponent<TestEmptyView>(prefab);
         
+        AssertSize(prefab, 50, 50);
+        
         DeletePrefab("TestEmptyView");
+    }
+    
+    private const float EXPECTED_LABEL_WIDTH = 300;
+    private const float EXPECTED_LABEL_HEIGHT = 100;
+    
+    private const float EXPECTED_BUTTON_WIDTH = 200;
+    private const float EXPECTED_BUTTON_HEIGHT = 80;
+    
+    private const float EXPECTED_PADDING = 25;
+    private const float EXPECTED_SPACING = 25;
+    
+    [Test]
+    public void ShouldCreatePrefabForLabelButtonView()
+    {
+        creator.CreatePrefab2(new PrefabCreator.Args
+        {
+            prefabName = "TestLabelButtonView",
+            viewTypeName = "SomeNamespace.TestLabelButtonView",
+            fields = new List<PrefabCreator.Field>
+            {
+                new() { path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Label.prefab", name = "myLabel", type = "B20.Frontend.Elements.View.LabelView" },
+                new() { path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Button.prefab", name = "myButton", type = "B20.Frontend.Elements.View.ButtonView" }
+            }
+        });
+        
+        var prefab = AssertPrefabCreatedAndGet("TestLabelButtonView");
+        AssertPrefabHasComponent<TestLabelButtonView>(prefab);
+        
+        float expectedWidth = Mathf.Max(EXPECTED_LABEL_WIDTH, EXPECTED_BUTTON_WIDTH) + 2 * EXPECTED_PADDING;
+        float expectedHeight = EXPECTED_LABEL_HEIGHT + EXPECTED_BUTTON_HEIGHT + 2 * EXPECTED_PADDING + EXPECTED_SPACING;
+
+        AssertSize(prefab, expectedWidth, expectedHeight);
+        
+        DeletePrefab("TestLabelButtonView");
+    }
+    
+    private void AssertSize(GameObject go, float width, float height)
+    {
+        var rt = go.GetComponent<RectTransform>();
+        Assert.AreEqual(new Vector2(width, height), rt.sizeDelta);
     }
     
     private GameObject AssertPrefabCreatedAndGet(string prefabName)
@@ -111,14 +154,7 @@ public class PrefabCreatorTest
         Assert.AreEqual(Color.grey, backgroundImage.color, "The background image should have a grey color.");
     }
 
-    private const float EXPECTED_LABEL_WIDTH = 300;
-    private const float EXPECTED_LABEL_HEIGHT = 100;
-    
-    private const float EXPECTED_BUTTON_WIDTH = 200;
-    private const float EXPECTED_BUTTON_HEIGHT = 80;
-    
-    private const float EXPECTED_PADDING = 25;
-    private const float EXPECTED_SPACING = 25;
+
     
     [Test]
     public void PrefabHasCorrectSizeBasedOnChildren()

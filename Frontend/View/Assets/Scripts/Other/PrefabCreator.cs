@@ -11,6 +11,7 @@ public class PrefabCreator
 {
     public class Field
     {
+        public string path;
         public string name;
         public string type;
     }
@@ -19,10 +20,14 @@ public class PrefabCreator
     {
         public string prefabName;
         public string viewTypeName;
+        public List<Field> fields = new List<Field>();
     }
 
     public void CreatePrefab2(Args args)
     {
+        float padding = 25f;
+        float spacing = 25f;
+        
         // Create the prefab object with a given name
         GameObject createdGameViewObject = new GameObject(args.prefabName, typeof(RectTransform), typeof(Image));
 
@@ -39,6 +44,41 @@ public class PrefabCreator
         // Add the component of the retrieved type to the GameObject
         createdGameViewObject.AddComponent(type);
         
+        // Set the parent object as a UI element with RectTransform
+        RectTransform rectTransform = createdGameViewObject.GetComponent<RectTransform>();
+
+        // Step 2: Add an Image component with a grey color to visualize the container size
+        Image backgroundImage = createdGameViewObject.GetComponent<Image>();
+        backgroundImage.color = Color.grey;
+
+        float containerWidth = 0;
+        float containerHeight = 0;
+        
+        foreach (var field in args.fields)
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(field.path);
+            if (prefab == null)
+            {
+                Debug.LogError($"Failed to load prefab at path: {field.path}");
+                return;
+            }
+            
+            GameObject childObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab, createdGameViewObject.transform);
+            childObject.name = field.name;
+            RectTransform childRect = childObject.GetComponent<RectTransform>();
+            containerWidth = Mathf.Max(containerWidth, childRect.sizeDelta.x);
+            containerHeight += childRect.sizeDelta.y + spacing;
+        }
+        if (args.fields.Count > 0)
+        {
+            containerHeight -= spacing;
+        }
+        
+        containerWidth += 2 * padding;
+        containerHeight += 2 * padding;
+        // Set the size of the container
+        rectTransform.sizeDelta = new Vector2(containerWidth, containerHeight);
+
         string folderPath = "Assets/Prefabs";
         if (!AssetDatabase.IsValidFolder(folderPath))
         {
