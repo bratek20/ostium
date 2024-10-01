@@ -21,7 +21,17 @@ public class PrefabCreatorTest
     {
         creator = new PrefabCreator();
         // Make sure to run the prefab creation before each test if needed
-        creator.CreatePrefab();
+        creator.CreatePrefab2(new PrefabCreator.Args()
+        {
+            prefabName = "CreatedGameView",
+            viewTypeName = "GamesManagement.View.CreatedGameView",
+            fields = new List<PrefabCreator.Field>()
+            {
+                new() {name = "id", path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Label.prefab", type = "B20.Frontend.Elements.View.LabelView"},
+                new() {name = "creator", path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Label.prefab", type = "B20.Frontend.Elements.View.LabelView"},
+                new() {name = "delete", path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Button.prefab", type = "B20.Frontend.Elements.View.ButtonView"}
+            }
+        });
         prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
     }
 
@@ -68,10 +78,27 @@ public class PrefabCreatorTest
         var prefab = AssertPrefabCreatedAndGet("TestLabelButtonView");
         AssertPrefabHasComponent<TestLabelButtonView>(prefab);
         
-        float expectedWidth = Mathf.Max(EXPECTED_LABEL_WIDTH, EXPECTED_BUTTON_WIDTH) + 2 * EXPECTED_PADDING;
-        float expectedHeight = EXPECTED_LABEL_HEIGHT + EXPECTED_BUTTON_HEIGHT + 2 * EXPECTED_PADDING + EXPECTED_SPACING;
+        AssertChildExists(prefab, "myLabel");
+        AssertChildExists(prefab, "myButton");
+        
+        AssertChildSize(prefab, "myLabel", 300, 100);
+        AssertChildSize(prefab, "myButton", 200, 80);
 
+
+        float expectedWidth = 300 + 2 * 25; //350, widest child + 2 * padding
+        float expectedHeight = 100 + 80 + 25 + 2 * 25; //255, sum of heights + spacing + 2 * padding
         AssertSize(prefab, expectedWidth, expectedHeight);
+
+        // container uses central anchoring
+        // it 255 height, so half of it is 127.5
+        // there is 25 padding and label height is 100 but anchored at center so half is 50
+        // so label should be at 127.5 - 25 - 50 = 52.5
+        AssertChildPostion(prefab, "myLabel", 52.5f);
+        
+        // now we add remaining size of label and spacing + 50 + 25
+        // button has 80 height, so half is 40
+        // so button should be at 52.5 - 25 - 50 - 40 = -62.5   
+        AssertChildPostion(prefab, "myButton", -62.5f);
         
         DeletePrefab("TestLabelButtonView");
     }
@@ -126,14 +153,14 @@ public class PrefabCreatorTest
         Transform createdGameViewTransform = prefab.transform;
         Assert.AreEqual(3, createdGameViewTransform.childCount, "Prefab should have exactly 3 child objects (IdLabel, CreatorLabel, DeleteButton).");
         
-        AssertChildExists("id");
-        AssertChildExists("creator");
-        AssertChildExists("delete");
+        AssertChildExists(prefab, "id");
+        AssertChildExists(prefab, "creator");
+        AssertChildExists(prefab, "delete");
     }
     
-    private void AssertChildExists(string childName)
+    private void AssertChildExists(GameObject go, string childName)
     {
-        Assert.IsNotNull(prefab.transform.Find(childName), $"{childName} should exist as a child.");
+        Assert.IsNotNull(go.transform.Find(childName), $"{childName} should exist as a child.");
     }
 
     [Test]
@@ -165,9 +192,9 @@ public class PrefabCreatorTest
         RectTransform rectTransform = prefab.GetComponent<RectTransform>();
         Assert.IsNotNull(rectTransform, "Prefab should have a RectTransform component.");
 
-        AssertChildSize("id", EXPECTED_LABEL_WIDTH, EXPECTED_LABEL_HEIGHT);
-        AssertChildSize("creator", EXPECTED_LABEL_WIDTH, EXPECTED_LABEL_HEIGHT);
-        AssertChildSize("delete", EXPECTED_BUTTON_WIDTH, EXPECTED_BUTTON_HEIGHT);
+        AssertChildSize(prefab, "id", EXPECTED_LABEL_WIDTH, EXPECTED_LABEL_HEIGHT);
+        AssertChildSize(prefab, "creator", EXPECTED_LABEL_WIDTH, EXPECTED_LABEL_HEIGHT);
+        AssertChildSize(prefab, "delete", EXPECTED_BUTTON_WIDTH, EXPECTED_BUTTON_HEIGHT);
         
         // Expected size based on child sizes
         float expectedWidth = Mathf.Max(EXPECTED_LABEL_WIDTH, EXPECTED_BUTTON_WIDTH) + 2 * EXPECTED_PADDING;
@@ -176,9 +203,9 @@ public class PrefabCreatorTest
         Assert.AreEqual(new Vector2(expectedWidth, expectedHeight), rectTransform.sizeDelta, "The container size should match the calculated size based on children and padding.");
     }
     
-    private void AssertChildSize(string childName, float expectedWidth, float expectedHeight)
+    private void AssertChildSize(GameObject go, string childName, float expectedWidth, float expectedHeight)
     {
-        RectTransform childTransform = prefab.transform.Find(childName).GetComponent<RectTransform>();
+        RectTransform childTransform = go.transform.Find(childName).GetComponent<RectTransform>();
         Assert.IsNotNull(childTransform, $"{childName} should have a RectTransform component.");
         Assert.AreEqual(new Vector2(expectedWidth, expectedHeight), childTransform.sizeDelta, $"{childName} should have the expected size.");
     }
@@ -186,14 +213,14 @@ public class PrefabCreatorTest
     [Test]
     public void ChildrenArePositionedCorrectly()
     {
-        AssertChildPostion("id", 115);
-        AssertChildPostion("creator", -10);
-        AssertChildPostion("delete", -125);
+        AssertChildPostion(prefab, "id", 115);
+        AssertChildPostion(prefab, "creator", -10);
+        AssertChildPostion(prefab, "delete", -125);
     }
     
-    private void AssertChildPostion(string childName, float yPosition)
+    private void AssertChildPostion(GameObject go, string childName, float yPosition)
     {
-        RectTransform childTransform = prefab.transform.Find(childName).GetComponent<RectTransform>();
+        RectTransform childTransform = go.transform.Find(childName).GetComponent<RectTransform>();
         Assert.IsNotNull(childTransform, $"{childName} should have a RectTransform component.");
         Assert.AreEqual(new Vector2(0, yPosition), childTransform.anchoredPosition, $"{childName} should be positioned correctly.");
     }

@@ -79,6 +79,24 @@ public class PrefabCreator
         // Set the size of the container
         rectTransform.sizeDelta = new Vector2(containerWidth, containerHeight);
 
+        var childY = containerHeight / 2 - padding;
+        foreach (var field in args.fields)
+        {
+            GameObject childObject = createdGameViewObject.transform.Find(field.name).gameObject;
+            var component = childObject.GetComponent(field.type);
+            childY -= childObject.GetComponent<RectTransform>().sizeDelta.y / 2;
+            childObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, childY);
+            
+            if (component == null)
+            {
+                Debug.LogError($"Component of type '{field.type}' not found on GameObject '{field.name}'.");
+                return;
+            }
+            type.GetField(field.name, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(createdGameViewObject.GetComponent(type), component);
+            
+            childY -= childObject.GetComponent<RectTransform>().sizeDelta.y / 2 + spacing;
+        }
+
         string folderPath = "Assets/Prefabs";
         if (!AssetDatabase.IsValidFolder(folderPath))
         {
