@@ -99,10 +99,7 @@ public class PrefabCreator
         }
 
         string folderPath = args.prefabDirPath;
-        if (!AssetDatabase.IsValidFolder(folderPath))
-        {
-            AssetDatabase.CreateFolder("Assets", "Prefab");
-        }
+        EnsurePathExists(folderPath);
 
         // Step 11: Save the CreatedGameView GameObject as a prefab
         string prefabPath = $"{folderPath}/{args.prefabName}.prefab";
@@ -113,6 +110,14 @@ public class PrefabCreator
         GameObject.DestroyImmediate(createdGameViewObject);
 
         Debug.Log($"{args.prefabName} Prefab created at: {prefabPath}, success: {success}");
+    }
+    
+    private void EnsurePathExists(string path)
+    {
+        if (!AssetDatabase.IsValidFolder(path))
+        {
+            AssetDatabase.CreateFolder("Assets", path);
+        }
     }
 }
 
