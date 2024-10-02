@@ -8,11 +8,6 @@ namespace Other
         [MenuItem("HLA/Start Module Prefabs")]
         public static void StartModulePrefabs()
         {
-            new PrefabCreator().CreatePrefab(new PrefabCreator.Args
-            {
-                prefabName = "EmptyView",
-                viewTypeName = "SomeNamespace.TestEmptyView"
-            });
         }
     }
 }

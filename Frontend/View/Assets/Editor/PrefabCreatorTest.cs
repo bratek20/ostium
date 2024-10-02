@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using B20.Frontend.Elements.View;
 using NUnit.Framework;
+using PrefabCreator;
 using SomeNamespace;
 using UnityEditor;
 using UnityEngine;
@@ -7,12 +9,12 @@ using UnityEngine.UI;
 
 public class PrefabCreatorTest
 {
-    protected PrefabCreator creator;
+    protected PrefabCreatorApiLogic creator;
 
     [SetUp]
     public void Setup()
     {
-        creator = new PrefabCreator();
+        creator = new PrefabCreatorApiLogic();
     }
 
     [TestFixture]
@@ -23,7 +25,7 @@ public class PrefabCreatorTest
         [SetUp]
         public void Create()
         {
-            creator.CreatePrefab(new PrefabCreator.Args
+            creator.CreatePrefab(new PrefabCreatorApiLogic.Args
             {
                 prefabDirPath = "Assets/Prefab",
                 prefabName = "TestEmptyView",
@@ -42,7 +44,7 @@ public class PrefabCreatorTest
         [Test]
         public void ShouldAddViewComponentAdjustSizeAndHasGreyBackground()
         {
-            AssertPrefabHasComponent<TestEmptyView>(prefab);
+            AssertHasComponentAndGet<TestEmptyView>(prefab);
         
             AssertSize(prefab, 50, 50);
             
@@ -60,12 +62,12 @@ public class PrefabCreatorTest
         [SetUp]
         public void Create()
         {
-            creator.CreatePrefab(new PrefabCreator.Args
+            creator.CreatePrefab(new PrefabCreatorApiLogic.Args
             {
                 prefabDirPath = "Assets/Prefab",
                 prefabName = "TestLabelButtonView",
                 viewTypeName = "SomeNamespace.TestLabelButtonView",
-                fields = new List<PrefabCreator.Field>
+                fields = new List<PrefabCreatorApiLogic.Field>
                 {
                     new() { path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Label.prefab", name = "myLabel", type = "B20.Frontend.Elements.View.LabelView" },
                     new() { path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Button.prefab", name = "myButton", type = "B20.Frontend.Elements.View.ButtonView" }
@@ -84,9 +86,6 @@ public class PrefabCreatorTest
         [Test]
         public void ShouldAddChildrenAdjustItsOwnSizeAndPutChildrenAtCorrectPosition()
         {
-            AssertChildExists(prefab, "myLabel");
-            AssertChildExists(prefab, "myButton");
-        
             AssertChildSize(prefab, "myLabel", 300, 100);
             AssertChildSize(prefab, "myButton", 200, 80);
 
@@ -107,9 +106,18 @@ public class PrefabCreatorTest
         }
         
         [Test]
-        public void ShouldSetReferencesToChidren()
+        public void ShouldSetReferencesToChildren()
         {
+            var view = AssertHasComponentAndGet<TestLabelButtonView>(prefab);
             
+            var myLabelGo = AssertHasChildAndGet(prefab, "myLabel");
+            var myButtonGo = AssertHasChildAndGet(prefab, "myButton");
+
+            var myLabelView = AssertHasComponentAndGet<LabelView>(myLabelGo);
+            var myButtonView = AssertHasComponentAndGet<ButtonView>(myButtonGo);
+            
+            Assert.AreEqual(myLabelView, view.MyLabel);
+            Assert.AreEqual(myButtonView, view.MyButton);
         }
     }
     
@@ -126,10 +134,11 @@ public class PrefabCreatorTest
         return prefab;
     }
     
-    private void AssertPrefabHasComponent<T>(GameObject prefab) where T : Component
+    private T AssertHasComponentAndGet<T>(GameObject prefab) where T : Component
     {
         T component = prefab.GetComponent<T>();
         Assert.IsNotNull(component, $"Prefab should have the {typeof(T)} component.");
+        return component;
     }
 
     private void DeletePrefab(string prefabPath)
@@ -140,9 +149,11 @@ public class PrefabCreatorTest
         }
     }
 
-    private void AssertChildExists(GameObject go, string childName)
+    private GameObject AssertHasChildAndGet(GameObject go, string childName)
     {
-        Assert.IsNotNull(go.transform.Find(childName), $"{childName} should exist as a child.");
+        var child = go.transform.Find(childName);
+        Assert.IsNotNull(child, $"{childName} should exist as a child.");
+        return child.gameObject;
     }
 
     private void AssertChildSize(GameObject go, string childName, float expectedWidth, float expectedHeight)

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace PrefabCreator
 {
-    public class PrefabCreatorApiLogic
+    public class PrefabCreatorApiLogic: PrefabCreatorApi
     {
         public class Field
         {
@@ -117,6 +117,11 @@ namespace PrefabCreator
             {
                 AssetDatabase.CreateFolder("Assets", path);
             }
+        }
+
+        public void StartModule(string pathToModules, string moduleName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
