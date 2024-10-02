@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using B20.Frontend.Elements.View;
 using NUnit.Framework;
 using PrefabCreator;
+using PrefabCreator.Impl;
 using SomeNamespace;
 using UnityEditor;
 using UnityEngine;

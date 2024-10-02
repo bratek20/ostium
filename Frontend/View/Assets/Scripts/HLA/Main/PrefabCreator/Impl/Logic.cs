@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using PrefabCreator.Api;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PrefabCreator
+namespace PrefabCreator.Impl
 {
     public class PrefabCreatorApiLogic: PrefabCreatorApi
     {
@@ -119,7 +120,7 @@ namespace PrefabCreator
             }
         }
 
-        public void StartModule(string pathToModules, string moduleName)
+        public void StartModule()
         {
             throw new NotImplementedException();
         }
