@@ -70,8 +70,8 @@ public class PrefabCreatorTest
                 viewTypeName = "SomeNamespace.TestLabelButtonView",
                 fields = new List<PrefabCreatorApiLogic.Field>
                 {
-                    new() { path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Label.prefab", name = "myLabel", type = "B20.Frontend.Elements.View.LabelView" },
-                    new() { path = "Assets/Scripts/B20/Frontend/Elements/Prefabs/Button.prefab", name = "myButton", type = "B20.Frontend.Elements.View.ButtonView" }
+                    new() { name = "myLabel", type = "B20.Frontend.Elements.View.LabelView" },
+                    new() { name = "myButton", type = "B20.Frontend.Elements.View.ButtonView" }
                 }
             });
         

@@ -11,7 +11,6 @@ namespace PrefabCreator.Impl
     {
         public class Field
         {
-            public string path;
             public string name;
             public string type;
         }
@@ -57,13 +56,7 @@ namespace PrefabCreator.Impl
             
             foreach (var field in args.fields)
             {
-                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(field.path);
-                if (prefab == null)
-                {
-                    Debug.LogError($"Failed to load prefab at path: {field.path}");
-                    return;
-                }
-                
+                GameObject prefab = GetPrefabOfComponentType(field.type);
                 GameObject childObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab, createdGameViewObject.transform);
                 childObject.name = field.name;
                 RectTransform childRect = childObject.GetComponent<RectTransform>();
@@ -123,6 +116,36 @@ namespace PrefabCreator.Impl
         public void StartModule(string modulesPath, string moduleName)
         {
             throw new NotImplementedException();
+        }
+
+        private GameObject GetPrefabOfComponentType(string typeName)
+        {
+            // Find all prefab asset GUIDs in the project
+            string[] allPrefabGuids = AssetDatabase.FindAssets("t:Prefab");
+
+            // Iterate through each prefab
+            foreach (string guid in allPrefabGuids)
+            {
+                // Get the asset path from the GUID
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+                // Load the prefab at that path
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+
+                if (prefab != null)
+                {
+                    // Try to get the component of the specified type
+                    var component = prefab.GetComponent(typeName);
+
+                    // If the component exists, return the prefab
+                    if (component != null)
+                    {
+                        return prefab;
+                    }
+                }
+            }
+
+            throw new Exception($"Prefab for component type {typeName} not found");
         }
     }
 }
