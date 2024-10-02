@@ -13,6 +13,9 @@ namespace SomeNamespace
         LabelView myLabel;
         [SerializeField]
         ButtonView myButton;
+        
+        public LabelView MyLabel => myLabel;
+        public ButtonView MyButton => myButton;
     }
 }
 

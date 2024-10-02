@@ -105,6 +105,12 @@ public class PrefabCreatorTest
             // so button should be at 52.5 - 25 - 50 - 40 = -62.5   
             AssertChildPosition(prefab, "myButton", -62.5f);
         }
+        
+        [Test]
+        public void ShouldSetReferencesToChidren()
+        {
+            
+        }
     }
     
     private void AssertSize(GameObject go, float width, float height)

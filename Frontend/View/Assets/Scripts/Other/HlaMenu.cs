@@ -5,8 +5,8 @@ namespace Other
 {
     public class HlaMenu: MonoBehaviour
     {
-        [MenuItem("HLA/Create CreatedGameView Prefab")]
-        public static void CreatePrefab()
+        [MenuItem("HLA/Start Module Prefabs")]
+        public static void StartModulePrefabs()
         {
             new PrefabCreator().CreatePrefab(new PrefabCreator.Args
             {
