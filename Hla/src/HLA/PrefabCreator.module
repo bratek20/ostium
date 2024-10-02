@@ -1,6 +1,9 @@
 ValueObjects
     PrefabChildBlueprint
-
+        prefabPath: string
+        viewType: string
+        name: string
+        
     PrefabBlueprint
         prefabName: string
         viewType: string
@@ -8,4 +11,4 @@ ValueObjects
 
 Interfaces
     PrefabCreatorApi
-        startModule()
+        startModule(modulesPath: string, moduleName: string)

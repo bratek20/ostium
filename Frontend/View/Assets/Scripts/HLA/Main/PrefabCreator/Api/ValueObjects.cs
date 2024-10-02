@@ -6,8 +6,30 @@ using B20.Ext;
 
 namespace PrefabCreator.Api {
     public class PrefabChildBlueprint {
-        public static PrefabChildBlueprint Create() {
-            return new PrefabChildBlueprint();
+        readonly string prefabPath;
+        readonly string viewType;
+        readonly string name;
+
+        public PrefabChildBlueprint(
+            string prefabPath,
+            string viewType,
+            string name
+        ) {
+            this.prefabPath = prefabPath;
+            this.viewType = viewType;
+            this.name = name;
+        }
+        public string GetPrefabPath() {
+            return prefabPath;
+        }
+        public string GetViewType() {
+            return viewType;
+        }
+        public string GetName() {
+            return name;
+        }
+        public static PrefabChildBlueprint Create(string prefabPath, string viewType, string name) {
+            return new PrefabChildBlueprint(prefabPath, viewType, name);
         }
     }
 
