@@ -33,6 +33,15 @@ public class PrefabCreatorTest
         
     }
     
+    [Test]
+    public void ShouldDeleteAllPrefabs()
+    {
+        creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
+        
+        AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestEmptyPrefab.prefab");
+        AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestLabelButtonPrefab.prefab");
+    }
+    
     [TearDown]
     public void Clean()
     {
@@ -132,6 +141,12 @@ public class PrefabCreatorTest
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{prefabPath}");
         Assert.IsNotNull(prefab, $"No prefab found at path {prefabPath}");
         return prefab;
+    }
+    
+    private void AssertPrefabDeleted(string prefabPath)
+    {
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{prefabPath}");
+        Assert.IsNull(prefab, $"Prefab should be deleted at path {prefabPath}");
     }
     
     private T AssertHasComponentAndGet<T>(GameObject prefab) where T : Component

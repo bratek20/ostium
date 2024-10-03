@@ -12,7 +12,7 @@ namespace PrefabCreator.Impl
 {
     public class PrefabCreatorApiLogic: PrefabCreatorApi
     {
-        private void CreatePrefab(PrefabBlueprint blueprint, string fullPath)
+        private void CreatePrefab(PrefabBlueprint blueprint, string prefabsPath)
         {
             float padding = 25f;
             float spacing = 25f;
@@ -82,7 +82,7 @@ namespace PrefabCreator.Impl
             }
 
             // Step 11: Save the CreatedGameView GameObject as a prefab
-            string prefabPath = $"{fullPath}/{blueprint.GetName()}.prefab";
+            string prefabPath = $"{prefabsPath}/{blueprint.GetName()}.prefab";
             bool success = false;
             PrefabUtility.SaveAsPrefabAsset(gameObject, prefabPath, out success);
 
@@ -124,18 +124,12 @@ namespace PrefabCreator.Impl
 
         public void StartModulePrefabs(string modulesPath, string moduleName)
         {
-            string fullPath = Path.Combine(modulesPath, moduleName, "Prefabs");
-            // Check if directory exists
-            if (!Directory.Exists(fullPath))
-            {
-                Debug.LogError($"Directory {fullPath} does not exist.");
-                return;
-            }
+            string prefabsPath = Path.Combine(modulesPath, moduleName, "Prefabs");
 
-            var blueprints = ReadPrefabBlueprints(fullPath);
+            var blueprints = ReadPrefabBlueprints(prefabsPath);
             foreach (var blueprint in blueprints)
             {
-                CreatePrefab(blueprint, fullPath);
+                CreatePrefab(blueprint, prefabsPath);
             }
         }
 
@@ -158,7 +152,19 @@ namespace PrefabCreator.Impl
 
         public void DeleteModulePrefabs(string modulesPath, string moduleName)
         {
+            var path = GetPrefabsPath(modulesPath, moduleName);
             
+            string[] guids = AssetDatabase.FindAssets("t:Prefab", new[] { path });
+            foreach (var guid in guids)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                AssetDatabase.DeleteAsset(assetPath);
+            }
+        }
+        
+        private String GetPrefabsPath(string modulesPath, string moduleName)
+        {
+            return Path.Combine(modulesPath, moduleName, "Prefabs");
         }
     }
 }
