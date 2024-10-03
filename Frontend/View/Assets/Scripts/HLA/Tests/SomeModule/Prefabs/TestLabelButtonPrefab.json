@@ -1,0 +1,14 @@
+{
+  "name": "TestLabelButtonPrefab",
+  "viewType": "SomeNamespace.TestLabelButtonView",
+  "children": [
+    {
+      "name": "myLabel",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    },
+    {
+      "name": "myButton",
+      "viewType": "B20.Frontend.Elements.View.ButtonView"
+    }
+  ]
+}

@@ -6,49 +6,43 @@ using B20.Ext;
 
 namespace PrefabCreator.Api {
     public class PrefabChildBlueprint {
-        readonly string prefabPath;
-        readonly string viewType;
         readonly string name;
+        readonly string viewType;
 
         public PrefabChildBlueprint(
-            string prefabPath,
-            string viewType,
-            string name
+            string name,
+            string viewType
         ) {
-            this.prefabPath = prefabPath;
-            this.viewType = viewType;
             this.name = name;
-        }
-        public string GetPrefabPath() {
-            return prefabPath;
-        }
-        public string GetViewType() {
-            return viewType;
+            this.viewType = viewType;
         }
         public string GetName() {
             return name;
         }
-        public static PrefabChildBlueprint Create(string prefabPath, string viewType, string name) {
-            return new PrefabChildBlueprint(prefabPath, viewType, name);
+        public string GetViewType() {
+            return viewType;
+        }
+        public static PrefabChildBlueprint Create(string name, string viewType) {
+            return new PrefabChildBlueprint(name, viewType);
         }
     }
 
     public class PrefabBlueprint {
-        readonly string prefabName;
+        readonly string name;
         readonly string viewType;
         readonly List<PrefabChildBlueprint> children;
 
         public PrefabBlueprint(
-            string prefabName,
+            string name,
             string viewType,
             List<PrefabChildBlueprint> children
         ) {
-            this.prefabName = prefabName;
+            this.name = name;
             this.viewType = viewType;
             this.children = children;
         }
-        public string GetPrefabName() {
-            return prefabName;
+        public string GetName() {
+            return name;
         }
         public string GetViewType() {
             return viewType;
@@ -56,8 +50,8 @@ namespace PrefabCreator.Api {
         public List<PrefabChildBlueprint> GetChildren() {
             return children;
         }
-        public static PrefabBlueprint Create(string prefabName, string viewType, List<PrefabChildBlueprint> children) {
-            return new PrefabBlueprint(prefabName, viewType, children);
+        public static PrefabBlueprint Create(string name, string viewType, List<PrefabChildBlueprint> children) {
+            return new PrefabBlueprint(name, viewType, children);
         }
     }
 }

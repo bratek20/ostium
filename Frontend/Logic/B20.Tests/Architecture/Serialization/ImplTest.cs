@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using B20.Architecture.Exceptions.Fixtures;
 using B20.Architecture.Serialization.Context;
 using B20.Tests.ExtraAsserts;
 using Serialization.Api;
@@ -38,7 +39,7 @@ namespace B20.Tests.Architecture.Serialization
             {
                 return HashCode.Combine(value, number, nullable);
             }
-
+            
             private string value;
             private int number;
             private string nullable;
@@ -100,6 +101,25 @@ namespace B20.Tests.Architecture.Serialization
 
             AssertExt.Equal(deserializedObject, new List<TestObject> { new TestObject("test", 1, null) });
         }
-
+        
+        [Fact]
+        public void BUG_Should_Throw_Exception_When_Deserializing_From_Invalid_JSON()
+        {
+            var serializedValue = SerializedValue.Create("{}", SerializationType.JSON);
+            
+            // ExceptionsAsserts.ThrowsApiException
+            // (
+            //     () => serializer.Deserialize<TestObject>(serializedValue),
+            //     e =>
+            //     {
+            //         e.Type = typeof(DeserializationException);
+            //         e.Message = "Deserialization failed: missing value for field `value`";
+            //     }
+            // );
+            
+            ExceptionsAsserts.DoesNotThrowAnyException(
+                () => serializer.Deserialize<TestObject>(serializedValue)
+            );
+        }
     }
 }

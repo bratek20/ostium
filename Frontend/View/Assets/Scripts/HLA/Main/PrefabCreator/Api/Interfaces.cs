@@ -6,6 +6,8 @@ using B20.Ext;
 
 namespace PrefabCreator.Api {
     public interface PrefabCreatorApi {
-        void StartModule(string modulesPath, string moduleName);
+        void StartModulePrefabs(string modulesPath, string moduleName);
+
+        void DeleteModulePrefabs(string modulesPath, string moduleName);
     }
 }
