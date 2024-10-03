@@ -42,93 +42,61 @@ public class PrefabCreatorTest
         AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestLabelButtonPrefab.prefab");
     }
     
+    
+    [Test]
+    public void ShouldAddViewComponentAdjustSizeAndHasGreyBackground()
+    {
+        AssertHasComponentAndGet<TestEmptyView>(emptyPrefab);
+    
+        AssertSize(emptyPrefab, 50, 50);
+        
+        Image backgroundImage = emptyPrefab.GetComponent<Image>();
+        Assert.IsNotNull(backgroundImage, "Prefab should have an Image component.");
+        Assert.AreEqual(Color.grey, backgroundImage.color, "The background image should have a grey color.");
+    }
+    
+    [Test]
+    public void ShouldAddChildrenAdjustItsOwnSizeAndPutChildrenAtCorrectPosition()
+    {
+        AssertChildSize(labelButtonPrefab, "myLabel", 300, 100);
+        AssertChildSize(labelButtonPrefab, "myButton", 200, 80);
+    
+        float expectedWidth = 300 + 2 * 25; //350, widest child + 2 * padding
+        float expectedHeight = 100 + 80 + 25 + 2 * 25; //255, sum of heights + spacing + 2 * padding
+        AssertSize(labelButtonPrefab, expectedWidth, expectedHeight);
+    
+        // container uses central anchoring
+        // it 255 height, so half of it is 127.5
+        // there is 25 padding and label height is 100 but anchored at center so half is 50
+        // so label should be at 127.5 - 25 - 50 = 52.5
+        AssertChildPosition(labelButtonPrefab, "myLabel", 52.5f);
+    
+        // now we add remaining size of label and spacing + 50 + 25
+        // button has 80 height, so half is 40
+        // so button should be at 52.5 - 25 - 50 - 40 = -62.5   
+        AssertChildPosition(labelButtonPrefab, "myButton", -62.5f);
+    }
+    
+    [Test]
+    public void ShouldSetReferencesToChildren()
+    {
+        var view = AssertHasComponentAndGet<TestLabelButtonView>(labelButtonPrefab);
+        
+        var myLabelGo = AssertHasChildAndGet(labelButtonPrefab, "myLabel");
+        var myButtonGo = AssertHasChildAndGet(labelButtonPrefab, "myButton");
+    
+        var myLabelView = AssertHasComponentAndGet<LabelView>(myLabelGo);
+        var myButtonView = AssertHasComponentAndGet<ButtonView>(myButtonGo);
+        
+        Assert.AreEqual(myLabelView, view.MyLabel);
+        Assert.AreEqual(myButtonView, view.MyButton);
+    }
+    
     [TearDown]
     public void Clean()
     {
         creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
     }
-    
-    // public class EmptyViewScope : PrefabCreatorTest
-    // {
-    //     [Test]
-    //     public void ShouldAddViewComponentAdjustSizeAndHasGreyBackground()
-    //     {
-    //         AssertHasComponentAndGet<TestEmptyView>(prefab);
-    //     
-    //         AssertSize(prefab, 50, 50);
-    //         
-    //         Image backgroundImage = prefab.GetComponent<Image>();
-    //         Assert.IsNotNull(backgroundImage, "Prefab should have an Image component.");
-    //         Assert.AreEqual(Color.grey, backgroundImage.color, "The background image should have a grey color.");
-    //     }
-    // }
-    //
-    // [TestFixture]
-    // public class LabelButtonViewScope: PrefabCreatorTest
-    // {
-    //     private GameObject prefab;
-    //     
-    //     [SetUp]
-    //     public void Create()
-    //     {
-    //         creator.CreatePrefab(new PrefabCreatorApiLogic.Args
-    //         {
-    //             prefabDirPath = "Assets/Prefab",
-    //             prefabName = "TestLabelButtonView",
-    //             viewTypeName = "SomeNamespace.TestLabelButtonView",
-    //             fields = new List<PrefabCreatorApiLogic.Field>
-    //             {
-    //                 new() { name = "myLabel", type = "B20.Frontend.Elements.View.LabelView" },
-    //                 new() { name = "myButton", type = "B20.Frontend.Elements.View.ButtonView" }
-    //             }
-    //         });
-    //     
-    //         prefab = AssertPrefabCreatedAndGet("Assets/Prefab/TestLabelButtonView.prefab");
-    //     }
-    //     
-    //     [TearDown]
-    //     public void Delete()
-    //     {
-    //         DeletePrefab("Assets/Prefab/TestLabelButtonView.prefab");
-    //     }
-    //     
-    //     [Test]
-    //     public void ShouldAddChildrenAdjustItsOwnSizeAndPutChildrenAtCorrectPosition()
-    //     {
-    //         AssertChildSize(prefab, "myLabel", 300, 100);
-    //         AssertChildSize(prefab, "myButton", 200, 80);
-    //
-    //         float expectedWidth = 300 + 2 * 25; //350, widest child + 2 * padding
-    //         float expectedHeight = 100 + 80 + 25 + 2 * 25; //255, sum of heights + spacing + 2 * padding
-    //         AssertSize(prefab, expectedWidth, expectedHeight);
-    //
-    //         // container uses central anchoring
-    //         // it 255 height, so half of it is 127.5
-    //         // there is 25 padding and label height is 100 but anchored at center so half is 50
-    //         // so label should be at 127.5 - 25 - 50 = 52.5
-    //         AssertChildPosition(prefab, "myLabel", 52.5f);
-    //     
-    //         // now we add remaining size of label and spacing + 50 + 25
-    //         // button has 80 height, so half is 40
-    //         // so button should be at 52.5 - 25 - 50 - 40 = -62.5   
-    //         AssertChildPosition(prefab, "myButton", -62.5f);
-    //     }
-    //     
-    //     [Test]
-    //     public void ShouldSetReferencesToChildren()
-    //     {
-    //         var view = AssertHasComponentAndGet<TestLabelButtonView>(prefab);
-    //         
-    //         var myLabelGo = AssertHasChildAndGet(prefab, "myLabel");
-    //         var myButtonGo = AssertHasChildAndGet(prefab, "myButton");
-    //
-    //         var myLabelView = AssertHasComponentAndGet<LabelView>(myLabelGo);
-    //         var myButtonView = AssertHasComponentAndGet<ButtonView>(myButtonGo);
-    //         
-    //         Assert.AreEqual(myLabelView, view.MyLabel);
-    //         Assert.AreEqual(myButtonView, view.MyButton);
-    //     }
-    // }
     
     private void AssertSize(GameObject go, float width, float height)
     {

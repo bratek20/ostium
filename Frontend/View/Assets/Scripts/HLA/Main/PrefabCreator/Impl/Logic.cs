@@ -76,7 +76,7 @@ namespace PrefabCreator.Impl
                     Debug.LogError($"Component of type '{child.GetViewType()}' not found on GameObject '{child.GetName()}'.");
                     return;
                 }
-                //type.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(gameObject.GetComponent(type), component);
+                type.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(gameObject.GetComponent(type), component);
                 
                 childY -= childObject.GetComponent<RectTransform>().sizeDelta.y / 2 + spacing;
             }
