@@ -16,6 +16,8 @@ public class PrefabCreatorTest
 
     private GameObject emptyPrefab;
     private GameObject labelButtonPrefab;
+    private GameObject referencingPrefab1;
+    private GameObject referencingPrefab2;
     
     [SetUp]
     public void Setup()
@@ -25,6 +27,8 @@ public class PrefabCreatorTest
         
         emptyPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestEmptyPrefab.prefab");
         labelButtonPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestLabelButtonPrefab.prefab");
+        referencingPrefab1 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab1.prefab");
+        referencingPrefab2 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab2.prefab");
     }
 
     [Test]
@@ -40,6 +44,14 @@ public class PrefabCreatorTest
         
         AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestEmptyPrefab.prefab");
         AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestLabelButtonPrefab.prefab");
+        AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab1.prefab");
+        AssertPrefabDeleted($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab2.prefab");
+    }
+        
+    [TearDown]
+    public void Clean()
+    {
+        //creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
     }
     
     
@@ -92,11 +104,24 @@ public class PrefabCreatorTest
         Assert.AreEqual(myButtonView, view.MyButton);
     }
     
-    [TearDown]
-    public void Clean()
+    [Test]
+    public void ShouldSetReferencesToOtherCreatedPrefabs()
     {
-        creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
+        var view1 = AssertHasComponentAndGet<TestReferencingView1>(referencingPrefab1);
+        
+        var prefab2 = AssertHasChildAndGet(referencingPrefab1, "prefab2");
+        var prefab2View = AssertHasComponentAndGet<TestReferencingView2>(prefab2);
+        
+        Assert.AreEqual(prefab2View, view1.Prefab2);
+        
+        var view2 = AssertHasComponentAndGet<TestReferencingView2>(referencingPrefab2);
+        
+        var myLabelButton = AssertHasChildAndGet(referencingPrefab2, "myLabelButton");
+        var myLabelButtonView = AssertHasComponentAndGet<TestLabelButtonView>(myLabelButton);
+        
+        Assert.AreEqual(myLabelButtonView, view2.MyLabelButton);
     }
+
     
     private void AssertSize(GameObject go, float width, float height)
     {

@@ -1,0 +1,10 @@
+{
+  "name": "TestReferencingPrefab2",
+  "viewType": "SomeNamespace.TestReferencingView2",
+  "children": [
+    {
+      "name": "myLabelButton",
+      "viewType": "SomeNamespace.TestLabelButtonView"
+    }
+  ]
+}

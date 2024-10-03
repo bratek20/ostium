@@ -1,0 +1,10 @@
+{
+  "name": "TestReferencingPrefab1",
+  "viewType": "SomeNamespace.TestReferencingView1",
+  "children": [
+    {
+      "name": "prefab2",
+      "viewType": "SomeNamespace.TestReferencingView2"
+    }
+  ]
+}

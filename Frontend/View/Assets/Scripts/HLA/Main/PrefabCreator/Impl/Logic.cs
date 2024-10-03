@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using B20.Architecture.Serialization.Context;
 using PrefabCreator.Api;
 using Serialization.Api;
@@ -10,35 +11,52 @@ using UnityEngine.UI;
 
 namespace PrefabCreator.Impl
 {
-    public class PrefabCreatorApiLogic: PrefabCreatorApi
+    public class PrefabBlueprintLogic
     {
-        private void CreatePrefab(PrefabBlueprint blueprint, string prefabsPath)
+        private PrefabBlueprint blueprint;
+        private string prefabsPath;
+
+        public PrefabBlueprintLogic(PrefabBlueprint blueprint, string prefabsPath)
+        {
+            this.blueprint = blueprint;
+            this.prefabsPath = prefabsPath;
+        }
+        
+        private Type ViewType => Type.GetType(blueprint.GetViewType());
+        
+        public void Create()
+        {
+            GameObject gameObject = new GameObject(blueprint.GetName(), typeof(RectTransform), typeof(Image));
+            
+            gameObject.AddComponent(ViewType);
+            
+            Image backgroundImage = gameObject.GetComponent<Image>();
+            backgroundImage.color = Color.grey;
+            
+            //SaveAndDestroyTmpObject(gameObject);
+            Fill(gameObject);
+        }
+        
+        private void SaveAndDestroyTmpObject(GameObject gameObject)
+        {
+            string prefabPath = $"{prefabsPath}/{gameObject.name}.prefab";
+            
+            bool success = false;
+            PrefabUtility.SaveAsPrefabAsset(gameObject, prefabPath, out success);
+            
+            Debug.Log($"{gameObject.name} Prefab saved at: {prefabPath}, success: {success}");
+            
+            GameObject.DestroyImmediate(gameObject);
+        }
+        
+                
+        private void Fill(GameObject gameObject)
         {
             float padding = 25f;
             float spacing = 25f;
-            
-            // Create the prefab object with a given name
-            GameObject gameObject = new GameObject(blueprint.GetName(), typeof(RectTransform), typeof(Image));
 
-            // Retrieve the type from the given typeName
-            var type = Type.GetType(blueprint.GetViewType());
-
-            // Check if the type is valid
-            if (type == null)
-            {
-                Debug.LogError($"Type '{blueprint.GetViewType()}' not found.");
-                return;
-            }
-
-            // Add the component of the retrieved type to the GameObject
-            gameObject.AddComponent(type);
-            
-            // Set the parent object as a UI element with RectTransform
-            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
-
-            // Step 2: Add an Image component with a grey color to visualize the container size
-            Image backgroundImage = gameObject.GetComponent<Image>();
-            backgroundImage.color = Color.grey;
+            //GameObject gameObject = (GameObject)PrefabUtility.InstantiatePrefab(GetPrefabOfComponentType(blueprint.GetViewType()));
+            var rectTransform = gameObject.GetComponent<RectTransform>();
 
             float containerWidth = 0;
             float containerHeight = 0;
@@ -76,22 +94,15 @@ namespace PrefabCreator.Impl
                     Debug.LogError($"Component of type '{child.GetViewType()}' not found on GameObject '{child.GetName()}'.");
                     return;
                 }
-                type.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(gameObject.GetComponent(type), component);
+                ViewType.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(gameObject.GetComponent(ViewType), component);
                 
                 childY -= childObject.GetComponent<RectTransform>().sizeDelta.y / 2 + spacing;
             }
 
-            // Step 11: Save the CreatedGameView GameObject as a prefab
-            string prefabPath = $"{prefabsPath}/{blueprint.GetName()}.prefab";
-            bool success = false;
-            PrefabUtility.SaveAsPrefabAsset(gameObject, prefabPath, out success);
-
-            // Clean up
-            GameObject.DestroyImmediate(gameObject);
-
-            Debug.Log($"{blueprint.GetName()} Prefab created at: {prefabPath}, success: {success}");
+            SaveAndDestroyTmpObject(gameObject);
         }
 
+                
         private GameObject GetPrefabOfComponentType(string typeName)
         {
             // Find all prefab asset GUIDs in the project
@@ -121,16 +132,26 @@ namespace PrefabCreator.Impl
 
             throw new Exception($"Prefab for component type {typeName} not found");
         }
-
+    }
+    
+    public class PrefabCreatorApiLogic: PrefabCreatorApi
+    {
         public void StartModulePrefabs(string modulesPath, string moduleName)
         {
             string prefabsPath = Path.Combine(modulesPath, moduleName, "Prefabs");
 
-            var blueprints = ReadPrefabBlueprints(prefabsPath);
-            foreach (var blueprint in blueprints)
+            var blueprintsLogic = ReadPrefabBlueprints(prefabsPath)
+                .Select(blueprint => new PrefabBlueprintLogic(blueprint, prefabsPath));
+            
+            foreach (var blueprintLogic in blueprintsLogic)
             {
-                CreatePrefab(blueprint, prefabsPath);
+                blueprintLogic.Create();
             }
+            //
+            // foreach (var blueprintLogic in blueprintsLogic)
+            // {
+            //     blueprintLogic.Fill();
+            // }
         }
 
         private List<PrefabBlueprint> ReadPrefabBlueprints(string fullPath)
