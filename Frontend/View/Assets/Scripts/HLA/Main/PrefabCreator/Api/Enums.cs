@@ -8,5 +8,6 @@ namespace PrefabCreator.Api {
     public enum BlueprintType {
         UiElement,
         Window,
+        ElementGroup,
     }
 }

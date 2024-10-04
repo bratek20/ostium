@@ -2,6 +2,7 @@ Enums
     BlueprintType
         UiElement
         Window
+        ElementGroup
         
 ValueObjects
     PrefabChildBlueprint
@@ -13,7 +14,8 @@ ValueObjects
         name: string
         viewType: string
         creationOrder: int
-        children: PrefabChildBlueprint[]
+        children: PrefabChildBlueprint[] = [] // only used for UiElement and Window
+        elementViewType: string? = empty // only set for ElementGroup
 
 Interfaces
     PrefabCreatorApi
