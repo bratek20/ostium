@@ -73,7 +73,7 @@ public class PrefabCreatorTest
     
         AssertSize(windowPrefab, 1080, 1920);
         
-        AssertColor(windowPrefab, new Color(87, 94,96));
+        AssertColor(windowPrefab, new Color(0.49f, 0.65f, 0.69f));
     }
     
     private void AssertColor(GameObject go, Color expectedColor)

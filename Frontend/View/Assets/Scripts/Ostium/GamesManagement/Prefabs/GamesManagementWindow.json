@@ -1,12 +1,12 @@
 {
-  "prefabType": "Window",
+  "blueprintType": "Window",
   "name": "GamesManagementWindow",
-  "viewType": "GamesManagement.View.GamesManagementWindow",
+  "viewType": "GamesManagement.View.GamesManagementWindowView",
   "creationOrder": 3,
   "children": [
     {
       "name": "createdGames",
-      "viewType": "GamesManagement.View.CreatedGameGroup"
+      "viewType": "GamesManagement.View.CreatedGameGroupView"
     },
     {
       "name": "createGame",

@@ -37,7 +37,7 @@ namespace PrefabCreator.Impl
             Color backgroundColor = Color.grey;
             if (BlueprintType == BlueprintType.Window)
             {
-                backgroundColor = new Color(87, 94,96);
+                backgroundColor = new Color(0.49f, 0.65f, 0.69f);
             }
             backgroundImage.color = backgroundColor;
             
@@ -109,7 +109,9 @@ namespace PrefabCreator.Impl
                     Debug.LogError($"Component of type '{child.GetViewType()}' not found on GameObject '{child.GetName()}'.");
                     return;
                 }
-                ViewType.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(gameObject.GetComponent(ViewType), component);
+                
+                var x = gameObject.GetComponent(ViewType);
+                ViewType.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(x, component);
                 
                 childY -= childObject.GetComponent<RectTransform>().sizeDelta.y / 2 + spacing;
             }

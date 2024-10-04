@@ -1,5 +1,5 @@
 {
-  "prefabType": "UiElement",
+  "blueprintType": "UiElement",
   "name": "CreatedGame",
   "viewType": "GamesManagement.View.CreatedGameView",
   "creationOrder": 1,
