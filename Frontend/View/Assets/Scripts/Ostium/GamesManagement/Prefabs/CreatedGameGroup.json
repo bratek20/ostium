@@ -1,0 +1,7 @@
+{
+  "prefabType": "UiElement",
+  "name": "CreatedGameGroup",
+  "viewType": "GamesManagement.View.CreatedGameGroupView",
+  "creationOrder": 2,
+  "children": []
+}

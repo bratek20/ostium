@@ -1,0 +1,16 @@
+{
+  "prefabType": "Window",
+  "name": "GamesManagementWindow",
+  "viewType": "GamesManagement.View.GamesManagementWindow",
+  "creationOrder": 3,
+  "children": [
+    {
+      "name": "createdGames",
+      "viewType": "GamesManagement.View.CreatedGameGroup"
+    },
+    {
+      "name": "createGame",
+      "viewType": "B20.Frontend.Elements.View.ButtonView"
+    }
+  ]
+}
