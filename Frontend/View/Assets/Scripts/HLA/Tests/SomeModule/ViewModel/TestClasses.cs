@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using B20.Frontend.UiElements;
+using B20.Frontend.Windows.Api;
 using UnityEngine;
 
 namespace SomeNamespace
@@ -13,4 +14,6 @@ namespace SomeNamespace
     {
 
     }
+    
+    public class EmptyWindow: Window<EmptyWindowState> {} 
 }

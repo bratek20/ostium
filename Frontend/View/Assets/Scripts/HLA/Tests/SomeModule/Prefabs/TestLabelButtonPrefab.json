@@ -1,4 +1,5 @@
 {
+  "blueprintType": "UiElement",
   "name": "TestLabelButtonPrefab",
   "viewType": "SomeNamespace.TestLabelButtonView",
   "creationOrder": 2,

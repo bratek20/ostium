@@ -1,9 +1,15 @@
+Enums
+    BlueprintType
+        UiElement
+        Window
+        
 ValueObjects
     PrefabChildBlueprint
         name: string
         viewType: string
 
     PrefabBlueprint
+        blueprintType: BlueprintType
         name: string
         viewType: string
         creationOrder: int

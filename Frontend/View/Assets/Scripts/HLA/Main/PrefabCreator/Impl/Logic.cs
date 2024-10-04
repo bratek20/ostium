@@ -24,6 +24,7 @@ namespace PrefabCreator.Impl
         
         private string Path => $"{prefabsPath}/{blueprint.GetName()}.prefab";
         
+        private BlueprintType BlueprintType => blueprint.GetBlueprintType();
         private Type ViewType => Type.GetType(blueprint.GetViewType());
         
         public void Create()
@@ -33,9 +34,13 @@ namespace PrefabCreator.Impl
             gameObject.AddComponent(ViewType);
             
             Image backgroundImage = gameObject.GetComponent<Image>();
-            backgroundImage.color = Color.grey;
+            Color backgroundColor = Color.grey;
+            if (BlueprintType == BlueprintType.Window)
+            {
+                backgroundColor = new Color(87, 94,96);
+            }
+            backgroundImage.color = backgroundColor;
             
-            //SaveAndDestroyTmpObject(gameObject);
             Fill(gameObject);
         }
 
@@ -84,7 +89,12 @@ namespace PrefabCreator.Impl
             containerWidth += 2 * padding;
             containerHeight += 2 * padding;
             // Set the size of the container
-            rectTransform.sizeDelta = new Vector2(containerWidth, containerHeight);
+            var containerSize = new Vector2(containerWidth, containerHeight);
+            if (BlueprintType == BlueprintType.Window)
+            {
+                containerSize = new Vector2(1080, 1920);
+            }
+            rectTransform.sizeDelta = containerSize;
 
             var childY = containerHeight / 2 - padding;
             foreach (var child in blueprint.GetChildren())

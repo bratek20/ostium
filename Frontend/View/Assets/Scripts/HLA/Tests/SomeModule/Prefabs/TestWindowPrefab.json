@@ -1,0 +1,12 @@
+{
+  "blueprintType": "Window",
+  "name": "TestWindowPrefab",
+  "viewType": "SomeNamespace.TestWindowView",
+  "creationOrder": 4,
+  "children": [
+    {
+      "name": "myLabel",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    }
+  ]
+}

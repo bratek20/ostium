@@ -18,6 +18,7 @@ public class PrefabCreatorTest
     private GameObject labelButtonPrefab;
     private GameObject referencingPrefab1;
     private GameObject referencingPrefab2;
+    private GameObject windowPrefab;
     
     [SetUp]
     public void Setup()
@@ -29,6 +30,7 @@ public class PrefabCreatorTest
         labelButtonPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestLabelButtonPrefab.prefab");
         referencingPrefab1 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab1.prefab");
         referencingPrefab2 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab2.prefab");
+        windowPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestWindowPrefab.prefab");
     }
 
     [Test]
@@ -55,15 +57,30 @@ public class PrefabCreatorTest
     }
     
     [Test]
-    public void ShouldAddViewComponentAdjustSizeAndHasGreyBackground()
+    public void UiElement_ShouldHaveViewComponentAdjustSizeAndHasGreyBackground()
     {
         AssertHasComponentAndGet<TestEmptyView>(emptyPrefab);
     
         AssertSize(emptyPrefab, 50, 50);
         
-        Image backgroundImage = emptyPrefab.GetComponent<Image>();
-        Assert.IsNotNull(backgroundImage, "Prefab should have an Image component.");
-        Assert.AreEqual(Color.grey, backgroundImage.color, "The background image should have a grey color.");
+        AssertColor(emptyPrefab, Color.gray);
+    }
+    
+    [Test]
+    public void Window_ShouldHaveViewComponentHaveConstantSizeAndHasLightBlueBackground()
+    {
+        AssertHasComponentAndGet<TestWindowView>(windowPrefab);
+    
+        AssertSize(windowPrefab, 1080, 1920);
+        
+        AssertColor(windowPrefab, new Color(87, 94,96));
+    }
+    
+    private void AssertColor(GameObject go, Color expectedColor)
+    {
+        Image image = go.GetComponent<Image>();
+        Assert.IsNotNull(image, "Prefab should have an Image component.");
+        Assert.AreEqual(expectedColor, image.color, "The background image should have the expected color.");
     }
     
     [Test]

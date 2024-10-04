@@ -28,21 +28,27 @@ namespace PrefabCreator.Api {
     }
 
     public class PrefabBlueprint {
+        readonly string blueprintType;
         readonly string name;
         readonly string viewType;
         readonly int creationOrder;
         readonly List<PrefabChildBlueprint> children;
 
         public PrefabBlueprint(
+            string blueprintType,
             string name,
             string viewType,
             int creationOrder,
             List<PrefabChildBlueprint> children
         ) {
+            this.blueprintType = blueprintType;
             this.name = name;
             this.viewType = viewType;
             this.creationOrder = creationOrder;
             this.children = children;
+        }
+        public BlueprintType GetBlueprintType() {
+            return (BlueprintType)Enum.Parse(typeof(BlueprintType), blueprintType);
         }
         public string GetName() {
             return name;
@@ -56,8 +62,8 @@ namespace PrefabCreator.Api {
         public List<PrefabChildBlueprint> GetChildren() {
             return children;
         }
-        public static PrefabBlueprint Create(string name, string viewType, int creationOrder, List<PrefabChildBlueprint> children) {
-            return new PrefabBlueprint(name, viewType, creationOrder, children);
+        public static PrefabBlueprint Create(BlueprintType blueprintType, string name, string viewType, int creationOrder, List<PrefabChildBlueprint> children) {
+            return new PrefabBlueprint(blueprintType.ToString(), name, viewType, creationOrder, children);
         }
     }
 }
