@@ -30,15 +30,18 @@ namespace PrefabCreator.Api {
     public class PrefabBlueprint {
         readonly string name;
         readonly string viewType;
+        readonly int creationOrder;
         readonly List<PrefabChildBlueprint> children;
 
         public PrefabBlueprint(
             string name,
             string viewType,
+            int creationOrder,
             List<PrefabChildBlueprint> children
         ) {
             this.name = name;
             this.viewType = viewType;
+            this.creationOrder = creationOrder;
             this.children = children;
         }
         public string GetName() {
@@ -47,11 +50,14 @@ namespace PrefabCreator.Api {
         public string GetViewType() {
             return viewType;
         }
+        public int GetCreationOrder() {
+            return creationOrder;
+        }
         public List<PrefabChildBlueprint> GetChildren() {
             return children;
         }
-        public static PrefabBlueprint Create(string name, string viewType, List<PrefabChildBlueprint> children) {
-            return new PrefabBlueprint(name, viewType, children);
+        public static PrefabBlueprint Create(string name, string viewType, int creationOrder, List<PrefabChildBlueprint> children) {
+            return new PrefabBlueprint(name, viewType, creationOrder, children);
         }
     }
 }

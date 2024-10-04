@@ -22,6 +22,8 @@ namespace PrefabCreator.Impl
             this.prefabsPath = prefabsPath;
         }
         
+        private string Path => $"{prefabsPath}/{blueprint.GetName()}.prefab";
+        
         private Type ViewType => Type.GetType(blueprint.GetViewType());
         
         public void Create()
@@ -36,15 +38,18 @@ namespace PrefabCreator.Impl
             //SaveAndDestroyTmpObject(gameObject);
             Fill(gameObject);
         }
+
+        public void Delete()
+        {
+            AssetDatabase.DeleteAsset(Path);    
+        }
         
         private void SaveAndDestroyTmpObject(GameObject gameObject)
         {
-            string prefabPath = $"{prefabsPath}/{gameObject.name}.prefab";
-            
             bool success = false;
-            PrefabUtility.SaveAsPrefabAsset(gameObject, prefabPath, out success);
+            PrefabUtility.SaveAsPrefabAsset(gameObject, Path, out success);
             
-            Debug.Log($"{gameObject.name} Prefab saved at: {prefabPath}, success: {success}");
+            Debug.Log($"{gameObject.name} Prefab saved at: {Path}, success: {success}");
             
             GameObject.DestroyImmediate(gameObject);
         }
@@ -138,20 +143,16 @@ namespace PrefabCreator.Impl
     {
         public void StartModulePrefabs(string modulesPath, string moduleName)
         {
-            string prefabsPath = Path.Combine(modulesPath, moduleName, "Prefabs");
+            string prefabsPath = GetPrefabsPath(modulesPath, moduleName);
 
             var blueprintsLogic = ReadPrefabBlueprints(prefabsPath)
+                .OrderBy(blueprint => blueprint.GetCreationOrder())
                 .Select(blueprint => new PrefabBlueprintLogic(blueprint, prefabsPath));
             
             foreach (var blueprintLogic in blueprintsLogic)
             {
                 blueprintLogic.Create();
             }
-            //
-            // foreach (var blueprintLogic in blueprintsLogic)
-            // {
-            //     blueprintLogic.Fill();
-            // }
         }
 
         private List<PrefabBlueprint> ReadPrefabBlueprints(string fullPath)
@@ -174,12 +175,14 @@ namespace PrefabCreator.Impl
         public void DeleteModulePrefabs(string modulesPath, string moduleName)
         {
             var path = GetPrefabsPath(modulesPath, moduleName);
-            
-            string[] guids = AssetDatabase.FindAssets("t:Prefab", new[] { path });
-            foreach (var guid in guids)
+
+            var blueprintsLogic = ReadPrefabBlueprints(path)
+                .OrderByDescending(b => b.GetCreationOrder())
+                .Select(b => new PrefabBlueprintLogic(b, path));
+
+            foreach (var blueprintLogic in blueprintsLogic)
             {
-                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                AssetDatabase.DeleteAsset(assetPath);
+                blueprintLogic.Delete();
             }
         }
         

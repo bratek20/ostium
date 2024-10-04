@@ -6,6 +6,7 @@ ValueObjects
     PrefabBlueprint
         name: string
         viewType: string
+        creationOrder: int
         children: PrefabChildBlueprint[]
 
 Interfaces

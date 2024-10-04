@@ -1,6 +1,7 @@
 {
   "name": "TestReferencingPrefab2",
   "viewType": "SomeNamespace.TestReferencingView2",
+  "creationOrder": 3,
   "children": [
     {
       "name": "myLabelButton",

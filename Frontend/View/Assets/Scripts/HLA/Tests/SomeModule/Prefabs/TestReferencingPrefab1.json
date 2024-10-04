@@ -1,6 +1,7 @@
 {
   "name": "TestReferencingPrefab1",
   "viewType": "SomeNamespace.TestReferencingView1",
+  "creationOrder": 4,
   "children": [
     {
       "name": "prefab2",
