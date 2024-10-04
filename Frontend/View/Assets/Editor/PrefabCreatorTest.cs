@@ -19,6 +19,7 @@ public class PrefabCreatorTest
     private GameObject referencingPrefab1;
     private GameObject referencingPrefab2;
     private GameObject windowPrefab;
+    private GameObject elementGroupPrefab;
     
     [SetUp]
     public void Setup()
@@ -31,6 +32,7 @@ public class PrefabCreatorTest
         referencingPrefab1 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab1.prefab");
         referencingPrefab2 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab2.prefab");
         windowPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestWindowPrefab.prefab");
+        elementGroupPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestElementGroupPrefab.prefab");
     }
 
     [Test]
@@ -57,7 +59,7 @@ public class PrefabCreatorTest
     }
     
     [Test]
-    public void UiElement_ShouldHaveViewComponentAdjustSizeAndHasGreyBackground()
+    public void UiElement_ShouldHaveViewComponentAdjustedSizeAndGreyBackground()
     {
         AssertHasComponentAndGet<TestEmptyView>(emptyPrefab);
     
@@ -67,13 +69,23 @@ public class PrefabCreatorTest
     }
     
     [Test]
-    public void Window_ShouldHaveViewComponentHaveConstantSizeAndHasLightBlueBackground()
+    public void Window_ShouldHaveConstantSizeAndHasLightBlueBackground()
     {
         AssertHasComponentAndGet<TestWindowView>(windowPrefab);
     
         AssertSize(windowPrefab, 1080, 1920);
         
         AssertColor(windowPrefab, new Color(0.49f, 0.65f, 0.69f));
+    }
+    
+    [Test]
+    public void ElementGroup_ShouldHaveSizeAccordingToElementAndDarkGreyBackground()
+    {
+        AssertHasComponentAndGet<TestElementGroupView>(elementGroupPrefab);
+    
+        AssertSize(elementGroupPrefab, 400, 305); // child is labelButtonPrefab, has 350x255, padding is 25, so 400x305
+        
+        AssertColor(elementGroupPrefab, new Color(0.38f, 0.38f, 0.38f));
     }
     
     private void AssertColor(GameObject go, Color expectedColor)

@@ -39,9 +39,29 @@ namespace PrefabCreator.Impl
             {
                 backgroundColor = new Color(0.49f, 0.65f, 0.69f);
             }
+            else if (BlueprintType == BlueprintType.ElementGroup)
+            {
+                backgroundColor = new Color(0.38f, 0.38f, 0.38f);
+            }
             backgroundImage.color = backgroundColor;
+
+            if (BlueprintType != BlueprintType.ElementGroup)
+            {
+                FillForNonGroup(gameObject);    
+            }
+            else
+            {
+                FillForGroup(gameObject);
+            }
             
-            Fill(gameObject);
+            SaveAndDestroyTmpObject(gameObject);
+        }
+
+        private void FillForGroup(GameObject gameObject)
+        {
+            var elementPrefab = GetPrefabOfComponentType(blueprint.GetElementViewType().Get());
+            var elementSize = elementPrefab.GetComponent<RectTransform>().sizeDelta;
+            SetSize(gameObject, elementSize.x + 50, elementSize.y + 50);
         }
 
         public void Delete()
@@ -58,16 +78,18 @@ namespace PrefabCreator.Impl
             
             GameObject.DestroyImmediate(gameObject);
         }
-        
                 
-        private void Fill(GameObject gameObject)
+        private void SetSize(GameObject gameObject, float width, float height)
+        {
+            var rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(width, height);
+        }
+        
+        private void FillForNonGroup(GameObject gameObject)
         {
             float padding = 25f;
             float spacing = 25f;
-
-            //GameObject gameObject = (GameObject)PrefabUtility.InstantiatePrefab(GetPrefabOfComponentType(blueprint.GetViewType()));
-            var rectTransform = gameObject.GetComponent<RectTransform>();
-
+            
             float containerWidth = 0;
             float containerHeight = 0;
             
@@ -89,12 +111,12 @@ namespace PrefabCreator.Impl
             containerWidth += 2 * padding;
             containerHeight += 2 * padding;
             // Set the size of the container
-            var containerSize = new Vector2(containerWidth, containerHeight);
             if (BlueprintType == BlueprintType.Window)
             {
-                containerSize = new Vector2(1080, 1920);
+                containerWidth = 1080;
+                containerHeight = 1920;
             }
-            rectTransform.sizeDelta = containerSize;
+            SetSize(gameObject, containerWidth, containerHeight);
 
             var childY = containerHeight / 2 - padding;
             foreach (var child in blueprint.GetChildren())
@@ -110,13 +132,16 @@ namespace PrefabCreator.Impl
                     return;
                 }
                 
-                var x = gameObject.GetComponent(ViewType);
-                ViewType.GetField(child.GetName(), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(x, component);
+                SetFieldReference(gameObject, child.GetName(), component);
                 
                 childY -= childObject.GetComponent<RectTransform>().sizeDelta.y / 2 + spacing;
             }
-
-            SaveAndDestroyTmpObject(gameObject);
+        }
+        
+        private void SetFieldReference(GameObject gameObject, string fieldName, Component component)
+        {
+            var view = gameObject.GetComponent(ViewType);
+            ViewType.GetField(fieldName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(view, component);
         }
 
                 
