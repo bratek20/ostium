@@ -10,7 +10,7 @@ namespace B20.Frontend.Elements.View
         where TViewModel: UiElement<TModel>
     {
         [SerializeField]
-        private TView elementPrefab;
+        protected TView elementPrefab;
 
         [SerializeField]
         private int elementSpacingX = 0;

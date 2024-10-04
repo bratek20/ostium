@@ -3,5 +3,5 @@
   "name": "CreatedGameGroup",
   "viewType": "GamesManagement.View.CreatedGameGroupView",
   "creationOrder": 2,
-  "children": []
+  "elementViewType": "GamesManagement.View.CreatedGameView"
 }

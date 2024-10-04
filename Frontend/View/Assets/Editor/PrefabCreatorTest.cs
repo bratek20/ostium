@@ -88,6 +88,16 @@ public class PrefabCreatorTest
         AssertColor(elementGroupPrefab, new Color(0.38f, 0.38f, 0.38f));
     }
     
+    [Test]
+    public void ElementGroup_ShouldHaveElementPrefabSet()
+    {
+        var view = AssertHasComponentAndGet<TestElementGroupView>(elementGroupPrefab);
+        
+        var elementPrefab = AssertHasComponentAndGet<TestLabelButtonView>(labelButtonPrefab);
+        
+        Assert.AreEqual(elementPrefab, view.ElementPrefab);
+    }
+    
     private void AssertColor(GameObject go, Color expectedColor)
     {
         Image image = go.GetComponent<Image>();

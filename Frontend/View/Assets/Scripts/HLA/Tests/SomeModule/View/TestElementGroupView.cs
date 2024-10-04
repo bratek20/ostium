@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace SomeNamespace
 {
-    public class TestElementGroupView : UiElementGroupView<TestEmptyView, EmptyViewModel, EmptyModel>
+    public class TestElementGroupView : UiElementGroupView<TestLabelButtonView, EmptyViewModel, EmptyModel>
     {
-
+        public TestLabelButtonView ElementPrefab => elementPrefab;
     }
 }
 

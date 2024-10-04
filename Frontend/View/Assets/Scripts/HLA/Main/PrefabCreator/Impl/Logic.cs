@@ -59,9 +59,12 @@ namespace PrefabCreator.Impl
 
         private void FillForGroup(GameObject gameObject)
         {
-            var elementPrefab = GetPrefabOfComponentType(blueprint.GetElementViewType().Get());
+            var elementViewType = blueprint.GetElementViewType().Get();
+            var elementPrefab = GetPrefabOfComponentType(elementViewType);
             var elementSize = elementPrefab.GetComponent<RectTransform>().sizeDelta;
             SetSize(gameObject, elementSize.x + 50, elementSize.y + 50);
+            
+            SetFieldReference(gameObject, "elementPrefab", elementPrefab.GetComponent(elementViewType));
         }
 
         public void Delete()
