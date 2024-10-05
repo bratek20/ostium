@@ -30,5 +30,17 @@ namespace B20.Architecture.Exceptions.Fixtures
                 Xunit.Assert.StartsWith(expected.MessagePrefix, thrownException.Message);
             }
         }
+        
+        public static void DoesNotThrowAnyException(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                Xunit.Assert.True(false, $"Expected no exception, but got: {ex.GetType().Name}");
+            }
+        }
     }
 }

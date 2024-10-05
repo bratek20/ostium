@@ -31,7 +31,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\B20\B20.csproj" />
-        <ProjectReference Include="..\OstiumBackend\OstiumBackend.csproj" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -1,0 +1,7 @@
+{
+  "blueprintType": "ElementGroup",
+  "name": "CreatedGameGroup",
+  "viewType": "GamesManagement.View.CreatedGameGroupView",
+  "creationOrder": 2,
+  "elementViewType": "GamesManagement.View.CreatedGameView"
+}

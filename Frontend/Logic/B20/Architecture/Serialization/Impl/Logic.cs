@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serialization.Api;
@@ -43,13 +44,34 @@ namespace B20.Architecture.Serialization.Impl
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(serializedValue.GetValue(), _jsonSettings);
+                var deserializedObject = JsonConvert.DeserializeObject<T>(serializedValue.GetValue(), _jsonSettings);
+        
+                //TODO-REF figure out how to support nullable types
+                //ValidateFields(typeof(T), deserializedObject);
+        
+                return deserializedObject;
             }
             catch (JsonException e)
             {
                 throw HandleJsonException(e);
             }
         }
+
+        private void ValidateFields(Type type, object obj)
+        {
+            foreach (var field in type.GetFields(System.Reflection.BindingFlags.NonPublic | 
+                                                 System.Reflection.BindingFlags.Public | 
+                                                 System.Reflection.BindingFlags.Instance))
+            {
+                var fieldValue = field.GetValue(obj);
+                // Check if the field is a non-nullable value type or a reference type that should not be null
+                if (fieldValue == null)
+                {
+                    throw new DeserializationException($"Deserialization failed: missing value for field `{field.Name}`");
+                }
+            }
+        }
+
 
         public List<T> DeserializeList<T>(SerializedValue serializedValue)
         {

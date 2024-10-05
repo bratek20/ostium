@@ -1,0 +1,20 @@
+{
+  "blueprintType": "UiElement",
+  "name": "CreatedGame",
+  "viewType": "GamesManagement.View.CreatedGameView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "id",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    },
+    {
+      "name": "creator",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    },
+    {
+      "name": "delete",
+      "viewType": "B20.Frontend.Elements.View.ButtonView"
+    }
+  ]
+}

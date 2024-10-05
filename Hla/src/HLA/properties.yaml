@@ -1,0 +1,7 @@
+profiles:
+  - name: "View"
+    language: "C_SHARP"
+    paths:
+      project: "../../../Frontend/View/Assets/Scripts/HLA"
+      src:
+        default: "Main"

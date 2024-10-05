@@ -9,13 +9,19 @@ namespace B20.Frontend.Elements.View
         where TView: ElementView<TViewModel>
         where TViewModel: UiElement<TModel>
     {
+        public enum Direction
+        {
+            Horizontal,
+            Vertical
+        }
         [SerializeField]
-        private TView elementPrefab;
+        protected TView elementPrefab;
 
         [SerializeField]
-        private int elementSpacingX = 0;
-        [SerializeField]
-        private int elementSpacingY = 0;
+        private Direction direction = Direction.Horizontal;
+
+        [SerializeField] 
+        private float elementSpacing = 10;
 
         private readonly List<TView> _elementViews = new List<TView>();
         
@@ -31,7 +37,12 @@ namespace B20.Frontend.Elements.View
             }
             _elementViews.Clear();
             
+            var elementSize = elementPrefab.GetComponent<RectTransform>().sizeDelta;
             int idx = 0;
+            Vector3 elementSpacingVector = direction == Direction.Horizontal
+                ? new Vector3(elementSpacing + elementSize.x, 0, 0)
+                : new Vector3(0, elementSpacing + elementSize.y, 0);
+            
             foreach (var element in ViewModel.Elements)
             {
                 var view = Instantiate(elementPrefab, transform);
@@ -44,7 +55,7 @@ namespace B20.Frontend.Elements.View
                 element.Refresh();
 
                 // Update the position for the next element
-                currentPosition += new Vector3(elementSpacingX, elementSpacingY, 0);
+                currentPosition += elementSpacingVector;
             }
         }
     }

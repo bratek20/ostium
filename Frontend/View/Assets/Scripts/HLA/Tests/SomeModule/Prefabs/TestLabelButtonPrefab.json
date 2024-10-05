@@ -1,0 +1,16 @@
+{
+  "blueprintType": "UiElement",
+  "name": "TestLabelButtonPrefab",
+  "viewType": "SomeNamespace.TestLabelButtonView",
+  "creationOrder": 2,
+  "children": [
+    {
+      "name": "myLabel",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    },
+    {
+      "name": "myButton",
+      "viewType": "B20.Frontend.Elements.View.ButtonView"
+    }
+  ]
+}

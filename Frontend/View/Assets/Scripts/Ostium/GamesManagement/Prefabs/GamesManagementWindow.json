@@ -1,0 +1,16 @@
+{
+  "blueprintType": "Window",
+  "name": "GamesManagementWindow",
+  "viewType": "GamesManagement.View.GamesManagementWindowView",
+  "creationOrder": 3,
+  "children": [
+    {
+      "name": "createdGames",
+      "viewType": "GamesManagement.View.CreatedGameGroupView"
+    },
+    {
+      "name": "createGame",
+      "viewType": "B20.Frontend.Elements.View.ButtonView"
+    }
+  ]
+}

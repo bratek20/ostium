@@ -1,0 +1,7 @@
+{
+  "blueprintType": "ElementGroup",
+  "name": "TestElementGroupPrefab",
+  "viewType": "SomeNamespace.TestElementGroupView",
+  "creationOrder": 5,
+  "elementViewType": "SomeNamespace.TestLabelButtonView"
+}

@@ -1,0 +1,7 @@
+{
+  "blueprintType": "UiElement",
+  "name": "TestEmptyPrefab",
+  "viewType": "SomeNamespace.TestEmptyView",
+  "creationOrder": 1,
+  "children": []
+}
