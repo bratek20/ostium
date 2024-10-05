@@ -20,6 +20,7 @@ public class PrefabCreatorTest
     private GameObject referencingPrefab2;
     private GameObject windowPrefab;
     private GameObject elementGroupPrefab;
+    private GameObject optionalElementPrefab;
     
     [SetUp]
     public void Setup()
@@ -33,6 +34,7 @@ public class PrefabCreatorTest
         referencingPrefab2 = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestReferencingPrefab2.prefab");
         windowPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestWindowPrefab.prefab");
         elementGroupPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestElementGroupPrefab.prefab");
+        optionalElementPrefab = AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestOptionalElementPrefab.prefab");
     }
 
     [Test]
@@ -92,6 +94,26 @@ public class PrefabCreatorTest
     public void ElementGroup_ShouldHaveElementPrefabSet()
     {
         var view = AssertHasComponentAndGet<TestElementGroupView>(elementGroupPrefab);
+        
+        var elementPrefab = AssertHasComponentAndGet<TestLabelButtonView>(labelButtonPrefab);
+        
+        Assert.AreEqual(elementPrefab, view.ElementPrefab);
+    }
+    
+    [Test]
+    public void OptionalElement_ShouldHaveSizeAccordingToElementAndDarkRedBackground()
+    {
+        AssertHasComponentAndGet<TestOptionalElementView>(optionalElementPrefab);
+    
+        AssertSize(optionalElementPrefab, 400, 305); // child is labelButtonPrefab, has 350x255, padding is 25, so 400x305
+        
+        AssertColor(optionalElementPrefab, new Color(0.4f, 0.2f, 0.2f));
+    }
+    
+    [Test]
+    public void OptionalElement_ShouldHaveElementPrefabSet()
+    {
+        var view = AssertHasComponentAndGet<TestOptionalElementView>(optionalElementPrefab);
         
         var elementPrefab = AssertHasComponentAndGet<TestLabelButtonView>(labelButtonPrefab);
         

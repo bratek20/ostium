@@ -43,9 +43,13 @@ namespace PrefabCreator.Impl
             {
                 backgroundColor = new Color(0.38f, 0.38f, 0.38f);
             }
+            else if (BlueprintType == BlueprintType.OptionalElement)
+            {
+                backgroundColor = new Color(0.4f, 0.2f, 0.2f);
+            }
             backgroundImage.color = backgroundColor;
 
-            if (BlueprintType != BlueprintType.ElementGroup)
+            if (BlueprintType != BlueprintType.ElementGroup && BlueprintType != BlueprintType.OptionalElement)
             {
                 FillForNonGroup(gameObject);    
             }

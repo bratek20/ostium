@@ -9,5 +9,6 @@ namespace PrefabCreator.Api {
         UiElement,
         Window,
         ElementGroup,
+        OptionalElement,
     }
 }

@@ -1,0 +1,7 @@
+{
+  "blueprintType": "OptionalElement",
+  "name": "TestOptionalElementPrefab",
+  "viewType": "SomeNamespace.TestOptionalElementView",
+  "creationOrder": 6,
+  "elementViewType": "SomeNamespace.TestLabelButtonView"
+}
