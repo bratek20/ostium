@@ -5,9 +5,9 @@ package com.github.bratek20.ostium.gamesmanagement.api
 import com.github.bratek20.ostium.user.api.*
 
 interface GamesManagementApi {
-    fun create(creator: Username): GameId
+    fun create(creator: Username): GameToken
 
-    fun join(joiner: Username, gameId: GameId): Unit
+    fun join(joiner: Username, gameId: GameId): GameToken
 
     fun delete(gameId: GameId): Unit
 

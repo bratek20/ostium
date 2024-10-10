@@ -12,6 +12,25 @@ fun diffGameId(given: GameId, expected: Int, path: String = ""): String {
     return ""
 }
 
+data class ExpectedGameToken(
+    var gameId: Int? = null,
+    var username: String? = null,
+)
+fun diffGameToken(given: GameToken, expectedInit: ExpectedGameToken.() -> Unit, path: String = ""): String {
+    val expected = ExpectedGameToken().apply(expectedInit)
+    val result: MutableList<String> = mutableListOf()
+
+    expected.gameId?.let {
+        if (diffGameId(given.getGameId(), it) != "") { result.add(diffGameId(given.getGameId(), it, "${path}gameId.")) }
+    }
+
+    expected.username?.let {
+        if (diffUsername(given.getUsername(), it) != "") { result.add(diffUsername(given.getUsername(), it, "${path}username.")) }
+    }
+
+    return result.joinToString("\n")
+}
+
 data class ExpectedCreatedGame(
     var id: Int? = null,
     var creator: String? = null,

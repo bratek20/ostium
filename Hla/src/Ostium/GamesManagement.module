@@ -1,6 +1,10 @@
 ValueObjects
     GameId: int
-    
+
+    GameToken
+        gameId: GameId
+        username: Username
+
     CreatedGame
         id: GameId
         creator: Username
@@ -8,9 +12,9 @@ ValueObjects
         
 Interfaces
     GamesManagementApi
-        create(creator: Username): GameId
+        create(creator: Username): GameToken
 
-        join(joiner: Username, gameId: GameId): void
+        join(joiner: Username, gameId: GameId): GameToken
 
         delete(gameId: GameId): void
         
