@@ -11,8 +11,8 @@ class GameApiLogic(
     override fun getState(token: GameToken): GameState {
         val game = getCreatedGameOrThrow(token)
         return GameState.create(
-            turn = -1,
-            phase = TurnPhase.Reveal,
+            turn = 1,
+            phase = TurnPhase.PlayCard,
             table = Table.create(
                 leftZone = createHitZone(),
                 centerZone = createHitZone(),
@@ -26,9 +26,21 @@ class GameApiLogic(
                     playedCards = emptyList()
                 )
             ),
-            hand = Hand.create(cards = emptyList()),
+            hand = Hand.create(cards = listOf(
+                createCard(),
+                createCard(),
+                createCard(),
+                createCard())),
             myReady = false,
             opponentReady = false
+        )
+    }
+
+    private fun createCard(): Card {
+        return Card.create(
+            type = DamageType.Heavy,
+            value = 0,
+            focusCost = 0
         )
     }
 

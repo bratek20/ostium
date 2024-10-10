@@ -8,11 +8,18 @@ import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
 import com.github.bratek20.ostium.kajiugame.api.GameApi
 import com.github.bratek20.ostium.kajiugame.api.GameNotFoundException
+import com.github.bratek20.ostium.kajiugame.api.TurnPhase
 import com.github.bratek20.ostium.kajiugame.context.KajiuGameImpl
 import com.github.bratek20.ostium.kajiugame.fixtures.assertGameState
 import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+
+class ExpectedTurnPhase {
+    companion object {
+        val PlayCard = "PlayCard"
+    }
+}
 
 class KajiuGameImplTest {
 
@@ -56,7 +63,35 @@ class KajiuGameImplTest {
        val state = api.getState(token)
 
         assertGameState(state) {
-
+            turn = 1
+            phase = ExpectedTurnPhase.PlayCard
+            myReady = false
+            opponentReady = false
+            table = {}
+            hand = {
+                cards = listOf(
+                    {
+                        type = "Heavy"
+                        value = 2
+                        focusCost = 1
+                    },
+                    {
+                        type = "Medium"
+                        value = 3
+                        focusCost = 2
+                    },
+                    {
+                        type = "Light"
+                        value = 1
+                        focusCost = 0
+                    },
+                    {
+                        type = "Heavy"
+                        value = 2
+                        focusCost = 1
+                    },
+                )
+            }
         }
     }
 }
