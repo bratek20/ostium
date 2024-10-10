@@ -6,6 +6,7 @@ import com.github.bratek20.logs.LogsMocks
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.assertCreatedGame
+import com.github.bratek20.ostium.gamesmanagement.fixtures.assertGameToken
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameId
 import com.github.bratek20.ostium.user.fixtures.username
 import org.assertj.core.api.Assertions.assertThat
@@ -39,10 +40,14 @@ open class GamesManagementImplTest {
         assertThat(api.getAllCreated()).hasSize(0)
 
         // create
-        api.create(username("test"))
+        val token = api.create(username("test"))
         loggerMock.assertInfos(
             "User `test` created game with id 1"
         )
+        assertGameToken(token) {
+            gameId = 1
+            username = "test"
+        }
 
         val games = api.getAllCreated()
         assertThat(games).hasSize(1)
@@ -54,11 +59,18 @@ open class GamesManagementImplTest {
 
         // join
         loggerMock.reset()
-        api.join(username("test2"), gameId(1))
+        val joinToken = api.join(username("test2"), gameId(1))
+
+        assertGameToken(joinToken) {
+            gameId = 1
+            username = "test2"
+        }
 
         loggerMock.assertInfos(
             "User `test2` joined game with id 1"
         )
+
+
 
         val gamesAfterJoin = api.getAllCreated()
         assertThat(gamesAfterJoin).hasSize(1)

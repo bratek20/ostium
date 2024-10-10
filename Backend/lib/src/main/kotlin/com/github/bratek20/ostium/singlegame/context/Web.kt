@@ -21,8 +21,8 @@ class SingleGameWebClient(
 }
 
 class SingleGameWebServer: WebServerModule {
-    override fun getImpl(): ContextModule {
-        return SingleGameImpl()
+    override fun apply(builder: ContextBuilder) {
+        builder.withModule(SingleGameImpl())
     }
 
     override fun getControllers(): List<Class<*>> {

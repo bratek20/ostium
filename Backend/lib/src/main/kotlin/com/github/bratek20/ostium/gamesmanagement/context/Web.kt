@@ -21,8 +21,8 @@ class GamesManagementWebClient(
 }
 
 class GamesManagementWebServer: WebServerModule {
-    override fun getImpl(): ContextModule {
-        return GamesManagementImpl()
+    override fun apply(builder: ContextBuilder) {
+        builder.withModule(GamesManagementImpl())
     }
 
     override fun getControllers(): List<Class<*>> {

@@ -14,12 +14,12 @@ class GamesManagementApiWebClient(
 ): GamesManagementApi {
     private val client = factory.create(config.value)
 
-    override fun create(creator: Username): GameId {
+    override fun create(creator: Username): GameToken {
         return client.post("/ostium/gamesManagementApi/create", GamesManagementApiCreateRequest.create(creator)).getBody(GamesManagementApiCreateResponse::class.java).getValue()
     }
 
-    override fun join(joiner: Username, gameId: GameId): Unit {
-        client.post("/ostium/gamesManagementApi/join", GamesManagementApiJoinRequest.create(joiner, gameId))
+    override fun join(joiner: Username, gameId: GameId): GameToken {
+        return client.post("/ostium/gamesManagementApi/join", GamesManagementApiJoinRequest.create(joiner, gameId)).getBody(GamesManagementApiJoinResponse::class.java).getValue()
     }
 
     override fun delete(gameId: GameId): Unit {

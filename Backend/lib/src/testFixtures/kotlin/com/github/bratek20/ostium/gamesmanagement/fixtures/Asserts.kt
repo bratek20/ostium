@@ -14,6 +14,11 @@ fun assertGameId(given: GameId, expected: Int) {
     assertThat(diff).withFailMessage(diff).isEqualTo("")
 }
 
+fun assertGameToken(given: GameToken, expectedInit: ExpectedGameToken.() -> Unit) {
+    val diff = diffGameToken(given, expectedInit)
+    assertThat(diff).withFailMessage(diff).isEqualTo("")
+}
+
 fun assertCreatedGame(given: CreatedGame, expectedInit: ExpectedCreatedGame.() -> Unit) {
     val diff = diffCreatedGame(given, expectedInit)
     assertThat(diff).withFailMessage(diff).isEqualTo("")

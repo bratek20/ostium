@@ -25,10 +25,10 @@ class GamesManagementApiCreateRequest(
     }
 }
 class GamesManagementApiCreateResponse(
-    private val value: Int
+    private val value: GameToken
 ) {
-    fun getValue(): GameId {
-        return GameId(value)
+    fun getValue(): GameToken {
+        return value
     }
 }
 class GamesManagementApiJoinRequest(
@@ -45,6 +45,13 @@ class GamesManagementApiJoinRequest(
         fun create(joiner: Username, gameId: GameId): GamesManagementApiJoinRequest {
             return GamesManagementApiJoinRequest(joiner.value, gameId.value)
         }
+    }
+}
+class GamesManagementApiJoinResponse(
+    private val value: GameToken
+) {
+    fun getValue(): GameToken {
+        return value
     }
 }
 class GamesManagementApiDeleteRequest(

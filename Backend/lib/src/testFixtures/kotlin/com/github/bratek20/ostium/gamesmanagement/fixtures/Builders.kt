@@ -11,6 +11,18 @@ fun gameId(value: Int = 0): GameId {
     return GameId(value)
 }
 
+data class GameTokenDef(
+    var gameId: Int = 0,
+    var username: String = "someValue",
+)
+fun gameToken(init: GameTokenDef.() -> Unit = {}): GameToken {
+    val def = GameTokenDef().apply(init)
+    return GameToken.create(
+        gameId = GameId(def.gameId),
+        username = Username(def.username),
+    )
+}
+
 data class CreatedGameDef(
     var id: Int = 0,
     var creator: String = "someValue",

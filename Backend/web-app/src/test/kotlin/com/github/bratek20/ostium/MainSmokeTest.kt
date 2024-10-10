@@ -30,7 +30,7 @@ class MainSmokeTest {
 
         val username = Username("test")
 
-        val gameId = gamesManagementApi.create(username)
-        singleGameApi.getState(gameId, username)
+        val gameToken = gamesManagementApi.create(username)
+        singleGameApi.getState(gameToken.getGameId(), username)
     }
 }

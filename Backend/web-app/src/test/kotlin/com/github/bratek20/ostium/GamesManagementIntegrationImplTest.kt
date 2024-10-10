@@ -14,7 +14,6 @@ class GamesManagementIntegrationImplTest: GamesManagementImplTest() {
     override fun createContext(): Context {
         val c = TestWebApp(
             modules = listOf(
-                WebServerLogMocks(),
                 GamesManagementWebServer(),
             ),
         ).run()

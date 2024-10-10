@@ -23,13 +23,13 @@ class GamesManagementApiController(
     @PostMapping("/create")
     fun create(@RequestBody rawRequest: Struct): Struct {
         val request = serializer.fromStruct(rawRequest, GamesManagementApiCreateRequest::class.java)
-        return serializer.asStruct(GamesManagementApiCreateResponse(api.create(request.getCreator()).value))
+        return serializer.asStruct(GamesManagementApiCreateResponse(api.create(request.getCreator())))
     }
 
     @PostMapping("/join")
-    fun join(@RequestBody rawRequest: Struct): Unit {
+    fun join(@RequestBody rawRequest: Struct): Struct {
         val request = serializer.fromStruct(rawRequest, GamesManagementApiJoinRequest::class.java)
-        api.join(request.getJoiner(), request.getGameId())
+        return serializer.asStruct(GamesManagementApiJoinResponse(api.join(request.getJoiner(), request.getGameId())))
     }
 
     @PostMapping("/delete")

@@ -24,6 +24,31 @@ data class GameId(
     }
 }
 
+data class GameToken(
+    private val gameId: Int,
+    private val username: String,
+) {
+    fun getGameId(): GameId {
+        return GameId(this.gameId)
+    }
+
+    fun getUsername(): Username {
+        return Username(this.username)
+    }
+
+    companion object {
+        fun create(
+            gameId: GameId,
+            username: Username,
+        ): GameToken {
+            return GameToken(
+                gameId = gameId.value,
+                username = username.value,
+            )
+        }
+    }
+}
+
 data class CreatedGame(
     private val id: Int,
     private val creator: String,
