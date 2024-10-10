@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "Table",
   "viewType": "SingleGame.View.TableView",
-  "creationOrder": 1,
+  "creationOrder": 13,
   "children": [
     {
       "name": "mySide",

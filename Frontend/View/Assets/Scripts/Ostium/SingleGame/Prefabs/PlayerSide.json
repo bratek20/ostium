@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "PlayerSide",
   "viewType": "SingleGame.View.PlayerSideView",
-  "creationOrder": 1,
+  "creationOrder": 12,
   "children": [
     {
       "name": "attackRow",
