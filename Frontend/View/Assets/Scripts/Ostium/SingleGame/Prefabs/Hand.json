@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "Hand",
   "viewType": "SingleGame.View.HandView",
-  "creationOrder": 1,
+  "creationOrder": 11,
   "children": [
     {
       "name": "cards",

@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "GameState",
   "viewType": "SingleGame.View.GameStateView",
-  "creationOrder": 1,
+  "creationOrder": 14,
   "children": [
     {
       "name": "table",

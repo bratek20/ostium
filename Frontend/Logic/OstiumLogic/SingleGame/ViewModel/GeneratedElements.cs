@@ -41,11 +41,11 @@ namespace SingleGame.ViewModel {
     }
 
     public partial class TableVm: UiElement<Table> {
-        public PlayerSideVm MySide { get; set; }
         public PlayerSideVm OpponentSide { get; set; }
+        public PlayerSideVm MySide { get; set; }
         protected override void OnUpdate() {
-            MySide.Update(Model.GetMySide());
             OpponentSide.Update(Model.GetOpponentSide());
+            MySide.Update(Model.GetMySide());
         }
     }
 
