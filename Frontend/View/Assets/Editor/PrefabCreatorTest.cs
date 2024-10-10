@@ -57,7 +57,7 @@ public class PrefabCreatorTest
     [TearDown]
     public void Clean()
     {
-        creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
+        //creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
     }
     
     [Test]
@@ -183,13 +183,13 @@ public class PrefabCreatorTest
     }
 
     
-    private void AssertSize(GameObject go, float width, float height)
+    public static void AssertSize(GameObject go, float width, float height)
     {
         var rt = go.GetComponent<RectTransform>();
         Assert.AreEqual(new Vector2(width, height), rt.sizeDelta);
     }
     
-    private GameObject AssertPrefabCreatedAndGet(string prefabPath)
+    public static GameObject AssertPrefabCreatedAndGet(string prefabPath)
     {
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{prefabPath}");
         Assert.IsNotNull(prefab, $"No prefab found at path {prefabPath}");
@@ -202,7 +202,7 @@ public class PrefabCreatorTest
         Assert.IsNull(prefab, $"Prefab should be deleted at path {prefabPath}");
     }
     
-    private T AssertHasComponentAndGet<T>(GameObject prefab) where T : Component
+    public static T AssertHasComponentAndGet<T>(GameObject prefab) where T : Component
     {
         T component = prefab.GetComponent<T>();
         Assert.IsNotNull(component, $"Prefab should have the {typeof(T)} component.");

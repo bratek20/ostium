@@ -1,30 +1,33 @@
+using System;
 using System.Collections.Generic;
 using B20.Frontend.UiElements;
 using UnityEngine;
 
 namespace B20.Frontend.Elements.View
 {
+    public enum Direction
+    {
+        Horizontal,
+        Vertical
+    }
+    
     public class UiElementGroupView<TView, TViewModel, TModel>
         : ElementView<UiElementGroup<TViewModel, TModel>> 
         where TView: ElementView<TViewModel>
         where TViewModel: UiElement<TModel>
     {
-        public enum Direction
-        {
-            Horizontal,
-            Vertical
-        }
+
         [SerializeField]
         protected TView elementPrefab;
 
         [SerializeField]
-        private Direction direction = Direction.Horizontal;
+        protected Direction direction = Direction.Horizontal;
 
         [SerializeField] 
-        private float elementSpacing = 10;
+        protected float elementSpacing = 10;
 
         private readonly List<TView> _elementViews = new List<TView>();
-        
+
         protected override void OnViewModelUpdate()
         {
             base.OnViewModelUpdate();
@@ -57,6 +60,12 @@ namespace B20.Frontend.Elements.View
                 // Update the position for the next element
                 currentPosition += elementSpacingVector;
             }
+            
+            var size = new Vector2(
+                elementSize.x + elementSpacingVector.x * (ViewModel.Elements.Count - 1) + 50,
+                elementSize.y + elementSpacingVector.y * (ViewModel.Elements.Count - 1) + 50
+            );
+            GetComponent<RectTransform>().sizeDelta = size;
         }
     }
 }
