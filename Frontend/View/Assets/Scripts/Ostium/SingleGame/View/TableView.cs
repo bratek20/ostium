@@ -13,13 +13,13 @@ using User.Api;
 namespace SingleGame.View {
     public class TableView: ElementView<TableVm> {
         [SerializeField]
-        PlayerSideView mySide;
-        [SerializeField]
         PlayerSideView opponentSide;
+        [SerializeField]
+        PlayerSideView mySide;
         protected override void OnBind() {
             base.OnBind();
-            mySide.Bind(ViewModel.MySide);
             opponentSide.Bind(ViewModel.OpponentSide);
+            mySide.Bind(ViewModel.MySide);
         }
     }
 }

@@ -66,8 +66,8 @@ ViewModel
                 
         TableVm
             Table
-                mySide
                 opponentSide
+                mySide
                 
         HandVm
             Hand

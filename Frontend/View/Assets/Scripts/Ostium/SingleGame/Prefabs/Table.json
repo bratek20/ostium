@@ -5,11 +5,11 @@
   "creationOrder": 13,
   "children": [
     {
-      "name": "mySide",
+      "name": "opponentSide",
       "viewType": "SingleGame.View.PlayerSideView"
     },
     {
-      "name": "opponentSide",
+      "name": "mySide",
       "viewType": "SingleGame.View.PlayerSideView"
     }
   ],
