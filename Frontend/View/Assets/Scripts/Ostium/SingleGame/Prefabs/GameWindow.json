@@ -1,0 +1,13 @@
+{
+  "blueprintType": "Window",
+  "name": "GameWindow",
+  "viewType": "SingleGame.View.GameWindowView",
+  "creationOrder": 20,
+  "children": [
+    {
+      "name": "gameState",
+      "viewType": "SingleGame.View.GameStateView"
+    }
+  ],
+  "elementViewType": null
+}

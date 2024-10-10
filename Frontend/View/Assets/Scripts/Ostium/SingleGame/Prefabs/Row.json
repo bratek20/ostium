@@ -1,0 +1,13 @@
+{
+  "blueprintType": "UiElement",
+  "name": "Row",
+  "viewType": "SingleGame.View.RowView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "card",
+      "viewType": "SingleGame.View.OptionalCreatureCardView"
+    }
+  ],
+  "elementViewType": null
+}

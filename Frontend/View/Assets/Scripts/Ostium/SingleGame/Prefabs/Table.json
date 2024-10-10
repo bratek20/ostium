@@ -1,0 +1,17 @@
+{
+  "blueprintType": "UiElement",
+  "name": "Table",
+  "viewType": "SingleGame.View.TableView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "mySide",
+      "viewType": "SingleGame.View.PlayerSideView"
+    },
+    {
+      "name": "opponentSide",
+      "viewType": "SingleGame.View.PlayerSideView"
+    }
+  ],
+  "elementViewType": null
+}

@@ -2,6 +2,7 @@
   "blueprintType": "ElementGroup",
   "name": "CreatedGameGroup",
   "viewType": "GamesManagement.View.CreatedGameGroupView",
-  "creationOrder": 2,
+  "creationOrder": 10,
+  "children": [ ],
   "elementViewType": "GamesManagement.View.CreatedGameView"
 }

@@ -1,0 +1,8 @@
+{
+  "blueprintType": "OptionalElement",
+  "name": "OptionalCreatureCard",
+  "viewType": "SingleGame.View.OptionalCreatureCardView",
+  "creationOrder": 10,
+  "children": [ ],
+  "elementViewType": "SingleGame.View.CreatureCardView"
+}

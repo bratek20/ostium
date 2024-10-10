@@ -18,9 +18,11 @@ profiles:
       src:
         default: "Logic/OstiumLogic"
         overrides:
-          - submodule: "Tests"
+          - submodules: 
+            - "Tests"
+            - "Fixtures"
             path: "Logic/OstiumLogic.Tests"
-          - submodule: "Fixtures"
-            path: "Logic/OstiumLogic.Tests"
-          - submodule: "View"
+          - submodules: 
+            - "View"
+            - "Prefabs"
             path: "View/Assets/Scripts/Ostium"

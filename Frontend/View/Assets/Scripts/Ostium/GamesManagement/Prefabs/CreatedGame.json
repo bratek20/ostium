@@ -16,5 +16,6 @@
       "name": "delete",
       "viewType": "B20.Frontend.Elements.View.ButtonView"
     }
-  ]
+  ],
+  "elementViewType": null
 }

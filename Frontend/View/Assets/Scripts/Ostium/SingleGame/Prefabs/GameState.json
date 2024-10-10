@@ -1,0 +1,17 @@
+{
+  "blueprintType": "UiElement",
+  "name": "GameState",
+  "viewType": "SingleGame.View.GameStateView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "table",
+      "viewType": "SingleGame.View.TableView"
+    },
+    {
+      "name": "myHand",
+      "viewType": "SingleGame.View.HandView"
+    }
+  ],
+  "elementViewType": null
+}

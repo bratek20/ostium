@@ -1,0 +1,17 @@
+{
+  "blueprintType": "UiElement",
+  "name": "PlayerSide",
+  "viewType": "SingleGame.View.PlayerSideView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "attackRow",
+      "viewType": "SingleGame.View.RowView"
+    },
+    {
+      "name": "defenseRow",
+      "viewType": "SingleGame.View.RowView"
+    }
+  ],
+  "elementViewType": null
+}
