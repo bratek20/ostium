@@ -4,10 +4,9 @@ import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.architecture.exceptions.assertApiExceptionThrown
 import com.github.bratek20.logs.LoggerMock
 import com.github.bratek20.logs.LogsMocks
-import com.github.bratek20.ostium.gamesmanagement.api.GameId
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
-import com.github.bratek20.ostium.gamesmanagement.fixtures.assertGameId
+import com.github.bratek20.ostium.gamesmanagement.fixtures.assertGameToken
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameId
 import com.github.bratek20.ostium.singlegame.api.GameNotFoundException
 import com.github.bratek20.ostium.singlegame.api.SingleGameApi
@@ -15,7 +14,6 @@ import com.github.bratek20.ostium.singlegame.api.RowType
 import com.github.bratek20.ostium.singlegame.context.SingleGameImpl
 import com.github.bratek20.ostium.singlegame.fixtures.assertGameState
 import com.github.bratek20.ostium.singlegame.fixtures.creatureCardId
-import com.github.bratek20.ostium.user.api.Username
 import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -80,8 +78,10 @@ open class SingleGameImplTest {
     inner class OneGameScope {
         @BeforeEach
         fun singleGameCreated() {
-            val gameId = managementApi.create(CREATOR)
-            assertGameId(gameId, GAME_ID.value)
+            val gameToken = managementApi.create(CREATOR)
+            assertGameToken(gameToken) {
+                gameId = GAME_ID.value
+            }
         }
 
         @Test
@@ -140,9 +140,9 @@ open class SingleGameImplTest {
         fun `other created game should heve separate state`() {
             api.playCard(GAME_ID, CREATOR, MOUSE_1, RowType.ATTACK)
 
-            val newGameId = managementApi.create(JOINER)
+            val token = managementApi.create(JOINER)
 
-            val state = api.getState(newGameId, JOINER)
+            val state = api.getState(token.getGameId(), JOINER)
 
             assertGameState(state) {
                 myName = JOINER.value
