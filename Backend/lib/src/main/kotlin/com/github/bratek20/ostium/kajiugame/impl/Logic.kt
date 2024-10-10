@@ -1,11 +1,13 @@
 package com.github.bratek20.ostium.kajiugame.impl
 
+import com.github.bratek20.ostium.carddrawer.api.CardDrawerApi
 import com.github.bratek20.ostium.kajiugame.api.*
 import com.github.bratek20.ostium.gamesmanagement.api.*
 import com.github.bratek20.ostium.user.api.Username
 
 class GameApiLogic(
     private val managementApi: GamesManagementApi,
+    private val drawer: CardDrawerApi
 ) : GameApi {
 
     override fun getState(token: GameToken): GameState {
@@ -27,10 +29,10 @@ class GameApiLogic(
                 )
             ),
             hand = Hand.create(cards = listOf(
-                createCard(),
-                createCard(),
-                createCard(),
-                createCard())),
+                drawer.draw(),
+                drawer.draw(),
+                drawer.draw(),
+                drawer.draw())),
             myReady = false,
             opponentReady = false
         )
