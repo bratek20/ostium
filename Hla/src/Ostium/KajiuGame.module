@@ -1,0 +1,71 @@
+Enums
+    DamageType
+        Light
+        Medium
+        Heavy
+
+    TurnPhase
+        PlayCard
+        AssignDamage
+        AssignGuard
+        Reveal
+
+
+ValueObjects
+    AttackReceiver
+        type: DamageType
+        myDamage: int
+        opponentDamage: int
+
+    AttackGiver
+        type: DamageType
+        damageValue: int
+
+    PlayerSide
+        pool: AttackPool
+        playedCards: Card[]
+
+    HitZone
+        leftReceiver: AttackReceiver
+        centerReceiver: AttackReceiver
+        rightReceiver: AttackReceiver
+
+    AttackPool
+        attackGivers: AttackGiver[] // always 3
+        focusLeft: int
+
+    Table
+        leftZone: HitZone
+        centerZone: HitZone
+        rightZone: HitZone
+
+        mySide: PlayerSide
+        opponentSide: PlayerSide
+
+    Card
+        type: DamageType
+        value: int
+        focusCost: int
+
+    Hand
+        cards: Card[]
+
+    GameState
+        turn: int
+        phase: TurnPhase
+        table: Table
+        hand: Hand
+        myReady: bool
+        opponentReady: bool
+
+Interfaces
+    GameApi
+        getState(token: GameToken): GameState
+            throws
+                GameNotFoundException
+
+        //playCard(...): GameState
+        //assignDamage(...): GameState
+        //assignGuard(...): GameState
+        //endPhase(): GameState
+
