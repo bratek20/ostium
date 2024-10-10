@@ -57,7 +57,7 @@ public class PrefabCreatorTest
     [TearDown]
     public void Clean()
     {
-        //creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
+        creator.DeleteModulePrefabs(TEST_MODULES_PATH, "SomeModule");
     }
     
     [Test]

@@ -1,39 +1,34 @@
 using System.Collections.Generic;
 using B20.Frontend.Elements.View;
+using MyNamespace;
 using NUnit.Framework;
-using PrefabCreator.Impl;
-using SomeNamespace;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UiElementGroupViewTest
 {
-    private const string TEST_MODULES_PATH = "Assets/Scripts/HLA/Tests";
-    
     [Test]
     public void ShouldWork()
     {
-        var labelButtonPrefab = PrefabCreatorTest.AssertPrefabCreatedAndGet($"{TEST_MODULES_PATH}/SomeModule/Prefabs/TestLabelButtonPrefab.prefab");
+        var myPrefab = PrefabCreatorTest.AssertPrefabCreatedAndGet("Assets/Scripts/B20/Tests/MyModule/Prefabs/MyPrefab.prefab");
 
-        var g = new GameObject("test", typeof(RectTransform), typeof(TestElementGroupView));
-        var view = g.GetComponent<TestElementGroupView>();
-        view.ElementPrefab = PrefabCreatorTest.AssertHasComponentAndGet<TestLabelButtonView>(labelButtonPrefab); //350 x 255
+        var g = new GameObject("test", typeof(RectTransform), typeof(MyGroupView));
+        var view = g.GetComponent<MyGroupView>();
+        view.ElementPrefab = PrefabCreatorTest.AssertHasComponentAndGet<MyView>(myPrefab); //350 x 250
         view.SetDirection(Direction.Horizontal);
         view.SetSpacing(10);
         
-        var viewModel = new EmptyViewModelGroup(() => new EmptyViewModel());
+        var viewModel = new MyViewModelGroup(() => new MyViewModel());
         view.Bind(viewModel);
         
-        viewModel.Update(new List<EmptyModel>()
+        viewModel.Update(new List<MyModel>()
         {
-            new EmptyModel(),
-            new EmptyModel(),
+            new MyModel(),
+            new MyModel(),
         });
         
         // padding 25
         float expectedWidth = 25 + 350 * 2 + 10 + 25;
-        float expectedHeight = 25 + 255 + 25;
+        float expectedHeight = 25 + 250 + 25;
         PrefabCreatorTest.AssertSize(g, expectedWidth, expectedHeight);  
     }
 }
