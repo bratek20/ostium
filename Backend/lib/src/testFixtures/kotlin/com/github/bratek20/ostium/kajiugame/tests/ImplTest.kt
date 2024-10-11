@@ -10,9 +10,9 @@ import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
 import com.github.bratek20.ostium.kajiugame.api.GameApi
 import com.github.bratek20.ostium.kajiugame.api.GameNotFoundException
-import com.github.bratek20.ostium.kajiugame.api.TurnPhase
 import com.github.bratek20.ostium.kajiugame.context.KajiuGameImpl
 import com.github.bratek20.ostium.kajiugame.fixtures.ExpectedHitZone
+import com.github.bratek20.ostium.kajiugame.fixtures.ExpectedPlayerSide
 import com.github.bratek20.ostium.kajiugame.fixtures.assertGameState
 import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
@@ -103,32 +103,17 @@ class KajiuGameImplTest {
         val state = api.getState(token)
 
         //then
-        val expectedEmptyZone: (ExpectedHitZone.() -> Unit) = {
-            leftReceiver = {
-                type =  ExpectedDamageType.Light
-                myDamage = 0
-                opponentDamage = 0
-            }
-            centerReceiver = {
-                type =  ExpectedDamageType.Medium
-                myDamage = 0
-                opponentDamage = 0
-            }
-            rightReceiver = {
-                type =  ExpectedDamageType.Heavy
-                myDamage = 0
-                opponentDamage = 0
-            }
-        }
         assertGameState(state) {
             turn = 1
             phase = ExpectedTurnPhase.PlayCard
             myReady = false
             opponentReady = false
             table = {
-                leftZone = expectedEmptyZone
-                centerZone = expectedEmptyZone
-                rightZone = expectedEmptyZone
+                leftZone = expectedInitialHitZone()
+                centerZone = expectedInitialHitZone()
+                rightZone = expectedInitialHitZone()
+                mySide = expectedInitialPlayerSide()
+                opponentSide = expectedInitialPlayerSide()
             }
             hand = {
                 cards = listOf(
@@ -155,5 +140,44 @@ class KajiuGameImplTest {
                 )
             }
         }
+    }
+
+    private fun expectedInitialHitZone(): (ExpectedHitZone.() -> Unit) = {
+        leftReceiver = {
+            type = ExpectedDamageType.Light
+            myDamage = 0
+            opponentDamage = 0
+        }
+        centerReceiver = {
+            type = ExpectedDamageType.Medium
+            myDamage = 0
+            opponentDamage = 0
+        }
+        rightReceiver = {
+            type = ExpectedDamageType.Heavy
+            myDamage = 0
+            opponentDamage = 0
+        }
+    }
+
+    private fun expectedInitialPlayerSide(): (ExpectedPlayerSide.() -> Unit) = {
+        pool = {
+            attackGivers = listOf(
+                {
+                    type = ExpectedDamageType.Light
+                    damageValue = 0
+                },
+                {
+                    type = ExpectedDamageType.Medium
+                    damageValue = 0
+                },
+                {
+                    type = ExpectedDamageType.Heavy
+                    damageValue = 0
+                },
+            )
+            focusLeft = 2
+        }
+        playedCards = emptyList()
     }
 }

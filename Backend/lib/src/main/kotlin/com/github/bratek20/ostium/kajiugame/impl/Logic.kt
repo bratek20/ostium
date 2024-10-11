@@ -19,14 +19,8 @@ class GameApiLogic(
                 leftZone = createHitZone(),
                 centerZone = createHitZone(),
                 rightZone = createHitZone(),
-                mySide = PlayerSide.create(
-                    pool = AttackPool.create(attackGivers = emptyList(), focusLeft = 0),
-                    playedCards = emptyList()
-                ),
-                opponentSide = PlayerSide.create(
-                    pool = AttackPool.create(attackGivers = emptyList(), focusLeft = 0),
-                    playedCards = emptyList()
-                )
+                mySide = createPlayerSide(),
+                opponentSide = createPlayerSide()
             ),
             hand = Hand.create(cards = listOf(
                 drawer.draw(),
@@ -38,11 +32,26 @@ class GameApiLogic(
         )
     }
 
-    private fun createCard(): Card {
-        return Card.create(
-            type = DamageType.Heavy,
-            value = 0,
-            focusCost = 0
+    private fun createPlayerSide(): PlayerSide {
+        return PlayerSide.create(
+            pool = AttackPool.create(
+                attackGivers = listOf(
+                    AttackGiver.create(
+                        type = DamageType.Light,
+                        damageValue = 0,
+                    ),
+                    AttackGiver.create(
+                        type = DamageType.Medium,
+                        damageValue = 0,
+                    ),
+                    AttackGiver.create(
+                        type = DamageType.Heavy,
+                        damageValue = 0,
+                    ),
+                ),
+                focusLeft = 2
+            ),
+            playedCards = emptyList()
         )
     }
 
