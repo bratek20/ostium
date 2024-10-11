@@ -97,11 +97,14 @@ class KajiuGameImplTest {
             focusCost = 4
         }
 
-        private lateinit var token: GameToken
+        private lateinit var creatorToken: GameToken
+        private lateinit var joinerToken: GameToken
 
         @BeforeEach
         fun `game created and cards to be drawn set`() {
-            token = gamesManagementApi.create(username())
+            creatorToken = gamesManagementApi.create(username("Player1"))
+            joinerToken = gamesManagementApi.join(username("Player2"), creatorToken.getGameId())
+
             cardDrawerApiMock.setCards(
                 listOf(
                     {
@@ -131,7 +134,7 @@ class KajiuGameImplTest {
         @Test
         fun `should return initial state`() {
             //when
-            val state = api.getState(token)
+            val state = api.getState(creatorToken)
 
             //then
             assertGameState(state) {
@@ -158,17 +161,23 @@ class KajiuGameImplTest {
         }
 
         @Test
-        fun `should end PlayCard phase`() {
-            api.endPhase(token).let {
+        fun `should end PlayCard phase - opponent sees that`() {
+            api.endPhase(creatorToken).let {
                 assertGameState(it) {
                     myReady = true
+                }
+            }
+
+            api.getState(joinerToken).let {
+                assertGameState(it) {
+                    opponentReady = true
                 }
             }
         }
 
         @Test
-        fun `should play card`() {
-            api.playCard(token, 1).let {
+        fun `should play card - opponent does not see`() {
+            api.playCard(creatorToken, 1).let {
                 assertGameState(it) {
                     hand = {
                         cards = listOf(
@@ -176,6 +185,23 @@ class KajiuGameImplTest {
                             expectedCard2,
                             expectedCard3,
                         )
+                    }
+                    table = {
+                        mySide = {
+                            playedCards = listOf(
+                                expectedCard1
+                            )
+                        }
+                    }
+                }
+            }
+
+            api.getState(joinerToken).let {
+                assertGameState(it) {
+                    table = {
+                        opponentSide = {
+                            playedCards = emptyList()
+                        }
                     }
                 }
             }
