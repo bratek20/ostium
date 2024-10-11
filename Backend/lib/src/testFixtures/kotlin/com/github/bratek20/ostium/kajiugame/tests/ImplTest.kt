@@ -9,8 +9,10 @@ import com.github.bratek20.ostium.gamesmanagement.api.GameToken
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
+import com.github.bratek20.ostium.kajiugame.api.DamageType
 import com.github.bratek20.ostium.kajiugame.api.GameApi
 import com.github.bratek20.ostium.kajiugame.api.GameNotFoundException
+import com.github.bratek20.ostium.kajiugame.api.HitZonePosition
 import com.github.bratek20.ostium.kajiugame.context.KajiuGameImpl
 import com.github.bratek20.ostium.kajiugame.fixtures.*
 import com.github.bratek20.ostium.user.fixtures.username
@@ -260,8 +262,25 @@ class KajiuGameImplTest {
             }
 
             @Test
-            fun `should assign damage`() {
-
+            fun `should assign damage from pool`() {
+                api.assignDamage(creatorToken, HitZonePosition.Center, DamageType.Medium).let {
+                    assertGameState(it) {
+                        table = {
+                            centerZone = {
+                                mediumReceiver = {
+                                    myDamage = 2
+                                }
+                            }
+                            mySide = {
+                                pool = {
+                                    mediumGiver = {
+                                        damageValue = 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
