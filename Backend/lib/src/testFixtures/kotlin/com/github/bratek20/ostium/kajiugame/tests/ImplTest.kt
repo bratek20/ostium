@@ -158,6 +158,15 @@ class KajiuGameImplTest {
         }
 
         @Test
+        fun `should end PlayCard phase`() {
+            api.endPhase(token).let {
+                assertGameState(it) {
+                    myReady = true
+                }
+            }
+        }
+
+        @Test
         fun `should play card`() {
             api.playCard(token, 1).let {
                 assertGameState(it) {

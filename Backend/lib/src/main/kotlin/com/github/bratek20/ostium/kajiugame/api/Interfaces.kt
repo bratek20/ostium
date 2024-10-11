@@ -10,5 +10,7 @@ interface GameApi {
     )
     fun getState(token: GameToken): GameState
 
+    fun endPhase(token: GameToken): GameState
+
     fun playCard(token: GameToken, handCardIdx: Int): GameState
 }

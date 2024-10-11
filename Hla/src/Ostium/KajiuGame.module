@@ -64,10 +64,13 @@ Interfaces
             throws
                 GameNotFoundException
 
+        // for all phases
+        endPhase(token: GameToken): GameState
+
         //TurnPhase.PlayCard
         playCard(token: GameToken, handCardIdx: int): GameState
 
         //assignDamage(...): GameState
         //assignGuard(...): GameState
-        //endPhase(): GameState
+
 

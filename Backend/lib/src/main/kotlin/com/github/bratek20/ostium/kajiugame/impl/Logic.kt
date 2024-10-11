@@ -63,6 +63,7 @@ private class GameStateLogic(
     private val hand = HandLogic(drawer)
     private val mySide = PlayerSideLogic()
     private val opponentSide = PlayerSideLogic()
+    private var myReady = false
 
     fun getState(): GameState {
         return GameState.create(
@@ -76,9 +77,14 @@ private class GameStateLogic(
                 opponentSide = opponentSide.getState()
             ),
             hand = hand.getState(),
-            myReady = false,
+            myReady = myReady,
             opponentReady = false
         )
+    }
+
+    fun endPhase(): GameState {
+        myReady = true
+        return getState()
     }
 
     fun playCard(handCardIdx: Int): GameState {
@@ -116,6 +122,10 @@ class GameApiLogic(
 
     override fun getState(token: GameToken): GameState {
         return getGameStateLogic(token).getState()
+    }
+
+    override fun endPhase(token: GameToken): GameState {
+        return getGameStateLogic(token).endPhase()
     }
 
     override fun playCard(token: GameToken, handCardIdx: Int): GameState {
