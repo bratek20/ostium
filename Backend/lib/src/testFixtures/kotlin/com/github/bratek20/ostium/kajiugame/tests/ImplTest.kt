@@ -146,9 +146,9 @@ class KajiuGameImplTest {
                 myReady = false
                 opponentReady = false
                 table = {
-                    leftZone = expectedInitialHitZone()
-                    centerZone = expectedInitialHitZone()
-                    rightZone = expectedInitialHitZone()
+                    leftZone = expectedInitialHitZone("Left")
+                    centerZone = expectedInitialHitZone("Center")
+                    rightZone = expectedInitialHitZone("Right")
                     mySide = expectedInitialPlayerSide()
                     opponentSide = expectedInitialPlayerSide()
                 }
@@ -266,7 +266,8 @@ class KajiuGameImplTest {
         }
     }
 
-    private fun expectedInitialHitZone(): (ExpectedHitZone.() -> Unit) = {
+    private fun expectedInitialHitZone(expectedPosition: String): (ExpectedHitZone.() -> Unit) = {
+        position = expectedPosition
         lightReceiver = {
             type = ExpectedDamageType.Light
             myDamage = 0

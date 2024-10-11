@@ -101,11 +101,41 @@ private class PlayerStateLogic(
     }
 }
 
+private class HitZoneLogic(
+    private val position: HitZonePosition
+) {
+    fun getState(): HitZone {
+        return HitZone.create(
+            position = position,
+            lightReceiver = AttackReceiver.create(
+                type = DamageType.Light,
+                myDamage = 0,
+                opponentDamage = 0
+            ),
+            mediumReceiver = AttackReceiver.create(
+                type = DamageType.Medium,
+                myDamage = 0,
+                opponentDamage = 0
+            ),
+            heavyReceiver = AttackReceiver.create(
+                type = DamageType.Heavy,
+                myDamage = 0,
+                opponentDamage = 0
+            )
+        )
+    }
+}
+
 private class GameStateLogic(
     private val creator: Username,
     drawer: CardDrawerApi
 ) {
     private var phase = TurnPhase.PlayCard
+
+    private val leftZone = HitZoneLogic(HitZonePosition.Left)
+    private val centerZone = HitZoneLogic(HitZonePosition.Center)
+    private val rightZone = HitZoneLogic(HitZonePosition.Right)
+
     private val creatorState = PlayerStateLogic(drawer)
     private val joinerState = PlayerStateLogic(drawer)
 
@@ -114,9 +144,9 @@ private class GameStateLogic(
             turn = 1,
             phase = phase,
             table = Table.create(
-                leftZone = createHitZone(),
-                centerZone = createHitZone(),
-                rightZone = createHitZone(),
+                leftZone = leftZone.getState(),
+                centerZone = centerZone.getState(),
+                rightZone = rightZone.getState(),
                 mySide = getMyState(user).getSideState(),
                 opponentSide = getOpponentState(user).initSideState
             ),
@@ -143,27 +173,6 @@ private class GameStateLogic(
 
     fun assignDamage(user: Username, zone: HitZonePosition, damageType: DamageType): GameState {
         return getState(user)
-    }
-
-    private fun createHitZone(): HitZone {
-        return HitZone.create(
-            position = HitZonePosition.Left,
-            lightReceiver = AttackReceiver.create(
-                type = DamageType.Light,
-                myDamage = 0,
-                opponentDamage = 0
-            ),
-            mediumReceiver = AttackReceiver.create(
-                type = DamageType.Medium,
-                myDamage = 0,
-                opponentDamage = 0
-            ),
-            heavyReceiver = AttackReceiver.create(
-                type = DamageType.Heavy,
-                myDamage = 0,
-                opponentDamage = 0
-            )
-        )
     }
 
     private fun getMyState(user: Username): PlayerStateLogic {
