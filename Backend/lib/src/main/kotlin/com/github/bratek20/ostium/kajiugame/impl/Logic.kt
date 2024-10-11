@@ -5,38 +5,30 @@ import com.github.bratek20.ostium.kajiugame.api.*
 import com.github.bratek20.ostium.gamesmanagement.api.*
 import com.github.bratek20.ostium.user.api.Username
 
-class GameApiLogic(
-    private val managementApi: GamesManagementApi,
+private class HandLogic(
     private val drawer: CardDrawerApi
-) : GameApi {
+) {
+    private val cards = mutableListOf(
+        drawer.draw(),
+        drawer.draw(),
+        drawer.draw(),
+        drawer.draw()
+    )
 
-    override fun getState(token: GameToken): GameState {
-        val game = getCreatedGameOrThrow(token)
-        return GameState.create(
-            turn = 1,
-            phase = TurnPhase.PlayCard,
-            table = Table.create(
-                leftZone = createHitZone(),
-                centerZone = createHitZone(),
-                rightZone = createHitZone(),
-                mySide = createPlayerSide(),
-                opponentSide = createPlayerSide()
-            ),
-            hand = Hand.create(cards = listOf(
-                drawer.draw(),
-                drawer.draw(),
-                drawer.draw(),
-                drawer.draw())),
-            myReady = false,
-            opponentReady = false
-        )
+    fun getState(): Hand {
+        return Hand.create(cards)
     }
 
-    override fun playCard(token: GameToken, handCardIdx: Int): GameState {
-        return getState(token)
+    fun removeCardAndGet(idx: Int): Card {
+        return cards.removeAt(idx)
     }
+}
 
-    private fun createPlayerSide(): PlayerSide {
+private class PlayerSideLogic {
+    private val playedCards = mutableListOf<Card>()
+    private var focusLeft = 2
+
+    fun getState(): PlayerSide {
         return PlayerSide.create(
             pool = AttackPool.create(
                 attackGivers = listOf(
@@ -53,10 +45,47 @@ class GameApiLogic(
                         damageValue = 0,
                     ),
                 ),
-                focusLeft = 2
+                focusLeft = focusLeft
             ),
-            playedCards = emptyList()
+            playedCards = playedCards
         )
+    }
+
+    fun putCardAndPayCost(card: Card) {
+        playedCards.add(card)
+        focusLeft -= card.getFocusCost()
+    }
+}
+
+private class GameStateLogic(
+    drawer: CardDrawerApi
+) {
+    private val hand = HandLogic(drawer)
+    private val mySide = PlayerSideLogic()
+    private val opponentSide = PlayerSideLogic()
+
+    fun getState(): GameState {
+        return GameState.create(
+            turn = 1,
+            phase = TurnPhase.PlayCard,
+            table = Table.create(
+                leftZone = createHitZone(),
+                centerZone = createHitZone(),
+                rightZone = createHitZone(),
+                mySide = mySide.getState(),
+                opponentSide = opponentSide.getState()
+            ),
+            hand = hand.getState(),
+            myReady = false,
+            opponentReady = false
+        )
+    }
+
+    fun playCard(handCardIdx: Int): GameState {
+        val handCard = hand.removeCardAndGet(handCardIdx)
+        mySide.putCardAndPayCost(handCard)
+
+        return getState()
     }
 
     private fun createHitZone(): HitZone {
@@ -78,6 +107,20 @@ class GameApiLogic(
             )
         )
     }
+}
+
+class GameApiLogic(
+    private val managementApi: GamesManagementApi,
+    private val drawer: CardDrawerApi
+) : GameApi {
+
+    override fun getState(token: GameToken): GameState {
+        return getGameStateLogic(token).getState()
+    }
+
+    override fun playCard(token: GameToken, handCardIdx: Int): GameState {
+        return getGameStateLogic(token).playCard(handCardIdx)
+    }
 
     private fun getCreatedGameOrThrow(token: GameToken): CreatedGame {
         val game = managementApi.getAllCreated().firstOrNull { it.getId() == token.getGameId() }
@@ -85,5 +128,10 @@ class GameApiLogic(
             throw GameNotFoundException("Game for id ${token.getGameId()} not found");
         }
         return game
+    }
+
+    private fun getGameStateLogic(token: GameToken): GameStateLogic {
+        getCreatedGameOrThrow(token)
+        return GameStateLogic(drawer)
     }
 }
