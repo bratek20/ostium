@@ -49,12 +49,12 @@ class GameApiLogic(
     private fun createHitZone(): HitZone {
         return HitZone.create(
             leftReceiver = AttackReceiver.create(
-                type = DamageType.Heavy,
+                type = DamageType.Light,
                 myDamage = 0,
                 opponentDamage = 0
             ),
             centerReceiver = AttackReceiver.create(
-                type = DamageType.Heavy,
+                type = DamageType.Medium,
                 myDamage = 0,
                 opponentDamage = 0
             ),

@@ -12,6 +12,7 @@ import com.github.bratek20.ostium.kajiugame.api.GameApi
 import com.github.bratek20.ostium.kajiugame.api.GameNotFoundException
 import com.github.bratek20.ostium.kajiugame.api.TurnPhase
 import com.github.bratek20.ostium.kajiugame.context.KajiuGameImpl
+import com.github.bratek20.ostium.kajiugame.fixtures.ExpectedHitZone
 import com.github.bratek20.ostium.kajiugame.fixtures.assertGameState
 import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
@@ -20,6 +21,14 @@ import org.junit.jupiter.api.Test
 class ExpectedTurnPhase {
     companion object {
         val PlayCard = "PlayCard"
+    }
+}
+
+class ExpectedDamageType {
+    companion object {
+        val Light = "Light"
+        val Medium = "Medium"
+        val Heavy = "Heavy"
     }
 }
 
@@ -69,24 +78,24 @@ class KajiuGameImplTest {
         cardDrawerApiMock.setCards(
             listOf(
                 {
-                    type = "Heavy"
-                    value = 2
+                    type = "Light"
+                    value = 1
                     focusCost = 1
                 },
                 {
                     type = "Medium"
-                    value = 3
+                    value = 2
                     focusCost = 2
                 },
                 {
-                    type = "Light"
-                    value = 1
-                    focusCost = 0
+                    type = "Heavy"
+                    value = 3
+                    focusCost = 3
                 },
                 {
                     type = "Heavy"
-                    value = 2
-                    focusCost = 1
+                    value = 4
+                    focusCost = 4
                 },
             )
         )
@@ -94,33 +103,54 @@ class KajiuGameImplTest {
         val state = api.getState(token)
 
         //then
+        val expectedEmptyZone: (ExpectedHitZone.() -> Unit) = {
+            leftReceiver = {
+                type =  ExpectedDamageType.Light
+                myDamage = 0
+                opponentDamage = 0
+            }
+            centerReceiver = {
+                type =  ExpectedDamageType.Medium
+                myDamage = 0
+                opponentDamage = 0
+            }
+            rightReceiver = {
+                type =  ExpectedDamageType.Heavy
+                myDamage = 0
+                opponentDamage = 0
+            }
+        }
         assertGameState(state) {
             turn = 1
             phase = ExpectedTurnPhase.PlayCard
             myReady = false
             opponentReady = false
-            table = {}
+            table = {
+                leftZone = expectedEmptyZone
+                centerZone = expectedEmptyZone
+                rightZone = expectedEmptyZone
+            }
             hand = {
                 cards = listOf(
                     {
-                        type = "Heavy"
-                        value = 2
+                        type = "Light"
+                        value = 1
                         focusCost = 1
                     },
                     {
                         type = "Medium"
-                        value = 3
+                        value = 2
                         focusCost = 2
                     },
                     {
-                        type = "Light"
-                        value = 1
-                        focusCost = 0
+                        type = "Heavy"
+                        value = 3
+                        focusCost = 3
                     },
                     {
                         type = "Heavy"
-                        value = 2
-                        focusCost = 1
+                        value = 4
+                        focusCost = 4
                     },
                 )
             }
