@@ -92,13 +92,14 @@ private class GameStateLogic(
     private val creator: Username,
     drawer: CardDrawerApi
 ) {
+    private var phase = TurnPhase.PlayCard
     private val creatorState = PlayerStateLogic(drawer)
     private val joinerState = PlayerStateLogic(drawer)
 
     fun getState(user: Username): GameState {
         return GameState.create(
             turn = 1,
-            phase = TurnPhase.PlayCard,
+            phase = phase,
             table = Table.create(
                 leftZone = createHitZone(),
                 centerZone = createHitZone(),
@@ -114,6 +115,11 @@ private class GameStateLogic(
 
     fun endPhase(user: Username): GameState {
         getMyState(user).markReady()
+
+        if (getMyState(user).isReady() && getOpponentState(user).isReady()) {
+            phase = TurnPhase.AssignDamage
+        }
+
         return getState(user)
     }
 

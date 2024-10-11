@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test
 class ExpectedTurnPhase {
     companion object {
         val PlayCard = "PlayCard"
+        val AssignDamage = "AssignDamage"
     }
 }
 
@@ -203,6 +204,17 @@ class KajiuGameImplTest {
                             playedCards = emptyList()
                         }
                     }
+                }
+            }
+        }
+
+        @Test
+        fun `should progress to AssignDamage phase when second player ends his phase`() {
+            api.endPhase(creatorToken)
+
+            api.endPhase(joinerToken).let {
+                assertGameState(it) {
+                    phase = ExpectedTurnPhase.AssignDamage
                 }
             }
         }
