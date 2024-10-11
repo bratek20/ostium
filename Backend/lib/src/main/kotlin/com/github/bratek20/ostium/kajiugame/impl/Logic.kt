@@ -47,7 +47,7 @@ private class PlayerSideLogic {
                 ),
                 focusLeft = focusLeft
             ),
-            playedCards = playedCards
+            playedCards = playedCards.toList()
         )
     }
 
@@ -63,6 +63,8 @@ private class PlayerStateLogic(
     private val hand = HandLogic(drawer)
     private val side = PlayerSideLogic()
     private var ready = false
+
+    val initSideState = side.getState()
 
     fun isReady(): Boolean {
         return ready
@@ -102,7 +104,7 @@ private class GameStateLogic(
                 centerZone = createHitZone(),
                 rightZone = createHitZone(),
                 mySide = getMyState(user).getSideState(),
-                opponentSide = getOpponentState(user).getSideState()
+                opponentSide = getOpponentState(user).initSideState
             ),
             hand = getMyState(user).getHandState(),
             myReady = getMyState(user).isReady(),
