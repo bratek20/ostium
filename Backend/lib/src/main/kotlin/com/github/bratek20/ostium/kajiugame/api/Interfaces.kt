@@ -9,4 +9,6 @@ interface GameApi {
         GameNotFoundException::class,
     )
     fun getState(token: GameToken): GameState
+
+    fun playCard(token: GameToken, handCardIdx: Int): GameState
 }

@@ -32,6 +32,10 @@ class GameApiLogic(
         )
     }
 
+    override fun playCard(token: GameToken, handCardIdx: Int): GameState {
+        return getState(token)
+    }
+
     private fun createPlayerSide(): PlayerSide {
         return PlayerSide.create(
             pool = AttackPool.create(
