@@ -57,15 +57,43 @@ private class PlayerSideLogic {
     }
 }
 
-private class GameStateLogic(
+private class PlayerStateLogic(
     drawer: CardDrawerApi
 ) {
     private val hand = HandLogic(drawer)
-    private val mySide = PlayerSideLogic()
-    private val opponentSide = PlayerSideLogic()
-    private var myReady = false
+    private val side = PlayerSideLogic()
+    private var ready = false
 
-    fun getState(): GameState {
+    fun isReady(): Boolean {
+        return ready
+    }
+
+    fun getSideState(): PlayerSide {
+        return side.getState()
+    }
+
+    fun getHandState(): Hand {
+        return hand.getState()
+    }
+
+    fun markReady() {
+        ready = true
+    }
+
+    fun playCard(handCardIdx: Int) {
+        val handCard = hand.removeCardAndGet(handCardIdx)
+        side.putCardAndPayCost(handCard)
+    }
+}
+
+private class GameStateLogic(
+    private val creator: Username,
+    drawer: CardDrawerApi
+) {
+    private val creatorState = PlayerStateLogic(drawer)
+    private val joinerState = PlayerStateLogic(drawer)
+
+    fun getState(user: Username): GameState {
         return GameState.create(
             turn = 1,
             phase = TurnPhase.PlayCard,
@@ -73,25 +101,23 @@ private class GameStateLogic(
                 leftZone = createHitZone(),
                 centerZone = createHitZone(),
                 rightZone = createHitZone(),
-                mySide = mySide.getState(),
-                opponentSide = opponentSide.getState()
+                mySide = getMyState(user).getSideState(),
+                opponentSide = getOpponentState(user).getSideState()
             ),
-            hand = hand.getState(),
-            myReady = myReady,
-            opponentReady = false
+            hand = getMyState(user).getHandState(),
+            myReady = getMyState(user).isReady(),
+            opponentReady = getOpponentState(user).isReady()
         )
     }
 
-    fun endPhase(): GameState {
-        myReady = true
-        return getState()
+    fun endPhase(user: Username): GameState {
+        getMyState(user).markReady()
+        return getState(user)
     }
 
-    fun playCard(handCardIdx: Int): GameState {
-        val handCard = hand.removeCardAndGet(handCardIdx)
-        mySide.putCardAndPayCost(handCard)
-
-        return getState()
+    fun playCard(user: Username, handCardIdx: Int): GameState {
+        getMyState(user).playCard(handCardIdx)
+        return getState(user)
     }
 
     private fun createHitZone(): HitZone {
@@ -113,6 +139,14 @@ private class GameStateLogic(
             )
         )
     }
+
+    private fun getMyState(user: Username): PlayerStateLogic {
+        return if (user == creator) creatorState else joinerState
+    }
+
+    private fun getOpponentState(user: Username): PlayerStateLogic {
+        return if (user == creator) joinerState else creatorState
+    }
 }
 
 class GameApiLogic(
@@ -121,15 +155,15 @@ class GameApiLogic(
 ) : GameApi {
 
     override fun getState(token: GameToken): GameState {
-        return getGameStateLogic(token).getState()
+        return getGameStateLogic(token).getState(token.getUsername())
     }
 
     override fun endPhase(token: GameToken): GameState {
-        return getGameStateLogic(token).endPhase()
+        return getGameStateLogic(token).endPhase(token.getUsername())
     }
 
     override fun playCard(token: GameToken, handCardIdx: Int): GameState {
-        return getGameStateLogic(token).playCard(handCardIdx)
+        return getGameStateLogic(token).playCard(token.getUsername(), handCardIdx)
     }
 
     private fun getCreatedGameOrThrow(token: GameToken): CreatedGame {
@@ -140,8 +174,12 @@ class GameApiLogic(
         return game
     }
 
+    private val gameStates: MutableMap<GameId, GameStateLogic> = mutableMapOf()
     private fun getGameStateLogic(token: GameToken): GameStateLogic {
-        getCreatedGameOrThrow(token)
-        return GameStateLogic(drawer)
+        if (!gameStates.containsKey(token.getGameId())) {
+            val createdGame = getCreatedGameOrThrow(token)
+            gameStates[token.getGameId()] = GameStateLogic(createdGame.getCreator(), drawer)
+        }
+        return gameStates[token.getGameId()]!!
     }
 }
