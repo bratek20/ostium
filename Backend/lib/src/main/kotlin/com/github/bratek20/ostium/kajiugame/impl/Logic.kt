@@ -42,17 +42,17 @@ private class AttackGiverLogic(
 
 private class PlayerSideLogic {
     private val playedCards = mutableListOf<Card>()
-    private val attackGivers = listOf(
-        AttackGiverLogic(DamageType.Light, 0),
-        AttackGiverLogic(DamageType.Medium, 0),
-        AttackGiverLogic(DamageType.Heavy, 0)
-    )
+    private val lightGiver = AttackGiverLogic(DamageType.Light, 0)
+    private val mediumGiver = AttackGiverLogic(DamageType.Medium, 0)
+    private val heavyGiver = AttackGiverLogic(DamageType.Heavy, 0)
     private var focusLeft = 2
 
     fun getState(): PlayerSide {
         return PlayerSide.create(
             pool = AttackPool.create(
-                attackGivers = attackGivers.map { it.getState() },
+                lightGiver = lightGiver.getState(),
+                mediumGiver = mediumGiver.getState(),
+                heavyGiver = heavyGiver.getState(),
                 focusLeft = focusLeft
             ),
             playedCards = playedCards.toList()
@@ -61,8 +61,12 @@ private class PlayerSideLogic {
 
     fun handleCardPlayed(card: Card) {
         playedCards.add(card)
-        attackGivers.first { it.type == card.getType() }.addDamage(card.getValue())
+        allGivers().first { it.type == card.getType() }.addDamage(card.getValue())
         focusLeft -= card.getFocusCost()
+    }
+
+    private fun allGivers(): List<AttackGiverLogic> {
+        return listOf(lightGiver, mediumGiver, heavyGiver)
     }
 }
 

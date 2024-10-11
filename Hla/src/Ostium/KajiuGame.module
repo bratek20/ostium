@@ -31,7 +31,9 @@ ValueObjects
         rightReceiver: AttackReceiver
 
     AttackPool
-        attackGivers: AttackGiver[] // always 3
+        lightGiver: AttackGiver
+        mediumGiver: AttackGiver
+        heavyGiver: AttackGiver
         focusLeft: int
 
     Table

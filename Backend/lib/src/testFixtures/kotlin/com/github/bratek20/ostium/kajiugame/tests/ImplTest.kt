@@ -199,20 +199,9 @@ class KajiuGameImplTest {
                     table = {
                         mySide = {
                             pool = {
-                                attackGivers = listOf(
-                                    {
-                                        type = ExpectedDamageType.Light
-                                        damageValue = 0
-                                    },
-                                    {
-                                        type = ExpectedDamageType.Medium
-                                        damageValue = 2
-                                    },
-                                    {
-                                        type = ExpectedDamageType.Heavy
-                                        damageValue = 0
-                                    },
-                                )
+                                mediumGiver = {
+                                    damageValue = 2
+                                }
                                 focusLeft = 0
                             }
                             playedCards = listOf(
@@ -266,20 +255,18 @@ class KajiuGameImplTest {
 
     private fun expectedInitialPlayerSide(): (ExpectedPlayerSide.() -> Unit) = {
         pool = {
-            attackGivers = listOf(
-                {
-                    type = ExpectedDamageType.Light
-                    damageValue = 0
-                },
-                {
-                    type = ExpectedDamageType.Medium
-                    damageValue = 0
-                },
-                {
-                    type = ExpectedDamageType.Heavy
-                    damageValue = 0
-                },
-            )
+            lightGiver = {
+                type = ExpectedDamageType.Light
+                damageValue = 0
+            }
+            mediumGiver = {
+                type = ExpectedDamageType.Medium
+                damageValue = 0
+            }
+            heavyGiver = {
+                type = ExpectedDamageType.Heavy
+                damageValue = 0
+            }
             focusLeft = 2
         }
         playedCards = emptyList()

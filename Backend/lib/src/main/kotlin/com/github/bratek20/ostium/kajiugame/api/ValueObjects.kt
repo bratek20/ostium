@@ -119,11 +119,21 @@ data class HitZone(
 }
 
 data class AttackPool(
-    private val attackGivers: List<AttackGiver>,
+    private val lightGiver: AttackGiver,
+    private val mediumGiver: AttackGiver,
+    private val heavyGiver: AttackGiver,
     private val focusLeft: Int,
 ) {
-    fun getAttackGivers(): List<AttackGiver> {
-        return this.attackGivers
+    fun getLightGiver(): AttackGiver {
+        return this.lightGiver
+    }
+
+    fun getMediumGiver(): AttackGiver {
+        return this.mediumGiver
+    }
+
+    fun getHeavyGiver(): AttackGiver {
+        return this.heavyGiver
     }
 
     fun getFocusLeft(): Int {
@@ -132,11 +142,15 @@ data class AttackPool(
 
     companion object {
         fun create(
-            attackGivers: List<AttackGiver>,
+            lightGiver: AttackGiver,
+            mediumGiver: AttackGiver,
+            heavyGiver: AttackGiver,
             focusLeft: Int,
         ): AttackPool {
             return AttackPool(
-                attackGivers = attackGivers,
+                lightGiver = lightGiver,
+                mediumGiver = mediumGiver,
+                heavyGiver = heavyGiver,
                 focusLeft = focusLeft,
             )
         }

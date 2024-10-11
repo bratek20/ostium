@@ -105,16 +105,25 @@ fun diffHitZone(given: HitZone, expectedInit: ExpectedHitZone.() -> Unit, path: 
 }
 
 data class ExpectedAttackPool(
-    var attackGivers: List<(ExpectedAttackGiver.() -> Unit)>? = null,
+    var lightGiver: (ExpectedAttackGiver.() -> Unit)? = null,
+    var mediumGiver: (ExpectedAttackGiver.() -> Unit)? = null,
+    var heavyGiver: (ExpectedAttackGiver.() -> Unit)? = null,
     var focusLeft: Int? = null,
 )
 fun diffAttackPool(given: AttackPool, expectedInit: ExpectedAttackPool.() -> Unit, path: String = ""): String {
     val expected = ExpectedAttackPool().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
 
-    expected.attackGivers?.let {
-        if (given.getAttackGivers().size != it.size) { result.add("${path}attackGivers size ${given.getAttackGivers().size} != ${it.size}"); return@let }
-        given.getAttackGivers().forEachIndexed { idx, entry -> if (diffAttackGiver(entry, it[idx]) != "") { result.add(diffAttackGiver(entry, it[idx], "${path}attackGivers[${idx}].")) } }
+    expected.lightGiver?.let {
+        if (diffAttackGiver(given.getLightGiver(), it) != "") { result.add(diffAttackGiver(given.getLightGiver(), it, "${path}lightGiver.")) }
+    }
+
+    expected.mediumGiver?.let {
+        if (diffAttackGiver(given.getMediumGiver(), it) != "") { result.add(diffAttackGiver(given.getMediumGiver(), it, "${path}mediumGiver.")) }
+    }
+
+    expected.heavyGiver?.let {
+        if (diffAttackGiver(given.getHeavyGiver(), it) != "") { result.add(diffAttackGiver(given.getHeavyGiver(), it, "${path}heavyGiver.")) }
     }
 
     expected.focusLeft?.let {

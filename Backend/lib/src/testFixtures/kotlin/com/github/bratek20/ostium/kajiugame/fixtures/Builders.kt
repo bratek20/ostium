@@ -60,13 +60,17 @@ fun hitZone(init: HitZoneDef.() -> Unit = {}): HitZone {
 }
 
 data class AttackPoolDef(
-    var attackGivers: List<(AttackGiverDef.() -> Unit)> = emptyList(),
+    var lightGiver: (AttackGiverDef.() -> Unit) = {},
+    var mediumGiver: (AttackGiverDef.() -> Unit) = {},
+    var heavyGiver: (AttackGiverDef.() -> Unit) = {},
     var focusLeft: Int = 0,
 )
 fun attackPool(init: AttackPoolDef.() -> Unit = {}): AttackPool {
     val def = AttackPoolDef().apply(init)
     return AttackPool.create(
-        attackGivers = def.attackGivers.map { it -> attackGiver(it) },
+        lightGiver = attackGiver(def.lightGiver),
+        mediumGiver = attackGiver(def.mediumGiver),
+        heavyGiver = attackGiver(def.heavyGiver),
         focusLeft = def.focusLeft,
     )
 }
