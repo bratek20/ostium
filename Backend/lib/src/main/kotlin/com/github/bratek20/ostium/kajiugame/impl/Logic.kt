@@ -24,35 +24,44 @@ private class HandLogic(
     }
 }
 
+private class AttackGiverLogic(
+    val type: DamageType,
+    private var damageValue: Int
+) {
+    fun getState(): AttackGiver {
+        return AttackGiver.create(
+            type = type,
+            damageValue = damageValue
+        )
+    }
+
+    fun addDamage(value: Int) {
+        damageValue += value
+    }
+}
+
 private class PlayerSideLogic {
     private val playedCards = mutableListOf<Card>()
+    private val attackGivers = listOf(
+        AttackGiverLogic(DamageType.Light, 0),
+        AttackGiverLogic(DamageType.Medium, 0),
+        AttackGiverLogic(DamageType.Heavy, 0)
+    )
     private var focusLeft = 2
 
     fun getState(): PlayerSide {
         return PlayerSide.create(
             pool = AttackPool.create(
-                attackGivers = listOf(
-                    AttackGiver.create(
-                        type = DamageType.Light,
-                        damageValue = 0,
-                    ),
-                    AttackGiver.create(
-                        type = DamageType.Medium,
-                        damageValue = 0,
-                    ),
-                    AttackGiver.create(
-                        type = DamageType.Heavy,
-                        damageValue = 0,
-                    ),
-                ),
+                attackGivers = attackGivers.map { it.getState() },
                 focusLeft = focusLeft
             ),
             playedCards = playedCards.toList()
         )
     }
 
-    fun putCardAndPayCost(card: Card) {
+    fun handleCardPlayed(card: Card) {
         playedCards.add(card)
+        attackGivers.first { it.type == card.getType() }.addDamage(card.getValue())
         focusLeft -= card.getFocusCost()
     }
 }
@@ -84,7 +93,7 @@ private class PlayerStateLogic(
 
     fun playCard(handCardIdx: Int) {
         val handCard = hand.removeCardAndGet(handCardIdx)
-        side.putCardAndPayCost(handCard)
+        side.handleCardPlayed(handCard)
     }
 }
 

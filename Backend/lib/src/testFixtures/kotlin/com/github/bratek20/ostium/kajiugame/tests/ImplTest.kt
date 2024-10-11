@@ -12,10 +12,7 @@ import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
 import com.github.bratek20.ostium.kajiugame.api.GameApi
 import com.github.bratek20.ostium.kajiugame.api.GameNotFoundException
 import com.github.bratek20.ostium.kajiugame.context.KajiuGameImpl
-import com.github.bratek20.ostium.kajiugame.fixtures.ExpectedCard
-import com.github.bratek20.ostium.kajiugame.fixtures.ExpectedHitZone
-import com.github.bratek20.ostium.kajiugame.fixtures.ExpectedPlayerSide
-import com.github.bratek20.ostium.kajiugame.fixtures.assertGameState
+import com.github.bratek20.ostium.kajiugame.fixtures.*
 import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -77,6 +74,27 @@ class KajiuGameImplTest {
 
     @Nested
     inner class GameCreated {
+        val card0Def: CardDef.() -> Unit = {
+            type = "Light"
+            value = 1
+            focusCost = 1
+        }
+        val card1Def: CardDef.() -> Unit = {
+            type = "Medium"
+            value = 2
+            focusCost = 2
+        }
+        val card2Def: CardDef.() -> Unit = {
+            type = "Heavy"
+            value = 3
+            focusCost = 3
+        }
+        val card3Def: CardDef.() -> Unit = {
+            type = "Heavy"
+            value = 4
+            focusCost = 4
+        }
+
         val expectedCard0: ExpectedCard.() -> Unit = {
             type = "Light"
             value = 1
@@ -108,26 +126,10 @@ class KajiuGameImplTest {
 
             cardDrawerApiMock.setCards(
                 listOf(
-                    {
-                        type = "Light"
-                        value = 1
-                        focusCost = 1
-                    },
-                    {
-                        type = "Medium"
-                        value = 2
-                        focusCost = 2
-                    },
-                    {
-                        type = "Heavy"
-                        value = 3
-                        focusCost = 3
-                    },
-                    {
-                        type = "Heavy"
-                        value = 4
-                        focusCost = 4
-                    },
+                    card0Def,
+                    card1Def,
+                    card2Def,
+                    card3Def
                 )
             )
         }
@@ -178,6 +180,13 @@ class KajiuGameImplTest {
 
         @Test
         fun `should play card - opponent does not see`() {
+            // assert just to show what card we are going to play
+            assertCard(card(card1Def)) {
+                type = ExpectedDamageType.Medium
+                value = 2
+                focusCost = 2
+            }
+
             api.playCard(creatorToken, 1).let {
                 assertGameState(it) {
                     hand = {
@@ -189,6 +198,23 @@ class KajiuGameImplTest {
                     }
                     table = {
                         mySide = {
+                            pool = {
+                                attackGivers = listOf(
+                                    {
+                                        type = ExpectedDamageType.Light
+                                        damageValue = 0
+                                    },
+                                    {
+                                        type = ExpectedDamageType.Medium
+                                        damageValue = 2
+                                    },
+                                    {
+                                        type = ExpectedDamageType.Heavy
+                                        damageValue = 0
+                                    },
+                                )
+                                focusLeft = 0
+                            }
                             playedCards = listOf(
                                 expectedCard1
                             )
