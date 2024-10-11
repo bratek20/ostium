@@ -17,6 +17,11 @@ fun diffTurnPhase(given: TurnPhase, expected: String, path: String = ""): String
     return ""
 }
 
+fun diffHitZonePosition(given: HitZonePosition, expected: String, path: String = ""): String {
+    if (given != HitZonePosition.valueOf(expected)) { return "${path}value ${given.name} != ${expected}" }
+    return ""
+}
+
 data class ExpectedAttackReceiver(
     var type: String? = null,
     var myDamage: Int? = null,
@@ -81,24 +86,29 @@ fun diffPlayerSide(given: PlayerSide, expectedInit: ExpectedPlayerSide.() -> Uni
 }
 
 data class ExpectedHitZone(
-    var leftReceiver: (ExpectedAttackReceiver.() -> Unit)? = null,
-    var centerReceiver: (ExpectedAttackReceiver.() -> Unit)? = null,
-    var rightReceiver: (ExpectedAttackReceiver.() -> Unit)? = null,
+    var position: String? = null,
+    var lightReceiver: (ExpectedAttackReceiver.() -> Unit)? = null,
+    var mediumReceiver: (ExpectedAttackReceiver.() -> Unit)? = null,
+    var heavyReceiver: (ExpectedAttackReceiver.() -> Unit)? = null,
 )
 fun diffHitZone(given: HitZone, expectedInit: ExpectedHitZone.() -> Unit, path: String = ""): String {
     val expected = ExpectedHitZone().apply(expectedInit)
     val result: MutableList<String> = mutableListOf()
 
-    expected.leftReceiver?.let {
-        if (diffAttackReceiver(given.getLeftReceiver(), it) != "") { result.add(diffAttackReceiver(given.getLeftReceiver(), it, "${path}leftReceiver.")) }
+    expected.position?.let {
+        if (diffHitZonePosition(given.getPosition(), it) != "") { result.add(diffHitZonePosition(given.getPosition(), it, "${path}position.")) }
     }
 
-    expected.centerReceiver?.let {
-        if (diffAttackReceiver(given.getCenterReceiver(), it) != "") { result.add(diffAttackReceiver(given.getCenterReceiver(), it, "${path}centerReceiver.")) }
+    expected.lightReceiver?.let {
+        if (diffAttackReceiver(given.getLightReceiver(), it) != "") { result.add(diffAttackReceiver(given.getLightReceiver(), it, "${path}lightReceiver.")) }
     }
 
-    expected.rightReceiver?.let {
-        if (diffAttackReceiver(given.getRightReceiver(), it) != "") { result.add(diffAttackReceiver(given.getRightReceiver(), it, "${path}rightReceiver.")) }
+    expected.mediumReceiver?.let {
+        if (diffAttackReceiver(given.getMediumReceiver(), it) != "") { result.add(diffAttackReceiver(given.getMediumReceiver(), it, "${path}mediumReceiver.")) }
+    }
+
+    expected.heavyReceiver?.let {
+        if (diffAttackReceiver(given.getHeavyReceiver(), it) != "") { result.add(diffAttackReceiver(given.getHeavyReceiver(), it, "${path}heavyReceiver.")) }
     }
 
     return result.joinToString("\n")

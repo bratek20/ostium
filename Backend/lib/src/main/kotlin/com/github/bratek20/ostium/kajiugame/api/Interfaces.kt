@@ -13,4 +13,6 @@ interface GameApi {
     fun endPhase(token: GameToken): GameState
 
     fun playCard(token: GameToken, handCardIdx: Int): GameState
+
+    fun assignDamage(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
 }

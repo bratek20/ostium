@@ -13,3 +13,9 @@ enum class TurnPhase {
     AssignGuard,
     Reveal,
 }
+
+enum class HitZonePosition {
+    Left,
+    Center,
+    Right,
+}

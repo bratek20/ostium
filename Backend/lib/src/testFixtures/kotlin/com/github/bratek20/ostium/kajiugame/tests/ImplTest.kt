@@ -233,20 +233,51 @@ class KajiuGameImplTest {
                 }
             }
         }
+
+        @Nested
+        inner class InAssignDamagePhase {
+            @BeforeEach
+            fun `creator has 2 medium damage in pool`() {
+                api.playCard(creatorToken, 1)
+                api.endPhase(creatorToken)
+                api.endPhase(joinerToken)
+
+                api.getState(creatorToken).let {
+                    assertGameState(it) {
+                        phase = ExpectedTurnPhase.AssignDamage
+                        table = {
+                            mySide = {
+                                pool = {
+                                    mediumGiver = {
+                                        damageValue = 2
+                                    }
+                                    focusLeft = 0
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Test
+            fun `should assign damage`() {
+
+            }
+        }
     }
 
     private fun expectedInitialHitZone(): (ExpectedHitZone.() -> Unit) = {
-        leftReceiver = {
+        lightReceiver = {
             type = ExpectedDamageType.Light
             myDamage = 0
             opponentDamage = 0
         }
-        centerReceiver = {
+        mediumReceiver = {
             type = ExpectedDamageType.Medium
             myDamage = 0
             opponentDamage = 0
         }
-        rightReceiver = {
+        heavyReceiver = {
             type = ExpectedDamageType.Heavy
             myDamage = 0
             opponentDamage = 0

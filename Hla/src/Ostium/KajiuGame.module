@@ -10,6 +10,11 @@ Enums
         AssignGuard
         Reveal
 
+    HitZonePosition
+        Left
+        Center
+        Right
+
 
 ValueObjects
     AttackReceiver
@@ -26,9 +31,10 @@ ValueObjects
         playedCards: Card[]
 
     HitZone
-        leftReceiver: AttackReceiver
-        centerReceiver: AttackReceiver
-        rightReceiver: AttackReceiver
+        position: HitZonePosition
+        lightReceiver: AttackReceiver
+        mediumReceiver: AttackReceiver
+        heavyReceiver: AttackReceiver
 
     AttackPool
         lightGiver: AttackGiver
@@ -72,7 +78,9 @@ Interfaces
         //TurnPhase.PlayCard
         playCard(token: GameToken, handCardIdx: int): GameState
 
-        //assignDamage(...): GameState
+        //TurnPhase.AssignDamage
+        assignDamage(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
+
         //assignGuard(...): GameState
 
 

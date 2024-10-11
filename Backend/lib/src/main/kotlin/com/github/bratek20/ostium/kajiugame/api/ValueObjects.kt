@@ -87,32 +87,39 @@ data class PlayerSide(
 }
 
 data class HitZone(
-    private val leftReceiver: AttackReceiver,
-    private val centerReceiver: AttackReceiver,
-    private val rightReceiver: AttackReceiver,
+    private val position: String,
+    private val lightReceiver: AttackReceiver,
+    private val mediumReceiver: AttackReceiver,
+    private val heavyReceiver: AttackReceiver,
 ) {
-    fun getLeftReceiver(): AttackReceiver {
-        return this.leftReceiver
+    fun getPosition(): HitZonePosition {
+        return HitZonePosition.valueOf(this.position)
     }
 
-    fun getCenterReceiver(): AttackReceiver {
-        return this.centerReceiver
+    fun getLightReceiver(): AttackReceiver {
+        return this.lightReceiver
     }
 
-    fun getRightReceiver(): AttackReceiver {
-        return this.rightReceiver
+    fun getMediumReceiver(): AttackReceiver {
+        return this.mediumReceiver
+    }
+
+    fun getHeavyReceiver(): AttackReceiver {
+        return this.heavyReceiver
     }
 
     companion object {
         fun create(
-            leftReceiver: AttackReceiver,
-            centerReceiver: AttackReceiver,
-            rightReceiver: AttackReceiver,
+            position: HitZonePosition,
+            lightReceiver: AttackReceiver,
+            mediumReceiver: AttackReceiver,
+            heavyReceiver: AttackReceiver,
         ): HitZone {
             return HitZone(
-                leftReceiver = leftReceiver,
-                centerReceiver = centerReceiver,
-                rightReceiver = rightReceiver,
+                position = position.name,
+                lightReceiver = lightReceiver,
+                mediumReceiver = mediumReceiver,
+                heavyReceiver = heavyReceiver,
             )
         }
     }

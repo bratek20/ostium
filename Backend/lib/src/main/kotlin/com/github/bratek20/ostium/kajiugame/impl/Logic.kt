@@ -141,19 +141,24 @@ private class GameStateLogic(
         return getState(user)
     }
 
+    fun assignDamage(user: Username, zone: HitZonePosition, damageType: DamageType): GameState {
+        return getState(user)
+    }
+
     private fun createHitZone(): HitZone {
         return HitZone.create(
-            leftReceiver = AttackReceiver.create(
+            position = HitZonePosition.Left,
+            lightReceiver = AttackReceiver.create(
                 type = DamageType.Light,
                 myDamage = 0,
                 opponentDamage = 0
             ),
-            centerReceiver = AttackReceiver.create(
+            mediumReceiver = AttackReceiver.create(
                 type = DamageType.Medium,
                 myDamage = 0,
                 opponentDamage = 0
             ),
-            rightReceiver = AttackReceiver.create(
+            heavyReceiver = AttackReceiver.create(
                 type = DamageType.Heavy,
                 myDamage = 0,
                 opponentDamage = 0
@@ -185,6 +190,10 @@ class GameApiLogic(
 
     override fun playCard(token: GameToken, handCardIdx: Int): GameState {
         return getGameStateLogic(token).playCard(token.getUsername(), handCardIdx)
+    }
+
+    override fun assignDamage(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState {
+        return getGameStateLogic(token).assignDamage(token.getUsername(), zone, damageType)
     }
 
     private fun getCreatedGameOrThrow(token: GameToken): CreatedGame {

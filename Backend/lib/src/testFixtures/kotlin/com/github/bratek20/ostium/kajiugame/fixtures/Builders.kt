@@ -46,16 +46,18 @@ fun playerSide(init: PlayerSideDef.() -> Unit = {}): PlayerSide {
 }
 
 data class HitZoneDef(
-    var leftReceiver: (AttackReceiverDef.() -> Unit) = {},
-    var centerReceiver: (AttackReceiverDef.() -> Unit) = {},
-    var rightReceiver: (AttackReceiverDef.() -> Unit) = {},
+    var position: String = HitZonePosition.Left.name,
+    var lightReceiver: (AttackReceiverDef.() -> Unit) = {},
+    var mediumReceiver: (AttackReceiverDef.() -> Unit) = {},
+    var heavyReceiver: (AttackReceiverDef.() -> Unit) = {},
 )
 fun hitZone(init: HitZoneDef.() -> Unit = {}): HitZone {
     val def = HitZoneDef().apply(init)
     return HitZone.create(
-        leftReceiver = attackReceiver(def.leftReceiver),
-        centerReceiver = attackReceiver(def.centerReceiver),
-        rightReceiver = attackReceiver(def.rightReceiver),
+        position = HitZonePosition.valueOf(def.position),
+        lightReceiver = attackReceiver(def.lightReceiver),
+        mediumReceiver = attackReceiver(def.mediumReceiver),
+        heavyReceiver = attackReceiver(def.heavyReceiver),
     )
 }
 
