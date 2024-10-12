@@ -262,7 +262,7 @@ class KajiuGameImplTest {
             }
 
             @Test
-            fun `should assign damage from pool`() {
+            fun `should assign damage from pool - opponent does not see`() {
                 api.assignDamage(creatorToken, HitZonePosition.Center, DamageType.Medium).let {
                     assertGameState(it) {
                         table = {
@@ -276,6 +276,19 @@ class KajiuGameImplTest {
                                     mediumGiver = {
                                         damageValue = 0
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                api.getState(joinerToken).let {
+                    assertGameState(it) {
+                        table = {
+                            centerZone = {
+                                mediumReceiver = {
+                                    myDamage = 0
+                                    opponentDamage = 0
                                 }
                             }
                         }
