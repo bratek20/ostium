@@ -38,6 +38,12 @@ private class AttackGiverLogic(
     fun addDamage(value: Int) {
         damageValue += value
     }
+
+    fun clearDamageAndGet(): Int {
+        val result = damageValue
+        damageValue = 0
+        return result
+    }
 }
 
 private class PlayerSideLogic {
@@ -61,8 +67,16 @@ private class PlayerSideLogic {
 
     fun handleCardPlayed(card: Card) {
         playedCards.add(card)
-        allGivers().first { it.type == card.getType() }.addDamage(card.getValue())
+        getGiver(card.getType()).addDamage(card.getValue())
         focusLeft -= card.getFocusCost()
+    }
+
+    fun clearDamageAndGet(damageType: DamageType): Int {
+        return getGiver(damageType).clearDamageAndGet()
+    }
+
+    private fun getGiver(damageType: DamageType): AttackGiverLogic {
+        return allGivers().first { it.type == damageType }
     }
 
     private fun allGivers(): List<AttackGiverLogic> {
@@ -99,30 +113,57 @@ private class PlayerStateLogic(
         val handCard = hand.removeCardAndGet(handCardIdx)
         side.handleCardPlayed(handCard)
     }
+
+    fun clearDamageAndGet(damageType: DamageType): Int {
+        return side.clearDamageAndGet(damageType)
+    }
+}
+
+class AttackReceiverLogic(
+    val type: DamageType,
+) {
+    private var myDamage = 0
+    private var opponentDamage = 0
+
+    fun getState(): AttackReceiver {
+        return AttackReceiver.create(
+            type = type,
+            myDamage = myDamage,
+            opponentDamage = opponentDamage
+        )
+    }
+
+    fun assignDamage(value: Int) {
+        myDamage += value
+    }
 }
 
 private class HitZoneLogic(
     private val position: HitZonePosition
 ) {
+    private val lightReceiver = AttackReceiverLogic(DamageType.Light)
+    private val mediumReceiver = AttackReceiverLogic(DamageType.Medium)
+    private val heavyReceiver = AttackReceiverLogic(DamageType.Heavy)
+
     fun getState(): HitZone {
         return HitZone.create(
             position = position,
-            lightReceiver = AttackReceiver.create(
-                type = DamageType.Light,
-                myDamage = 0,
-                opponentDamage = 0
-            ),
-            mediumReceiver = AttackReceiver.create(
-                type = DamageType.Medium,
-                myDamage = 0,
-                opponentDamage = 0
-            ),
-            heavyReceiver = AttackReceiver.create(
-                type = DamageType.Heavy,
-                myDamage = 0,
-                opponentDamage = 0
-            )
+            lightReceiver = lightReceiver.getState(),
+            mediumReceiver = mediumReceiver.getState(),
+            heavyReceiver = heavyReceiver.getState()
         )
+    }
+
+    fun assignDamage(damageType: DamageType, value: Int) {
+        getReceiver(damageType).assignDamage(value)
+    }
+
+    private fun getReceiver(damageType: DamageType): AttackReceiverLogic {
+        return when (damageType) {
+            DamageType.Light -> lightReceiver
+            DamageType.Medium -> mediumReceiver
+            DamageType.Heavy -> heavyReceiver
+        }
     }
 }
 
@@ -172,7 +213,17 @@ private class GameStateLogic(
     }
 
     fun assignDamage(user: Username, zone: HitZonePosition, damageType: DamageType): GameState {
+        val damageValue = getMyState(user).clearDamageAndGet(damageType)
+        getHitZone(zone).assignDamage(damageType, damageValue)
         return getState(user)
+    }
+
+    private fun getHitZone(zone: HitZonePosition): HitZoneLogic {
+        return when (zone) {
+            HitZonePosition.Left -> leftZone
+            HitZonePosition.Center -> centerZone
+            HitZonePosition.Right -> rightZone
+        }
     }
 
     private fun getMyState(user: Username): PlayerStateLogic {
