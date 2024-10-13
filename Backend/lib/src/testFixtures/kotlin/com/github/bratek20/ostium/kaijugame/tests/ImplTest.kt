@@ -78,7 +78,124 @@ class KaijuGameImplTest {
     }
 
     @Nested
-    inner class GameCreated {
+    inner class InitialStateScope {
+        val card0Def: CardDef.() -> Unit = {
+            type = "Light"
+            value = 1
+            focusCost = 1
+        }
+        val expectedCard0: ExpectedCard.() -> Unit = {
+            type = "Light"
+            value = 1
+            focusCost = 1
+        }
+
+        val card1Def: CardDef.() -> Unit = {
+            type = "Medium"
+            value = 2
+            focusCost = 2
+        }
+        val expectedCard1: ExpectedCard.() -> Unit = {
+            type = "Medium"
+            value = 2
+            focusCost = 2
+        }
+
+        val card2Def: CardDef.() -> Unit = {
+            type = "Heavy"
+            value = 3
+            focusCost = 3
+        }
+        val expectedCard2: ExpectedCard.() -> Unit = {
+            type = "Heavy"
+            value = 3
+            focusCost = 3
+        }
+
+        @Test
+        fun `should return same initial state for both players`() {
+            val si = scenarios.inGame {
+                cards = listOf(
+                    card0Def,
+                    card1Def,
+                    card2Def
+                )
+            }
+
+            val expectedInitialHitZone: (expectedPosition: String) -> (ExpectedHitZone.() -> Unit) = { expectedPosition ->
+                {
+                    position = expectedPosition
+                    lightReceiver = {
+                        type = ExpectedDamageType.Light
+                        myDamage = 0
+                        opponentDamage = 0
+                    }
+                    mediumReceiver = {
+                        type = ExpectedDamageType.Medium
+                        myDamage = 0
+                        opponentDamage = 0
+                    }
+                    heavyReceiver = {
+                        type = ExpectedDamageType.Heavy
+                        myDamage = 0
+                        opponentDamage = 0
+                    }
+                }
+            }
+
+            val expectedInitialPlayerSide: (ExpectedPlayerSide.() -> Unit) = {
+                pool = {
+                    lightGiver = {
+                        type = ExpectedDamageType.Light
+                        damageValue = 0
+                    }
+                    mediumGiver = {
+                        type = ExpectedDamageType.Medium
+                        damageValue = 0
+                    }
+                    heavyGiver = {
+                        type = ExpectedDamageType.Heavy
+                        damageValue = 0
+                    }
+                    focusLeft = 2
+                }
+                playedCards = emptyList()
+            }
+
+            val expectedInitialState: ExpectedGameState.() -> Unit = {
+                turn = 1
+                phase = ExpectedTurnPhase.PlayCard
+                myReady = false
+                opponentReady = false
+                table = {
+                    leftZone = expectedInitialHitZone("Left")
+                    centerZone = expectedInitialHitZone("Center")
+                    rightZone = expectedInitialHitZone("Right")
+                    mySide = expectedInitialPlayerSide
+                    opponentSide = expectedInitialPlayerSide
+                }
+                hand = {
+                    cards = listOf(
+                        expectedCard0,
+                        expectedCard1,
+                        expectedCard2,
+                        expectedCard0,
+                    )
+                }
+            }
+
+            //when
+            val creatorState = api.getState(si.creatorToken)
+            val joinerState = api.getState(si.joinerToken)
+
+            //then
+            assertGameState(creatorState, expectedInitialState)
+            assertGameState(joinerState, expectedInitialState)
+        }
+    }
+
+    @Nested
+    inner class ToRefactorScope {
         val card0Def: CardDef.() -> Unit = {
             type = "Light"
             value = 1
@@ -138,73 +255,6 @@ class KaijuGameImplTest {
                     card3Def
                 )
             )
-        }
-
-        @Test
-        fun `should return initial state`() {
-            //when
-            val state = api.getState(creatorToken)
-
-            //then
-            assertGameState(state) {
-                turn = 1
-                phase = ExpectedTurnPhase.PlayCard
-                myReady = false
-                opponentReady = false
-                table = {
-                    leftZone = expectedInitialHitZone("Left")
-                    centerZone = expectedInitialHitZone("Center")
-                    rightZone = expectedInitialHitZone("Right")
-                    mySide = expectedInitialPlayerSide()
-                    opponentSide = expectedInitialPlayerSide()
-                }
-                hand = {
-                    cards = listOf(
-                        expectedCard0,
-                        expectedCard1,
-                        expectedCard2,
-                        expectedCard3
-                    )
-                }
-            }
-        }
-
-        private fun expectedInitialHitZone(expectedPosition: String): (ExpectedHitZone.() -> Unit) = {
-            position = expectedPosition
-            lightReceiver = {
-                type = ExpectedDamageType.Light
-                myDamage = 0
-                opponentDamage = 0
-            }
-            mediumReceiver = {
-                type = ExpectedDamageType.Medium
-                myDamage = 0
-                opponentDamage = 0
-            }
-            heavyReceiver = {
-                type = ExpectedDamageType.Heavy
-                myDamage = 0
-                opponentDamage = 0
-            }
-        }
-
-        private fun expectedInitialPlayerSide(): (ExpectedPlayerSide.() -> Unit) = {
-            pool = {
-                lightGiver = {
-                    type = ExpectedDamageType.Light
-                    damageValue = 0
-                }
-                mediumGiver = {
-                    type = ExpectedDamageType.Medium
-                    damageValue = 0
-                }
-                heavyGiver = {
-                    type = ExpectedDamageType.Heavy
-                    damageValue = 0
-                }
-                focusLeft = 2
-            }
-            playedCards = emptyList()
         }
 
         @Test
@@ -405,4 +455,18 @@ class KaijuGameImplTest {
             assertPhase(ExpectedTurnPhase.PlayCard)
         }
     }
+
+    @Nested
+    inner class RevealScope {
+        @Test
+        fun `should not show opponent state before reveal phase`() {
+
+        }
+
+        @Test
+        fun `should show opponent in reveal phase`() {
+
+        }
+    }
+
 }

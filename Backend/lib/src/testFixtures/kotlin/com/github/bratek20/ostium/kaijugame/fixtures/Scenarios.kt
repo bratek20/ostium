@@ -15,13 +15,21 @@ class KaijuGameScenarios(
     private val cardDrawerApiMock: CardDrawerApiMock
 ) {
 
+    class InGameArgs(
+        var cards: List<CardDef.() -> Unit> = listOf({})
+    )
     open class InGameStateInfo(
         val creatorToken: GameToken,
         val joinerToken: GameToken
     )
-    fun inGame(): InGameStateInfo {
+    fun inGame(argsInit: InGameArgs.() -> Unit = {}): InGameStateInfo {
+        val args = InGameArgs().apply(argsInit)
+
         val creatorToken = gamesManagementApi.create(username("Player1"))
         val joinerToken = gamesManagementApi.join(username("Player2"), creatorToken.getGameId())
+
+        cardDrawerApiMock.setCards(args.cards)
+
         return InGameStateInfo(creatorToken, joinerToken)
     }
 
