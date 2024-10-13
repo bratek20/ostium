@@ -126,6 +126,10 @@ private class PlayerStateLogic(
         ready = true
     }
 
+    fun clearReady() {
+        ready = false
+    }
+
     fun playCard(handCardIdx: Int) {
         val handCard = hand.removeCardAndGet(handCardIdx)
         side.handleCardPlayed(handCard)
@@ -193,7 +197,15 @@ private class GameStateLogic(
     private val creator: Username,
     drawer: CardDrawerApi
 ) {
-    private var phase = TurnPhase.PlayCard
+    companion object {
+        private val orderedPhases = listOf(
+            TurnPhase.PlayCard,
+            TurnPhase.AssignDamage,
+            TurnPhase.AssignGuard,
+            TurnPhase.Reveal
+        )
+    }
+    private var phaseIdx = 0
 
     private val creatorState = PlayerStateLogic(drawer)
     private val joinerState = PlayerStateLogic(drawer)
@@ -201,7 +213,7 @@ private class GameStateLogic(
     fun getState(user: Username): GameState {
         return GameState.create(
             turn = 1,
-            phase = phase,
+            phase = orderedPhases[phaseIdx],
             table = Table.create(
                 leftZone = getMyState(user).getZoneState(HitZonePosition.Left),
                 centerZone = getMyState(user).getZoneState(HitZonePosition.Center),
@@ -218,11 +230,16 @@ private class GameStateLogic(
     fun endPhase(user: Username): GameState {
         getMyState(user).markReady()
 
-        if (getMyState(user).isReady() && getOpponentState(user).isReady()) {
-            phase = TurnPhase.AssignDamage
+        if (getBothStates().all { it.isReady() }){
+            phaseIdx++
+            getBothStates().forEach { it.clearReady() }
         }
 
         return getState(user)
+    }
+
+    private fun getBothStates(): List<PlayerStateLogic> {
+        return listOf(creatorState, joinerState)
     }
 
     fun playCard(user: Username, handCardIdx: Int): GameState {

@@ -353,8 +353,42 @@ class KaijuGameImplTest {
     @Nested
     inner class AssignGuardScope {
         @Test
-        fun x() {
+        fun `should assign unspect focus as guard - redues opponent damage`() {
             val si = scenarios.inPhase(TurnPhase.AssignGuard)
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            heavyReceiver = {
+                                opponentDamage = 0
+                            }
+                        }
+                        mySide = {
+                            pool = {
+                                focusLeft = 2
+                            }
+                        }
+                    }
+                }
+            }
+
+            //when & then
+            api.assignGuard(si.creatorToken, HitZonePosition.Center, DamageType.Heavy).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            heavyReceiver = {
+                                opponentDamage = -2
+                            }
+                        }
+                        mySide = {
+                            pool = {
+                                focusLeft = 0
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
