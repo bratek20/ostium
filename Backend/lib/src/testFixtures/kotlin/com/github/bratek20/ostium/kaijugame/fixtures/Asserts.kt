@@ -4,6 +4,9 @@ package com.github.bratek20.ostium.kaijugame.fixtures
 
 import org.assertj.core.api.Assertions.assertThat
 
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.gamesmanagement.fixtures.*
+
 import com.github.bratek20.ostium.kaijugame.api.*
 
 fun assertAttackReceiver(given: AttackReceiver, expectedInit: ExpectedAttackReceiver.() -> Unit) {

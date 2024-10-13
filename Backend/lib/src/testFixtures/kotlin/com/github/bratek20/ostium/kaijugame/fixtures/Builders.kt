@@ -2,6 +2,9 @@
 
 package com.github.bratek20.ostium.kaijugame.fixtures
 
+import com.github.bratek20.ostium.gamesmanagement.api.*
+import com.github.bratek20.ostium.gamesmanagement.fixtures.*
+
 import com.github.bratek20.ostium.kaijugame.api.*
 
 data class AttackReceiverDef(

@@ -2,6 +2,8 @@
 
 package com.github.bratek20.ostium.kaijugame.api
 
+import com.github.bratek20.ostium.gamesmanagement.api.*
+
 data class AttackReceiver(
     private val type: String,
     private val myDamage: Int,
