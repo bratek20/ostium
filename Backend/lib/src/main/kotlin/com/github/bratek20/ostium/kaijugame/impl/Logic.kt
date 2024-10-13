@@ -23,6 +23,12 @@ private class HandLogic(
     fun removeCardAndGet(idx: Int): Card {
         return cards.removeAt(idx)
     }
+
+    fun fill() {
+        while (cards.size < 4) {
+            cards.add(drawer.draw())
+        }
+    }
 }
 
 private class AttackGiverLogic(
@@ -83,6 +89,10 @@ private class PlayerSideLogic {
         return result
     }
 
+    fun handleNewTurn(turn: Int) {
+        focusLeft = 2 * turn
+    }
+
     private fun getGiver(damageType: DamageType): AttackGiverLogic {
         return allGivers().first { it.type == damageType }
     }
@@ -135,7 +145,7 @@ private class PlayerStateLogic(
         return hand.getState()
     }
 
-    fun getZoneState(zone: HitZonePosition): HitZone {
+    private fun getZoneState(zone: HitZonePosition): HitZone {
         return getHitZone(zone).getState()
     }
 
@@ -161,6 +171,11 @@ private class PlayerStateLogic(
         rightZone.handleReveal(currentOpponentTable.getRightZone(), opponentRevealedTable.getRightZone())
 
         opponentRevealedTable = currentOpponentTable
+    }
+
+    fun handleNewTurn(turn: Int) {
+        hand.fill()
+        side.handleNewTurn(turn)
     }
 
     fun playCard(handCardIdx: Int) {
@@ -273,7 +288,7 @@ private class GameStateLogic(
 
     fun getState(user: Username): GameState {
         return GameState.create(
-            turn = 1,
+            turn = getTurn(),
             phase = getCurrentPhase(),
             table = getMyState(user).getTableState(),
             hand = getMyState(user).getHandState(),
@@ -287,12 +302,17 @@ private class GameStateLogic(
         return orderedPhases[adjustedIdx]
     }
 
+    private fun getTurn(): Int {
+        return 1 + (phaseIdx / orderedPhases.size)
+    }
+
     fun endPhase(user: Username): GameState {
         getMyState(user).markReady()
+        val currentTurn = getTurn()
 
-        if (getBothStates().all { it.isReady() }){
+        if (getBothPlayers().all { it.isReady() }){
             phaseIdx++
-            getBothStates().forEach { it.clearReady() }
+            getBothPlayers().forEach { it.clearReady() }
 
             if (getCurrentPhase() == TurnPhase.Reveal) {
                 val creatorTable = creatorState.getTableState()
@@ -301,12 +321,16 @@ private class GameStateLogic(
                 creatorState.handleReveal(joinerTable)
                 joinerState.handleReveal(creatorTable)
             }
+
+            if (currentTurn != getTurn()) {
+                getBothPlayers().forEach { it.handleNewTurn(getTurn()) }
+            }
         }
 
         return getState(user)
     }
 
-    private fun getBothStates(): List<PlayerStateLogic> {
+    private fun getBothPlayers(): List<PlayerStateLogic> {
         return listOf(creatorState, joinerState)
     }
 
