@@ -645,4 +645,26 @@ class KaijuGameImplTest {
         }
     }
 
+    @Nested
+    inner class ManyTurnsScope {
+        @Test
+        fun `should never end game, focus increases by 2 every turn`() {
+            val si = scenarios.inGame()
+
+            scenarios.progressToTurn(si, 100)
+
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    turn = 100
+                    table = {
+                        mySide = {
+                            pool = {
+                                focusLeft = 200
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -56,6 +56,15 @@ class KaijuGameScenarios(
             state = api.getState(si.creatorToken)
         }
     }
+
+    fun progressToTurn(si: InGameStateInfo, turn: Int) {
+        var state = api.getState(si.creatorToken)
+        while (state.getTurn() < turn) {
+            api.endPhase(si.creatorToken)
+            api.endPhase(si.joinerToken)
+            state = api.getState(si.creatorToken)
+        }
+    }
 }
 
 class KaijuGameScenariosModule: ContextModule {
