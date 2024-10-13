@@ -571,4 +571,78 @@ class KaijuGameImplTest {
         }
     }
 
+    @Nested
+    inner class NextTurnScope {
+        @Test
+        fun `should have 4 focus and draw to 4 cards in second turn`() {
+            val si = scenarios.inPhase {
+                phase = TurnPhase.PlayCard
+                cards = listOf(
+                    {
+                        type = "Light"
+                        focusCost = 1
+                    },
+                    {
+                        type = "Medium"
+                    },
+                )
+            }
+
+            api.playCard(si.creatorToken, 2)
+            api.playCard(si.creatorToken, 0)
+
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    hand = {
+                        cards = listOf(
+                            {
+                                type = "Medium"
+                            },
+                            {
+                                type = "Medium"
+                            },
+                        )
+                    }
+                }
+            }
+
+            scenarios.progressToPhase(si, TurnPhase.Reveal)
+
+            //when
+            api.endPhase(si.creatorToken)
+            api.endPhase(si.joinerToken)
+
+            //then
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    turn = 2
+                    phase = ExpectedTurnPhase.PlayCard
+                    table = {
+                        mySide = {
+                            pool = {
+                                focusLeft = 4
+                            }
+                        }
+                    }
+                    hand = {
+                        cards = listOf(
+                            {
+                                type = "Medium"
+                            },
+                            {
+                                type = "Medium"
+                            },
+                            {
+                                type = "Light"
+                            },
+                            {
+                                type = "Medium"
+                            },
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 }
