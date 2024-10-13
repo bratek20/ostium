@@ -22,6 +22,7 @@ class ExpectedTurnPhase {
         val PlayCard = "PlayCard"
         val AssignDamage = "AssignDamage"
         val AssignGuard = "AssignGuard"
+        val Reveal = "Reveal"
     }
 }
 
@@ -266,17 +267,6 @@ class KaijuGameImplTest {
             }
         }
 
-        @Test
-        fun `should progress to AssignDamage phase when second player ends his phase`() {
-            api.endPhase(creatorToken)
-
-            api.endPhase(joinerToken).let {
-                assertGameState(it) {
-                    phase = ExpectedTurnPhase.AssignDamage
-                }
-            }
-        }
-
         @Nested
         inner class InAssignDamagePhase {
             @BeforeEach
@@ -336,17 +326,6 @@ class KaijuGameImplTest {
                     }
                 }
             }
-
-            @Test
-            fun `should progress to AssignGuard phase when second player ends his phase`() {
-                api.endPhase(creatorToken)
-
-                api.endPhase(joinerToken).let {
-                    assertGameState(it) {
-                        phase = ExpectedTurnPhase.AssignGuard
-                    }
-                }
-            }
         }
     }
 
@@ -392,4 +371,38 @@ class KaijuGameImplTest {
         }
     }
 
+    @Nested
+    inner class ChangingPhasesScope {
+        @Test
+        fun `should change phases`() {
+            val si = scenarios.inGame()
+
+            val endPhaseByBothPlayers = {
+                api.endPhase(si.creatorToken)
+                api.endPhase(si.joinerToken)
+            }
+
+            val assertPhase = { expectedPhase: String ->
+                api.getState(si.creatorToken).let {
+                    assertGameState(it) {
+                        phase = expectedPhase
+                    }
+                }
+            }
+
+            assertPhase(ExpectedTurnPhase.PlayCard)
+            endPhaseByBothPlayers()
+
+            assertPhase(ExpectedTurnPhase.AssignDamage)
+            endPhaseByBothPlayers()
+
+            assertPhase(ExpectedTurnPhase.AssignGuard)
+            endPhaseByBothPlayers()
+
+            assertPhase(ExpectedTurnPhase.Reveal)
+            endPhaseByBothPlayers()
+
+            assertPhase(ExpectedTurnPhase.PlayCard)
+        }
+    }
 }

@@ -228,7 +228,7 @@ private class GameStateLogic(
     fun getState(user: Username): GameState {
         return GameState.create(
             turn = 1,
-            phase = orderedPhases[phaseIdx],
+            phase = getCurrentPhase(),
             table = Table.create(
                 leftZone = getMyState(user).getZoneState(HitZonePosition.Left),
                 centerZone = getMyState(user).getZoneState(HitZonePosition.Center),
@@ -240,6 +240,11 @@ private class GameStateLogic(
             myReady = getMyState(user).isReady(),
             opponentReady = getOpponentState(user).isReady()
         )
+    }
+
+    private fun getCurrentPhase(): TurnPhase {
+        val adjustedIdx = phaseIdx % orderedPhases.size
+        return orderedPhases[adjustedIdx]
     }
 
     fun endPhase(user: Username): GameState {
