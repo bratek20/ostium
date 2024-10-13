@@ -4,8 +4,6 @@ import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.architecture.exceptions.assertApiExceptionThrown
 import com.github.bratek20.logs.LogsMocks
 import com.github.bratek20.ostium.carddrawing.context.CardDrawerMocks
-import com.github.bratek20.ostium.gamesmanagement.api.GameToken
-import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
 import com.github.bratek20.ostium.kaijugame.api.*
@@ -56,19 +54,22 @@ class KaijuGameImplTest {
         scenarios = c.get(KaijuGameScenarios::class.java)
     }
 
-    @Test
-    fun `should throw api exception if game not created`() {
-        assertApiExceptionThrown(
-            {
-                api.getState(gameToken {
-                    gameId = 42
-                })
-            },
-            {
-                type = GameNotFoundException::class
-                message = "Game for id 42 not found"
-            }
-        )
+    @Nested
+    inner class NoGameScope {
+        @Test
+        fun `should throw api exception if game not found`() {
+            assertApiExceptionThrown(
+                {
+                    api.getState(gameToken {
+                        gameId = 42
+                    })
+                },
+                {
+                    type = GameNotFoundException::class
+                    message = "Game for id 42 not found"
+                }
+            )
+        }
     }
 
     @Nested
@@ -189,97 +190,38 @@ class KaijuGameImplTest {
     }
 
     @Nested
-    inner class ToRefactorScope {
-        val card0Def: CardDef.() -> Unit = {
-            type = "Light"
-            value = 1
-            focusCost = 1
-        }
-        val card1Def: CardDef.() -> Unit = {
-            type = "Medium"
-            value = 2
-            focusCost = 2
-        }
-        val card2Def: CardDef.() -> Unit = {
-            type = "Heavy"
-            value = 3
-            focusCost = 3
-        }
-        val card3Def: CardDef.() -> Unit = {
-            type = "Heavy"
-            value = 4
-            focusCost = 4
-        }
-
-        val expectedCard0: ExpectedCard.() -> Unit = {
-            type = "Light"
-            value = 1
-            focusCost = 1
-        }
-        val expectedCard1: ExpectedCard.() -> Unit = {
-            type = "Medium"
-            value = 2
-            focusCost = 2
-        }
-        val expectedCard2: ExpectedCard.() -> Unit = {
-            type = "Heavy"
-            value = 3
-            focusCost = 3
-        }
-        val expectedCard3: ExpectedCard.() -> Unit = {
-            type = "Heavy"
-            value = 4
-            focusCost = 4
-        }
-
-        private lateinit var creatorToken: GameToken
-        private lateinit var joinerToken: GameToken
-
-        @BeforeEach
-        fun `game created and cards to be drawn set`() {
-            val si = scenarios.inGame {
-                cards = listOf(
-                    card0Def,
-                    card1Def,
-                    card2Def,
-                    card3Def
-                )
-            }
-            creatorToken = si.creatorToken
-            joinerToken = si.joinerToken
-        }
-
-        @Test
-        fun `should end PlayCard phase - opponent sees that`() {
-            api.endPhase(creatorToken).let {
-                assertGameState(it) {
-                    myReady = true
-                }
-            }
-
-            api.getState(joinerToken).let {
-                assertGameState(it) {
-                    opponentReady = true
-                }
-            }
-        }
-
+    inner class PlayCardScope {
         @Test
         fun `should play card - opponent does not see`() {
-            // assert just to show what card we are going to play
-            assertCard(card(card1Def)) {
-                type = ExpectedDamageType.Medium
+            val si = scenarios.inPhase {
+                phase = TurnPhase.PlayCard
+                cards = listOf (
+                    {
+                        type = "Light"
+                    },
+                    {
+                        type = "Medium"
+                        value = 2
+                        focusCost = 1
+                    },
+                )
+            }
+            val expectedCard0: ExpectedCard.() -> Unit = {
+                type = "Light"
+            }
+            val expectedCard1: ExpectedCard.() -> Unit = {
+                type = "Medium"
                 value = 2
-                focusCost = 2
+                focusCost = 1
             }
 
-            api.playCard(creatorToken, 1).let {
+            api.playCard(si.creatorToken, 1).let {
                 assertGameState(it) {
                     hand = {
                         cards = listOf(
                             expectedCard0,
-                            expectedCard2,
-                            expectedCard3,
+                            expectedCard0,
+                            expectedCard1
                         )
                     }
                     table = {
@@ -288,7 +230,7 @@ class KaijuGameImplTest {
                                 mediumGiver = {
                                     damageValue = 2
                                 }
-                                focusLeft = 0
+                                focusLeft = 1
                             }
                             playedCards = listOf(
                                 expectedCard1
@@ -298,7 +240,7 @@ class KaijuGameImplTest {
                 }
             }
 
-            api.getState(joinerToken).let {
+            api.getState(si.joinerToken).let {
                 assertGameState(it) {
                     table = {
                         opponentSide = {
@@ -308,25 +250,58 @@ class KaijuGameImplTest {
                 }
             }
         }
+    }
 
-        @Nested
-        inner class InAssignDamagePhase {
-            @BeforeEach
-            fun `creator has 2 medium damage in pool`() {
-                api.playCard(creatorToken, 1)
-                api.endPhase(creatorToken)
-                api.endPhase(joinerToken)
+    @Nested
+    inner class AssignDamageScope {
+        private lateinit var si: KaijuGameScenarios.InGameStateInfo
 
-                api.getState(creatorToken).let {
-                    assertGameState(it) {
-                        phase = ExpectedTurnPhase.AssignDamage
-                        table = {
-                            mySide = {
-                                pool = {
-                                    mediumGiver = {
-                                        damageValue = 2
-                                    }
-                                    focusLeft = 0
+        @BeforeEach
+        fun `creator has 2 medium damage in pool`() {
+            si = scenarios.inGame {
+                cards = listOf {
+                    type = "Medium"
+                    value = 2
+                    focusCost = 2
+                }
+            }
+
+            api.playCard(si.creatorToken, 0)
+
+            scenarios.progressToPhase(si, TurnPhase.AssignDamage)
+
+
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    phase = ExpectedTurnPhase.AssignDamage
+                    table = {
+                        mySide = {
+                            pool = {
+                                mediumGiver = {
+                                    damageValue = 2
+                                }
+                                focusLeft = 0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @Test
+        fun `should assign damage from pool - opponent does not see`() {
+            api.assignDamage(si.creatorToken, HitZonePosition.Center, DamageType.Medium).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            mediumReceiver = {
+                                myDamage = 2
+                            }
+                        }
+                        mySide = {
+                            pool = {
+                                mediumGiver = {
+                                    damageValue = 0
                                 }
                             }
                         }
@@ -334,35 +309,13 @@ class KaijuGameImplTest {
                 }
             }
 
-            @Test
-            fun `should assign damage from pool - opponent does not see`() {
-                api.assignDamage(creatorToken, HitZonePosition.Center, DamageType.Medium).let {
-                    assertGameState(it) {
-                        table = {
-                            centerZone = {
-                                mediumReceiver = {
-                                    myDamage = 2
-                                }
-                            }
-                            mySide = {
-                                pool = {
-                                    mediumGiver = {
-                                        damageValue = 0
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                api.getState(joinerToken).let {
-                    assertGameState(it) {
-                        table = {
-                            centerZone = {
-                                mediumReceiver = {
-                                    myDamage = 0
-                                    opponentDamage = 0
-                                }
+            api.getState(si.joinerToken).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            mediumReceiver = {
+                                myDamage = 0
+                                opponentDamage = 0
                             }
                         }
                     }
@@ -375,7 +328,9 @@ class KaijuGameImplTest {
     inner class AssignGuardScope {
         @Test
         fun `should assign unspect focus as guard - redues opponent damage`() {
-            val si = scenarios.inPhase(TurnPhase.AssignGuard)
+            val si = scenarios.inPhase {
+                phase = TurnPhase.AssignGuard
+            }
             api.getState(si.creatorToken).let {
                 assertGameState(it) {
                     table = {
@@ -415,6 +370,23 @@ class KaijuGameImplTest {
 
     @Nested
     inner class ChangingPhasesScope {
+        @Test
+        fun `should end PlayCard phase - opponent sees that`() {
+            val si = scenarios.inGame()
+
+            api.endPhase(si.creatorToken).let {
+                assertGameState(it) {
+                    myReady = true
+                }
+            }
+
+            api.getState(si.joinerToken).let {
+                assertGameState(it) {
+                    opponentReady = true
+                }
+            }
+        }
+
         @Test
         fun `should change phases`() {
             val si = scenarios.inGame()

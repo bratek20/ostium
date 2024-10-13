@@ -15,15 +15,15 @@ class KaijuGameScenarios(
     private val cardDrawerFactoryMock: CardDrawerFactoryMock
 ) {
 
-    class InGameArgs(
+    open class InGameArgs(
         var cards: List<CardDef.() -> Unit> = listOf({})
     )
     open class InGameStateInfo(
         val creatorToken: GameToken,
         val joinerToken: GameToken
     )
-    fun inGame(argsInit: InGameArgs.() -> Unit = {}): InGameStateInfo {
-        val args = InGameArgs().apply(argsInit)
+    fun inGame(overriddenArgs: InGameArgs? = null, argsInit: InGameArgs.() -> Unit = {}): InGameStateInfo {
+        val args = overriddenArgs ?: InGameArgs().apply(argsInit)
 
         val creatorToken = gamesManagementApi.create(username("Player1"))
         val joinerToken = gamesManagementApi.join(username("Player2"), creatorToken.getGameId())
@@ -33,21 +33,28 @@ class KaijuGameScenarios(
         return InGameStateInfo(creatorToken, joinerToken)
     }
 
+    class InPhaseArgs(
+        var phase: TurnPhase = TurnPhase.PlayCard
+    ): InGameArgs()
     class InPhaseStateInfo(
         inGameSI: InGameStateInfo
-    ): InGameStateInfo(inGameSI.joinerToken, inGameSI.creatorToken) {
+    ): InGameStateInfo(inGameSI.joinerToken, inGameSI.creatorToken)
+    fun inPhase(argsInit: InPhaseArgs.() -> Unit): InPhaseStateInfo {
+        val args = InPhaseArgs().apply(argsInit)
+        val inGameSI = inGame(overriddenArgs = args)
+
+        progressToPhase(inGameSI, args.phase)
+
+        return InPhaseStateInfo(inGameSI)
     }
 
-    fun inPhase(phase: TurnPhase): InPhaseStateInfo {
-        val inGameSI = inGame()
-
-        var state = api.getState(inGameSI.creatorToken)
+    fun progressToPhase(si: InGameStateInfo, phase: TurnPhase) {
+        var state = api.getState(si.creatorToken)
         while (state.getPhase() != phase) {
-            api.endPhase(inGameSI.creatorToken)
-            api.endPhase(inGameSI.joinerToken)
-            state = api.getState(inGameSI.creatorToken)
+            api.endPhase(si.creatorToken)
+            api.endPhase(si.joinerToken)
+            state = api.getState(si.creatorToken)
         }
-        return InPhaseStateInfo(inGameSI)
     }
 }
 
