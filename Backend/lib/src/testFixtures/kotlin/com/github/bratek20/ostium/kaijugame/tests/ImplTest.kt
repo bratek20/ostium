@@ -510,10 +510,12 @@ class KaijuGameImplTest {
 
         @Test
         fun `should show opponent state in reveal phase`() {
-            scenarios.progressToPhase(si, TurnPhase.Reveal)
+            api.endPhase(si.creatorToken)
+            api.endPhase(si.joinerToken)
 
             api.getState(si.creatorToken).let {
                 assertGameState(it) {
+                    phase = ExpectedTurnPhase.Reveal
                     table = {
                         centerZone = {
                             lightReceiver = {
@@ -541,6 +543,7 @@ class KaijuGameImplTest {
 
             api.getState(si.joinerToken).let {
                 assertGameState(it) {
+                    phase = ExpectedTurnPhase.Reveal
                     table = {
                         centerZone = {
                             lightReceiver = {

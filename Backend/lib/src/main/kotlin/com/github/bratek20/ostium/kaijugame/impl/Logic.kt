@@ -90,6 +90,10 @@ private class PlayerSideLogic {
     private fun allGivers(): List<AttackGiverLogic> {
         return listOf(lightGiver, mediumGiver, heavyGiver)
     }
+
+    companion object {
+        val initState = PlayerSideLogic().getState()
+    }
 }
 
 private class PlayerStateLogic(
@@ -103,10 +107,24 @@ private class PlayerStateLogic(
     private val centerZone = HitZoneLogic(HitZonePosition.Center)
     private val rightZone = HitZoneLogic(HitZonePosition.Right)
 
-    val initSideState = side.getState()
+    private lateinit var opponentRevealedTable: Table
+
+    fun init(initialOpponentTable: Table) {
+        opponentRevealedTable = initialOpponentTable
+    }
 
     fun isReady(): Boolean {
         return ready
+    }
+
+    fun getTableState(): Table {
+        return Table.create(
+            leftZone = getZoneState(HitZonePosition.Left),
+            centerZone = getZoneState(HitZonePosition.Center),
+            rightZone = getZoneState(HitZonePosition.Right),
+            mySide = getSideState(),
+            opponentSide = if(::opponentRevealedTable.isInitialized) opponentRevealedTable.getMySide() else PlayerSideLogic.initState
+        )
     }
 
     fun getSideState(): PlayerSide {
@@ -135,6 +153,14 @@ private class PlayerStateLogic(
 
     fun clearReady() {
         ready = false
+    }
+
+    fun handleReveal(currentOpponentTable: Table) {
+        leftZone.handleReveal(currentOpponentTable.getLeftZone(), opponentRevealedTable.getLeftZone())
+        centerZone.handleReveal(currentOpponentTable.getCenterZone(), opponentRevealedTable.getCenterZone())
+        rightZone.handleReveal(currentOpponentTable.getRightZone(), opponentRevealedTable.getRightZone())
+
+        opponentRevealedTable = currentOpponentTable
     }
 
     fun playCard(handCardIdx: Int) {
@@ -174,6 +200,14 @@ class AttackReceiverLogic(
     fun assignGuard(value: Int) {
         opponentDamage -= value
     }
+
+    fun handleReveal(currentOpponentReceiver: AttackReceiver, previousOpponentReceiver: AttackReceiver) {
+        val opponentDamageDiff = currentOpponentReceiver.getMyDamage() - previousOpponentReceiver.getMyDamage()
+        opponentDamage += opponentDamageDiff
+
+        val myDamageDiff = currentOpponentReceiver.getOpponentDamage() - previousOpponentReceiver.getOpponentDamage()
+        myDamage += myDamageDiff
+    }
 }
 
 private class HitZoneLogic(
@@ -198,6 +232,12 @@ private class HitZoneLogic(
 
     fun assignGuard(damageType: DamageType, value: Int) {
         getReceiver(damageType).assignGuard(value)
+    }
+
+    fun handleReveal(currentOpponentZone: HitZone, previousOpponentZone: HitZone) {
+        lightReceiver.handleReveal(currentOpponentZone.getLightReceiver(), previousOpponentZone.getLightReceiver())
+        mediumReceiver.handleReveal(currentOpponentZone.getMediumReceiver(), previousOpponentZone.getMediumReceiver())
+        heavyReceiver.handleReveal(currentOpponentZone.getHeavyReceiver(), previousOpponentZone.getHeavyReceiver())
     }
 
     private fun getReceiver(damageType: DamageType): AttackReceiverLogic {
@@ -226,17 +266,16 @@ private class GameStateLogic(
     private val creatorState = PlayerStateLogic(drawerFactory.create())
     private val joinerState = PlayerStateLogic(drawerFactory.create())
 
+    init {
+        creatorState.init(joinerState.getTableState())
+        joinerState.init(creatorState.getTableState())
+    }
+
     fun getState(user: Username): GameState {
         return GameState.create(
             turn = 1,
             phase = getCurrentPhase(),
-            table = Table.create(
-                leftZone = getMyState(user).getZoneState(HitZonePosition.Left),
-                centerZone = getMyState(user).getZoneState(HitZonePosition.Center),
-                rightZone = getMyState(user).getZoneState(HitZonePosition.Right),
-                mySide = getMyState(user).getSideState(),
-                opponentSide = getOpponentState(user).initSideState
-            ),
+            table = getMyState(user).getTableState(),
             hand = getMyState(user).getHandState(),
             myReady = getMyState(user).isReady(),
             opponentReady = getOpponentState(user).isReady()
@@ -254,6 +293,14 @@ private class GameStateLogic(
         if (getBothStates().all { it.isReady() }){
             phaseIdx++
             getBothStates().forEach { it.clearReady() }
+
+            if (getCurrentPhase() == TurnPhase.Reveal) {
+                val creatorTable = creatorState.getTableState()
+                val joinerTable = joinerState.getTableState()
+
+                creatorState.handleReveal(joinerTable)
+                joinerState.handleReveal(creatorTable)
+            }
         }
 
         return getState(user)
