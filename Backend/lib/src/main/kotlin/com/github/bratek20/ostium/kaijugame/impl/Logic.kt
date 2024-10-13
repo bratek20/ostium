@@ -135,6 +135,10 @@ private class PlayerStateLogic(
         val damageValue = side.clearDamageAndGet(damageType)
         getHitZone(zone).assignDamage(damageType, damageValue)
     }
+
+    fun assignGuard(zone: HitZonePosition, damageType: DamageType) {
+
+    }
 }
 
 class AttackReceiverLogic(
@@ -231,6 +235,11 @@ private class GameStateLogic(
         return getState(user)
     }
 
+    fun assignGuard(user: Username, zone: HitZonePosition, damageType: DamageType): GameState {
+        getMyState(user).assignGuard(zone, damageType)
+        return getState(user)
+    }
+
     private fun getMyState(user: Username): PlayerStateLogic {
         return if (user == creator) creatorState else joinerState
     }
@@ -262,7 +271,7 @@ class GameApiLogic(
     }
 
     override fun assignGuard(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState {
-        TODO("Not yet implemented")
+        return getGameStateLogic(token).assignGuard(token.getUsername(), zone, damageType)
     }
 
     private fun getCreatedGameOrThrow(token: GameToken): CreatedGame {

@@ -9,10 +9,7 @@ import com.github.bratek20.ostium.gamesmanagement.api.GameToken
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
-import com.github.bratek20.ostium.kaijugame.api.DamageType
-import com.github.bratek20.ostium.kaijugame.api.GameApi
-import com.github.bratek20.ostium.kaijugame.api.GameNotFoundException
-import com.github.bratek20.ostium.kaijugame.api.HitZonePosition
+import com.github.bratek20.ostium.kaijugame.api.*
 import com.github.bratek20.ostium.kaijugame.context.KaijuGameImpl
 import com.github.bratek20.ostium.kaijugame.fixtures.*
 import com.github.bratek20.ostium.user.fixtures.username
@@ -24,6 +21,7 @@ class ExpectedTurnPhase {
     companion object {
         val PlayCard = "PlayCard"
         val AssignDamage = "AssignDamage"
+        val AssignGuard = "AssignGuard"
     }
 }
 
@@ -127,8 +125,9 @@ class KaijuGameImplTest {
 
         @BeforeEach
         fun `game created and cards to be drawn set`() {
-            creatorToken = gamesManagementApi.create(username("Player1"))
-            joinerToken = gamesManagementApi.join(username("Player2"), creatorToken.getGameId())
+            val si = scenarios.inGame()
+            creatorToken = si.creatorToken
+            joinerToken = si.joinerToken
 
             cardDrawerApiMock.setCards(
                 listOf(
@@ -167,6 +166,44 @@ class KaijuGameImplTest {
                     )
                 }
             }
+        }
+
+        private fun expectedInitialHitZone(expectedPosition: String): (ExpectedHitZone.() -> Unit) = {
+            position = expectedPosition
+            lightReceiver = {
+                type = ExpectedDamageType.Light
+                myDamage = 0
+                opponentDamage = 0
+            }
+            mediumReceiver = {
+                type = ExpectedDamageType.Medium
+                myDamage = 0
+                opponentDamage = 0
+            }
+            heavyReceiver = {
+                type = ExpectedDamageType.Heavy
+                myDamage = 0
+                opponentDamage = 0
+            }
+        }
+
+        private fun expectedInitialPlayerSide(): (ExpectedPlayerSide.() -> Unit) = {
+            pool = {
+                lightGiver = {
+                    type = ExpectedDamageType.Light
+                    damageValue = 0
+                }
+                mediumGiver = {
+                    type = ExpectedDamageType.Medium
+                    damageValue = 0
+                }
+                heavyGiver = {
+                    type = ExpectedDamageType.Heavy
+                    damageValue = 0
+                }
+                focusLeft = 2
+            }
+            playedCards = emptyList()
         }
 
         @Test
@@ -299,44 +336,26 @@ class KaijuGameImplTest {
                     }
                 }
             }
+
+            @Test
+            fun `should progress to AssignGuard phase when second player ends his phase`() {
+                api.endPhase(creatorToken)
+
+                api.endPhase(joinerToken).let {
+                    assertGameState(it) {
+                        phase = ExpectedTurnPhase.AssignGuard
+                    }
+                }
+            }
         }
     }
 
-    private fun expectedInitialHitZone(expectedPosition: String): (ExpectedHitZone.() -> Unit) = {
-        position = expectedPosition
-        lightReceiver = {
-            type = ExpectedDamageType.Light
-            myDamage = 0
-            opponentDamage = 0
-        }
-        mediumReceiver = {
-            type = ExpectedDamageType.Medium
-            myDamage = 0
-            opponentDamage = 0
-        }
-        heavyReceiver = {
-            type = ExpectedDamageType.Heavy
-            myDamage = 0
-            opponentDamage = 0
+    @Nested
+    inner class AssignGuardScope {
+        @Test
+        fun x() {
+            val si = scenarios.inPhase(TurnPhase.AssignGuard)
         }
     }
 
-    private fun expectedInitialPlayerSide(): (ExpectedPlayerSide.() -> Unit) = {
-        pool = {
-            lightGiver = {
-                type = ExpectedDamageType.Light
-                damageValue = 0
-            }
-            mediumGiver = {
-                type = ExpectedDamageType.Medium
-                damageValue = 0
-            }
-            heavyGiver = {
-                type = ExpectedDamageType.Heavy
-                damageValue = 0
-            }
-            focusLeft = 2
-        }
-        playedCards = emptyList()
-    }
 }
