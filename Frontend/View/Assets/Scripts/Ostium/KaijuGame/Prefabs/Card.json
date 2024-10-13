@@ -1,0 +1,21 @@
+{
+  "blueprintType": "UiElement",
+  "name": "Card",
+  "viewType": "KaijuGame.View.CardView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "type",
+      "viewType": "B20.Frontend.Elements.View.EnumSwitchView"
+    },
+    {
+      "name": "value",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    },
+    {
+      "name": "focusCost",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    }
+  ],
+  "elementViewType": null
+}

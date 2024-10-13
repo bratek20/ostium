@@ -1,0 +1,25 @@
+{
+  "blueprintType": "UiElement",
+  "name": "HitZone",
+  "viewType": "KaijuGame.View.HitZoneView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "position",
+      "viewType": "B20.Frontend.Elements.View.EnumSwitchView"
+    },
+    {
+      "name": "lightReceiver",
+      "viewType": "KaijuGame.View.AttackReceiverView"
+    },
+    {
+      "name": "mediumReceiver",
+      "viewType": "KaijuGame.View.AttackReceiverView"
+    },
+    {
+      "name": "heavyReceiver",
+      "viewType": "KaijuGame.View.AttackReceiverView"
+    }
+  ],
+  "elementViewType": null
+}

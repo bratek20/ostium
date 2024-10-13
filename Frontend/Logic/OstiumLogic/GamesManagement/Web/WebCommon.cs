@@ -35,15 +35,15 @@ namespace GamesManagement.Web {
     }
 
     public class GamesManagementApiCreateResponse {
-        readonly int value;
+        readonly GameToken value;
 
         public GamesManagementApiCreateResponse(
-            int value
+            GameToken value
         ) {
             this.value = value;
         }
-        public GameId GetValue() {
-            return new GameId(value);
+        public GameToken GetValue() {
+            return value;
         }
     }
 
@@ -66,6 +66,19 @@ namespace GamesManagement.Web {
         }
         public static GamesManagementApiJoinRequest Create(Username joiner, GameId gameId) {
             return new GamesManagementApiJoinRequest(joiner.Value, gameId.Value);
+        }
+    }
+
+    public class GamesManagementApiJoinResponse {
+        readonly GameToken value;
+
+        public GamesManagementApiJoinResponse(
+            GameToken value
+        ) {
+            this.value = value;
+        }
+        public GameToken GetValue() {
+            return value;
         }
     }
 

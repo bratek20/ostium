@@ -1,0 +1,29 @@
+{
+  "blueprintType": "UiElement",
+  "name": "Table",
+  "viewType": "KaijuGame.View.TableView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "leftZone",
+      "viewType": "KaijuGame.View.HitZoneView"
+    },
+    {
+      "name": "centerZone",
+      "viewType": "KaijuGame.View.HitZoneView"
+    },
+    {
+      "name": "rightZone",
+      "viewType": "KaijuGame.View.HitZoneView"
+    },
+    {
+      "name": "mySide",
+      "viewType": "KaijuGame.View.PlayerSideView"
+    },
+    {
+      "name": "opponentSide",
+      "viewType": "KaijuGame.View.PlayerSideView"
+    }
+  ],
+  "elementViewType": null
+}

@@ -7,9 +7,9 @@ using User.Api;
 
 namespace GamesManagement.Api {
     public interface GamesManagementApi {
-        GameId Create(Username creator);
+        GameToken Create(Username creator);
 
-        void Join(Username joiner, GameId gameId);
+        GameToken Join(Username joiner, GameId gameId);
 
         void Delete(GameId gameId);
 

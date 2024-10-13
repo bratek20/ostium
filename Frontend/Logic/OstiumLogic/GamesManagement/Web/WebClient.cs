@@ -17,11 +17,11 @@ namespace GamesManagement.Web {
         ) {
             this.client = factory.Create(config.Value);
         }
-        public GameId Create(Username creator) {
+        public GameToken Create(Username creator) {
             return client.Post("/ostium/gamesManagementApi/create", Optional<GamesManagementApiCreateRequest>.Of(GamesManagementApiCreateRequest.Create(creator))).GetBody<GamesManagementApiCreateResponse>().Get().GetValue();
         }
-        public void Join(Username joiner, GameId gameId) {
-            client.Post("/ostium/gamesManagementApi/join", Optional<GamesManagementApiJoinRequest>.Of(GamesManagementApiJoinRequest.Create(joiner, gameId)));
+        public GameToken Join(Username joiner, GameId gameId) {
+            return client.Post("/ostium/gamesManagementApi/join", Optional<GamesManagementApiJoinRequest>.Of(GamesManagementApiJoinRequest.Create(joiner, gameId))).GetBody<GamesManagementApiJoinResponse>().Get().GetValue();
         }
         public void Delete(GameId gameId) {
             client.Post("/ostium/gamesManagementApi/delete", Optional<GamesManagementApiDeleteRequest>.Of(GamesManagementApiDeleteRequest.Create(gameId)));

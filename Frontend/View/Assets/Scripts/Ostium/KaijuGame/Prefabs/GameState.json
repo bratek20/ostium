@@ -1,0 +1,33 @@
+{
+  "blueprintType": "UiElement",
+  "name": "GameState",
+  "viewType": "KaijuGame.View.GameStateView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "turn",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    },
+    {
+      "name": "phase",
+      "viewType": "B20.Frontend.Elements.View.EnumSwitchView"
+    },
+    {
+      "name": "table",
+      "viewType": "KaijuGame.View.TableView"
+    },
+    {
+      "name": "hand",
+      "viewType": "KaijuGame.View.HandView"
+    },
+    {
+      "name": "myReady",
+      "viewType": "B20.Frontend.Elements.View.BoolSwitchView"
+    },
+    {
+      "name": "opponentReady",
+      "viewType": "B20.Frontend.Elements.View.BoolSwitchView"
+    }
+  ],
+  "elementViewType": null
+}
