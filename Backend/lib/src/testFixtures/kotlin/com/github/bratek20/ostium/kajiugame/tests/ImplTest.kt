@@ -40,6 +40,7 @@ class KajiuGameImplTest {
     private lateinit var api: GameApi
     private lateinit var gamesManagementApi: GamesManagementApi
     private lateinit var cardDrawerApiMock: CardDrawerApiMock
+    private lateinit var scenarios: KaijuGameScenarios
 
     @BeforeEach
     fun createContext() {
@@ -50,13 +51,16 @@ class KajiuGameImplTest {
 
                 CardDrawerMocks(),
 
-                KajiuGameImpl()
+                KajiuGameImpl(),
+
+                KaijuGameScenariosModule()
             )
             .build()
 
         gamesManagementApi = c.get(GamesManagementApi::class.java)
         api = c.get(GameApi::class.java)
         cardDrawerApiMock = c.get(CardDrawerApiMock::class.java)
+        scenarios = c.get(KaijuGameScenarios::class.java)
     }
 
     @Test
