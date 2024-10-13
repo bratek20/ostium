@@ -1,0 +1,94 @@
+Enums
+    DamageType
+        Light
+        Medium
+        Heavy
+
+    TurnPhase
+        PlayCard
+        AssignDamage
+        AssignGuard
+        Reveal
+
+    HitZonePosition
+        Left
+        Center
+        Right
+
+
+ValueObjects
+    AttackReceiver
+        type: DamageType
+        myDamage: int
+        opponentDamage: int
+
+    AttackGiver
+        type: DamageType
+        damageValue: int
+
+    PlayerSide
+        pool: AttackPool
+        playedCards: Card[]
+
+    HitZone
+        position: HitZonePosition
+        lightReceiver: AttackReceiver
+        mediumReceiver: AttackReceiver
+        heavyReceiver: AttackReceiver
+
+    AttackPool
+        lightGiver: AttackGiver
+        mediumGiver: AttackGiver
+        heavyGiver: AttackGiver
+        focusLeft: int
+
+    Table
+        leftZone: HitZone
+        centerZone: HitZone
+        rightZone: HitZone
+
+        mySide: PlayerSide
+        opponentSide: PlayerSide
+
+    Card
+        type: DamageType
+        value: int
+        focusCost: int
+
+    Hand
+        cards: Card[]
+
+    GameState
+        turn: int
+        phase: TurnPhase
+        table: Table
+        hand: Hand
+        myReady: bool
+        opponentReady: bool
+
+Interfaces
+    GameApi
+        getState(token: GameToken): GameState
+            throws
+                GameNotFoundException
+
+        // for all phases
+        endPhase(token: GameToken): GameState
+
+        //TurnPhase.PlayCard
+        playCard(token: GameToken, handCardIdx: int): GameState
+
+        //TurnPhase.AssignDamage
+        assignDamage(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
+
+        //TurnPhase.AssignGuard
+        assignGuard(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
+
+
+Web
+    Http
+        ExposedInterfaces
+            GameApi
+        urlPathPrefix = "/ostium"
+
+

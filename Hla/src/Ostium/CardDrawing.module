@@ -1,0 +1,6 @@
+Interfaces
+    CardDrawer
+        draw(): Card
+
+    CardDrawerFactory
+        create(): CardDrawer

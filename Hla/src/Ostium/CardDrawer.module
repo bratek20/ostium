@@ -1,3 +1,0 @@
-Interfaces
-    CardDrawerApi
-        draw(): Card
