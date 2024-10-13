@@ -422,14 +422,149 @@ class KaijuGameImplTest {
 
     @Nested
     inner class RevealScope {
-        @Test
-        fun `should not show opponent state before reveal phase`() {
+        private lateinit var si: KaijuGameScenarios.InGameStateInfo
 
+        @BeforeEach
+        fun `some cards played, damage and guard assigned - by both players`() {
+            si = scenarios.inGame {
+                cards = listOf (
+                    {
+                        type = "Light"
+                        value = 5
+                        focusCost = 0
+                    },
+                    {
+                        type = "Medium"
+                        value = 5
+                        focusCost = 1
+                    }
+                )
+            }
+
+            api.playCard(si.creatorToken, 0) // Light
+            api.playCard(si.joinerToken, 1) // Medium
+
+            scenarios.progressToPhase(si, TurnPhase.AssignDamage)
+
+            api.assignDamage(si.creatorToken, HitZonePosition.Center, DamageType.Light) // 5 dmg
+            api.assignDamage(si.joinerToken, HitZonePosition.Center, DamageType.Medium) // 5 dmg
+
+            scenarios.progressToPhase(si, TurnPhase.AssignGuard)
+
+            api.assignGuard(si.creatorToken, HitZonePosition.Center, DamageType.Medium) // -2 dmg
+            api.assignGuard(si.joinerToken, HitZonePosition.Center, DamageType.Light) // -1 dmg
         }
 
         @Test
-        fun `should show opponent in reveal phase`() {
+        fun `should not show opponent state before reveal phase`() {
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            lightReceiver = {
+                                myDamage = 5
+                                opponentDamage = 0
+                            }
+                            mediumReceiver = {
+                                myDamage = 0
+                                opponentDamage = -2
+                            }
+                        }
+                        mySide = {
+                            playedCards = listOf {
+                                type = "Light"
+                            }
+                        }
+                        opponentSide = {
+                            playedCards = emptyList()
+                        }
+                    }
+                }
+            }
 
+            api.getState(si.joinerToken).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            lightReceiver = {
+                                myDamage = 0
+                                opponentDamage = -1
+                            }
+                            mediumReceiver = {
+                                myDamage = 5
+                                opponentDamage = 0
+                            }
+                        }
+                        mySide = {
+                            playedCards = listOf {
+                                type = "Medium"
+                            }
+                        }
+                        opponentSide = {
+                            playedCards = emptyList()
+                        }
+                    }
+                }
+            }
+        }
+
+        @Test
+        fun `should show opponent state in reveal phase`() {
+            scenarios.progressToPhase(si, TurnPhase.Reveal)
+
+            api.getState(si.creatorToken).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            lightReceiver = {
+                                myDamage = 4
+                                opponentDamage = 0
+                            }
+                            mediumReceiver = {
+                                myDamage = 0
+                                opponentDamage = 3
+                            }
+                        }
+                        mySide = {
+                            playedCards = listOf {
+                                type = "Light"
+                            }
+                        }
+                        opponentSide = {
+                            playedCards = listOf {
+                                type = "Medium"
+                            }
+                        }
+                    }
+                }
+            }
+
+            api.getState(si.joinerToken).let {
+                assertGameState(it) {
+                    table = {
+                        centerZone = {
+                            lightReceiver = {
+                                myDamage = 0
+                                opponentDamage = 4
+                            }
+                            mediumReceiver = {
+                                myDamage = 3
+                                opponentDamage = 0
+                            }
+                        }
+                        mySide = {
+                            playedCards = listOf {
+                                type = "Medium"
+                            }
+                        }
+                        opponentSide = {
+                            playedCards = listOf {
+                                type = "Light"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
