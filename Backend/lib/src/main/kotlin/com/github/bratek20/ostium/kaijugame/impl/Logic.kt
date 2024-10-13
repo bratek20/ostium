@@ -76,6 +76,12 @@ private class PlayerSideLogic {
         return getGiver(damageType).clearDamageAndGet()
     }
 
+    fun clearFocusAndGet(): Int {
+        val result = focusLeft
+        focusLeft = 0
+        return result
+    }
+
     private fun getGiver(damageType: DamageType): AttackGiverLogic {
         return allGivers().first { it.type == damageType }
     }
@@ -141,7 +147,8 @@ private class PlayerStateLogic(
     }
 
     fun assignGuard(zone: HitZonePosition, damageType: DamageType) {
-
+        val guardValue = side.clearFocusAndGet()
+        getHitZone(zone).assignGuard(damageType, guardValue)
     }
 }
 
@@ -161,6 +168,10 @@ class AttackReceiverLogic(
 
     fun assignDamage(value: Int) {
         myDamage += value
+    }
+
+    fun assignGuard(value: Int) {
+        opponentDamage -= value
     }
 }
 
@@ -182,6 +193,10 @@ private class HitZoneLogic(
 
     fun assignDamage(damageType: DamageType, value: Int) {
         getReceiver(damageType).assignDamage(value)
+    }
+
+    fun assignGuard(damageType: DamageType, value: Int) {
+        getReceiver(damageType).assignGuard(value)
     }
 
     private fun getReceiver(damageType: DamageType): AttackReceiverLogic {
