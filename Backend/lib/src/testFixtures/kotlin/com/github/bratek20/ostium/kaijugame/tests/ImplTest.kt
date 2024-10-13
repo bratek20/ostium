@@ -110,7 +110,7 @@ class KaijuGameImplTest {
         @Test
         fun `should return same initial state for both players`() {
             val si = scenarios.inGame {
-                cards = listOf(
+                drawerMockCards = listOf(
                     card0Def,
                     card1Def,
                     card2Def
@@ -195,7 +195,7 @@ class KaijuGameImplTest {
         fun `should play card - opponent does not see`() {
             val si = scenarios.inPhase {
                 phase = TurnPhase.PlayCard
-                cards = listOf (
+                drawerMockCards = listOf (
                     {
                         type = "Light"
                     },
@@ -259,7 +259,7 @@ class KaijuGameImplTest {
         @BeforeEach
         fun `creator has 2 medium damage in pool`() {
             si = scenarios.inGame {
-                cards = listOf {
+                drawerMockCards = listOf {
                     type = "Medium"
                     value = 2
                     focusCost = 2
@@ -427,7 +427,7 @@ class KaijuGameImplTest {
         @BeforeEach
         fun `some cards played, damage and guard assigned - by both players`() {
             si = scenarios.inGame {
-                cards = listOf (
+                drawerMockCards = listOf (
                     {
                         type = "Light"
                         value = 5
@@ -577,7 +577,7 @@ class KaijuGameImplTest {
         fun `should have 4 focus and draw to 4 cards in second turn`() {
             val si = scenarios.inPhase {
                 phase = TurnPhase.PlayCard
-                cards = listOf(
+                drawerMockCards = listOf(
                     {
                         type = "Light"
                         focusCost = 1
