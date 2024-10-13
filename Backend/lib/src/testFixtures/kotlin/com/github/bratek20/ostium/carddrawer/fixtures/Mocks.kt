@@ -1,9 +1,9 @@
 package com.github.bratek20.ostium.carddrawer.fixtures
 
 import com.github.bratek20.ostium.carddrawer.api.CardDrawerApi
-import com.github.bratek20.ostium.kajiugame.api.Card
-import com.github.bratek20.ostium.kajiugame.fixtures.CardDef
-import com.github.bratek20.ostium.kajiugame.fixtures.card
+import com.github.bratek20.ostium.kaijugame.api.Card
+import com.github.bratek20.ostium.kaijugame.fixtures.CardDef
+import com.github.bratek20.ostium.kaijugame.fixtures.card
 
 class CardDrawerApiMock: CardDrawerApi {
     private var cards: List<CardDef.() -> Unit> = listOf({})

@@ -1,10 +1,10 @@
-package com.github.bratek20.ostium.kajiugame.fixtures
+package com.github.bratek20.ostium.kaijugame.fixtures
 
 import com.github.bratek20.architecture.context.api.ContextBuilder
 import com.github.bratek20.architecture.context.api.ContextModule
 import com.github.bratek20.ostium.carddrawer.fixtures.CardDrawerApiMock
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
-import com.github.bratek20.ostium.kajiugame.api.GameApi
+import com.github.bratek20.ostium.kaijugame.api.GameApi
 
 class KaijuGameScenarios(
     private val api: GameApi,

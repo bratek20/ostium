@@ -2,7 +2,7 @@
 
 package com.github.bratek20.ostium.carddrawer.api
 
-import com.github.bratek20.ostium.kajiugame.api.*
+import com.github.bratek20.ostium.kaijugame.api.*
 
 interface CardDrawerApi {
     fun draw(): Card

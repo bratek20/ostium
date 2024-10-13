@@ -1,4 +1,4 @@
-package com.github.bratek20.ostium.kajiugame.tests
+package com.github.bratek20.ostium.kaijugame.tests
 
 import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.architecture.exceptions.assertApiExceptionThrown
@@ -9,12 +9,12 @@ import com.github.bratek20.ostium.gamesmanagement.api.GameToken
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
 import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
-import com.github.bratek20.ostium.kajiugame.api.DamageType
-import com.github.bratek20.ostium.kajiugame.api.GameApi
-import com.github.bratek20.ostium.kajiugame.api.GameNotFoundException
-import com.github.bratek20.ostium.kajiugame.api.HitZonePosition
-import com.github.bratek20.ostium.kajiugame.context.KajiuGameImpl
-import com.github.bratek20.ostium.kajiugame.fixtures.*
+import com.github.bratek20.ostium.kaijugame.api.DamageType
+import com.github.bratek20.ostium.kaijugame.api.GameApi
+import com.github.bratek20.ostium.kaijugame.api.GameNotFoundException
+import com.github.bratek20.ostium.kaijugame.api.HitZonePosition
+import com.github.bratek20.ostium.kaijugame.context.KaijuGameImpl
+import com.github.bratek20.ostium.kaijugame.fixtures.*
 import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -35,7 +35,7 @@ class ExpectedDamageType {
     }
 }
 
-class KajiuGameImplTest {
+class KaijuGameImplTest {
 
     private lateinit var api: GameApi
     private lateinit var gamesManagementApi: GamesManagementApi
@@ -51,7 +51,7 @@ class KajiuGameImplTest {
 
                 CardDrawerMocks(),
 
-                KajiuGameImpl(),
+                KaijuGameImpl(),
 
                 KaijuGameScenariosModule()
             )

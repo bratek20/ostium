@@ -1,7 +1,7 @@
-package com.github.bratek20.ostium.kajiugame.impl
+package com.github.bratek20.ostium.kaijugame.impl
 
 import com.github.bratek20.ostium.carddrawer.api.CardDrawerApi
-import com.github.bratek20.ostium.kajiugame.api.*
+import com.github.bratek20.ostium.kaijugame.api.*
 import com.github.bratek20.ostium.gamesmanagement.api.*
 import com.github.bratek20.ostium.user.api.Username
 
