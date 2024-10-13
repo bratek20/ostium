@@ -1,12 +1,13 @@
 package com.github.bratek20.ostium.kaijugame.impl
 
-import com.github.bratek20.ostium.carddrawer.api.CardDrawerApi
+import com.github.bratek20.ostium.carddrawing.api.CardDrawer
+import com.github.bratek20.ostium.carddrawing.api.CardDrawerFactory
 import com.github.bratek20.ostium.kaijugame.api.*
 import com.github.bratek20.ostium.gamesmanagement.api.*
 import com.github.bratek20.ostium.user.api.Username
 
 private class HandLogic(
-    private val drawer: CardDrawerApi
+    private val drawer: CardDrawer
 ) {
     private val cards = mutableListOf(
         drawer.draw(),
@@ -92,7 +93,7 @@ private class PlayerSideLogic {
 }
 
 private class PlayerStateLogic(
-    drawer: CardDrawerApi
+    drawer: CardDrawer
 ) {
     private val hand = HandLogic(drawer)
     private val side = PlayerSideLogic()
@@ -210,7 +211,7 @@ private class HitZoneLogic(
 
 private class GameStateLogic(
     private val creator: Username,
-    drawer: CardDrawerApi
+    drawerFactory: CardDrawerFactory
 ) {
     companion object {
         private val orderedPhases = listOf(
@@ -222,8 +223,8 @@ private class GameStateLogic(
     }
     private var phaseIdx = 0
 
-    private val creatorState = PlayerStateLogic(drawer)
-    private val joinerState = PlayerStateLogic(drawer)
+    private val creatorState = PlayerStateLogic(drawerFactory.create())
+    private val joinerState = PlayerStateLogic(drawerFactory.create())
 
     fun getState(user: Username): GameState {
         return GameState.create(
@@ -288,7 +289,7 @@ private class GameStateLogic(
 
 class GameApiLogic(
     private val managementApi: GamesManagementApi,
-    private val drawer: CardDrawerApi
+    private val drawerFactory: CardDrawerFactory
 ) : GameApi {
 
     override fun getState(token: GameToken): GameState {
@@ -323,7 +324,7 @@ class GameApiLogic(
     private fun getGameStateLogic(token: GameToken): GameStateLogic {
         if (!gameStates.containsKey(token.getGameId())) {
             val createdGame = getCreatedGameOrThrow(token)
-            gameStates[token.getGameId()] = GameStateLogic(createdGame.getCreator(), drawer)
+            gameStates[token.getGameId()] = GameStateLogic(createdGame.getCreator(), drawerFactory)
         }
         return gameStates[token.getGameId()]!!
     }

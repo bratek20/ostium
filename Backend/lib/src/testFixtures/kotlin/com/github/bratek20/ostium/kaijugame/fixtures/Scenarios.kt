@@ -2,7 +2,7 @@ package com.github.bratek20.ostium.kaijugame.fixtures
 
 import com.github.bratek20.architecture.context.api.ContextBuilder
 import com.github.bratek20.architecture.context.api.ContextModule
-import com.github.bratek20.ostium.carddrawer.fixtures.CardDrawerApiMock
+import com.github.bratek20.ostium.carddrawing.fixtures.CardDrawerFactoryMock
 import com.github.bratek20.ostium.gamesmanagement.api.GameToken
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.kaijugame.api.GameApi
@@ -12,7 +12,7 @@ import com.github.bratek20.ostium.user.fixtures.username
 class KaijuGameScenarios(
     private val api: GameApi,
     private val gamesManagementApi: GamesManagementApi,
-    private val cardDrawerApiMock: CardDrawerApiMock
+    private val cardDrawerFactoryMock: CardDrawerFactoryMock
 ) {
 
     class InGameArgs(
@@ -28,7 +28,7 @@ class KaijuGameScenarios(
         val creatorToken = gamesManagementApi.create(username("Player1"))
         val joinerToken = gamesManagementApi.join(username("Player2"), creatorToken.getGameId())
 
-        cardDrawerApiMock.setCards(args.cards)
+        cardDrawerFactoryMock.setCards(args.cards)
 
         return InGameStateInfo(creatorToken, joinerToken)
     }

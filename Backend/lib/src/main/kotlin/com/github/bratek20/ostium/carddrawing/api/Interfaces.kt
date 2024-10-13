@@ -4,6 +4,10 @@ package com.github.bratek20.ostium.carddrawing.api
 
 import com.github.bratek20.ostium.kaijugame.api.*
 
-interface CardDrawerApi {
+interface CardDrawer {
     fun draw(): Card
+}
+
+interface CardDrawerFactory {
+    fun create(): CardDrawer
 }

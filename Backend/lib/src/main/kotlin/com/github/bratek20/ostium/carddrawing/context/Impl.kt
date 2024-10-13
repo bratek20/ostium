@@ -6,9 +6,10 @@ import com.github.bratek20.architecture.context.api.ContextModule
 import com.github.bratek20.ostium.carddrawing.api.*
 import com.github.bratek20.ostium.carddrawing.impl.*
 
-class CardDrawerImpl: ContextModule {
+class CardDrawingImpl: ContextModule {
     override fun apply(builder: ContextBuilder) {
         builder
-            .setImpl(CardDrawerApi::class.java, CardDrawerApiLogic::class.java)
+            .setImpl(CardDrawer::class.java, CardDrawerLogic::class.java)
+            .setImpl(CardDrawerFactory::class.java, CardDrawerFactoryLogic::class.java)
     }
 }

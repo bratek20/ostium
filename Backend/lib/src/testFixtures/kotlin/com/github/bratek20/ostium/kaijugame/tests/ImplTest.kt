@@ -4,7 +4,6 @@ import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.architecture.exceptions.assertApiExceptionThrown
 import com.github.bratek20.logs.LogsMocks
 import com.github.bratek20.ostium.carddrawing.context.CardDrawerMocks
-import com.github.bratek20.ostium.carddrawing.fixtures.CardDrawerApiMock
 import com.github.bratek20.ostium.gamesmanagement.api.GameToken
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
@@ -36,8 +35,6 @@ class ExpectedDamageType {
 class KaijuGameImplTest {
 
     private lateinit var api: GameApi
-    private lateinit var gamesManagementApi: GamesManagementApi
-    private lateinit var cardDrawerApiMock: CardDrawerApiMock
     private lateinit var scenarios: KaijuGameScenarios
 
     @BeforeEach
@@ -55,9 +52,7 @@ class KaijuGameImplTest {
             )
             .build()
 
-        gamesManagementApi = c.get(GamesManagementApi::class.java)
         api = c.get(GameApi::class.java)
-        cardDrawerApiMock = c.get(CardDrawerApiMock::class.java)
         scenarios = c.get(KaijuGameScenarios::class.java)
     }
 
@@ -242,18 +237,16 @@ class KaijuGameImplTest {
 
         @BeforeEach
         fun `game created and cards to be drawn set`() {
-            val si = scenarios.inGame()
-            creatorToken = si.creatorToken
-            joinerToken = si.joinerToken
-
-            cardDrawerApiMock.setCards(
-                listOf(
+            val si = scenarios.inGame {
+                cards = listOf(
                     card0Def,
                     card1Def,
                     card2Def,
                     card3Def
                 )
-            )
+            }
+            creatorToken = si.creatorToken
+            joinerToken = si.joinerToken
         }
 
         @Test
