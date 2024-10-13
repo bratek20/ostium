@@ -85,3 +85,10 @@ Interfaces
         assignGuard(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
 
 
+Web
+    Http
+        ExposedInterfaces
+            GameApi
+        urlPathPrefix = "/ostium"
+
+
