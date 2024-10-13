@@ -3,8 +3,8 @@ package com.github.bratek20.ostium.kaijugame.tests
 import com.github.bratek20.architecture.context.someContextBuilder
 import com.github.bratek20.architecture.exceptions.assertApiExceptionThrown
 import com.github.bratek20.logs.LogsMocks
-import com.github.bratek20.ostium.carddrawer.context.CardDrawerMocks
-import com.github.bratek20.ostium.carddrawer.fixtures.CardDrawerApiMock
+import com.github.bratek20.ostium.carddrawing.context.CardDrawerMocks
+import com.github.bratek20.ostium.carddrawing.fixtures.CardDrawerApiMock
 import com.github.bratek20.ostium.gamesmanagement.api.GameToken
 import com.github.bratek20.ostium.gamesmanagement.api.GamesManagementApi
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementImpl
@@ -12,7 +12,6 @@ import com.github.bratek20.ostium.gamesmanagement.fixtures.gameToken
 import com.github.bratek20.ostium.kaijugame.api.*
 import com.github.bratek20.ostium.kaijugame.context.KaijuGameImpl
 import com.github.bratek20.ostium.kaijugame.fixtures.*
-import com.github.bratek20.ostium.user.fixtures.username
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

@@ -1,6 +1,6 @@
-package com.github.bratek20.ostium.carddrawer.impl
+package com.github.bratek20.ostium.carddrawing.impl
 
-import com.github.bratek20.ostium.carddrawer.api.*
+import com.github.bratek20.ostium.carddrawing.api.*
 
 import com.github.bratek20.ostium.kaijugame.api.*
 
