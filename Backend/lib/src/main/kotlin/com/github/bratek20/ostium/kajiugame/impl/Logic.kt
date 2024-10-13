@@ -25,9 +25,10 @@ private class HandLogic(
 }
 
 private class AttackGiverLogic(
-    val type: DamageType,
-    private var damageValue: Int
+    val type: DamageType
 ) {
+    private var damageValue = 0
+
     fun getState(): AttackGiver {
         return AttackGiver.create(
             type = type,
@@ -48,9 +49,9 @@ private class AttackGiverLogic(
 
 private class PlayerSideLogic {
     private val playedCards = mutableListOf<Card>()
-    private val lightGiver = AttackGiverLogic(DamageType.Light, 0)
-    private val mediumGiver = AttackGiverLogic(DamageType.Medium, 0)
-    private val heavyGiver = AttackGiverLogic(DamageType.Heavy, 0)
+    private val lightGiver = AttackGiverLogic(DamageType.Light)
+    private val mediumGiver = AttackGiverLogic(DamageType.Medium)
+    private val heavyGiver = AttackGiverLogic(DamageType.Heavy)
     private var focusLeft = 2
 
     fun getState(): PlayerSide {
@@ -91,6 +92,10 @@ private class PlayerStateLogic(
     private val side = PlayerSideLogic()
     private var ready = false
 
+    private val leftZone = HitZoneLogic(HitZonePosition.Left)
+    private val centerZone = HitZoneLogic(HitZonePosition.Center)
+    private val rightZone = HitZoneLogic(HitZonePosition.Right)
+
     val initSideState = side.getState()
 
     fun isReady(): Boolean {
@@ -105,6 +110,18 @@ private class PlayerStateLogic(
         return hand.getState()
     }
 
+    fun getZoneState(zone: HitZonePosition): HitZone {
+        return getHitZone(zone).getState()
+    }
+
+    private fun getHitZone(zone: HitZonePosition): HitZoneLogic {
+        return when (zone) {
+            HitZonePosition.Left -> leftZone
+            HitZonePosition.Center -> centerZone
+            HitZonePosition.Right -> rightZone
+        }
+    }
+
     fun markReady() {
         ready = true
     }
@@ -114,8 +131,9 @@ private class PlayerStateLogic(
         side.handleCardPlayed(handCard)
     }
 
-    fun clearDamageAndGet(damageType: DamageType): Int {
-        return side.clearDamageAndGet(damageType)
+    fun assignDamage(zone: HitZonePosition, damageType: DamageType) {
+        val damageValue = side.clearDamageAndGet(damageType)
+        getHitZone(zone).assignDamage(damageType, damageValue)
     }
 }
 
@@ -173,10 +191,6 @@ private class GameStateLogic(
 ) {
     private var phase = TurnPhase.PlayCard
 
-    private val leftZone = HitZoneLogic(HitZonePosition.Left)
-    private val centerZone = HitZoneLogic(HitZonePosition.Center)
-    private val rightZone = HitZoneLogic(HitZonePosition.Right)
-
     private val creatorState = PlayerStateLogic(drawer)
     private val joinerState = PlayerStateLogic(drawer)
 
@@ -185,9 +199,9 @@ private class GameStateLogic(
             turn = 1,
             phase = phase,
             table = Table.create(
-                leftZone = leftZone.getState(),
-                centerZone = centerZone.getState(),
-                rightZone = rightZone.getState(),
+                leftZone = getMyState(user).getZoneState(HitZonePosition.Left),
+                centerZone = getMyState(user).getZoneState(HitZonePosition.Center),
+                rightZone = getMyState(user).getZoneState(HitZonePosition.Right),
                 mySide = getMyState(user).getSideState(),
                 opponentSide = getOpponentState(user).initSideState
             ),
@@ -213,17 +227,8 @@ private class GameStateLogic(
     }
 
     fun assignDamage(user: Username, zone: HitZonePosition, damageType: DamageType): GameState {
-        val damageValue = getMyState(user).clearDamageAndGet(damageType)
-        getHitZone(zone).assignDamage(damageType, damageValue)
+        getMyState(user).assignDamage(zone, damageType)
         return getState(user)
-    }
-
-    private fun getHitZone(zone: HitZonePosition): HitZoneLogic {
-        return when (zone) {
-            HitZonePosition.Left -> leftZone
-            HitZonePosition.Center -> centerZone
-            HitZonePosition.Right -> rightZone
-        }
     }
 
     private fun getMyState(user: Username): PlayerStateLogic {
