@@ -3,6 +3,7 @@ package com.github.bratek20.ostium
 import com.github.bratek20.logs.api.Logger
 import com.github.bratek20.logs.logback.api.LogbackHelper
 import com.github.bratek20.logs.logback.context.LogsLogbackImpl
+import com.github.bratek20.ostium.carddrawing.context.CardDrawingImpl
 import com.github.bratek20.ostium.gamesmanagement.context.GamesManagementWebServer
 import com.github.bratek20.ostium.kaijugame.context.KaijuGameWebServer
 import com.github.bratek20.spring.webapp.SpringWebApp
@@ -12,7 +13,10 @@ fun main() {
     val c = SpringWebApp(
         modules = listOf(
             GamesManagementWebServer(),
+
+            CardDrawingImpl(),
             KaijuGameWebServer(),
+
             LogsLogbackImpl()
         ),
     ).run()
