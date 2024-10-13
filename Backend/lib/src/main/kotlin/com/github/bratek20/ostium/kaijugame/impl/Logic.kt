@@ -261,6 +261,10 @@ class GameApiLogic(
         return getGameStateLogic(token).assignDamage(token.getUsername(), zone, damageType)
     }
 
+    override fun assignGuard(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState {
+        TODO("Not yet implemented")
+    }
+
     private fun getCreatedGameOrThrow(token: GameToken): CreatedGame {
         val game = managementApi.getAllCreated().firstOrNull { it.getId() == token.getGameId() }
         if (game == null) {

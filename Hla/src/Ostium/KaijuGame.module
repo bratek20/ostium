@@ -81,6 +81,7 @@ Interfaces
         //TurnPhase.AssignDamage
         assignDamage(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
 
-        //assignGuard(...): GameState
+        //TurnPhase.AssignGuard
+        assignGuard(token: GameToken, zone: HitZonePosition, damageType: DamageType): GameState
 
 
