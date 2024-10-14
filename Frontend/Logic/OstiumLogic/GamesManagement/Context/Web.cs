@@ -16,7 +16,7 @@ namespace GamesManagement.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .SetImplObject(new GamesManagementWebClientConfig(_config))
+                .SetImplObject<GamesManagementWebClientConfig>(new GamesManagementWebClientConfig(_config))
                 .SetImpl<GamesManagementApi, GamesManagementApiWebClient>();
         }
     }
