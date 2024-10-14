@@ -23,8 +23,9 @@ namespace Ostium.Logic.Tests
             _output = output;
         }
 
+        //TODO-FIX rework to kxk
         [Fact(
-            //Skip = "Comment this line to test real server interaction"
+            Skip = "Comment this line to test real server interaction"
         )]
         public void CloudGreenPathTest()
         {

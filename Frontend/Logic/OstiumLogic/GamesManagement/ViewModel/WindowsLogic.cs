@@ -57,8 +57,8 @@ namespace GamesManagement.ViewModel
         
         private void OnCreateClicked()
         {
-            var gameId = api.Create(State.Username);
-            windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(State.Username, gameId));
+            var token = api.Create(State.Username);
+            windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(State.Username, token.GetGameId()));
         }
         
         private void HandleCreatedGameDeleteButtonClicked(CreatedGameVm game)

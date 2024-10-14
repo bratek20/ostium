@@ -10,10 +10,10 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
     public class GamesManagementApiMock: GamesManagementApi
     {
         private Username lastCreateCreator;
-        public GameId Create(Username creator)
+        public GameToken Create(Username creator)
         {
             lastCreateCreator = creator;
-            return new GameId(666);
+            return new GameToken(666, creator.Value);
         }
         
         public void AssertCreateCalled(Username creator)
@@ -23,10 +23,11 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
 
         private Username lastJoinJoiner;
         private GameId lastJoinGameId;
-        public void Join(Username joiner, GameId gameId)
+        public GameToken Join(Username joiner, GameId gameId)
         {
             lastJoinJoiner = joiner;
             lastJoinGameId = gameId;
+            return new GameToken(666, joiner.Value);
         }
 
         private GameId lastDeleteGameId;

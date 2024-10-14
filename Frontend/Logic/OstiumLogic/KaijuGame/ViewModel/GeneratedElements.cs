@@ -120,11 +120,4 @@ namespace KaijuGame.ViewModel {
         ): base(() => c.Get<CardVm>()) {
         }
     }
-
-    public class CardVmGroup: UiElementGroup<CardVm, Card> {
-        public CardVmGroup(
-            B20.Architecture.Contexts.Api.Context c
-        ): base(() => c.Get<CardVm>()) {
-        }
-    }
 }
