@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using B20.Architecture.Contexts.Api;
 using B20.Ext;
-using KaijuGame.Api;
-using GamesManagement.Api;
+using B20.Architecture.Contexts.Api;
 using HttpClientModule.Api;
+using KaijuGame.Api;
 using KaijuGame.Web;
+using GamesManagement.Api;
 
 namespace KaijuGame.Context {
     public class KaijuGameWebClient: ContextModule {

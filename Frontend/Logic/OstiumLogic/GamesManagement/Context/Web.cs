@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using B20.Architecture.Contexts.Api;
 using B20.Ext;
+using B20.Architecture.Contexts.Api;
+using HttpClientModule.Api;
 using GamesManagement.Api;
 using GamesManagement.Web;
-using HttpClientModule.Api;
 using User.Api;
 
 namespace GamesManagement.Context {

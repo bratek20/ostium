@@ -34,7 +34,7 @@ class KaijuGameScenarios(
     }
 
     class InPhaseArgs(
-        var phase: TurnPhase = TurnPhase.PlayCard
+        var phase: TurnPhase? = null
     ): InGameArgs()
     class InPhaseStateInfo(
         inGameSI: InGameStateInfo
@@ -43,7 +43,7 @@ class KaijuGameScenarios(
         val args = InPhaseArgs().apply(argsInit)
         val inGameSI = inGame(overriddenArgs = args)
 
-        progressToPhase(inGameSI, args.phase)
+        progressToPhase(inGameSI, args.phase!!)
 
         return InPhaseStateInfo(inGameSI)
     }
