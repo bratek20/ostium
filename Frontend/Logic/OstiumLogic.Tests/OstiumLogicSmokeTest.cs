@@ -7,6 +7,7 @@ using B20.Tests.Architecture.Logs.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.ViewModel;
+using KaijuGame.ViewModel;
 using Main.ViewModel;
 using SingleGame.ViewModel;
 using Xunit;
@@ -22,10 +23,9 @@ namespace Ostium.Logic.Tests
         {
             _output = output;
         }
-
-        //TODO-FIX rework to kxk
+        
         [Fact(
-            Skip = "Comment this line to test real server interaction"
+            //Skip = "Comment this line to test real server interaction"
         )]
         public void CloudGreenPathTest()
         {
@@ -53,9 +53,9 @@ namespace Ostium.Logic.Tests
             var gamesManagementWindow = windowManager.GetCurrent() as GamesManagementWindow;
             gamesManagementWindow.CreateGame.Click();
             
-            var gameWindow = windowManager.GetCurrent() as OldGameWindow;
+            var gameWindow = windowManager.GetCurrent() as GameWindow;
             
-            AssertExt.ListCount(gameWindow.GameState.MyHand.Cards.Model, 2);
+            AssertExt.Equal(gameWindow.GameState.Turn.Model, "1");
         }
 
         private Context CreateContext(ServerType serverType)

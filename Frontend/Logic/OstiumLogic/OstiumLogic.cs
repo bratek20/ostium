@@ -11,6 +11,7 @@ using B20.Infrastructure.HttpClientModule.Context;
 using GamesManagement.Context;
 using SingleGame.Context;
 using HttpClientModule.Api;
+using KaijuGame.Context;
 using Main.ViewModel;
 using Ostium.Logic.GameModule.Context;
 using Ostium.Logic.MainWindowModule.Context;
@@ -47,7 +48,7 @@ namespace Ostium.Logic
                 .WithModules( // ostium modules
                     new MainViewModel(),
                     new GamesManagementViewModel(),
-                    new SingleGameViewModel()
+                    new KaijuGameViewModel()
                 )
                 .SetClass<OstiumLogic>();
         }
@@ -92,7 +93,7 @@ namespace Ostium.Logic
                     new OstiumLogicNoBackendImpl(),
                     
                     new DotNetHttpClientModuleImpl(),
-                    new SingleGameWebClient(httpConfig),
+                    new KaijuGameWebClient(httpConfig),
                     new GamesManagementWebClient(httpConfig)
                 );
         }
