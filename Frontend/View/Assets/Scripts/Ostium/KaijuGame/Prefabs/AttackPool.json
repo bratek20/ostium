@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "AttackPool",
   "viewType": "KaijuGame.View.AttackPoolView",
-  "creationOrder": 1,
+  "creationOrder": 2,
   "children": [
     {
       "name": "lightGiver",

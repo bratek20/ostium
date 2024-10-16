@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "HitZone",
   "viewType": "KaijuGame.View.HitZoneView",
-  "creationOrder": 1,
+  "creationOrder": 2,
   "children": [
     {
       "name": "position",

@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "GameState",
   "viewType": "KaijuGame.View.GameStateView",
-  "creationOrder": 1,
+  "creationOrder": 15,
   "children": [
     {
       "name": "turn",

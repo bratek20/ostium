@@ -460,7 +460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowPrefabs:
-  - {fileID: 9041289285158896413, guid: 5c5d545888466a944bccdb3519856ddc, type: 3}
   - {fileID: 3831434279102806826, guid: c0614b3711f5dd849bd9f00f90ef872a, type: 3}
   - {fileID: 7864151477474263191, guid: 9e84e8455a7d7a34cbfc9e5f50043f1d, type: 3}
 --- !u!1 &2030486941

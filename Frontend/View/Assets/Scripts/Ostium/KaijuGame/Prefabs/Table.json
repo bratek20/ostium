@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "Table",
   "viewType": "KaijuGame.View.TableView",
-  "creationOrder": 1,
+  "creationOrder": 12,
   "children": [
     {
       "name": "leftZone",

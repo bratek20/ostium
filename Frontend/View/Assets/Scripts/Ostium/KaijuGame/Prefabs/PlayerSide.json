@@ -2,7 +2,7 @@
   "blueprintType": "UiElement",
   "name": "PlayerSide",
   "viewType": "KaijuGame.View.PlayerSideView",
-  "creationOrder": 1,
+  "creationOrder": 11,
   "children": [
     {
       "name": "pool",
