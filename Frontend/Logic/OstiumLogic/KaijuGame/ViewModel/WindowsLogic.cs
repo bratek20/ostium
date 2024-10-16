@@ -7,6 +7,18 @@ using KaijuGame.Api;
 using GamesManagement.Api;
 
 namespace KaijuGame.ViewModel {
-    public partial class GamesWindow {
+    public partial class GameWindow
+    {
+        private GameApi api;
+
+        public GameWindow(GameApi api)
+        {
+            this.api = api;
+        }
+
+        protected override void OnOpen()
+        {
+            GameState.Update(api.GetState(State.Token));
+        }
     }
 }
