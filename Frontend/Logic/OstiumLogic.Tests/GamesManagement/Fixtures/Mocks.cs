@@ -27,7 +27,7 @@ namespace Ostium.Logic.Tests.GamesManagement.Fixtures
         {
             lastJoinJoiner = joiner;
             lastJoinGameId = gameId;
-            return new GameToken(666, joiner.Value);
+            return new GameToken(gameId.Value, joiner.Value);
         }
 
         private GameId lastDeleteGameId;

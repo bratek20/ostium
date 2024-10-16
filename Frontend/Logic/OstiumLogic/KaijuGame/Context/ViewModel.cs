@@ -23,7 +23,7 @@ namespace KaijuGame.Context {
                 .SetClass<HandVm>(InjectionMode.Prototype)
                 .SetClass<GameStateVm>(InjectionMode.Prototype)
                 .SetClass<CardVmGroup>(InjectionMode.Prototype)
-                .AddImpl<Window, GamesWindow>();
+                .AddImpl<Window, GameWindow>();
         }
     }
 }

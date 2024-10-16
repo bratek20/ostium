@@ -152,7 +152,7 @@ ViewModel
                 opponentReady
     
     Windows
-        GamesWindow
+        GameWindow
             State
                 token: GameToken
             gameState: GameStateVm

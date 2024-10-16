@@ -53,7 +53,7 @@ namespace Ostium.Logic.Tests
             var gamesManagementWindow = windowManager.GetCurrent() as GamesManagementWindow;
             gamesManagementWindow.CreateGame.Click();
             
-            var gameWindow = windowManager.GetCurrent() as GameWindow;
+            var gameWindow = windowManager.GetCurrent() as OldGameWindow;
             
             AssertExt.ListCount(gameWindow.GameState.MyHand.Cards.Model, 2);
         }

@@ -10,11 +10,11 @@ using GamesManagement.Api;
 using User.Api;
 
 namespace SingleGame.ViewModel {
-    public class GameWindowState {
+    public class OldGameWindowState {
         public Username User { get; }
         public GameId GameId { get; }
 
-        public GameWindowState(
+        public OldGameWindowState(
             Username user,
             GameId gameId
         ) {
@@ -23,7 +23,7 @@ namespace SingleGame.ViewModel {
         }
     }
 
-    public partial class GameWindow: Window<GameWindowState> {
+    public partial class OldGameWindow: Window<OldGameWindowState> {
         public GameStateVm GameState { get; set; }
     }
 }

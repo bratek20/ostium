@@ -2,6 +2,7 @@ using B20.Events.Api;
 using B20.Frontend.Traits;
 using B20.Frontend.Windows.Api;
 using GamesManagement.Api;
+using KaijuGame.ViewModel;
 using SingleGame.ViewModel;
 
 namespace GamesManagement.ViewModel
@@ -38,8 +39,8 @@ namespace GamesManagement.ViewModel
         
         public void HandleCreatedGameClicked(CreatedGameVm game)
         {
-            api.Join(State.Username, game.Model.GetId());
-            windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(State.Username, game.Model.GetId()));
+            var token = api.Join(State.Username, game.Model.GetId());
+            OpenGameWindow(token);
         }
 
         protected override void OnOpen()
@@ -58,7 +59,12 @@ namespace GamesManagement.ViewModel
         private void OnCreateClicked()
         {
             var token = api.Create(State.Username);
-            windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(State.Username, token.GetGameId()));
+            OpenGameWindow(token);
+        }
+        
+        private void OpenGameWindow(GameToken token)
+        {
+            windowManager.Open<GameWindow, GameWindowState>(new GameWindowState(token));
         }
         
         private void HandleCreatedGameDeleteButtonClicked(CreatedGameVm game)

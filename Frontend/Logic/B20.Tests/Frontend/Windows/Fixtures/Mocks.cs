@@ -47,7 +47,7 @@ namespace B20.Tests.Frontend.Windows.Fixtures
 
         public void AssertLastOpenedWindow<TWindow, TWindowState>(Action<TWindowState> stateAssertion = null) where TWindow: Window<TWindowState>
         {
-            Assert.True(lastOpenedWindow == typeof(TWindow), "Last opened window is not " + typeof(TWindow).Name);
+            Assert.True(lastOpenedWindow == typeof(TWindow), "Last opened window is not " + typeof(TWindow).Name + " but " + lastOpenedWindow.Name);
             stateAssertion?.Invoke((TWindowState) lastOpenedWindowState);
         }
 

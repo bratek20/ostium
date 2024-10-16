@@ -13,8 +13,8 @@ namespace SingleGame.ViewModel
 {
     class GameElementDragStartedListener: EventListener<ElementDragStartedEvent>
     {
-        private GameWindow window;
-        public GameElementDragStartedListener(GameWindow window)
+        private OldGameWindow window;
+        public GameElementDragStartedListener(OldGameWindow window)
         {
             this.window = window;
         }
@@ -27,8 +27,8 @@ namespace SingleGame.ViewModel
     
     class GameElementDragEndedListener: EventListener<ElementDragEndedEvent>
     {
-        private GameWindow window;
-        public GameElementDragEndedListener(GameWindow window)
+        private OldGameWindow window;
+        public GameElementDragEndedListener(OldGameWindow window)
         {
             this.window = window;
         }
@@ -39,12 +39,12 @@ namespace SingleGame.ViewModel
         }
     }
     
-    public partial class GameWindow
+    public partial class OldGameWindow
     {
         private SingleGameApi singleGameApi;
         private TimerApi timerApi;
         
-        public GameWindow(SingleGameApi singleGameApi, EventPublisher eventPublisher, TimerApi timerApi)
+        public OldGameWindow(SingleGameApi singleGameApi, EventPublisher eventPublisher, TimerApi timerApi)
         {
             this.singleGameApi = singleGameApi;
             this.timerApi = timerApi;

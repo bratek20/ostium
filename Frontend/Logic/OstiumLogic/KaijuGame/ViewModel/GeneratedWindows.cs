@@ -9,17 +9,17 @@ using KaijuGame.Api;
 using GamesManagement.Api;
 
 namespace KaijuGame.ViewModel {
-    public class GamesWindowState {
+    public class GameWindowState {
         public GameToken Token { get; }
 
-        public GamesWindowState(
+        public GameWindowState(
             GameToken token
         ) {
             Token = token;
         }
     }
 
-    public partial class GamesWindow: Window<GamesWindowState> {
+    public partial class GameWindow: Window<GameWindowState> {
         public GameStateVm GameState { get; set; }
     }
 }
