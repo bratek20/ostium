@@ -156,3 +156,4 @@ ViewModel
             State
                 token: GameToken
             gameState: GameStateVm
+            endPhaseButton: Button

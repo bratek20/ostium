@@ -13,9 +13,12 @@ namespace KaijuGame.View {
     public class GameWindowView: WindowView<GameWindow> {
         [SerializeField]
         GameStateView gameState;
+        [SerializeField]
+        ButtonView endPhaseButton;
         protected override void OnBind() {
             base.OnBind();
             gameState.Bind(ViewModel.GameState);
+            endPhaseButton.Bind(ViewModel.EndPhaseButton);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
 using B20.Tests.ExtraAsserts;
@@ -40,6 +41,22 @@ namespace KaijuGame.Tests
         public void ShouldLoadGameState()
         {
             AssertExt.Equal(window.GameState.Model.GetTurn(), 1);
+        }
+        
+        [Fact]
+        public void ShouldEndPhaseOnButtonClick()
+        {
+            window.EndPhaseButton.Click();
+            
+            apiMock.AssertEndPhaseCalled();
+        }
+        
+        [Fact]
+        public void ShouldPlayCard()
+        {
+            var card = window.GameState.Hand.Cards.Elements.First();
+            
+            //TODO drag to the table
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using B20.Architecture.Contexts.Api;
+using B20.Tests.ExtraAsserts;
 using GamesManagement.Api;
 using KaijuGame;
 using KaijuGame.Api;
@@ -13,12 +15,26 @@ namespace Ostium.Logic.Tests.KaijuGame.Fixtures
             return KaijuGameBuilders.BuildGameState(i =>
             {
                 i.Turn = 1;
+                i.Hand = hi =>
+                {
+                    hi.Cards = new List<Action<KaijuGameBuilders.CardDef>>
+                    {
+                        c => c.FocusCost = 1
+                    };
+                };
             });
         }
 
+        private bool endPhaseCalled = false;
         public GameState EndPhase(GameToken token)
         {
-            throw new NotImplementedException();
+            endPhaseCalled = true;
+            return GetState(token);
+        }
+        
+        public void AssertEndPhaseCalled()
+        {
+            AssertExt.Equal(endPhaseCalled, true);
         }
 
         public GameState PlayCard(GameToken token, int handCardIdx)

@@ -21,5 +21,6 @@ namespace KaijuGame.ViewModel {
 
     public partial class GameWindow: Window<GameWindowState> {
         public GameStateVm GameState { get; set; }
+        public Button EndPhaseButton { get; set; }
     }
 }

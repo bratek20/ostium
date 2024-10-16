@@ -18,7 +18,14 @@ namespace KaijuGame.ViewModel {
 
         protected override void OnOpen()
         {
+            EndPhaseButton.OnClick(OnEndPhaseButtonClick);
+            
             GameState.Update(api.GetState(State.Token));
+        }
+        
+        private void OnEndPhaseButtonClick()
+        {
+            GameState.Update(api.EndPhase(State.Token));
         }
     }
 }
