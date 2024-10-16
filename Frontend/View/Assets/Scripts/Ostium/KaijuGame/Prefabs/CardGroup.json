@@ -1,0 +1,8 @@
+{
+  "blueprintType": "ElementGroup",
+  "name": "CardGroup",
+  "viewType": "KaijuGame.View.CardGroupView",
+  "creationOrder": 10,
+  "children": [ ],
+  "elementViewType": "KaijuGame.View.CardView"
+}

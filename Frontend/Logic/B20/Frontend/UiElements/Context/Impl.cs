@@ -12,7 +12,8 @@ namespace B20.Frontend.UiElements.Context
                 .SetClass<Button>(InjectionMode.Prototype)
                 .SetClass<Label>(InjectionMode.Prototype)
                 .SetClass<OptionalLabel>(InjectionMode.Prototype)
-                .SetClass<BoolSwitch>(InjectionMode.Prototype);
+                .SetClass<BoolSwitch>(InjectionMode.Prototype)
+                .SetClass<EnumSwitch>(InjectionMode.Prototype);
         }
     }
 }

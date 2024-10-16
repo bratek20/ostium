@@ -1,0 +1,17 @@
+{
+  "blueprintType": "Window",
+  "name": "GameWindow",
+  "viewType": "KaijuGame.View.GameWindowView",
+  "creationOrder": 20,
+  "children": [
+    {
+      "name": "gameState",
+      "viewType": "KaijuGame.View.GameStateView"
+    },
+    {
+      "name": "endPhaseButton",
+      "viewType": "B20.Frontend.Elements.View.ButtonView"
+    }
+  ],
+  "elementViewType": null
+}

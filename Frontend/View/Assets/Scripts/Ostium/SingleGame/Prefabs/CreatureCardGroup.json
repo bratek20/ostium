@@ -1,8 +1,0 @@
-{
-  "blueprintType": "ElementGroup",
-  "name": "CreatureCardGroup",
-  "viewType": "SingleGame.View.CreatureCardGroupView",
-  "creationOrder": 10,
-  "children": [ ],
-  "elementViewType": "SingleGame.View.CreatureCardView"
-}

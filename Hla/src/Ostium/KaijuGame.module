@@ -91,4 +91,69 @@ Web
             GameApi
         urlPathPrefix = "/ostium"
 
-
+ViewModel
+    Elements
+        AttackReceiverVm
+            AttackReceiver
+                type
+                myDamage
+                opponentDamage
+    
+        AttackGiverVm
+            AttackGiver
+                type
+                damageValue
+        
+        PlayerSideVm
+            PlayerSide
+                pool
+                playedCards
+        
+        HitZoneVm
+            HitZone
+                position
+                lightReceiver
+                mediumReceiver
+                heavyReceiver
+        
+        AttackPoolVm
+            AttackPool
+                lightGiver
+                mediumGiver
+                heavyGiver
+                focusLeft
+        
+        TableVm
+            Table
+                leftZone
+                centerZone
+                rightZone
+        
+                mySide
+                opponentSide
+        
+        CardVm
+            Card
+                type
+                value
+                focusCost
+        
+        HandVm
+            Hand
+                cards
+        
+        GameStateVm
+            GameState
+                turn
+                phase
+                table
+                hand
+                myReady
+                opponentReady
+    
+    Windows
+        GameWindow
+            State
+                token: GameToken
+            gameState: GameStateVm
+            endPhaseButton: Button

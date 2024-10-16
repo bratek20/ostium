@@ -7,6 +7,7 @@ using B20.Tests.Architecture.Logs.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.ViewModel;
+using KaijuGame.ViewModel;
 using Main.ViewModel;
 using SingleGame.ViewModel;
 using Xunit;
@@ -22,7 +23,7 @@ namespace Ostium.Logic.Tests
         {
             _output = output;
         }
-
+        
         [Fact(
             //Skip = "Comment this line to test real server interaction"
         )]
@@ -54,7 +55,7 @@ namespace Ostium.Logic.Tests
             
             var gameWindow = windowManager.GetCurrent() as GameWindow;
             
-            AssertExt.ListCount(gameWindow.GameState.MyHand.Cards.Model, 2);
+            AssertExt.Equal(gameWindow.GameState.Turn.Model, "1");
         }
 
         private Context CreateContext(ServerType serverType)

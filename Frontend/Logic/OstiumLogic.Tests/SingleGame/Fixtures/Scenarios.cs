@@ -26,30 +26,30 @@ namespace Ostium.Logic.Tests
     {
         public class InGameWindowContext
         {
-            private GameWindow GameWindow { get; }
+            private OldGameWindow OldGameWindow { get; }
             public SingleGameApiMock GameApiMock { get; }
             private Context Context { get; }
 
             public TimerApi TimerApi => Context.Get<TimerApi>();
             
-            public InGameWindowContext(GameWindow gameWindow, SingleGameApiMock gameApiMock, Context c)
+            public InGameWindowContext(OldGameWindow gameWindow, SingleGameApiMock gameApiMock, Context c)
             {
-                GameWindow = gameWindow;
+                OldGameWindow = gameWindow;
                 GameApiMock = gameApiMock;
                 Context = c;
             }
 
-            public RowVm AttackRow => GameWindow.GameState.Table.MySide.AttackRow;
-            public RowVm DefenseRow => GameWindow.GameState.Table.MySide.DefenseRow;
+            public RowVm AttackRow => OldGameWindow.GameState.Table.MySide.AttackRow;
+            public RowVm DefenseRow => OldGameWindow.GameState.Table.MySide.DefenseRow;
             
             public CreatureCardVm CardInAttackRow => AttackRow.Card.Element;
             public CreatureCardVm CardInDefenseRow => DefenseRow.Card.Element;
             
-            public List<CreatureCardVm> CardsInHand => GameWindow.GameState.MyHand.Cards.Elements;
+            public List<CreatureCardVm> CardsInHand => OldGameWindow.GameState.MyHand.Cards.Elements;
             public CreatureCardVm FirstCardInHand => CardsInHand[0];
             public CreatureCardVm SecondCardInHand => CardsInHand[1];
             
-            public Optional<CreatureCardVm> SelectedCard => GameWindow.SelectedCard;
+            public Optional<CreatureCardVm> SelectedCard => OldGameWindow.SelectedCard;
         }
 
         public class InGameWindowArgs
@@ -77,8 +77,8 @@ namespace Ostium.Logic.Tests
             var apiMock = c.Get<SingleGameApiMock>();
             apiMock.SetGame(args.Game);
             
-            var window = c.Get<GameWindow>();
-            window.Open(new GameWindowState(new Username("testUser"), new GameId(42)));
+            var window = c.Get<OldGameWindow>();
+            window.Open(new OldGameWindowState(new Username("testUser"), new GameId(42)));
             
             var nc = new InGameWindowContext(window, apiMock, c);
             nc.AttackRow.GetTrait<WithRect>().SetRectProvider(() => args.AttackRowRect);

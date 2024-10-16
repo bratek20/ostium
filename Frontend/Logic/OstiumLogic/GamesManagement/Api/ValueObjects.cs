@@ -27,6 +27,28 @@ namespace GamesManagement.Api {
         }
     }
 
+    public class GameToken {
+        readonly int gameId;
+        readonly string username;
+
+        public GameToken(
+            int gameId,
+            string username
+        ) {
+            this.gameId = gameId;
+            this.username = username;
+        }
+        public GameId GetGameId() {
+            return new GameId(gameId);
+        }
+        public Username GetUsername() {
+            return new Username(username);
+        }
+        public static GameToken Create(GameId gameId, Username username) {
+            return new GameToken(gameId.Value, username.Value);
+        }
+    }
+
     public class CreatedGame {
         readonly int id;
         readonly string creator;

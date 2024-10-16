@@ -1,0 +1,17 @@
+{
+  "blueprintType": "UiElement",
+  "name": "PlayerSide",
+  "viewType": "KaijuGame.View.PlayerSideView",
+  "creationOrder": 11,
+  "children": [
+    {
+      "name": "pool",
+      "viewType": "KaijuGame.View.AttackPoolView"
+    },
+    {
+      "name": "playedCards",
+      "viewType": "KaijuGame.View.CardGroupView"
+    }
+  ],
+  "elementViewType": null
+}

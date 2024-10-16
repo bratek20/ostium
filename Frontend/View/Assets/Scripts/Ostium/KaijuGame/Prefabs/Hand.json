@@ -1,0 +1,13 @@
+{
+  "blueprintType": "UiElement",
+  "name": "Hand",
+  "viewType": "KaijuGame.View.HandView",
+  "creationOrder": 11,
+  "children": [
+    {
+      "name": "cards",
+      "viewType": "KaijuGame.View.CardGroupView"
+    }
+  ],
+  "elementViewType": null
+}

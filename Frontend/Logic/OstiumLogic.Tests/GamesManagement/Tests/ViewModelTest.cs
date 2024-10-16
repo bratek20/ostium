@@ -6,6 +6,7 @@ using B20.Tests.Frontend.Windows.Context;
 using B20.Tests.Frontend.Windows.Fixtures;
 using GamesManagement.Context;
 using GamesManagement.ViewModel;
+using KaijuGame.ViewModel;
 using Ostium.Logic.Tests.GamesManagement.Context;
 using Ostium.Logic.Tests.GamesManagement.Fixtures;
 using SingleGame.ViewModel;
@@ -50,8 +51,8 @@ namespace GamesManagement.Tests
             windowManagerMock.AssertLastOpenedWindow<GameWindow, GameWindowState>(
                 state =>
                 {
-                    AssertExt.Equal(state.GameId.Value, 69);
-                    AssertExt.Equal(state.User.Value, "testUser");
+                    AssertExt.Equal(state.Token.GetGameId().Value, 69);
+                    AssertExt.Equal(state.Token.GetUsername().Value, "testUser");
                 });
         }
         
@@ -76,8 +77,8 @@ namespace GamesManagement.Tests
             windowManagerMock.AssertLastOpenedWindow<GameWindow, GameWindowState>(
                 state =>
                 {
-                    AssertExt.Equal(state.GameId.Value, 666);
-                    AssertExt.Equal(state.User.Value, "testUser");
+                    AssertExt.Equal(state.Token.GetGameId().Value, 666);
+                    AssertExt.Equal(state.Token.GetUsername().Value, "testUser");
                 });
         }
 

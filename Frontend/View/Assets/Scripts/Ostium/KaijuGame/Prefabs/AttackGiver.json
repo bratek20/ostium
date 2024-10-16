@@ -1,0 +1,17 @@
+{
+  "blueprintType": "UiElement",
+  "name": "AttackGiver",
+  "viewType": "KaijuGame.View.AttackGiverView",
+  "creationOrder": 1,
+  "children": [
+    {
+      "name": "type",
+      "viewType": "B20.Frontend.Elements.View.EnumSwitchView"
+    },
+    {
+      "name": "damageValue",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    }
+  ],
+  "elementViewType": null
+}

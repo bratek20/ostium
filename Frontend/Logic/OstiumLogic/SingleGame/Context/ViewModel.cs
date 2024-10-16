@@ -10,7 +10,7 @@ namespace SingleGame.Context
         public void Apply(ContextBuilder builder)
         {
             builder
-                .AddImpl<Window, GameWindow>()
+                .AddImpl<Window, OldGameWindow>()
                 .SetClass<GameStateVm>(InjectionMode.Prototype)
                 .SetClass<TableVm>(InjectionMode.Prototype)
                 .SetClass<PlayerSideVm>(InjectionMode.Prototype)

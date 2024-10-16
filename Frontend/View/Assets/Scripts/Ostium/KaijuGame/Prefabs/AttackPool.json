@@ -1,0 +1,25 @@
+{
+  "blueprintType": "UiElement",
+  "name": "AttackPool",
+  "viewType": "KaijuGame.View.AttackPoolView",
+  "creationOrder": 2,
+  "children": [
+    {
+      "name": "lightGiver",
+      "viewType": "KaijuGame.View.AttackGiverView"
+    },
+    {
+      "name": "mediumGiver",
+      "viewType": "KaijuGame.View.AttackGiverView"
+    },
+    {
+      "name": "heavyGiver",
+      "viewType": "KaijuGame.View.AttackGiverView"
+    },
+    {
+      "name": "focusLeft",
+      "viewType": "B20.Frontend.Elements.View.LabelView"
+    }
+  ],
+  "elementViewType": null
+}
