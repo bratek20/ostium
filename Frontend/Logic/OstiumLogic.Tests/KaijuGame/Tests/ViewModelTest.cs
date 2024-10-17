@@ -60,12 +60,10 @@ namespace KaijuGame.Tests
         [Fact]
         public void ShouldPlayCardIfDraggedToMySide()
         {
-            
-            
             TraitsHelpers.DragTo(
                 FirstCardInHand,
                 Table.MySide
-                );
+            );
             
             apiMock.AssertPlayCardLastCall(0);
         }
