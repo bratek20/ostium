@@ -53,16 +53,32 @@ namespace KaijuGame.Tests
             
             apiMock.AssertEndPhaseCalled();
         }
+
+        private CardVm FirstCardInHand => window.GameState.Hand.Cards.Elements.First();
+        private TableVm Table => window.GameState.Table;
         
         [Fact]
-        public void ShouldPlayCard()
+        public void ShouldPlayCardIfDraggedToMySide()
         {
-            var card = window.GameState.Hand.Cards.Elements.First();
-            var mySide = window.GameState.Table.MySide;
             
-            TraitsHelpers.DragTo(card, mySide);
+            
+            TraitsHelpers.DragTo(
+                FirstCardInHand,
+                Table.MySide
+                );
             
             apiMock.AssertPlayCardLastCall(0);
+        }
+        
+        [Fact]
+        public void ShouldNotPlayCardIfDraggedToOpponentSide()
+        {
+            TraitsHelpers.DragTo(
+                FirstCardInHand, 
+                Table.OpponentSide
+            );
+            
+            apiMock.AssertPlayCardNotCalled();
         }
     }
 }
