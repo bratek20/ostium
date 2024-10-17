@@ -4,6 +4,7 @@ using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.TestHelpers;
+using B20.Tests.Frontend.Traits.Fixtures;
 using GamesManagement.Api;
 using KaijuGame.Api;
 using KaijuGame.Context;
@@ -34,6 +35,8 @@ namespace KaijuGame.Tests
             window = c.Get<GameWindow>();
             apiMock = c.Get<GameApiMock>();
 
+            TraitsHelpers.PlaceElements(window);
+            
             window.Open(new GameWindowState(new GameToken(666, "testUser")));
         }
 
@@ -55,8 +58,11 @@ namespace KaijuGame.Tests
         public void ShouldPlayCard()
         {
             var card = window.GameState.Hand.Cards.Elements.First();
+            var mySide = window.GameState.Table.MySide;
             
-            //TODO drag to the table
+            TraitsHelpers.DragTo(card, mySide);
+            
+            apiMock.AssertPlayCardLastCall(0);
         }
     }
 }
