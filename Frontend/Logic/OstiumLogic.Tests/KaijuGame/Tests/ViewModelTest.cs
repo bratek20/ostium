@@ -4,6 +4,7 @@ using B20.Architecture.Contexts.Api;
 using B20.Architecture.Contexts.Context;
 using B20.Tests.ExtraAsserts;
 using B20.Tests.Frontend.TestHelpers;
+using B20.Tests.Frontend.Traits.Fixtures;
 using GamesManagement.Api;
 using KaijuGame.Api;
 using KaijuGame.Context;
@@ -34,6 +35,8 @@ namespace KaijuGame.Tests
             window = c.Get<GameWindow>();
             apiMock = c.Get<GameApiMock>();
 
+            TraitsHelpers.PlaceElements(window);
+            
             window.Open(new GameWindowState(new GameToken(666, "testUser")));
         }
 
@@ -50,13 +53,30 @@ namespace KaijuGame.Tests
             
             apiMock.AssertEndPhaseCalled();
         }
+
+        private CardVm FirstCardInHand => window.GameState.Hand.Cards.Elements.First();
+        private TableVm Table => window.GameState.Table;
         
         [Fact]
-        public void ShouldPlayCard()
+        public void ShouldPlayCardIfDraggedToMySide()
         {
-            var card = window.GameState.Hand.Cards.Elements.First();
+            TraitsHelpers.DragTo(
+                FirstCardInHand,
+                Table.MySide
+            );
             
-            //TODO drag to the table
+            apiMock.AssertPlayCardLastCall(0);
+        }
+        
+        [Fact]
+        public void ShouldNotPlayCardIfDraggedToOpponentSide()
+        {
+            TraitsHelpers.DragTo(
+                FirstCardInHand, 
+                Table.OpponentSide
+            );
+            
+            apiMock.AssertPlayCardNotCalled();
         }
     }
 }

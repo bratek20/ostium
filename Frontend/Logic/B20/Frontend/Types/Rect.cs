@@ -2,28 +2,30 @@ namespace B20.Frontend.Postion
 {
     public class Rect
     {
-        private Position2d leftBottom;
-        private Position2d size;
+        public Position2d LeftBottom { get; }
+        public Position2d Size { get; }
         
         public Rect(int leftBottomX, int leftBottomY, int width, int height)
             : this(new Position2d(leftBottomX, leftBottomY), new Position2d(width, height))
         { }
         
+        public Position2d Center => new Position2d(LeftBottom.X + Size.X / 2, LeftBottom.Y + Size.Y / 2);
+        
         public Rect(Position2d leftBottom, Position2d size)
         {
-            this.leftBottom = leftBottom;
-            this.size = size;
+            LeftBottom = leftBottom;
+            Size = size;
         }
         
         public bool IsInside(Position2d p)
         {
-            return leftBottom.X <= p.X && p.X <= leftBottom.X + size.X &&
-                   leftBottom.Y <= p.Y && p.Y <= leftBottom.Y + size.Y;
+            return LeftBottom.X <= p.X && p.X <= LeftBottom.X + Size.X &&
+                   LeftBottom.Y <= p.Y && p.Y <= LeftBottom.Y + Size.Y;
         }
 
         public override string ToString()
         {
-            return $"(lbx: {leftBottom.X}, lby: {leftBottom.Y}, w: {size.X}, h: {size.Y})";
+            return $"(lbx: {LeftBottom.X}, lby: {LeftBottom.Y}, w: {Size.X}, h: {Size.Y})";
         }
     }
 }

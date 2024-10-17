@@ -1,5 +1,4 @@
 using System;
-using B20.Frontend.UiElements;
 using B20.Frontend.Postion;
 
 namespace B20.Frontend.UiElements
@@ -8,8 +7,9 @@ namespace B20.Frontend.UiElements
     {
         private Action<Position2d> _positionSetter;
 
-        public void SetPositionSetter(Action<Position2d> positionSetter)
+        public void Init(Position2d initPos, Action<Position2d> positionSetter)
         {
+            Model = initPos;
             _positionSetter = positionSetter;
         }
         

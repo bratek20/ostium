@@ -37,9 +37,21 @@ namespace Ostium.Logic.Tests.KaijuGame.Fixtures
             AssertExt.Equal(endPhaseCalled, true);
         }
 
+        private int playedCardIdx = -1;
         public GameState PlayCard(GameToken token, int handCardIdx)
         {
-            throw new NotImplementedException();
+            playedCardIdx = handCardIdx;
+            return GetState(token);
+        }
+        
+        public void AssertPlayCardLastCall(int expectedIdx)
+        {
+            AssertExt.Equal(playedCardIdx, expectedIdx);
+        }
+        
+        public void AssertPlayCardNotCalled()
+        {
+            AssertExt.Equal(playedCardIdx, -1);
         }
 
         public GameState AssignDamage(GameToken token, HitZonePosition zone, DamageType damageType)

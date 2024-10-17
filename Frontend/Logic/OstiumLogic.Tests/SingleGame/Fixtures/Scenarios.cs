@@ -12,6 +12,7 @@ using B20.Frontend.UiElements.Context;
 using B20.Frontend.Windows.Api;
 using B20.Tests.Architecture.Logs.Context;
 using B20.Tests.Frontend.TestHelpers;
+using B20.Tests.Frontend.Traits.Fixtures;
 using B20.Tests.Frontend.Windows.Context;
 using GamesManagement.Api;
 using Ostium.Logic.Tests.GameModule.Context;
@@ -55,8 +56,6 @@ namespace Ostium.Logic.Tests
         public class InGameWindowArgs
         {
             public Action<SingleGameBuilders.GameDef> Game = null;
-            public Rect AttackRowRect { get; set; } = new Rect(0, 0, 100, 100);
-            public Rect DefenseRowRect { get; set; } = new Rect(0, 100, 100, 100);
         }
         public InGameWindowContext InGameWindow(Action<InGameWindowArgs> init = null)
         {
@@ -80,9 +79,9 @@ namespace Ostium.Logic.Tests
             var window = c.Get<OldGameWindow>();
             window.Open(new OldGameWindowState(new Username("testUser"), new GameId(42)));
             
+            TraitsHelpers.PlaceElements(window);
+            
             var nc = new InGameWindowContext(window, apiMock, c);
-            nc.AttackRow.GetTrait<WithRect>().SetRectProvider(() => args.AttackRowRect);
-            nc.DefenseRow.GetTrait<WithRect>().SetRectProvider(() => args.DefenseRowRect);
             return nc;
         }
     }

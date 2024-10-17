@@ -32,6 +32,9 @@ namespace KaijuGame.ViewModel {
     public partial class PlayerSideVm: UiElement<PlayerSide> {
         public AttackPoolVm Pool { get; set; }
         public CardVmGroup PlayedCards { get; set; }
+        protected override List<Type> GetTraitTypes() {
+            return new List<Type>() { typeof(WithRect) };
+        }
         protected override void OnUpdate() {
             Pool.Update(Model.GetPool());
             PlayedCards.Update(Model.GetPlayedCards());
@@ -83,6 +86,9 @@ namespace KaijuGame.ViewModel {
         public EnumSwitch Type { get; set; }
         public Label Value { get; set; }
         public Label FocusCost { get; set; }
+        protected override List<Type> GetTraitTypes() {
+            return new List<Type>() { typeof(Draggable) };
+        }
         protected override void OnUpdate() {
             Type.Update(Model.GetType());
             Value.Update(Model.GetValue());

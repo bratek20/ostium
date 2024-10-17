@@ -19,7 +19,6 @@ namespace B20.Tests.Frontend.Traits.Tests
             protected override List<Type> GetTraitTypes()
             {
                 return ListUtils.Of(
-                    typeof(WithPosition2d),
                     typeof(Draggable)
                 );
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using B20.Architecture.Contexts.Context;
 using B20.Architecture.Exceptions.Fixtures;
 using B20.Frontend.Traits.Context;
+using B20.Frontend.UiElements.Context;
 using B20.Frontend.UiElements.Utils;
 using B20.Tests.ExtraAsserts;
 using Xunit;
@@ -25,6 +26,10 @@ namespace B20.Frontend.UiElements.Tests
     {
         private int startCount = 0;
         private int updateCount = 0;
+
+        public Label Label1 { get; set;  }
+        public Button Button { get; set;  }
+        public Label Label2 { get; set;  }
 
         protected override List<Type> GetTraitTypes()
         {
@@ -58,6 +63,14 @@ namespace B20.Frontend.UiElements.Tests
             var t = GetTrait<TraitTester>();
             t.AssertOwner(this);
         }
+        
+        public void AssertHaveChildrenInOrderOfDeclaration()
+        {
+            AssertExt.ListCount(Children, 3);
+            AssertExt.Equal(Children[0], Label1);
+            AssertExt.Equal(Children[1], Button);
+            AssertExt.Equal(Children[2], Label2);
+        }
     }
     
     public class UiElementTest
@@ -68,7 +81,10 @@ namespace B20.Frontend.UiElements.Tests
         public UiElementTest()
         {
             elementTester = ContextsFactory.CreateBuilder()
-                .WithModule(new TraitsImpl())
+                .WithModules(
+                    new TraitsImpl(),
+                    new UiElementsImpl()
+                )
                 .SetClass<TraitTester>()
                 .SetClass<OtherTrait>()
                 .SetClass<UiElementTester>()
@@ -105,6 +121,12 @@ namespace B20.Frontend.UiElements.Tests
                     e.Message = "Trait OtherTrait not found for UiElementTester";
                 }
             );
+        }
+        
+        [Fact]
+        public void ShouldSupportChildren()
+        {
+            elementTester.AssertHaveChildrenInOrderOfDeclaration();
         }
     }
 }
