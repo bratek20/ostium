@@ -104,7 +104,7 @@ ViewModel
                 type
                 damageValue
         
-        PlayerSideVm
+        PlayerSideVm (withRect)
             PlayerSide
                 pool
                 playedCards
@@ -132,7 +132,7 @@ ViewModel
                 mySide
                 opponentSide
         
-        CardVm
+        CardVm (draggable)
             Card
                 type
                 value
