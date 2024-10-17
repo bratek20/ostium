@@ -10,7 +10,7 @@ namespace B20.Frontend.Windows.Tests
 {
     public class WindowsImplTest
     {
-        class NotRegisteredWindow : Window
+        class NotRegisteredWindow : Window<EmptyWindowState>
         {
         }
         

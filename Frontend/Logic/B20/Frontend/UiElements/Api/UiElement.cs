@@ -18,11 +18,38 @@ namespace B20.Frontend.UiElements
         
         void Refresh();
         
-        
         List<Trait> Traits { get; }
         
         T GetTrait<T>() where T: Trait;
+        
+        List<UiElement> Children { get; }
+        
+        List<UiElement> Descendants
+        {
+            get
+            {
+                var descendants = new List<UiElement>();
+                foreach (var child in Children)
+                {
+                    descendants.Add(child);
+                    descendants.AddRange(child.Descendants);
+                }
+                return descendants;
+            }
+        }
     }
+
+    public class UiElementHelper
+    {
+        public static List<UiElement> GetElementProperties(Object obj)
+        {
+            var fields = obj.GetType().GetProperties()
+                .Where(f => typeof(UiElement).IsAssignableFrom(f.PropertyType));
+            return fields.Select(f => f.GetValue(obj) as UiElement).ToList();
+        }
+    }
+
+    public class EmptyModel { }
 
     public abstract class UiElement<TModelType>: UiElement
     {
@@ -91,6 +118,16 @@ namespace B20.Frontend.UiElements
             }
 
             return result;
+        }
+
+        private List<UiElement> children = null;
+        public List<UiElement> Children {
+            get {
+                if (children == null) {
+                    children = UiElementHelper.GetElementProperties(this);
+                }
+                return children;
+            }
         }
     }
 }

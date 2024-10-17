@@ -10,7 +10,7 @@ namespace B20.Frontend.UiElements
         }
     }
     
-    public class Button
+    public class Button: UiElement<EmptyModel>
     {
         private Action onClick;
         

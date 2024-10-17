@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using B20.Frontend.UiElements;
+
 namespace B20.Frontend.Windows.Api
 {
     public interface Window
     {
-        
+        List<UiElement> Elements { get; }
     } 
     
     public abstract class Window<TState>: Window
@@ -15,6 +18,20 @@ namespace B20.Frontend.Windows.Api
         }
         
         protected virtual void OnOpen() { }
+        
+        private List<UiElement> _elements;
+
+        public List<UiElement> Elements
+        {
+            get
+            {
+                if (_elements == null)
+                {
+                    _elements = UiElementHelper.GetElementProperties(this);
+                }
+                return _elements;
+            }
+        }
     }
 
     public class EmptyWindowState
