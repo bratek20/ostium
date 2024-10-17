@@ -12,7 +12,9 @@ namespace B20.Frontend.Traits.View
         {
             base.OnBind();
             rectTransform = gameObject.GetComponent<RectTransform>();
-            Trait.SetPositionSetter(position =>
+            var initPos = TypesConverter.Convert(rectTransform.position);
+            
+            Trait.Init(initPos, position =>
             {
                 rectTransform.position = TypesConverter.Convert(position);
             });
