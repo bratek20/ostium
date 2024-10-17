@@ -18,8 +18,6 @@ namespace SingleGame.Tests
         {
             var c = scenarios.InGameWindow(i =>
             {
-                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
-                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
                 i.Game = g =>
                 {
                     g.MyHand = h =>
@@ -39,9 +37,9 @@ namespace SingleGame.Tests
             var card1Name = c.FirstCardInHand.Id.Model;
             Assert.Equal("Mouse1", card1Name);
             
-            TraitsHelpers.StartDrag(c.FirstCardInHand, new Position2d(0, 0));
+            TraitsHelpers.StartDrag(c.FirstCardInHand);
             AssertSelectedCard(c, "Mouse1");
-            TraitsHelpers.EndDrag(c.FirstCardInHand, new Position2d(10, 10));
+            TraitsHelpers.EndDragIn(c.FirstCardInHand, c.AttackRow);
             AssertNoCardSelected(c);
             
             c.GameApiMock.AssertPlayCardLastCall(
@@ -52,8 +50,7 @@ namespace SingleGame.Tests
                 );
             
             //Playing second card on defense row
-            TraitsHelpers.StartDrag(c.SecondCardInHand, new Position2d(0, 0));
-            TraitsHelpers.EndDrag(c.SecondCardInHand, new Position2d(20, 20));
+            TraitsHelpers.DragTo(c.SecondCardInHand, c.DefenseRow);
             
             c.GameApiMock.AssertPlayCardLastCall(
                 42,
@@ -82,8 +79,6 @@ namespace SingleGame.Tests
         {
             var c = scenarios.InGameWindow(i =>
             {
-                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
-                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
                 i.Game = g =>
                 {
                     g.Table = t => 
@@ -97,10 +92,10 @@ namespace SingleGame.Tests
             });
            
             AssertCardInRow(c.DefenseRow, "Mouse1");
-            
-            TraitsHelpers.StartDrag(c.CardInDefenseRow, new Position2d(20, 20));
+
+            TraitsHelpers.StartDrag(c.CardInDefenseRow);
             AssertSelectedCard(c, "Mouse1");
-            TraitsHelpers.EndDrag(c.CardInDefenseRow, new Position2d(10, 10));
+            TraitsHelpers.EndDragIn(c.CardInDefenseRow, c.AttackRow);
             AssertNoCardSelected(c);
             
             c.GameApiMock.AssertMoveCardLastCall(
@@ -117,8 +112,6 @@ namespace SingleGame.Tests
         {
             var c = scenarios.InGameWindow(i =>
             {
-                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
-                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
                 i.Game = g =>
                 {
                     g.Table = t => 
@@ -134,8 +127,8 @@ namespace SingleGame.Tests
             AssertCardInRow(c.AttackRow, "Mouse1");
             AssertCardInRow(c.DefenseRow, "Mouse2");
             
-            TraitsHelpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
-            TraitsHelpers.EndDrag(c.CardInAttackRow, new Position2d(20, 20));
+            TraitsHelpers.StartDrag(c.CardInAttackRow);
+            TraitsHelpers.EndDragIn(c.CardInAttackRow, c.DefenseRow);
             c.GameApiMock.AssertMoveCardLastCall(
                 42,
                 "testUser",
@@ -150,8 +143,6 @@ namespace SingleGame.Tests
         {
             var c = scenarios.InGameWindow(i =>
             {
-                i.AttackRowRect = new Rect(new Position2d(10, 10), new Position2d(1, 1));
-                i.DefenseRowRect = new Rect(new Position2d(20, 20), new Position2d(1, 1));
                 i.Game = g =>
                 {
                     g.Table = t => 
@@ -165,8 +156,8 @@ namespace SingleGame.Tests
             });
             AssertCardInRow(c.AttackRow, "Mouse1");
             
-            TraitsHelpers.StartDrag(c.CardInAttackRow, new Position2d(10, 10));
-            TraitsHelpers.EndDrag(c.CardInAttackRow, new Position2d(10, 10));
+            TraitsHelpers.StartDrag(c.CardInAttackRow);
+            TraitsHelpers.EndDragAt(c.CardInAttackRow, c.CardInAttackRow);
 
             c.GameApiMock.AssertNoCalls();
         }

@@ -13,24 +13,27 @@ namespace B20.Tests.Frontend.Traits.Fixtures
             element.GetTrait<Clickable>().Click();
         }
         
-        public static void StartDrag(UiElement element, Position2d p)
+        public static void StartDrag(UiElement element)
         {
-            element.GetTrait<Draggable>().StartDrag(p);
+            element.GetTrait<Draggable>().StartDrag(element.GetTrait<WithPosition2d>().Model);
         }
         
-        public static void EndDrag(UiElement element, Position2d p)
+        public static void EndDragIn(UiElement element, UiElement target)
         {
+            var p = target.GetTrait<WithRect>().Rect.Center;
             element.GetTrait<Draggable>().EndDrag(p);
         }
         
-        public static void DragToRect(UiElement element, UiElement target)
+        public static void EndDragAt(UiElement element, UiElement target)
         {
-            var currentPos = element.GetTrait<WithPosition2d>().Model;
-            var draggable = element.GetTrait<Draggable>();
-            var targetRect = target.GetTrait<WithRect>().Rect;
-            
-            draggable.StartDrag(currentPos);
-            draggable.EndDrag(targetRect.Center);
+            var p = target.GetTrait<WithPosition2d>().Model;
+            element.GetTrait<Draggable>().EndDrag(p);
+        }
+        
+        public static void DragTo(UiElement element, UiElement target)
+        {
+            StartDrag(element);
+            EndDragIn(element, target);
         }
 
         public static void PlaceElements(Window window)
